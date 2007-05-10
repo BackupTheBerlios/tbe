@@ -3,7 +3,18 @@ package ch.tbe.util;
 import java.util.List;
 
 public class FTPHandler {
+	private static FTPHandler instance = null;
  
+	private void FTPHandler(){}
+	
+	public static FTPHandler getInstance() {
+	      if(instance == null) {
+	         instance = new FTPHandler();
+	      }
+	      return instance;
+	   }
+
+	
 	public List getAllSports() {
 		return null;
 	}

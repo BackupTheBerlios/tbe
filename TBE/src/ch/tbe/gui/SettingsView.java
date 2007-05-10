@@ -1,7 +1,8 @@
 package ch.tbe.gui;
 
 import java.util.List;
-import ch.tbe.util.FTPServer;
+
+import ch.tbe.FTPServer;
 
 public class SettingsView {
  

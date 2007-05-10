@@ -1,10 +1,10 @@
 package ch.tbe.gui;
 
 import java.util.ArrayList;
+import ch.tbe.FTPServer;
 import ch.tbe.Sport;
 import ch.tbe.Field;
 import java.util.List;
-
 import javax.swing.JFrame;
 
 
@@ -13,12 +13,11 @@ public class TBE
 {
 
 	private ArrayList sports;
-
 	private String UserName;
-
 	private String UserPrename;
-
 	private String UserEmail;
+	private List<FTPServer> ftpServer; 
+	
 	private final int HEIGHT = 300;
 	private final int WIDTH = 600;
 
