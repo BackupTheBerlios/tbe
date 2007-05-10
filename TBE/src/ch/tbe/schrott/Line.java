@@ -25,8 +25,8 @@ public class Line extends JFrame
 		cells[0] = edge2;
 		List<Point2D> myPoints = new ArrayList<Point2D>();
 		myPoints.add(new Point2D.Double(40, 40));
-		myPoints.add(new Point2D.Double(400, 400));	
-		myPoints.add(new Point2D.Double(100, 150));
+		myPoints.add(new Point2D.Double(140, 140));	
+		//myPoints.add(new Point2D.Double(100, 150));
 		int style = GraphConstants.STYLE_CURVED;
 		GraphConstants.setLineStyle(edge2.getAttributes(), style);
 
