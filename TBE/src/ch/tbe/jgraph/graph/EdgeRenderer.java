@@ -27,7 +27,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.Serializable;
 import java.lang.ref.WeakReference;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.JComponent;
 import javax.swing.UIManager;
@@ -730,11 +732,18 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 			Point2D pe = p[n - 1];
 			Point2D p1 = p[1];
 			Point2D p2 = p[n - 2];
+			
+			System.out.println(p[0].getX()+":"+p[0].getY());
 
 			if (lineStyle == GraphConstants.STYLE_BEZIER && n > 2) {
 				bezier = new Bezier(p);
 				p2 = bezier.getPoint(bezier.getPointCount() - 1);
-			} else if (lineStyle == GraphConstants.STYLE_SPLINE && n > 2) {
+			} else if (lineStyle == GraphConstants.STYLE_CURVED && n > 2) {
+				p = calculate(p);
+				bezier = new Bezier(p);
+				p2 = bezier.getPoint(bezier.getPointCount() - 1);
+			}
+			else if (lineStyle == GraphConstants.STYLE_SPLINE && n > 2) {
 				spline = new Spline2D(p);
 				double[] point = spline.getPoint(0.9875);
 				// Extrapolate p2 away from the end point, pe, to avoid integer
@@ -751,6 +760,7 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 				view.endShape = createLineEnd(endSize, endDeco, p2, pe);
 			}
 			view.sharedPath.moveTo((float) p0.getX(), (float) p0.getY());
+			
 			/* THIS CODE WAS ADDED BY MARTIN KRUEGER 10/20/2003 */
 			if (lineStyle == GraphConstants.STYLE_BEZIER && n > 2) {
 				Point2D[] b = bezier.getPoints();
@@ -767,7 +777,32 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 				view.sharedPath.quadTo((float) b[b.length - 1].getX(),
 						(float) b[b.length - 1].getY(),
 						(float) p[n - 1].getX(), (float) p[n - 1].getY());
-			} else if (lineStyle == GraphConstants.STYLE_SPLINE && n > 2) {
+			} 
+			/* THIS CODE WAS ADDED BY DAVID MEIER 10/05/2007 */
+			else if (lineStyle == GraphConstants.STYLE_CURVED) {
+				
+				//bezier = new Bezier(p);
+				//p2 = bezier.getPoint(bezier.getPointCount() - 1);
+				
+				Point2D[] b = bezier.getPoints();
+				//Point2D[] b = calculate(p);
+				
+				System.out.println(b.length);
+				System.out.println(p.length);
+				view.sharedPath.quadTo((float) b[0].getX(),
+						(float) b[0].getY(), (float) p1.getX(), (float) p1
+								.getY());
+				for (int i = 2; i < n - 1; i++) {
+					Point2D b0 = b[2 * i - 3];
+					Point2D b1 = b[2 * i - 2];
+					view.sharedPath.curveTo((float) b0.getX(), (float) b0
+							.getY(), (float) b1.getX(), (float) b1.getY(),
+							(float) p[i].getX(), (float) p[i].getY());
+				}
+				view.sharedPath.quadTo((float) b[b.length - 1].getX(),
+						(float) b[b.length - 1].getY(),
+						(float) p[n - 1].getX(), (float) p[n - 1].getY());
+			}else if (lineStyle == GraphConstants.STYLE_SPLINE && n > 2) {
 				for (double t = 0; t <= 1; t += 0.0125) {
 					double[] xy = spline.getPoint(t);
 					view.sharedPath.lineTo((float) xy[0], (float) xy[1]);
@@ -995,6 +1030,59 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 	 */
 	public void firePropertyChange(String propertyName, boolean oldValue,
 			boolean newValue) {
+	}
+	public Point2D[] calculate(Point2D[] points){
+		
+		int space = 20;
+		int xSpace, ySpace;
+		int height = 20;
+		int j = 0;
+		
+		List p = new Vector();
+		
+		double l = Math.sqrt(Math.pow(points[1].getX() - points[0].getX(), 2)+Math.pow(points[1].getY() - points[0].getY(), 2));
+		int npoints = (int) l / space;
+		
+		xSpace = (int) (points[1].getX() - points[0].getX()) / npoints;
+		ySpace = (int) (points[1].getY() - points[0].getY()) / npoints;
+		
+		int normx = -ySpace;
+		int normy = xSpace;
+		int yHeight = (int) Math.sqrt(Math.pow(normx, 2)+Math.pow(normy, 2))/height*normx;
+		int xHeight = (int) Math.sqrt(Math.pow(normx, 2)+Math.pow(normy, 2))/height*normy;
+		
+		p.add(points[0]);
+		
+		for(int i=0; i<=npoints-1;i++){
+			
+			switch (j){
+			case 0:
+				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()+xSpace+xHeight,((Point2D)p.get(i)).getY()+ySpace+yHeight));
+				j++;
+				break;
+			case 1:
+				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()+xSpace-xHeight,((Point2D)p.get(i)).getY()+ySpace-yHeight));
+				j++;
+				break;
+			case 2:
+				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()-xSpace+xHeight,((Point2D)p.get(i)).getY()+ySpace-yHeight));
+				j++;
+				break;
+			case 3:
+				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()+xSpace+xHeight,((Point2D)p.get(i)).getY()+ySpace+yHeight));
+				j=0;
+				break;}
+			
+		}
+		
+		p.add(points[1]);
+		//System.out.println(p.size());
+		Point2D[] rArray = new Point2D[p.size()];
+		for(int i = 0; i < p.size()-1;i++){
+			rArray[i] = (Point2D)p.get(i);
+		}
+		
+		return rArray;
 	}
 
 }

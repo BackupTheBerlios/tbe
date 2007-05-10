@@ -160,7 +160,10 @@ public class GraphConstants {
 	public static final int STYLE_BEZIER = 12;
 
 	/** Represents an spline line style */
-	public static final int STYLE_SPLINE = 13;
+	public static final int STYLE_SPLINE = 13;	
+	
+	/** Represents a bezier line style */
+	public static final int STYLE_CURVED = 14;
 
 	/** Represents an bezier line style */
 	public static final int X_AXIS = 1;
