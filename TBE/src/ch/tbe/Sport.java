@@ -1,10 +1,13 @@
 package ch.tbe;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class Sport {
  
-	private ArrayList fields;
-	 
+	private List<Field> fields;
+
+	public List<Field> getFields(){
+		return this.fields;
+	}
 }
  

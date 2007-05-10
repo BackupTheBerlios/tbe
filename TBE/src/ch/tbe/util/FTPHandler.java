@@ -8,11 +8,11 @@ public class FTPHandler {
 	private void FTPHandler(){}
 	
 	public static FTPHandler getInstance() {
-	      if(instance == null) {
-	         instance = new FTPHandler();
-	      }
-	      return instance;
-	   }
+		if(instance == null) {
+			instance = new FTPHandler();
+		}
+		return instance;
+	}
 
 	
 	public List getAllSports() {
