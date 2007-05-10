@@ -30,21 +30,33 @@ public class Invoker {
 	}
 	 
 	public void undo() {
-		actCommands = doneCommands.pop();
-		undoneCommands.push(actCommands);
-		
-		for (int i=0; i< actCommands.size()-1; i++){
-			actCommands.get(i).undo();
+		if (this.canUndo()){
+			actCommands = doneCommands.pop();
+			undoneCommands.push(actCommands);
+			
+			for (int i=0; i< actCommands.size()-1; i++){
+				actCommands.get(i).undo();
+			}
 		}
 	}
 	 
 	public void redo() {
-		actCommands = undoneCommands.pop();
-		doneCommands.push(actCommands);
+		if (this.canRedo()){
+			actCommands = undoneCommands.pop();
+			doneCommands.push(actCommands);
 		
-		for (int i=0; i< actCommands.size()-1; i++){
-			actCommands.get(i).redo();
+			for (int i=0; i< actCommands.size()-1; i++){
+				actCommands.get(i).redo();
+			}
 		}
+	}
+	
+	public boolean canUndo(){
+		return doneCommands.isEmpty();
+	}
+	
+	public boolean canRedo(){
+		return undoneCommands.isEmpty();
 	}
 	 
 }

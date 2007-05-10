@@ -733,13 +733,13 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 			Point2D p1 = p[1];
 			Point2D p2 = p[n - 2];
 			
-			System.out.println(p[0].getX()+":"+p[0].getY());
+			
 
 			if (lineStyle == GraphConstants.STYLE_BEZIER && n > 2) {
 				bezier = new Bezier(p);
 				p2 = bezier.getPoint(bezier.getPointCount() - 1);
 			} else if (lineStyle == GraphConstants.STYLE_CURVED && n > 2) {
-				p = calculate(p);
+				
 				bezier = new Bezier(p);
 				p2 = bezier.getPoint(bezier.getPointCount() - 1);
 			}
@@ -764,6 +764,14 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 			/* THIS CODE WAS ADDED BY MARTIN KRUEGER 10/20/2003 */
 			if (lineStyle == GraphConstants.STYLE_BEZIER && n > 2) {
 				Point2D[] b = bezier.getPoints();
+				
+				System.out.println(p[0].getX()+":"+p[0].getY());
+				System.out.println(b[0].getX()+":"+b[0].getY());
+				System.out.println(b[1].getX()+":"+b[1].getY());
+				
+				System.out.println("p: "+p.length);//3
+				System.out.println("b: "+b.length);//3
+				
 				view.sharedPath.quadTo((float) b[0].getX(),
 						(float) b[0].getY(), (float) p1.getX(), (float) p1
 								.getY());
@@ -776,37 +784,42 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 				}
 				view.sharedPath.quadTo((float) b[b.length - 1].getX(),
 						(float) b[b.length - 1].getY(),
-						(float) p[n - 1].getX(), (float) p[n - 1].getY());
+						(float) p[n - 2].getX(), (float) p[n - 2].getY());
 			} 
 			/* THIS CODE WAS ADDED BY DAVID MEIER 10/05/2007 */
 			else if (lineStyle == GraphConstants.STYLE_CURVED) {
+				//Point2D[] b = bezier.getPoints();
+				Point2D[] b = calculate(p);
+				n=p.length;
+				System.out.println(p[0].getX()+":"+p[0].getY());
+				System.out.println(b[0].getX()+":"+b[0].getY());
+				System.out.println(b[1].getX()+":"+b[1].getY());
 				
-				//bezier = new Bezier(p);
-				//p2 = bezier.getPoint(bezier.getPointCount() - 1);
+				System.out.println("p: "+p.length);//3
+				System.out.println("b: "+b.length);//3
 				
-				Point2D[] b = bezier.getPoints();
-				//Point2D[] b = calculate(p);
-				
-				System.out.println(b.length);
-				System.out.println(p.length);
 				view.sharedPath.quadTo((float) b[0].getX(),
-						(float) b[0].getY(), (float) p1.getX(), (float) p1
+						(float) b[0].getY(), (float) b[1].getX(), (float) b[1]
 								.getY());
-				for (int i = 2; i < n - 1; i++) {
-					Point2D b0 = b[2 * i - 3];
-					Point2D b1 = b[2 * i - 2];
-					view.sharedPath.curveTo((float) b0.getX(), (float) b0
-							.getY(), (float) b1.getX(), (float) b1.getY(),
-							(float) p[i].getX(), (float) p[i].getY());
+				for (int i = 1; i < b.length-2; i+=2) {
+				view.sharedPath.curveTo((float) b[i].getX(),
+						(float) b[i].getY(), (float) b[i+1].getX(), (float) b[i+1]
+								.getY(),(float) b[i+2].getX(),
+								(float) b[i+2].getY());
 				}
-				view.sharedPath.quadTo((float) b[b.length - 1].getX(),
-						(float) b[b.length - 1].getY(),
-						(float) p[n - 1].getX(), (float) p[n - 1].getY());
-			}else if (lineStyle == GraphConstants.STYLE_SPLINE && n > 2) {
-				for (double t = 0; t <= 1; t += 0.0125) {
-					double[] xy = spline.getPoint(t);
-					view.sharedPath.lineTo((float) xy[0], (float) xy[1]);
-				}
+				view.sharedPath.quadTo((float) b[1].getX(),
+						(float) b[1].getY(), (float) pe.getX(), (float) pe
+								.getY());
+//				for (int i = 2; i < n - 1; i++) {
+//					Point2D b0 = b[2 * i - 3];
+//					Point2D b1 = b[2 * i - 2];
+//					view.sharedPath.curveTo((float) b0.getX(), (float) b0
+//							.getY(), (float) b1.getX(), (float) b1.getY(),
+//							(float) p[i].getX(), (float) p[i].getY());
+//				}
+//				view.sharedPath.quadTo((float) b[b.length - 1].getX(),
+//						(float) b[b.length - 1].getY(),
+//						(float) p[n - 1].getX(), (float) p[n - 1].getY());
 			}
 			/* END */
 			else {
@@ -1040,11 +1053,11 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 		
 		List p = new Vector();
 		
-		double l = Math.sqrt(Math.pow(points[1].getX() - points[0].getX(), 2)+Math.pow(points[1].getY() - points[0].getY(), 2));
+		double l = Math.sqrt(Math.pow(points[points.length-1].getX() - points[0].getX(), 2)+Math.pow(points[points.length-1].getY() - points[0].getY(), 2));
 		int npoints = (int) l / space;
 		
-		xSpace = (int) (points[1].getX() - points[0].getX()) / npoints;
-		ySpace = (int) (points[1].getY() - points[0].getY()) / npoints;
+		xSpace = (int) (points[points.length-1].getX() - points[0].getX()) / npoints;
+		ySpace = (int) (points[points.length-1].getY() - points[0].getY()) / npoints;
 		
 		int normx = -ySpace;
 		int normy = xSpace;
@@ -1074,14 +1087,14 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 				break;}
 			
 		}
-		
-		p.add(points[1]);
+		p.remove(0);
+		//p.add(points[1]);
 		//System.out.println(p.size());
-		Point2D[] rArray = new Point2D[p.size()];
+		Point2D[] rArray = new Point2D[p.size()-1];
 		for(int i = 0; i < p.size()-1;i++){
 			rArray[i] = (Point2D)p.get(i);
 		}
-		
+		System.out.println(rArray[rArray.length-2]);
 		return rArray;
 	}
 

@@ -27,7 +27,7 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(40, 40));
 		myPoints.add(new Point2D.Double(400, 400));	
 		myPoints.add(new Point2D.Double(100, 150));
-		int style = GraphConstants.STYLE_BEZIER;
+		int style = GraphConstants.STYLE_CURVED;
 		GraphConstants.setLineStyle(edge2.getAttributes(), style);
 
 		GraphConstants.setPoints(edge2.getAttributes(), myPoints);
