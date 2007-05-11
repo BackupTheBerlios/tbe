@@ -51,11 +51,11 @@ public class Invoker {
 	}
 	
 	public boolean canUndo(){
-		return doneCommands.isEmpty();
+		return !doneCommands.isEmpty();
 	}
 	
 	public boolean canRedo(){
-		return undoneCommands.isEmpty();
+		return !undoneCommands.isEmpty();
 	}
 	 
 }

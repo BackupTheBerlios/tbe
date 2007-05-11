@@ -1,5 +1,6 @@
 package ch.tbe.gui;
 
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
@@ -13,6 +14,7 @@ import java.util.ResourceBundle;
 
 import ch.tbe.Sport;
 import ch.tbe.Field;
+import ch.tbe.*;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -32,6 +34,7 @@ public class TBE
 	private String UserEmail;
 	private final int HEIGHT = 800;
 	private final int WIDTH = 1000;
+	private Invoker invoker = Invoker.getInstance();
 
 	public TBE()
 	{
@@ -137,7 +140,19 @@ public class TBE
 		JMenuItem editInsert = new JMenuItem(menuLabels.getString("edit4"));
 		JMenuItem editUndo = new JMenuItem(menuLabels.getString("edit5"));
 		JMenuItem editRedo = new JMenuItem(menuLabels.getString("edit6"));
-
+		
+		if (this.invoker.canUndo()){
+			editUndo.setEnabled(true);	
+		}else{
+			editUndo.setEnabled(false);
+		}
+		
+		if (this.invoker.canRedo()){
+			editRedo.setEnabled(true);	
+		}else{
+			editRedo.setEnabled(false);
+		}
+		
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
 		editmenu.add(editCopy);
@@ -225,10 +240,12 @@ public class TBE
 
 	public void undo()
 	{
+		this.invoker.undo();
 	}
 
 	public void redo()
 	{
+		this.invoker.redo();
 	}
 
 	public void openSettings()
