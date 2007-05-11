@@ -7,7 +7,7 @@ public class FTPServer {
 	private String username;
 	private String password;
 	
-	public void FTPServer(String name, String host, int port, String username, String password) {
+	public FTPServer(String name, String host, int port, String username, String password) {
 		this.name = name;
 		this.host = host;
 		this.port = port;

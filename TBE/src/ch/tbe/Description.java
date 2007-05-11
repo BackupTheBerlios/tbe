@@ -1,15 +1,21 @@
 package ch.tbe;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Description {
- 
-	private ArrayList attributes;
+ 	private List<Attribute> attributes = new ArrayList<Attribute>();
 	 
-	public void addAttribute(String title, String text) {
+	public void addAttribute(Attribute attribute) {
+		this.attributes.add(attribute);
 	}
 	 
 	public void removeAttribute(Attribute attribute) {
+		this.attributes.remove(attribute);
+	}
+	
+	public List<Attribute> getAttributes(){
+		return this.attributes;
 	}
 	 
 }

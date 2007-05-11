@@ -5,7 +5,7 @@ public class Attribute {
 	private String text;
 	private String title;
 	 
-	public void Attribute(String text, String title) {
+	public Attribute(String text, String title) {
 		this.text = text;
 		this.title = title;
 	}
@@ -17,5 +17,12 @@ public class Attribute {
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
+	public String getText(){
+		return this.text;
+	}
+	
+	public String getTitle(){
+		return this.title;
+	}
 }
- 
