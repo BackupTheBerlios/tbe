@@ -38,6 +38,7 @@ import javax.swing.UIManager;
 import ch.tbe.jgraph.JGraph;
 import ch.tbe.jgraph.util.Bezier;
 import ch.tbe.jgraph.util.Curved;
+import ch.tbe.jgraph.util.DoubleLine;
 import ch.tbe.jgraph.util.Spline2D;
 
 /**
@@ -806,6 +807,24 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 				}
 
 			}
+			
+			else if (lineStyle == GraphConstants.STYLE_DOUBLELINE) {
+				DoubleLine d = new DoubleLine(p);
+				Point2D[] b = d.getPoints();
+
+				view.sharedPath.moveTo(b[0].getX(), b[0].getY());
+				int i;
+				for (i = 1; i <= n - 1; i++){
+					
+						view.sharedPath.lineTo((float) b[i].getX(), (float) b[i].getY());
+						view.sharedPath.moveTo(b[n+i-1].getX(), b[n+i-1].getY());
+						view.sharedPath.lineTo((float) b[n+i].getX(), (float) b[n+i].getY());
+						view.sharedPath.moveTo(b[i].getX(), b[i].getY());
+					
+					view.sharedPath.lineTo((float) b[i].getX(), (float) b[i].getY());
+				}
+				
+			}
 			/* END */
 			else {
 				for (int i = 1; i < n - 1; i++)
@@ -813,6 +832,7 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 							.getY());
 				view.sharedPath.lineTo((float) pe.getX(), (float) pe.getY());
 			}
+						
 			view.sharedPath.moveTo((float) pe.getX(), (float) pe.getY());
 			if (view.endShape == null && view.beginShape == null) {
 				// With no end decorations the line shape is the same as the

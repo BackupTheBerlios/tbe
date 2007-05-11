@@ -116,6 +116,10 @@ public class Spline {
 		for (int i = 0; i < N - 1; i++) {
 			a[i] = yy[i];
 			h[i] = xx[i + 1] - xx[i];
+			// h[i] is used for division later, avoid a NaN
+			if (h[i] == 0.0) {
+				h[i] = 0.01;
+			}
 		}
 		a[N - 1] = yy[N - 1];
 

@@ -19,8 +19,8 @@ public class Curved {
 		double x = end.getX()-start.getX();
 		double y = end.getY()-start.getY();
 		double l = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
-		double eVectorx = x/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
-		double eVectory = y/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+		double eVectorx = x/l;
+		double eVectory = y/l;
 		
 		int npoints = (int) l / SPACE;
 		
@@ -81,7 +81,7 @@ public class Curved {
 	/**
 	 * Returns the curved points at position i.
 	 * @param i
-	 * @return the bezier point at position i
+	 * @return the curved point at position i
 	 */
 	public Point2D getPoint(int i) {
 		return (Point2D) p.get(i);
