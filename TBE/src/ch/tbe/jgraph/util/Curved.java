@@ -9,8 +9,8 @@ import java.util.Vector;
 public class Curved {
 
 	private List p = new Vector();
-	private final int SPACE = 5;
-	private final int HEIGHT = 30;
+	private final int SPACE = 4;
+	private final int HEIGHT = 8;
 
 	
 	public Curved(Point2D start, Point2D end) {
@@ -63,8 +63,8 @@ public class Curved {
 	}
 
 	/**
-	 * Returns the calculated bezier points.
-	 * @return the calculated bezier points
+	 * Returns the calculated courved points.
+	 * @return the calculated courved points
 	 */
 	public Point2D[] getPoints() {
 		
@@ -77,7 +77,7 @@ public class Curved {
 	}
 
 	/**
-	 * Returns the number of bezier points.
+	 * Returns the number of curved points.
 	 * @return number of bezier points
 	 */
 	public int getPointCount() {
@@ -85,7 +85,7 @@ public class Curved {
 	}
 
 	/**
-	 * Returns the bezier points at position i.
+	 * Returns the curved points at position i.
 	 * @param i
 	 * @return the bezier point at position i
 	 */
