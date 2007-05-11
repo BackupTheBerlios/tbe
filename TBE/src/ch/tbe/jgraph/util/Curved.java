@@ -11,7 +11,6 @@ public class Curved {
 	private List p = new Vector();
 	private final int SPACE = 4;
 	private final int HEIGHT = 8;
-
 	
 	public Curved(Point2D start, Point2D end) {
 		
@@ -28,25 +27,20 @@ public class Curved {
 		xSpace =  (end.getX() - start.getX()) / npoints;
 		ySpace =  (end.getY() - start.getY()) / npoints;
 		
-
-		double normx = -eVectory;
-		double normy = eVectorx;
-		double yHeight = normy*HEIGHT;
-		double xHeight = normx*HEIGHT;
+		double yHeight = eVectorx*HEIGHT;
+		double xHeight = -eVectory*HEIGHT;
 		
 		p.add(start);
 		int j = 0;
 		for(int i=0; i<=npoints-1;i++){
 			
+
 			switch (j){
 			case 0:
 				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()+xSpace+xHeight,((Point2D)p.get(i)).getY()+ySpace+yHeight));
 				j++;
 				break;
 			case 1:
-				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()+xSpace-xHeight,((Point2D)p.get(i)).getY()+ySpace-yHeight));
-				j++;
-				break;
 			case 2:
 				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()+xSpace-xHeight,((Point2D)p.get(i)).getY()+ySpace-yHeight));
 				j++;
