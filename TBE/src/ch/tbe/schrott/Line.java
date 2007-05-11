@@ -75,7 +75,7 @@ public class Line extends JFrame
 				j++;
 				break;
 			case 2:
-				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()-xSpace+xHeight,((Point2D)p.get(i)).getY()+ySpace-yHeight));
+				p.add(new Point2D.Double(((Point2D)p.get(i)).getX()+xSpace-xHeight,((Point2D)p.get(i)).getY()+ySpace-yHeight));
 				j++;
 				break;
 			case 3:
@@ -86,8 +86,7 @@ public class Line extends JFrame
 		}
 		
 		p.add(points.get(1));
-		System.out.println(xHeight);
-		System.out.println(yHeight);
+
 		
 		return p;
 	}

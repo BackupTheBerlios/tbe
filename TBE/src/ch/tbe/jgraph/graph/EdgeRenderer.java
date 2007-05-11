@@ -738,11 +738,7 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 			if (lineStyle == GraphConstants.STYLE_BEZIER && n > 2) {
 				bezier = new Bezier(p);
 				p2 = bezier.getPoint(bezier.getPointCount() - 1);
-			} else if (lineStyle == GraphConstants.STYLE_CURVED) {
-				
-				//bezier = new Bezier(p);
-				//p2 = bezier.getPoint(bezier.getPointCount() - 1);
-			}
+			} 
 			else if (lineStyle == GraphConstants.STYLE_SPLINE && n > 2) {
 				spline = new Spline2D(p);
 				double[] point = spline.getPoint(0.9875);
@@ -785,15 +781,9 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 			/* END */
 			/* THIS CODE WAS ADDED BY DAVID MEIER 10/05/2007 */
 			else if (lineStyle == GraphConstants.STYLE_CURVED) {
-				//Point2D[] b = bezier.getPoints();
+
 				Point2D[] b = calculate(p[0],pe);
 				n=p.length;
-				System.out.println(p[0].getX()+":"+p[0].getY());
-				System.out.println(b[0].getX()+":"+b[0].getY());
-				System.out.println(b[1].getX()+":"+b[1].getY());
-				
-				System.out.println("p: "+p.length);//"handels"
-				System.out.println("b: "+b.length);//"
 				
 				view.sharedPath.quadTo((float) b[0].getX(),
 						(float) b[0].getY(), (float) b[1].getX(), (float) b[1]
@@ -1039,17 +1029,22 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 		int j = 0;
 		
 		List p = new Vector();
+		double x = end.getX()-start.getX();
+		double y = end.getY()-start.getY();
+		double l = Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+		double eVectorx = x/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+		double eVectory = y/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
 		
-		double l = Math.sqrt(Math.pow(end.getX() - start.getX(), 2)+Math.pow(end.getY() - start.getY(), 2));
 		int npoints = (int) l / space;
 		
 		xSpace =  (end.getX() - start.getX()) / npoints;
 		ySpace =  (end.getY() - start.getY()) / npoints;
 		
-		double normx = -ySpace;
-		double normy = xSpace;
-		double yHeight = normx/Math.sqrt(Math.pow(normx, 2)+Math.pow(normy, 2))*height;
-		double xHeight = normy/Math.sqrt(Math.pow(normx, 2)+Math.pow(normy, 2))*height;
+
+		double normx = -eVectory;
+		double normy = eVectorx;
+		double yHeight = normy*height;
+		double xHeight = normx*height;
 		
 		p.add(start);
 		
@@ -1075,13 +1070,12 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 			
 		}
 		p.remove(0);
-		//p.add(points[1]);
-		//System.out.println(p.size());
+
 		Point2D[] rArray = new Point2D[p.size()-1];
 		for(int i = 0; i < p.size()-1;i++){
 			rArray[i] = (Point2D)p.get(i);
 		}
-		//System.out.println(rArray[rArray.length-2]);
+
 		return rArray;
 	}
 
