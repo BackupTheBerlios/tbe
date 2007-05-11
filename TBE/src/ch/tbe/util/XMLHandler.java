@@ -19,7 +19,7 @@ public class XMLHandler {
  
 	public void createXML(Board board) {
 	}
-	 
+	
 	public Board openXML(String path) {
 		return null;
 	}
@@ -28,7 +28,7 @@ public class XMLHandler {
 		return null;
 	}
 	 
-	public void saveUser(String prename, String lastname, String email, String language) {
+	public void saveSettings(String prename, String lastname, String email, String language) {
 	}
 	 
 }
