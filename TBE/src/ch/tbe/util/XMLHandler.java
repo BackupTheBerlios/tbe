@@ -1,6 +1,9 @@
 package ch.tbe.util;
 
+import java.util.List;
+
 import ch.tbe.Board;
+import ch.tbe.Sport;
 
 public class XMLHandler {
 	private static XMLHandler instance = null;
@@ -18,6 +21,10 @@ public class XMLHandler {
 	}
 	 
 	public Board openXML(String path) {
+		return null;
+	}
+	
+	public Sport openSport(String path) {
 		return null;
 	}
 	 
