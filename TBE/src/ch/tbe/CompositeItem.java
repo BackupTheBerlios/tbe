@@ -1,10 +1,12 @@
 package ch.tbe;
 
-import java.util.ArrayList;
+import java.util.List;
 
-public class CompositeItem {
+import ch.tbe.framework.ItemComponent;
+
+public class CompositeItem{
  
-	public void CompositeItem(ArrayList items) {
+	public CompositeItem(List<ItemComponent> items) {
 	}
 	 
 }

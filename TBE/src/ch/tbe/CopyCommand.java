@@ -1,6 +1,8 @@
 package ch.tbe;
 
-public class CopyCommand {
+import ch.tbe.framework.*;
+
+public class CopyCommand extends Command{
  
 }
  

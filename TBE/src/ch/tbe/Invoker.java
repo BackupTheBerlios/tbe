@@ -1,6 +1,5 @@
 package ch.tbe;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -12,7 +11,7 @@ public class Invoker {
 	private Stack<List<Command>> undoneCommands = new Stack<List<Command>>();
 	private List<Command> actCommands;
 	
-	private void Invoker(){}
+	private Invoker(){}
 	
 	public static Invoker getInstance() {
 		if(instance == null) {
