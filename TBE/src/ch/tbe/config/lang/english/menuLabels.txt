@@ -1,0 +1,31 @@
+# Menutitel
+title1=File
+title2=Edit
+title3=Board
+title4=TBE
+
+# Menuitems FileMenu
+file1=New
+file2=Open
+file3=Save
+file4=Save as
+file5=Share Board
+file6=Export
+file7=Print
+file8=Close
+
+# Menuitems EditMenu
+edit1=Delete
+edit2=Cut
+edit3=Copy
+edit4=Insert
+edit5=Undo
+edit6=Redo
+
+# Menuitems BoardMenu
+board1=Change Field
+board2=Clear Board
+
+# Menuitems TBEManu
+tbe1=Settings
+tbe2=About

@@ -1,0 +1,31 @@
+# Menutitel
+title1=Datei
+title2=Bearbeiten
+title3=Board
+title4=TBE
+
+# Menuitems FileMenu
+file1=Neu
+file2=Öffnen
+file3=Speichern
+file4=Speichern als
+file5=Share Board
+file6=Export
+file7=Drucken
+file8=Schliessen
+
+# Menuitems EditMenu
+edit1=Löschen
+edit2=Ausschneiden
+edit3=Kopieren
+edit4=Einfügen
+edit5=Rückgängig
+edit6=Wiederherstellen
+
+# Menuitems BoardMenu
+board1=Spielfeld wechseln
+board2=Alles löschen
+
+# Menuitems TBEManu
+tbe1=Einstellungen
+tbe2=About
