@@ -8,7 +8,7 @@ import java.awt.geom.Point2D;
 public class DoubleLine {
 
 	private Point2D[] rArray;
-	private final int HEIGHT = 4;
+	private final int HEIGHT = 2;
 	
 	public DoubleLine(Point2D[] points) {
 		int n = points.length*2+(points.length-2)*2;
