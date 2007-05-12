@@ -11,39 +11,31 @@ public class DoubleLine {
 	private final int HEIGHT = 4;
 	
 	public DoubleLine(Point2D[] points) {
+		int n = points.length*2+(points.length-2)*2;
+		rArray = new Point2D[n];
 		
-		rArray = new Point2D[points.length*2];
-
-		double x = points[1].getX()-points[0].getX();
-		double y = points[1].getY()-points[0].getY();
-		
-		double eVectorx = x/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
-		double eVectory = y/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
-		
-		double yHeight = eVectorx*HEIGHT;
-		double xHeight = -eVectory*HEIGHT;
-		
-		rArray[0] = new Point2D.Double(points[0].getX()+xHeight,points[0].getY()+yHeight);
-		rArray[points.length] = new Point2D.Double(points[0].getX()-xHeight,points[0].getY()-yHeight);
-		
-		for(int i = 1; i < points.length-1; i++){
+		int j =0;
+		for(int i = 0; i < points.length-1; i++){
 			
-			x = points[i].getX()-points[i-1].getX() + points[i].getX()-points[i+1].getX();
-			y = points[i].getY()-points[i-1].getY() + points[i].getY()-points[i+1].getY();
-		
-			eVectorx = x/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
-			eVectory = y/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
-				
-			xHeight = eVectorx*HEIGHT;
-			yHeight = eVectory*HEIGHT;
+			double x = points[i+1].getX()-points[i].getX();
+			double y = points[i+1].getY()-points[i].getY();
 			
-			rArray[i] = new Point2D.Double(points[i].getX()+xHeight,points[i].getY()+yHeight);
-			rArray[points.length+i] = new Point2D.Double(points[i].getX()-xHeight,points[i].getY()-yHeight);
-		
+			double eVectorx = x/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+			double eVectory = y/Math.sqrt(Math.pow(x, 2)+Math.pow(y, 2));
+			
+			double yHeight = eVectorx*HEIGHT;
+			double xHeight = -eVectory*HEIGHT;
+			
+			rArray[j] = new Point2D.Double(points[i].getX()+xHeight,points[i].getY()+yHeight);
+			rArray[n/2+j] = new Point2D.Double(points[i].getX()-xHeight,points[i].getY()-yHeight);
+			j++;
+			rArray[j] = new Point2D.Double(points[i+1].getX()+xHeight,points[i+1].getY()+yHeight);
+			rArray[n/2+j] = new Point2D.Double(points[i+1].getX()-xHeight,points[i+1].getY()-yHeight);
+			j++;
+			
 		}
 		
-		rArray[points.length-1] = new Point2D.Double(points[points.length-1].getX()+xHeight,points[points.length-1].getY()+yHeight);
-		rArray[rArray.length-1] = new Point2D.Double(points[points.length-1].getX()-xHeight,points[points.length-1].getY()-yHeight);
+
 		
 	}
 
