@@ -165,8 +165,11 @@ public class GraphConstants {
 	/** Represents a curved line style */
 	public static final int STYLE_CURVED = 14;
 	
-	/** Represents a curved line style */
+	/** Represents a double line style */
 	public static final int STYLE_DOUBLELINE = 15;
+	
+	/** Represents a double bezier line style */
+	public static final int STYLE_DOUBLEBEZIER = 16;
 
 	/** Represents an bezier line style */
 	public static final int X_AXIS = 1;

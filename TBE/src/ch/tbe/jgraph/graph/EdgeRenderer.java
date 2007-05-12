@@ -815,13 +815,84 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 				
 				view.sharedPath.moveTo(b[0].getX(), b[0].getY());
 				int i;
-				for (i = 1; i < b.length/2; i++){
+				for (i = 1; i < b.length/2; i+=2){
 						view.sharedPath.lineTo((float) b[i].getX(), (float) b[i].getY());
 						view.sharedPath.moveTo(b[b.length/2+i-1].getX(), b[b.length/2+i-1].getY());
 						view.sharedPath.lineTo((float) b[b.length/2+i].getX(), (float) b[b.length/2+i].getY());
 						view.sharedPath.moveTo(b[i+1].getX(), b[i+1].getY());
-						i++;
+						
 				}
+				
+			}
+			else if (lineStyle == GraphConstants.STYLE_DOUBLEBEZIER) {
+				
+				
+				DoubleLine d = new DoubleLine(p);
+				Point2D[] dp = d.getPoints();
+				
+				Point2D[] line = new Point2D[p.length];
+				
+				line[0] = dp[0];
+				int j = 1;
+				for (int i = 1; i < dp.length/2; i+=2){
+					line[j] = dp[i];
+					j++;
+				}
+				bezier = new Bezier(line);
+				Point2D[] upper = bezier.getPoints();		
+				
+				line[0] = dp[dp.length/2];
+				j = 1;
+				for (int i = dp.length/2+1; i < dp.length; i+=2){
+					line[j] = dp[i];
+					j++;
+				}
+				bezier = new Bezier(line);
+				Point2D[] lower = bezier.getPoints();
+								
+				view.sharedPath.moveTo(dp[0].getX(), dp[0].getY());
+				view.sharedPath.quadTo((float) upper[0].getX(),
+					(float) upper[0].getY(), (float) dp[1].getX(), (float) dp[1]
+							.getY());
+				
+				view.sharedPath.moveTo(dp[dp.length/2].getX(), dp[dp.length/2].getY());
+				view.sharedPath.quadTo((float) lower[0].getX(),
+						(float) lower[0].getY(), (float) dp[dp.length/2+1].getX(), (float) dp[dp.length/2+1]
+								.getY());
+				
+				view.sharedPath.moveTo(dp[1].getX(), dp[1].getY());
+				
+				j=2;
+				for (int i = 3; i < dp.length/2-2; i+=2) {
+					Point2D b0 = upper[2 * j - 3];
+					Point2D b1 = upper[2 * j - 2];
+					view.sharedPath.curveTo((float) b0.getX(), (float) b0
+							.getY(), (float) b1.getX(), (float) b1.getY(),
+							(float) dp[i].getX(), (float) dp[i].getY());
+					j++;
+				}
+				
+				view.sharedPath.moveTo(dp[dp.length/2+1].getX(), dp[dp.length/2+1].getY());
+				
+				j=2;
+				for (int i = dp.length/2+3; i < dp.length-2; i+=2) {
+					Point2D b0 = lower[2 * j - 3];
+					Point2D b1 = lower[2 * j - 2];
+					view.sharedPath.curveTo((float) b0.getX(), (float) b0
+							.getY(), (float) b1.getX(), (float) b1.getY(),
+							(float) dp[i].getX(), (float) dp[i].getY());
+					j++;
+				}
+				
+				view.sharedPath.moveTo(dp[dp.length/2-2].getX(), dp[dp.length/2-2].getY());
+				view.sharedPath.quadTo((float) upper[upper.length-1].getX(),
+					(float) upper[upper.length-1].getY(), (float) dp[dp.length/2-1].getX(), (float) dp[dp.length/2-1]
+							.getY());
+				
+				view.sharedPath.moveTo(dp[dp.length-2].getX(), dp[dp.length-2].getY());
+				view.sharedPath.quadTo((float) lower[lower.length-1].getX(),
+						(float) lower[lower.length-1].getY(), (float) dp[dp.length-1].getX(), (float) dp[dp.length-1]
+								.getY());
 				
 			}
 			/* END */
