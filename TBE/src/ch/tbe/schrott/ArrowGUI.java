@@ -69,6 +69,7 @@ public class ArrowGUI extends JFrame
 		List myPoints4 = new Vector();
 		myPoints4.add(new Point2D.Double(150, 30));
 		myPoints4.add(new Point2D.Double(150, 90));
+		myPoints4.add(new Point2D.Double(180, 100));
 		GraphConstants.setPoints(edge4.getAttributes(), myPoints4);
 		GraphConstants.setLineEnd(edge4.getAttributes(), GraphConstants.ARROW_DOUBLELINE);
 		GraphConstants.setEndFill(edge4.getAttributes(), true);

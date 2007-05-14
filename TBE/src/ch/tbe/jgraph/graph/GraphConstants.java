@@ -152,6 +152,9 @@ public class GraphConstants {
 	 * @see #getLineEnd(Map)
 	 */
 	public static final int ARROW_DIAMOND = 9;
+	
+	public static final int ARROW_BLOCK = 17;
+
 
 	/** Represents an orthogonal line style */
 	public static final int STYLE_ORTHOGONAL = 11;

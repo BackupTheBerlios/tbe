@@ -29,8 +29,8 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(40, 140));
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
-		int style = GraphConstants.STYLE_DOUBLEBEZIER;
-		GraphConstants.setLineStyle(edge2.getAttributes(), style);
+		//int style = GraphConstants.STYLE_DOUBLELINE;
+		//GraphConstants.setLineStyle(edge2.getAttributes(), style);
 		
 		
 		//float[] dashPattern = new float[]{6,6};
@@ -38,7 +38,7 @@ public class Line extends JFrame
 		
 		
 		GraphConstants.setPoints(edge2.getAttributes(), myPoints);
-		GraphConstants.setLineEnd(edge2.getAttributes(), ARROW);
+		GraphConstants.setLineEnd(edge2.getAttributes(), GraphConstants.ARROW_BLOCK);
 		GraphConstants.setEndFill(edge2.getAttributes(), true);
 
 		
