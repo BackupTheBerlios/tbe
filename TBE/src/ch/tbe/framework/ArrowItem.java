@@ -1,7 +1,6 @@
 package ch.tbe.framework;
 
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
 import java.util.List;
 
 import ch.tbe.jgraph.graph.DefaultEdge;

@@ -20,8 +20,6 @@ public class Line extends JFrame
 		JGraph graph = new JGraph(model, view);
 		DefaultGraphCell[] cells = new DefaultGraphCell[1];
 		
-		
-		// Zelle 0: Bezier Line
 
 		List<Point2D> myPoints = new ArrayList<Point2D>();
 		myPoints.add(new Point2D.Double(40, 40));
