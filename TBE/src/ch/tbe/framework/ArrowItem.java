@@ -2,7 +2,6 @@ package ch.tbe.framework;
 
 import java.awt.geom.Point2D;
 import java.util.List;
-
 import ch.tbe.jgraph.graph.DefaultEdge;
 import ch.tbe.jgraph.graph.GraphConstants;
 
@@ -10,7 +9,7 @@ public abstract class ArrowItem extends ItemComponent
 {
 	protected DefaultEdge edge = new DefaultEdge();
 
-	public ArrowItem(List<Point2D> points)
+	protected ArrowItem(List<Point2D> points)
 	{
 		GraphConstants.setPoints(edge.getAttributes(), points);
 		GraphConstants.setLineEnd(edge.getAttributes(),
