@@ -1,6 +1,19 @@
 package ch.tbe;
 
-public class BezierSolidArrowItem {
- 
+import java.awt.geom.Point2D;
+import java.util.List;
+import ch.tbe.framework.ArrowItem;
+import ch.tbe.jgraph.graph.GraphConstants;
+
+public class BezierSolidArrowItem extends ArrowItem
+{
+
+	public BezierSolidArrowItem(List<Point2D> points)
+	{
+		super(points);
+		GraphConstants.setLineStyle(edge.getAttributes(),
+				GraphConstants.STYLE_BEZIER);
+
+	}
+
 }
- 

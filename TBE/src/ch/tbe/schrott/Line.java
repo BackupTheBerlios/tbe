@@ -7,6 +7,9 @@ import java.util.Vector;
 import javax.swing.*;
 
 import ch.tbe.BezierDashedArrowItem;
+import ch.tbe.BezierDoubleArrowItem;
+import ch.tbe.BezierSolidArrowItem;
+import ch.tbe.PolyCurvedArrowItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.*;
 import ch.tbe.jgraph.graph.*;
@@ -29,7 +32,7 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		ArrowItem edge = new BezierDashedArrowItem(myPoints);
+		ArrowItem edge = new PolyCurvedArrowItem(myPoints);
 		cells[0] = edge.getArrow();
 
 		

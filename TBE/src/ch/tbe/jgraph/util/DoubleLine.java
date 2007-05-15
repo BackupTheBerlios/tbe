@@ -4,7 +4,11 @@ package ch.tbe.jgraph.util;
 import java.awt.geom.Point2D;
 
 
-
+/**
+ * 
+ * @author David Meier 10/05/2007
+ *
+ */
 public class DoubleLine {
 
 	private Point2D[] rArray;

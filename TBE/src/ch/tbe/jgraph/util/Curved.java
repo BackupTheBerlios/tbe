@@ -5,7 +5,11 @@ import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Vector;
 
-
+/**
+ * 
+ * @author David Meier 10/05/2007
+ *
+ */
 public class Curved {
 
 	private List p = new Vector();

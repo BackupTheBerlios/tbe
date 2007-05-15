@@ -1112,7 +1112,9 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 						(float) (dst.getY() + ay / 3 - ax / 2));
 				path.lineTo((float) (dst.getX() + ax / 3 - ay / 2),
 						(float) (dst.getY() + ay / 3 + ax / 2));
-			} else if (style == GraphConstants.ARROW_BLOCK)
+			} 
+			/* THIS CODE WAS ADDED BY DAVID MEIER 10/05/2007 */
+			else if (style == GraphConstants.ARROW_BLOCK)
 			{
 				double dx = dst.getX() - src.getX();
 				double dy = dst.getY() - src.getY();
@@ -1129,7 +1131,7 @@ public class EdgeRenderer extends JComponent implements CellViewRenderer,
 						(float) (dst.getY() + ay));
 				path.lineTo((float) (dst.getX() + ax + (dx / d) * size),
 						(float) (dst.getY() + ay + (dy / d) * size));
-
+				/* END */
 			}
 			return path;
 		}
