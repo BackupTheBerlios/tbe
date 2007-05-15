@@ -1,11 +1,8 @@
 package ch.tbe.schrott;
-import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.*;
-
 import ch.tbe.BezierDashedArrowItem;
 import ch.tbe.BezierDoubleArrowItem;
 import ch.tbe.BezierSolidArrowItem;
@@ -38,7 +35,7 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		ArrowItem edge = new PolySolidBlockItem(myPoints);
+		ArrowItem edge = new BezierSolidArrowItem(myPoints);
 		cells[0] = edge.getArrow();
 
 		
