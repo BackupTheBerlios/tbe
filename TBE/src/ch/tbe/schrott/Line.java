@@ -10,6 +10,12 @@ import ch.tbe.BezierDashedArrowItem;
 import ch.tbe.BezierDoubleArrowItem;
 import ch.tbe.BezierSolidArrowItem;
 import ch.tbe.PolyCurvedArrowItem;
+import ch.tbe.PolyCurvedBlockItem;
+import ch.tbe.PolyDashedArrowItem;
+import ch.tbe.PolyDashedBlockItem;
+import ch.tbe.PolyDoubleArrowItem;
+import ch.tbe.PolySolidArrowItem;
+import ch.tbe.PolySolidBlockItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.*;
 import ch.tbe.jgraph.graph.*;
@@ -32,7 +38,7 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		ArrowItem edge = new PolyCurvedArrowItem(myPoints);
+		ArrowItem edge = new PolySolidBlockItem(myPoints);
 		cells[0] = edge.getArrow();
 
 		
