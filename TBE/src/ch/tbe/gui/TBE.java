@@ -280,9 +280,18 @@ public class TBE
 	private JMenu createBoardMenu()
 	{
 		JMenu boardmenu = new JMenu(menuLabels.getString("title3"));
-
+		
 		JMenuItem boardClear = new JMenuItem(menuLabels.getString("board2"));
-
+		class boardClearListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				clear();
+			}
+		}
+		boardClear.addMouseListener(new boardClearListener());
+		
 		boardmenu.add(createFieldMenu());
 		boardmenu.add(boardClear);
 
@@ -294,10 +303,40 @@ public class TBE
 		JMenu boardChangeField = new JMenu(menuLabels.getString("board1"));
 		// TODO: Verfügbare Fields der Sportart dynamisch auslesen
 		JMenuItem field1 = new JMenuItem("Leeres Spielfeld");
-		boardChangeField.add(field1);
+		class field1Listener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				// TODO
+			}
+		}
+		field1.addMouseListener(new field1Listener());		
+		
 		JMenuItem field2 = new JMenuItem("Halbes Feld");
-		boardChangeField.add(field2);
+		class field2Listener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				//TODO
+			}
+		}
+		field2.addMouseListener(new field2Listener());
+		
 		JMenuItem field3 = new JMenuItem("Torraum");
+		class field3Listener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				// TODO
+			}
+		}
+		field3.addMouseListener(new field3Listener());
+		
+		boardChangeField.add(field2);
+		boardChangeField.add(field1);
 		boardChangeField.add(field3);
 		return boardChangeField;
 	}
@@ -305,9 +344,11 @@ public class TBE
 	private JMenu createTBEMenu()
 	{
 		JMenu tbemenu = new JMenu(menuLabels.getString("title4"));
+		
 		JMenuItem tbeSettings = new JMenuItem(menuLabels.getString("tbe1"));
+		
 		JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
-
+		
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
 
