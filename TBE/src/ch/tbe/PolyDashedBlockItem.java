@@ -13,8 +13,8 @@ public class PolyDashedBlockItem extends ArrowItem
 	public PolyDashedBlockItem(List<Point2D> points)
 	{
 		super(points);
-		GraphConstants.setLineEnd(edge.getAttributes(), GraphConstants.ARROW_BLOCK);
-		GraphConstants.setDashPattern(edge.getAttributes(), DASH);
+		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_BLOCK);
+		GraphConstants.setDashPattern(this.getAttributes(), DASH);
 	}
 
 }

@@ -35,10 +35,8 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		ArrowItem edge = new BezierSolidArrowItem(myPoints);
-		cells[0] = edge;
-
-		
+		cells[0] = new BezierSolidArrowItem(myPoints);
+			
 		graph.getGraphLayoutCache().insert(cells);
 		JFrame frame = new JFrame();
 		frame.add(new JScrollPane(graph));

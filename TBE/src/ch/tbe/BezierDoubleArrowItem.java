@@ -11,7 +11,7 @@ public class BezierDoubleArrowItem extends ArrowItem
 	public BezierDoubleArrowItem(List<Point2D> points)
 	{
 		super(points);
-		GraphConstants.setLineStyle(edge.getAttributes(),
+		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_DOUBLEBEZIER);
 	}
 

@@ -1,8 +1,10 @@
 package ch.tbe.framework;
 
-import ch.tbe.jgraph.graph.DefaultGraphCell;
+import ch.tbe.jgraph.graph.DefaultEdge;
 
-public abstract class ItemComponent extends DefaultGraphCell {
+
+
+public abstract class ItemComponent extends DefaultEdge{
 	private int x,y;
  
 	public void ItemComponent(int x, int y) {

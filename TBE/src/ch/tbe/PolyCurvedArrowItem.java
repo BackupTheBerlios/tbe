@@ -12,7 +12,7 @@ public class PolyCurvedArrowItem extends ArrowItem
 	
 	{
 		super(points);
-		GraphConstants.setLineStyle(edge.getAttributes(),
+		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_CURVED);
 	}
 

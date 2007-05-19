@@ -12,8 +12,8 @@ public class PolyCurvedBlockItem extends ArrowItem
 	
 	{
 		super(points);
-		GraphConstants.setLineEnd(edge.getAttributes(), GraphConstants.ARROW_BLOCK);
-		GraphConstants.setLineStyle(edge.getAttributes(),
+		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_BLOCK);
+		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_CURVED);
 	}
 

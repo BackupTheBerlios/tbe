@@ -13,9 +13,9 @@ public class BezierDashedArrowItem extends ArrowItem
 	public BezierDashedArrowItem(List<Point2D> points)
 	{
 		super(points);
-		GraphConstants.setLineStyle(edge.getAttributes(),
+		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_BEZIER);
-		GraphConstants.setDashPattern(edge.getAttributes(), DASH);
+		GraphConstants.setDashPattern(this.getAttributes(), DASH);
 	}
 
 }

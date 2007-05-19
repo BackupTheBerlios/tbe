@@ -60,7 +60,7 @@ public class WorkingView extends JPanel implements View
 
 		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
 		for(int i = 0;i < items.size(); i++){
-			cells[i] = (DefaultEdge) items.get(i);
+			cells[i] = items.get(i);
 		}
 
 		graph.getGraphLayoutCache().insert(cells);

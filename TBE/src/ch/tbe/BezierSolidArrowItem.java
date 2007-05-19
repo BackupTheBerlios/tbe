@@ -11,7 +11,7 @@ public class BezierSolidArrowItem extends ArrowItem
 	public BezierSolidArrowItem(List<Point2D> points)
 	{
 		super(points);
-		GraphConstants.setLineStyle(edge.getAttributes(),
+		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_BEZIER);
 
 	}

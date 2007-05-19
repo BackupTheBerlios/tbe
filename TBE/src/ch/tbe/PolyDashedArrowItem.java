@@ -13,7 +13,7 @@ public class PolyDashedArrowItem extends ArrowItem
 	public PolyDashedArrowItem(List<Point2D> points)
 	{
 		super(points);
-		GraphConstants.setDashPattern(edge.getAttributes(), DASH);
+		GraphConstants.setDashPattern(this.getAttributes(), DASH);
 	}
 
 }

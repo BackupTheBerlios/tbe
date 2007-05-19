@@ -24,8 +24,7 @@ public class Board {
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		ItemComponent edge = new BezierSolidArrowItem(myPoints);
-		items.add(edge);
+		items.add(new BezierSolidArrowItem(myPoints));
 		// END
 	}
 	
