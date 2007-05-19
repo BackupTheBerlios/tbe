@@ -20,10 +20,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import ch.tbe.Sport;
 
-public class WorkingView extends JComponent implements View
+public class WorkingView extends JPanel implements View
 {
 
 	private Invoker invoker;
@@ -36,7 +38,6 @@ public class WorkingView extends JComponent implements View
 
 	private Attribute currentAttribute;
 
-	private JGraph graph;
 
 	public WorkingView(Board board)
 	{
@@ -49,7 +50,7 @@ public class WorkingView extends JComponent implements View
 		
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,	new	DefaultCellViewFactory());
-		graph = new JGraph(model, view);
+		JGraph graph = new JGraph(model, view);
 		
 		//TODO this is only for testing (by David Meier)
 		
@@ -62,6 +63,8 @@ public class WorkingView extends JComponent implements View
 		}
 
 		graph.getGraphLayoutCache().insert(cells);
+		this.add(new JScrollPane(graph));
+		
 		//END
 	}
 
@@ -138,9 +141,5 @@ public class WorkingView extends JComponent implements View
 	{
 	}
 
-	public JGraph getGraph()
-	{
-		return graph;
-	}
 
 }

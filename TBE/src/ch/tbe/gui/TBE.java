@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class TBE
@@ -76,7 +77,7 @@ public class TBE
 		
 		//TODO this is only for testing (by David Meier)
 		view = new WorkingView(new Sport());
-		frame.add(new JScrollPane(((WorkingView) view).getGraph()));
+		frame.add((JPanel)view);
 		//END
 		
 		//frame.add(new WelcomeView(this.getSports()), constraints);
