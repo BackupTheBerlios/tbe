@@ -11,11 +11,16 @@ import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import ch.tbe.*;
+import ch.tbe.framework.View;
+
 import java.util.List;
+
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
 
 public class TBE
 {
@@ -28,6 +33,7 @@ public class TBE
 	private final int HEIGHT = 800;
 	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
+	private View view = null;
 
 	public TBE()
 	{
@@ -66,7 +72,14 @@ public class TBE
 		
 		frame.setLayout(gridbag);
 		// TODO: check ob FirstStart oder nicht!
-		frame.add(new WelcomeView(this.getSports()), constraints);
+		
+		
+		//TODO this is only for testing (by David Meier)
+		view = new WorkingView(new Sport());
+		frame.add(new JScrollPane(((WorkingView) view).getGraph()));
+		//END
+		
+		//frame.add(new WelcomeView(this.getSports()), constraints);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}

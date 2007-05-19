@@ -2,88 +2,145 @@ package ch.tbe.gui;
 
 import ch.tbe.Invoker;
 import ch.tbe.Board;
+import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
+import ch.tbe.framework.View;
+import ch.tbe.jgraph.JGraph;
+import ch.tbe.jgraph.graph.DefaultCellViewFactory;
+import ch.tbe.jgraph.graph.DefaultGraphCell;
+import ch.tbe.jgraph.graph.DefaultGraphModel;
+import ch.tbe.jgraph.graph.GraphLayoutCache;
+import ch.tbe.jgraph.graph.GraphModel;
 import ch.tbe.Attribute;
 import ch.tbe.Field;
+
+import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JComponent;
+
 import ch.tbe.Sport;
 
-public class WorkingView {
- 
+public class WorkingView extends JComponent implements View
+{
+
 	private Invoker invoker;
-	 
+
 	private Board board;
-	 
+
 	private Tool currentTool;
-	 
+
 	private ItemComponent currentItem;
-	 
+
 	private Attribute currentAttribute;
-	 
-	public Board getBoard() {
+
+	private JGraph graph;
+
+	public WorkingView(Board board)
+	{
+	}
+
+	public WorkingView(Sport sport)
+	{
+
+		
+		
+		GraphModel model = new DefaultGraphModel();
+		GraphLayoutCache view = new GraphLayoutCache(model,	new	DefaultCellViewFactory());
+		graph = new JGraph(model, view);
+		
+		//TODO this is only for testing (by David Meier)
+		
+		this.board = new Board(new Field("",""));
+		List<ItemComponent> items = board.getItems();
+
+		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
+		for(int i = 0;i < items.size(); i++){
+			cells[i] = ((ArrowItem)items.get(i)).getArrow();
+		}
+
+		graph.getGraphLayoutCache().insert(cells);
+		//END
+	}
+
+	public Board getBoard()
+	{
 		return null;
 	}
-	 
-	public void changeField(Field field) {
+
+	public void changeField(Field field)
+	{
 	}
-	 
-	public void clear() {
+
+	public void clear()
+	{
 	}
-	 
-	public void select(ItemComponent item) {
+
+	public void select(ItemComponent item)
+	{
 	}
-	 
-	public void resize(ArrayList points) {
+
+	public void resize(ArrayList points)
+	{
 	}
-	 
-	public void cut() {
+
+	public void cut()
+	{
 	}
-	 
-	public void paste() {
+
+	public void paste()
+	{
 	}
-	 
-	public void undo() {
+
+	public void undo()
+	{
 	}
-	 
-	public void redo() {
+
+	public void redo()
+	{
 	}
-	 
-	public void selectAttribute(Attribute attribute) {
+
+	public void selectAttribute(Attribute attribute)
+	{
 	}
-	 
-	public void saveAttribute(String title, String text) {
+
+	public void saveAttribute(String title, String text)
+	{
 	}
-	 
-	public void setText(String text) {
+
+	public void setText(String text)
+	{
 	}
-	 
-	public void move(int xdiff, int ydiff) {
+
+	public void move(int xdiff, int ydiff)
+	{
 	}
-	 
-	public void delete() {
+
+	public void delete()
+	{
 	}
-	 
-	public void WorkingView(Sport sport) {
+
+	public void setCurrentTool(Tool tool)
+	{
 	}
-	 
-	public void WorkingView(Board board) {
+
+	public void draw(int x, int y)
+	{
 	}
-	 
-	public void setCurrentTool(Tool tool) {
+
+	public void addAttribute(String title, String text)
+	{
 	}
-	 
-	public void draw(int x, int y) {
+
+	public void removeAttribute(Attribute attribute)
+	{
 	}
-	 
-	public void addAttribute(String title, String text) {
+
+	public JGraph getGraph()
+	{
+		return graph;
 	}
-	 
-	public void removeAttribute(Attribute attribute) {
-	}
-	 
-	public void Message14() {
-	}
-	 
+
 }
- 
