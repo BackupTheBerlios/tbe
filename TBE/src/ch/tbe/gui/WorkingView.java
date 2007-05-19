@@ -8,6 +8,7 @@ import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
 import ch.tbe.jgraph.JGraph;
 import ch.tbe.jgraph.graph.DefaultCellViewFactory;
+import ch.tbe.jgraph.graph.DefaultEdge;
 import ch.tbe.jgraph.graph.DefaultGraphCell;
 import ch.tbe.jgraph.graph.DefaultGraphModel;
 import ch.tbe.jgraph.graph.GraphLayoutCache;
@@ -59,7 +60,7 @@ public class WorkingView extends JPanel implements View
 
 		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
 		for(int i = 0;i < items.size(); i++){
-			cells[i] = ((ArrowItem)items.get(i)).getArrow();
+			cells[i] = (DefaultEdge) items.get(i);
 		}
 
 		graph.getGraphLayoutCache().insert(cells);

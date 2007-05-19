@@ -3,10 +3,8 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
-
-import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ItemComponent;
-import ch.tbe.framework.View;
+
 
 public class Board {
  
@@ -26,7 +24,7 @@ public class Board {
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		ArrowItem edge = new BezierSolidArrowItem(myPoints);
+		ItemComponent edge = new BezierSolidArrowItem(myPoints);
 		items.add(edge);
 		// END
 	}

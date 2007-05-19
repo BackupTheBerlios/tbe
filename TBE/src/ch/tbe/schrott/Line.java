@@ -36,7 +36,7 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(300, 150));
 
 		ArrowItem edge = new BezierSolidArrowItem(myPoints);
-		cells[0] = edge.getArrow();
+		cells[0] = edge;
 
 		
 		graph.getGraphLayoutCache().insert(cells);
