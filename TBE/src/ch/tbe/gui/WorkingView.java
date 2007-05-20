@@ -28,17 +28,11 @@ import ch.tbe.Sport;
 
 public class WorkingView extends JPanel implements View
 {
-
 	private Invoker invoker;
-
 	private Board board;
-
 	private Tool currentTool;
-
 	private ItemComponent currentItem;
-
 	private Attribute currentAttribute;
-
 
 	public WorkingView(Board board)
 	{
@@ -46,27 +40,26 @@ public class WorkingView extends JPanel implements View
 
 	public WorkingView(Sport sport)
 	{
-
-		
-		
 		GraphModel model = new DefaultGraphModel();
-		GraphLayoutCache view = new GraphLayoutCache(model,	new	DefaultCellViewFactory());
+		GraphLayoutCache view = new GraphLayoutCache(model, new DefaultCellViewFactory());
 		JGraph graph = new JGraph(model, view);
 		
-		//TODO this is only for testing (by David Meier)
 		
-		this.board = new Board(new Field("",""));
+		// TODO this is only for testing (by David Meier)
+		
+		this.board = new Board(new Field("", ""));
 		List<ItemComponent> items = board.getItems();
-
+		
 		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
-		for(int i = 0;i < items.size(); i++){
+		for (int i = 0; i < items.size(); i++)
+		{
 			cells[i] = items.get(i);
 		}
-
+		
 		graph.getGraphLayoutCache().insert(cells);
 		this.add(new JScrollPane(graph));
-		
-		//END
+
+		// END
 	}
 
 	public Board getBoard()
@@ -141,6 +134,5 @@ public class WorkingView extends JPanel implements View
 	public void removeAttribute(Attribute attribute)
 	{
 	}
-
 
 }

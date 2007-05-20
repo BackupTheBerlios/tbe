@@ -57,13 +57,13 @@ public class TBE
 			System.out.println("LanguageFile for MenuItems not found !");
 		} catch (IOException ioe)
 		{
-			System.out.println("Error with ResourceBundle !");
+			System.out.println("Error with ResourceBundle MenuLabels!");
 		}
 
 		JFrame frame = new JFrame("TBE - Tactic Board Editor");
 		frame.setSize(this.WIDTH, this.HEIGHT);
 		frame.setJMenuBar(createJMenuBar());
-		
+
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.gridheight = 1;
@@ -72,15 +72,16 @@ public class TBE
 		constraints.fill = GridBagConstraints.NONE;
 		
 		frame.setLayout(gridbag);
+		
 		// TODO: check ob FirstStart oder nicht!
+		// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 		
 		
 		//TODO this is only for testing (by David Meier)
-		view = new WorkingView(new Sport());
-		frame.add((JPanel)view);
+		//view = new WorkingView(new Sport());
+		//frame.add((JPanel) view);
 		//END
-		
-		//frame.add(new WelcomeView(this.getSports()), constraints);
+		frame.add(new WelcomeView(this.getSports(), lang));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
@@ -438,6 +439,11 @@ public class TBE
 	public void setUser(String prename, String lastname, String email,
 			String language)
 	{
+	}
+	
+	public String getLang()
+	{
+		return lang;
 	}
 
 	public static void main(String[] args)

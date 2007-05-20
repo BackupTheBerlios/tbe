@@ -5,21 +5,21 @@ import java.util.ArrayList;
 import java.util.List;
 import ch.tbe.framework.ItemComponent;
 
-
-public class Board {
- 
+public class Board
+{
 	private List<ItemComponent> items = new ArrayList<ItemComponent>();
 	private String path;
 	private Field field;
 	private Description description;
 
-	public Board(Field field) {
+	public Board(Field field)
+	{
 		this.field = field;
-		
-		//TODO this is only for testing (by David Meier)
+
+		// TODO this is only for testing (by David Meier)
 		List<Point2D> myPoints = new ArrayList<Point2D>();
 		myPoints.add(new Point2D.Double(40, 40));
-		myPoints.add(new Point2D.Double(140, 100));	
+		myPoints.add(new Point2D.Double(140, 100));
 		myPoints.add(new Point2D.Double(40, 140));
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
@@ -27,32 +27,38 @@ public class Board {
 		items.add(new BezierSolidArrowItem(myPoints));
 		// END
 	}
-	
-	public void clear() {
+
+	public void clear()
+	{
 	}
 
-	public List<ItemComponent> getItems() {
+	public List<ItemComponent> getItems()
+	{
 		return this.items;
 	}
-	 
-	public void setPath(String path) {
+
+	public void setPath(String path)
+	{
 		this.path = path;
 	}
-	 
-	public void setField(Field field) {
+
+	public void setField(Field field)
+	{
 		this.field = field;
 	}
-	 
-	public void addAttribute(String title, String text) {
+
+	public void addAttribute(String title, String text)
+	{
 		this.description.addAttribute(new Attribute(title, text));
 	}
-	 
-	public void removeAttribute(Attribute attribute) {
+
+	public void removeAttribute(Attribute attribute)
+	{
 		this.description.removeAttribute(attribute);
 	}
-	
-	public Description getDescription(){
+
+	public Description getDescription()
+	{
 		return this.description;
 	}
 }
- 
