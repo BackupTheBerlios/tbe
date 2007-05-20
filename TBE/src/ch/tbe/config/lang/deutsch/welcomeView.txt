@@ -1,0 +1,17 @@
+# Title Welcome
+welcome = Herzlich Willkommen zum Tactic Board Editor
+
+# Recently Files Open
+open = Datei öffnen
+
+# New Board
+new = Neue Datei
+
+# Choose recently used File
+recently = Zuletzt geöffnete Dateien
+
+# Choose Sport
+sport = Sport auswählen
+
+# more
+more = mehr

@@ -30,7 +30,7 @@ public class WelcomeView extends JPanel implements View
 	public WelcomeView(ArrayList sports, String lang) 
 	{
 		welcomeViewLabels = getResourceBundle(lang);
-		//createPanel();
+		createPanel();
 	}
 	 
 	public void getRecently() 
@@ -59,7 +59,7 @@ public class WelcomeView extends JPanel implements View
 	
 	private void createPanel()
 	{
-		this.setPreferredSize(new Dimension(600, 400));
+		this.setPreferredSize(new Dimension(700, 500));
 		this.setBackground(Color.WHITE);
 		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		
