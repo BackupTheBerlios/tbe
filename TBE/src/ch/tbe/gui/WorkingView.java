@@ -28,6 +28,7 @@ import ch.tbe.Sport;
 
 public class WorkingView extends JPanel implements View
 {
+	private TBE tbe;
 	private Invoker invoker;
 	private Board board;
 	private Tool currentTool;
@@ -38,12 +39,12 @@ public class WorkingView extends JPanel implements View
 	{
 	}
 
-	public WorkingView(Sport sport)
-	{
+	public WorkingView(TBE tbe, Sport sport)
+	{	
+		this.tbe = tbe;
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model, new DefaultCellViewFactory());
 		JGraph graph = new JGraph(model, view);
-		
 		
 		// TODO this is only for testing (by David Meier)
 		

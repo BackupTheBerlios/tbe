@@ -13,6 +13,7 @@ file5=Share Board
 file6=Export
 file7=Print
 file8=Close
+file9=Quit TBE
 
 # Menuitems EditMenu
 edit1=Delete
@@ -26,6 +27,6 @@ edit6=Redo
 board1=Change Field
 board2=Clear Board
 
-# Menuitems TBEManu
+# Menuitems TBEMenu
 tbe1=Settings
 tbe2=About

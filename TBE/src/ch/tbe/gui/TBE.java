@@ -34,7 +34,9 @@ public class TBE
 	private final int HEIGHT = 800;
 	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
-	private View view = null;
+	private JFrame frame;
+	private WelcomeView welcomeView;
+	private WorkingView workingView;
 
 	public TBE()
 	{
@@ -60,7 +62,7 @@ public class TBE
 			System.out.println("Error with ResourceBundle MenuLabels!");
 		}
 
-		JFrame frame = new JFrame("TBE - Tactic Board Editor");
+		frame = new JFrame("TBE - Tactic Board Editor");
 		frame.setSize(this.WIDTH, this.HEIGHT);
 		frame.setJMenuBar(createJMenuBar());
 
@@ -75,13 +77,8 @@ public class TBE
 		
 		// TODO: check ob FirstStart oder nicht!
 		// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
+		this.openWelcomeView();
 		
-		
-		//TODO this is only for testing (by David Meier)
-		//view = new WorkingView(new Sport());
-		//frame.add((JPanel) view);
-		//END
-		frame.add(new WelcomeView(this.getSports(), lang));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
@@ -188,6 +185,18 @@ public class TBE
 		}
 		fileClose.addMouseListener(new fileCloseListener());
 		
+		JMenuItem fileQuit = new JMenuItem(menuLabels.getString("file9"));
+		class fileQuitListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				// TODO: save abfragen
+				System.exit(0);
+			}
+		}
+		fileQuit.addMouseListener(new fileQuitListener());
+		
 		filemenu.add(fileNew);
 		filemenu.add(fileOpen);
 		filemenu.add(fileSave);
@@ -196,6 +205,7 @@ public class TBE
 		filemenu.add(fileExport);
 		filemenu.add(filePrint);
 		filemenu.add(fileClose);
+		filemenu.add(fileQuit);
 
 		return filemenu;
 	}
@@ -369,7 +379,24 @@ public class TBE
 
 		return tbemenu;
 	}
-
+	
+	public void openWelcomeView()
+	{
+		welcomeView = new WelcomeView(this, this.getSports(), lang);
+		frame.add(welcomeView);
+	}
+	
+	public void openWorkingView(String path)
+	{
+		if(welcomeView != null)
+			frame.remove(welcomeView);
+		frame.repaint();
+		//TODO this is only for testing (by David Meier)
+		workingView = new WorkingView(this, new Sport());
+		frame.add(workingView);
+		//END
+	}
+	
 	public ArrayList getSports()
 	{
 		return sports;

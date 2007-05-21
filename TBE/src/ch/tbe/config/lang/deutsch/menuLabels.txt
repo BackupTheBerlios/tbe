@@ -13,6 +13,7 @@ file5=Share Board
 file6=Export
 file7=Drucken
 file8=Schliessen
+file9=TBE Beenden
 
 # Menuitems EditMenu
 edit1=Löschen
@@ -26,6 +27,6 @@ edit6=Wiederherstellen
 board1=Spielfeld wechseln
 board2=Alles löschen
 
-# Menuitems TBEManu
+# Menuitems TBEMenu
 tbe1=Einstellungen
 tbe2=About

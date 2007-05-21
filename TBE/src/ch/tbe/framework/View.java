@@ -1,6 +1,7 @@
 package ch.tbe.framework;
 
-public interface View {
+public interface View
+{
  
 }
  
