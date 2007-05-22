@@ -1,5 +1,4 @@
 package ch.tbe.schrott;
-import java.awt.*;
 import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +23,12 @@ public class ArrowGUI extends JFrame
 		Icon myIcon = new ImageIcon("markierung.gif");
 		GraphConstants.setIcon(cells[0].getAttributes(), myIcon);
 		GraphConstants.setOpaque(cells[0].getAttributes(), true);
+		
 		// Zelle 1: T
 		cells[1] = new DefaultGraphCell(new String("T"));
 		GraphConstants.setBounds(cells[1].getAttributes(), new Rectangle2D.Double(140,140,20,20));
-		GraphConstants.setOpaque(cells[1].getAttributes(), true);
+		//GraphConstants.setOpaque(cells[1].getAttributes(), true);
+
 		// Zelle 2: klassischer Pfeil
 		DefaultEdge edge1 = new DefaultEdge();
 		cells[2] = edge1;

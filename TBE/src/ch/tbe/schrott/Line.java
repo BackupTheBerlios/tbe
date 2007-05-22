@@ -13,6 +13,7 @@ import ch.tbe.PolyDashedBlockItem;
 import ch.tbe.PolyDoubleArrowItem;
 import ch.tbe.PolySolidArrowItem;
 import ch.tbe.PolySolidBlockItem;
+import ch.tbe.TextBoxItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.*;
 import ch.tbe.jgraph.graph.*;
@@ -25,7 +26,7 @@ public class Line extends JFrame
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,	new	DefaultCellViewFactory());
 		JGraph graph = new JGraph(model, view);
-		DefaultGraphCell[] cells = new DefaultGraphCell[1];
+		DefaultGraphCell[] cells = new DefaultGraphCell[2];
 		
 
 		List<Point2D> myPoints = new ArrayList<Point2D>();
@@ -36,6 +37,8 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(300, 150));
 
 		cells[0] = new BezierSolidArrowItem(myPoints);
+		
+		cells[1] = new TextBoxItem(new Rectangle2D.Double(100,100,120,120));
 			
 		graph.getGraphLayoutCache().insert(cells);
 		JFrame frame = new JFrame();

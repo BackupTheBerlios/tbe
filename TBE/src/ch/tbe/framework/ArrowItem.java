@@ -6,7 +6,7 @@ import java.util.List;
 import ch.tbe.jgraph.graph.DefaultEdge;
 import ch.tbe.jgraph.graph.GraphConstants;
 
-public abstract class ArrowItem extends ItemComponent
+public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 {
 
 	protected ArrowItem(List<Point2D> points)

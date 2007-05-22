@@ -1,6 +1,7 @@
 package ch.tbe;
 
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 import ch.tbe.framework.ItemComponent;
@@ -24,7 +25,9 @@ public class Board
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		items.add(new BezierSolidArrowItem(myPoints));
+		items.add((ItemComponent)new BezierSolidArrowItem(myPoints));
+		
+		items.add((ItemComponent)new TextBoxItem(new Rectangle2D.Double(100,100,50,50)));
 		// END
 	}
 

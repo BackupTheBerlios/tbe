@@ -2,25 +2,19 @@ package ch.tbe.gui;
 
 import ch.tbe.Invoker;
 import ch.tbe.Board;
-import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
 import ch.tbe.jgraph.JGraph;
 import ch.tbe.jgraph.graph.DefaultCellViewFactory;
-import ch.tbe.jgraph.graph.DefaultEdge;
 import ch.tbe.jgraph.graph.DefaultGraphCell;
 import ch.tbe.jgraph.graph.DefaultGraphModel;
 import ch.tbe.jgraph.graph.GraphLayoutCache;
 import ch.tbe.jgraph.graph.GraphModel;
 import ch.tbe.Attribute;
 import ch.tbe.Field;
-
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -54,7 +48,7 @@ public class WorkingView extends JPanel implements View
 		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
 		for (int i = 0; i < items.size(); i++)
 		{
-			cells[i] = items.get(i);
+			cells[i] = (DefaultGraphCell) items.get(i);
 		}
 		
 		graph.getGraphLayoutCache().insert(cells);
