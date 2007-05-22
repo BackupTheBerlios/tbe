@@ -5,7 +5,7 @@ import ch.tbe.Board;
 public class PrintHandler {
 	private static PrintHandler instance = null;
 	 
-	private void PrintHandler(){}
+	private PrintHandler(){}
 	
 	public static PrintHandler getInstance() {
 	      if(instance == null) {

@@ -5,7 +5,7 @@ import java.util.List;
 public class FTPHandler {
 	private static FTPHandler instance = null;
  
-	private void FTPHandler(){}
+	private FTPHandler(){}
 	
 	public static FTPHandler getInstance() {
 		if(instance == null) {

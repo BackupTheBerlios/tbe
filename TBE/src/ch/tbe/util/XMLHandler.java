@@ -8,7 +8,7 @@ import ch.tbe.Sport;
 public class XMLHandler {
 	private static XMLHandler instance = null;
 	 
-	private void XMLHandler(){}
+	private XMLHandler(){}
 	
 	public static XMLHandler getInstance() {
 	      if(instance == null) {

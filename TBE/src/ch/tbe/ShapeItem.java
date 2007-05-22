@@ -1,5 +1,6 @@
 package ch.tbe;
 
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.Icon;
@@ -10,9 +11,10 @@ import ch.tbe.jgraph.graph.GraphConstants;
 public class ShapeItem extends DefaultGraphCell implements ItemComponent
 {
 
-	public ShapeItem(Icon icon, Rectangle2D.Double rect)
+	public ShapeItem(Icon icon, Point2D.Double p)
 	{
-		GraphConstants.setBounds(this.getAttributes(), rect);
+
+		GraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p.getX(),p.getY(),icon.getIconWidth(),icon.getIconHeight()));
 		GraphConstants.setIcon(this.getAttributes(), icon);
 	}
 }
