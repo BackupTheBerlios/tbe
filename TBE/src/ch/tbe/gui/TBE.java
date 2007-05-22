@@ -1,5 +1,6 @@
 package ch.tbe.gui;
 
+import java.awt.AWTException;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
@@ -45,6 +46,15 @@ public class TBE
 
 	private void init()
 	{
+		SplashScreen splashScreen = null;
+		try
+		{
+			splashScreen = new SplashScreen();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
 		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
 		// PropertiesFile ausgelesen
 		lang = "deutsch";
@@ -72,14 +82,15 @@ public class TBE
 		constraints.gridwidth = 1;
 		constraints.anchor = GridBagConstraints.CENTER;
 		constraints.fill = GridBagConstraints.NONE;
-		
+
 		frame.setLayout(gridbag);
-		
+
 		// TODO: check ob FirstStart oder nicht!
 		// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 		this.openWelcomeView();
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		splashScreen.blendOut();
 		frame.setVisible(true);
 	}
 
@@ -96,7 +107,7 @@ public class TBE
 	private JMenu createFileMenu()
 	{
 		JMenu filemenu = new JMenu(menuLabels.getString("title1"));
-		
+
 		JMenuItem fileNew = new JMenuItem(menuLabels.getString("file1"));
 		class fileNewListener extends MouseAdapter
 		{
@@ -107,8 +118,8 @@ public class TBE
 			}
 		}
 		fileNew.addMouseListener(new fileNewListener());
-		
-		JMenuItem fileOpen = new JMenuItem(menuLabels.getString("file2"));		
+
+		JMenuItem fileOpen = new JMenuItem(menuLabels.getString("file2"));
 		class fileOpenListener extends MouseAdapter
 		{
 			@Override
@@ -118,7 +129,7 @@ public class TBE
 			}
 		}
 		fileOpen.addMouseListener(new fileOpenListener());
-		
+
 		JMenuItem fileSave = new JMenuItem(menuLabels.getString("file3"));
 		class fileSaveListener extends MouseAdapter
 		{
@@ -129,7 +140,7 @@ public class TBE
 			}
 		}
 		fileSave.addMouseListener(new fileSaveListener());
-		
+
 		JMenuItem fileSaveAs = new JMenuItem(menuLabels.getString("file4"));
 		class fileSaveAsListener extends MouseAdapter
 		{
@@ -140,7 +151,7 @@ public class TBE
 			}
 		}
 		fileSaveAs.addMouseListener(new fileSaveAsListener());
-		
+
 		JMenuItem fileShare = new JMenuItem(menuLabels.getString("file5"));
 		class fileShareListener extends MouseAdapter
 		{
@@ -151,7 +162,7 @@ public class TBE
 			}
 		}
 		fileShare.addMouseListener(new fileShareListener());
-		
+
 		JMenuItem fileExport = new JMenuItem(menuLabels.getString("file6"));
 		class fileExportListener extends MouseAdapter
 		{
@@ -162,7 +173,7 @@ public class TBE
 			}
 		}
 		fileExport.addMouseListener(new fileExportListener());
-		
+
 		JMenuItem filePrint = new JMenuItem(menuLabels.getString("file7"));
 		class filePrintListener extends MouseAdapter
 		{
@@ -173,7 +184,7 @@ public class TBE
 			}
 		}
 		filePrint.addMouseListener(new filePrintListener());
-		
+
 		JMenuItem fileClose = new JMenuItem(menuLabels.getString("file8"));
 		class fileCloseListener extends MouseAdapter
 		{
@@ -184,7 +195,7 @@ public class TBE
 			}
 		}
 		fileClose.addMouseListener(new fileCloseListener());
-		
+
 		JMenuItem fileQuit = new JMenuItem(menuLabels.getString("file9"));
 		class fileQuitListener extends MouseAdapter
 		{
@@ -196,7 +207,7 @@ public class TBE
 			}
 		}
 		fileQuit.addMouseListener(new fileQuitListener());
-		
+
 		filemenu.add(fileNew);
 		filemenu.add(fileOpen);
 		filemenu.add(fileSave);
@@ -213,7 +224,7 @@ public class TBE
 	private JMenu createEditMenu()
 	{
 		JMenu editmenu = new JMenu(menuLabels.getString("title2"));
-		
+
 		JMenuItem editDelete = new JMenuItem(menuLabels.getString("edit1"));
 		class editDeleteListener extends MouseAdapter
 		{
@@ -224,7 +235,7 @@ public class TBE
 			}
 		}
 		editDelete.addMouseListener(new editDeleteListener());
-		
+
 		JMenuItem editCut = new JMenuItem(menuLabels.getString("edit2"));
 		class editCutListener extends MouseAdapter
 		{
@@ -235,7 +246,7 @@ public class TBE
 			}
 		}
 		editCut.addMouseListener(new editCutListener());
-		
+
 		JMenuItem editCopy = new JMenuItem(menuLabels.getString("edit3"));
 		class editCopyListener extends MouseAdapter
 		{
@@ -246,7 +257,7 @@ public class TBE
 			}
 		}
 		editCopy.addMouseListener(new editCopyListener());
-		
+
 		JMenuItem editInsert = new JMenuItem(menuLabels.getString("edit4"));
 		class editInsertListener extends MouseAdapter
 		{
@@ -257,7 +268,7 @@ public class TBE
 			}
 		}
 		editInsert.addMouseListener(new editInsertListener());
-		
+
 		JMenuItem editUndo = new JMenuItem(menuLabels.getString("edit5"));
 		class editUndoListener extends MouseAdapter
 		{
@@ -268,7 +279,7 @@ public class TBE
 			}
 		}
 		editUndo.addMouseListener(new editUndoListener());
-		
+
 		JMenuItem editRedo = new JMenuItem(menuLabels.getString("edit6"));
 		class editRedoListener extends MouseAdapter
 		{
@@ -279,19 +290,23 @@ public class TBE
 			}
 		}
 		editRedo.addMouseListener(new editRedoListener());
-		
-		if (this.invoker.canUndo()){
-			editUndo.setEnabled(true);	
-		}else{
+
+		if (this.invoker.canUndo())
+		{
+			editUndo.setEnabled(true);
+		} else
+		{
 			editUndo.setEnabled(false);
 		}
-		
-		if (this.invoker.canRedo()){
-			editRedo.setEnabled(true);	
-		}else{
+
+		if (this.invoker.canRedo())
+		{
+			editRedo.setEnabled(true);
+		} else
+		{
 			editRedo.setEnabled(false);
 		}
-		
+
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
 		editmenu.add(editCopy);
@@ -305,7 +320,7 @@ public class TBE
 	private JMenu createBoardMenu()
 	{
 		JMenu boardmenu = new JMenu(menuLabels.getString("title3"));
-		
+
 		JMenuItem boardClear = new JMenuItem(menuLabels.getString("board2"));
 		class boardClearListener extends MouseAdapter
 		{
@@ -316,7 +331,7 @@ public class TBE
 			}
 		}
 		boardClear.addMouseListener(new boardClearListener());
-		
+
 		boardmenu.add(createFieldMenu());
 		boardmenu.add(boardClear);
 
@@ -336,19 +351,19 @@ public class TBE
 				// TODO
 			}
 		}
-		field1.addMouseListener(new field1Listener());		
-		
+		field1.addMouseListener(new field1Listener());
+
 		JMenuItem field2 = new JMenuItem("Halbes Feld");
 		class field2Listener extends MouseAdapter
 		{
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				//TODO
+				// TODO
 			}
 		}
 		field2.addMouseListener(new field2Listener());
-		
+
 		JMenuItem field3 = new JMenuItem("Torraum");
 		class field3Listener extends MouseAdapter
 		{
@@ -359,7 +374,7 @@ public class TBE
 			}
 		}
 		field3.addMouseListener(new field3Listener());
-		
+
 		boardChangeField.add(field2);
 		boardChangeField.add(field1);
 		boardChangeField.add(field3);
@@ -369,34 +384,34 @@ public class TBE
 	private JMenu createTBEMenu()
 	{
 		JMenu tbemenu = new JMenu(menuLabels.getString("title4"));
-		
+
 		JMenuItem tbeSettings = new JMenuItem(menuLabels.getString("tbe1"));
-		
+
 		JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
-		
+
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
 
 		return tbemenu;
 	}
-	
+
 	public void openWelcomeView()
 	{
 		welcomeView = new WelcomeView(this, this.getSports(), lang);
 		frame.add(welcomeView);
 	}
-	
+
 	public void openWorkingView(String path)
 	{
-		if(welcomeView != null)
+		if (welcomeView != null)
 			frame.remove(welcomeView);
 		frame.repaint();
-		//TODO this is only for testing (by David Meier)
+		// TODO this is only for testing (by David Meier)
 		workingView = new WorkingView(this, new Sport());
 		frame.add(workingView);
-		//END
+		// END
 	}
-	
+
 	public ArrayList getSports()
 	{
 		return sports;
@@ -467,7 +482,7 @@ public class TBE
 			String language)
 	{
 	}
-	
+
 	public String getLang()
 	{
 		return lang;
