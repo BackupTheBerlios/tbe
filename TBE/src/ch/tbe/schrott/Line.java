@@ -1,8 +1,10 @@
 package ch.tbe.schrott;
 import java.awt.geom.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
+
 import ch.tbe.BezierDashedArrowItem;
 import ch.tbe.BezierDoubleArrowItem;
 import ch.tbe.BezierSolidArrowItem;
@@ -13,8 +15,10 @@ import ch.tbe.PolyDashedBlockItem;
 import ch.tbe.PolyDoubleArrowItem;
 import ch.tbe.PolySolidArrowItem;
 import ch.tbe.PolySolidBlockItem;
+import ch.tbe.ShapeItem;
 import ch.tbe.TextBoxItem;
 import ch.tbe.framework.ArrowItem;
+import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.*;
 import ch.tbe.jgraph.graph.*;
 
@@ -26,7 +30,7 @@ public class Line extends JFrame
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,	new	DefaultCellViewFactory());
 		JGraph graph = new JGraph(model, view);
-		DefaultGraphCell[] cells = new DefaultGraphCell[2];
+		DefaultGraphCell[] cells = new DefaultGraphCell[3];
 		
 
 		List<Point2D> myPoints = new ArrayList<Point2D>();
@@ -39,7 +43,11 @@ public class Line extends JFrame
 		cells[0] = new BezierSolidArrowItem(myPoints);
 		
 		cells[1] = new TextBoxItem(new Rectangle2D.Double(100,100,120,120));
-			
+		
+		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
+		Icon logoIcon = new ImageIcon(imgURL);
+		cells[2] = new ShapeItem(logoIcon, new Point2D.Double(200,200));
+		
 		graph.getGraphLayoutCache().insert(cells);
 		JFrame frame = new JFrame();
 		frame.add(new JScrollPane(graph));
