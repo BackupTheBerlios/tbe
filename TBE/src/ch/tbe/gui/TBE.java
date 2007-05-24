@@ -1,6 +1,7 @@
 package ch.tbe.gui;
 
 import java.awt.AWTException;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
@@ -64,22 +65,13 @@ public class TBE
 		}
 		
 		xmlHandler.loadTBESettings();
-
+		
 		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
 		// PropertiesFile ausgelesen
 		
 		frame = new JFrame("TBE - Tactic Board Editor");
 		frame.setSize(this.WIDTH, this.HEIGHT);
 		frame.setJMenuBar(new Menu(lang));
-
-		GridBagLayout gridbag = new GridBagLayout();
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.anchor = GridBagConstraints.CENTER;
-		constraints.fill = GridBagConstraints.NONE;
-
-		frame.setLayout(gridbag);
 		
 		// TODO: check ob FirstStart oder nicht!
 		// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
@@ -100,6 +92,11 @@ public class TBE
 		this.view = newView;
 		frame.add(view);
 		frame.repaint();
+		Component[] components = frame.getComponents();
+		for(Component c : components)
+		{
+			c.repaint();
+		}
 	}
 	
 	public View getView()

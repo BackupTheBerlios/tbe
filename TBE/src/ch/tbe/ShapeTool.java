@@ -7,16 +7,16 @@ import ch.tbe.gui.WorkingView;
 
  class ShapeTool {
 	
-	private ShapeType icon;
+	private ShapeType shapeType;
 	
-	public ShapeTool(ShapeType icon){
-		this.icon = icon;
+	public ShapeTool(ShapeType shapeType){
+		this.shapeType = shapeType;
 	}
  
 	public void mouseDown(int x, int y, MouseEvent e)
 	{
 		
-		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(new ShapeItem(icon ,new Point2D.Double(x,y)));
+		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(new ShapeItem(shapeType ,new Point2D.Double(x,y)));
 	}
  
 }

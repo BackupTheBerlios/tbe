@@ -16,6 +16,7 @@ import ch.tbe.PolyDoubleArrowItem;
 import ch.tbe.PolySolidArrowItem;
 import ch.tbe.PolySolidBlockItem;
 import ch.tbe.ShapeItem;
+import ch.tbe.ShapeType;
 import ch.tbe.TextBoxItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.gui.TBE;
@@ -46,13 +47,15 @@ public class Line extends JFrame
 		
 		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
 		Icon logoIcon = new ImageIcon(imgURL);
-		cells[2] = new ShapeItem(logoIcon, new Point2D.Double(200,200));
+		ShapeType icon = new ShapeType("test",logoIcon,"test");
+		cells[2] = new ShapeItem(icon, new Point2D.Double(200,200));
 		
 		graph.getGraphLayoutCache().insert(cells);
 		JFrame frame = new JFrame();
 		frame.add(new JScrollPane(graph));
 		frame.pack();
 		frame.setVisible(true);
+		
 	}
 	
 }

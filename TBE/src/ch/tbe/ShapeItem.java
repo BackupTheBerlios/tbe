@@ -10,21 +10,21 @@ import ch.tbe.jgraph.graph.GraphConstants;
 
 public class ShapeItem extends DefaultGraphCell implements ItemComponent
 {
-	private ShapeType icon;
+	private ShapeType shapeType;
 
-	public ShapeItem(ShapeType icon, Point2D p)
+	public ShapeItem(ShapeType shapeType, Point2D p)
 	{
 
-		this.icon = icon;
+		this.shapeType = shapeType;
 		GraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p
-				.getX(), p.getY(), icon.getPicture().getIconWidth(), icon
+				.getX(), p.getY(), shapeType.getPicture().getIconWidth(), shapeType
 				.getPicture().getIconHeight()));
-		GraphConstants.setIcon(this.getAttributes(), icon.getPicture());
+		GraphConstants.setIcon(this.getAttributes(), shapeType.getPicture());
 	}
 
 	public ShapeType getIcon()
 	{
-		return icon;
+		return shapeType;
 	}
 
 }

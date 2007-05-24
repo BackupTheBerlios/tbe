@@ -120,7 +120,7 @@ public class WelcomeView extends View
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				tbe.setView(new WorkingView(new Sport()));
+				tbe.setView(new WorkingView(new Sport("Unihockey")));
 				// TODO: file öffnen 
 				// tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
 			}
@@ -179,7 +179,7 @@ public class WelcomeView extends View
 		}
 		// TODO: SportDownload öffnen
 		moreLabel = new JLabel(welcomeViewLabels.getString("more"));
-		moreLabel.addMouseListener(new NewListener(new Sport()));
+		moreLabel.addMouseListener(new NewListener(new Sport("Unihockey")));
 		sportPanel.add(moreLabel);
 		
 		gridbag.setConstraints(newPanel, constraints);
