@@ -56,7 +56,8 @@ public class Line extends JFrame
 		frame.add(new JScrollPane(graph));
 		frame.pack();
 		frame.setVisible(true);
-		PrintHandler.export(graph);
+		//PrintHandler.export(graph);
+		//PrintHandler.printBoard(graph);
 		
 	}
 	

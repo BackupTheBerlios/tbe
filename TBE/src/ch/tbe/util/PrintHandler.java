@@ -11,11 +11,13 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
 import javax.swing.JFileChooser;
 import javax.swing.RepaintManager;
+import javax.swing.filechooser.FileFilter;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
@@ -26,7 +28,7 @@ public final class PrintHandler implements Printable
 {
 	private Component componentToBePrinted;
 
-	public static void printComponent(Component c)
+	public static void printBoard(Component c)
 	{
 		new PrintHandler(c).print();
 	}
@@ -78,10 +80,26 @@ public final class PrintHandler implements Printable
 		RepaintManager currentManager = RepaintManager.currentManager(c);
 		currentManager.setDoubleBufferingEnabled(true);
 	}
+
 	public static void export(Component myComponent)
 	{
 		JFileChooser chooser = new JFileChooser();
+
+		chooser.setFileFilter(new FileFilter()
+		{
+			public boolean accept(File f)
+			{
+				return f.getName().toLowerCase().endsWith(".jpg")
+						|| f.isDirectory();
+			}
+
+			public String getDescription()
+			{
+				return "JPEG (*.jpg)";
+			}
+		});
 		chooser.showSaveDialog(new Frame());
+
 		File filename = chooser.getSelectedFile();
 		Dimension size = myComponent.getSize();
 		BufferedImage myImage = new BufferedImage(size.width, size.height,
