@@ -14,11 +14,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLHandler{
 	private static XMLHandler instance = null;
-	static final String sNEWLINE = System.getProperty( "line.separator" );
-	static private Writer out = null;
-	private StringBuffer textBuffer = null;
-
-	 
 	private XMLHandler(){}
 	
 	public static XMLHandler getInstance() {
@@ -36,7 +31,7 @@ public class XMLHandler{
 				DefaultHandler handler = new SaxHandler();
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse( new File(""), handler );
+					saxParser.parse( new File("../config/tbe.config"), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
 				}
@@ -44,16 +39,20 @@ public class XMLHandler{
 			
 			public void startElement(String name, AttributeList atts) throws SAXException {
 				if (name.equals("trainer")){
-					tbe.setUser(atts.getValue("prename").toString(), atts.getValue("name").toString(), atts.getValue("name").toString());
-					tbe.setLang(lang)
+					//tbe.setUser(atts.getValue("prename").toString(), atts.getValue("name").toString(), atts.getValue("name").toString());
+					System.out.println(atts.getValue("prename").toString());
 				}
+				
 			}
 
 			public void endDocument() throws SAXException {
-				System.out.println( semarbeit + " enthält " + count + " Kapitel");
+				
 			}
 
 		}
+		
+		SaxHandler xml = new SaxHandler();
+		xml.loadTBESettings();
 	}
 
 	
