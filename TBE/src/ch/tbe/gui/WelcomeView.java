@@ -108,7 +108,6 @@ public class WelcomeView extends View
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				System.out.println(tbe.toString());
 				tbe.setView(new WorkingView(new Sport()));
 				// TODO: file öffnen 
 				// tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
@@ -117,7 +116,7 @@ public class WelcomeView extends View
 		ArrayList<String> paths = tbe.getRecently();
 		JPanel pathPanel = new JPanel();
 		pathPanel.setLayout(new GridLayout(7,1));
-		pathPanel.setPreferredSize(new Dimension(300, 200));
+		pathPanel.setPreferredSize(new Dimension(350, 200));
 		pathPanel.setBackground(Color.WHITE);
 		for(String s : paths)
 		{
@@ -140,7 +139,6 @@ public class WelcomeView extends View
 		TitledBorder newTitle = BorderFactory.createTitledBorder(welcomeViewLabels.getString("new"));
 		newPanel.setBorder(newTitle);
 		newPanel.setBackground(Color.WHITE);
-		
 		// add available Sports
 		class NewListener extends MouseAdapter
 		{
@@ -158,15 +156,19 @@ public class WelcomeView extends View
 		ArrayList<Sport> sports = tbe.getSports();
 		JPanel sportPanel = new JPanel();
 		sportPanel.setLayout(new GridLayout(7,1));
-		sportPanel.setPreferredSize(new Dimension(300, 200));
+		sportPanel.setPreferredSize(new Dimension(150, 200));
 		sportPanel.setBackground(Color.WHITE);
 		for(Sport s : sports)
 		{
 			JLabel sportLabel = new JLabel(s.getName());
 			sportLabel.addMouseListener(new NewListener(s));
 			sportPanel.add(sportLabel);
-			recentlyPanel.add(sportPanel);
+			newPanel.add(sportPanel);
 		}
+		// TODO: SportDownload öffnen
+		moreLabel = new JLabel(welcomeViewLabels.getString("more"));
+		moreLabel.addMouseListener(new NewListener(new Sport()));
+		sportPanel.add(moreLabel);
 		
 		gridbag.setConstraints(newPanel, constraints);
 		add(newPanel);
