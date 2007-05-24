@@ -1,6 +1,7 @@
 package ch.tbe.util;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import ch.tbe.Board;

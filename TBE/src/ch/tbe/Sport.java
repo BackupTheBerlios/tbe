@@ -1,19 +1,19 @@
 package ch.tbe;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Sport 
 {
-	private List<Field> fields;
-	private List<ArrowType> arrows;
-	private List<ShapeType> shapes;
+	private ArrayList<Field> fields;
+	private ArrayList<ArrowType> arrows;
+	private ArrayList<ShapeType> shapes;
 	private String name;
 	
 	public Sport(String name)
 	{
 		this.name = name;
 	}
-	public List<Field> getFields()
+	public ArrayList<Field> getFields()
 	{
 		return this.fields;
 	}
@@ -27,22 +27,22 @@ public class Sport
 		this.name = name;
 	}
 
-	public void setFields(List<Field> fields)
+	public void setFields(ArrayList<Field> fields)
 	{
 		this.fields = fields;
 	}
-	public void setArrowTypes(List<ArrowType> arrows){
+	public void setArrowTypes(ArrayList<ArrowType> arrows){
 		this.arrows = arrows;
 	}
 	
-	public void setShapeTypes(List<ShapeType> shapes){
+	public void setShapeTypes(ArrayList<ShapeType> shapes){
 		this.shapes = shapes;
 	}
 	
-	public List<ShapeType> getShapeTypes(){
+	public ArrayList<ShapeType> getShapeTypes(){
 		return this.shapes;
 	}
-	public List<ArrowType> getArrowTypes(){
+	public ArrayList<ArrowType> getArrowTypes(){
 		return this.arrows;
 	}
 }
