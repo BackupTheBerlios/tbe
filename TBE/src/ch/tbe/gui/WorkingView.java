@@ -14,6 +14,7 @@ import ch.tbe.jgraph.graph.GraphModel;
 import ch.tbe.Attribute;
 import ch.tbe.Field;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -21,9 +22,11 @@ import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
 
 import ch.tbe.Sport;
 
@@ -43,79 +46,25 @@ public class WorkingView extends View
 
 	public WorkingView(Sport sport)
 	{
-		GridBagLayout globalGridbag = new GridBagLayout();
-		GridBagConstraints globalConstraints = new GridBagConstraints();
-		globalConstraints.gridheight = 1;
-		globalConstraints.gridwidth = 1;
-		globalConstraints.anchor = GridBagConstraints.NORTHWEST;
-		globalConstraints.fill = GridBagConstraints.BOTH;
-		
-		this.setLayout(globalGridbag);
-		
-		JPanel working = new JPanel();
-		
-		working.setBackground(Color.WHITE);
-		
-		GridBagLayout gridbag = new GridBagLayout();
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.fill = GridBagConstraints.BOTH;
-		working.setLayout(gridbag);
-		
-		this.add(working, constraints);
+		this.setLayout(new BorderLayout());
+		this.setBackground(Color.WHITE);
 		
 		// Toolbar
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		constraints.gridheight = 1;
-		constraints.gridwidth = 2;
-		constraints.weightx = 1.0;
-		constraints.weighty = 0.0;
-		JPanel toolbarPanel = new JPanel();
-		toolbarPanel.setBackground(Color.BLACK);
-		toolbarPanel.add(new JLabel("Toolbar !"));
-		
-		working.add(toolbarPanel, constraints);
+		JToolBar toolbar = new JToolBar();
+		toolbar.add(new JButton("Tool 1"));
+		this.add(toolbar, BorderLayout.NORTH);
 		
 		// Attributebar
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.gridheight = 2;
-		constraints.gridwidth = 1;
-		constraints.weightx = 0.0;
-		constraints.weighty = 1.0;
-		JPanel attributePanel = new JPanel();
-		attributePanel.setBackground(Color.BLUE);
-		attributePanel.add(new JLabel("AttributeBar !"));
+		JToolBar attributebar = new JToolBar();
+		attributebar.setOrientation(1);
+		attributebar.add(new JLabel("Attributes"));
+		this.add(attributebar, BorderLayout.WEST);
 		
-		working.add(attributePanel, constraints);
+		// gemeinsames Panel für Board und Legend
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new BorderLayout());
 		
 		// Board
-		constraints.gridx = 1;
-		constraints.gridy = 1;
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.weightx = 0.0;
-		constraints.weighty = 1.0;
-		JPanel boardPanel = new JPanel();
-		boardPanel.setBackground(Color.RED);
-		boardPanel.add(new JLabel("Board !"));
-		
-		working.add(boardPanel, constraints);
-		
-		// Legend
-		constraints.gridx = 1;
-		constraints.gridy = 2;
-		constraints.gridheight = 1;
-		constraints.gridwidth = 1;
-		constraints.weightx = 0.0;
-		constraints.weighty = 0.0;
-		JPanel legendPanel = new JPanel();
-		legendPanel.setBackground(Color.CYAN);
-		legendPanel.add(new JLabel("Legend !"));
-		
-		working.add(legendPanel, constraints);
-		
-		/*
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model, new DefaultCellViewFactory());
 		JGraph graph = new JGraph(model, view);
@@ -132,9 +81,19 @@ public class WorkingView extends View
 		}
 		
 		graph.getGraphLayoutCache().insert(cells);
-		this.add(new JScrollPane(graph));
+		rightPanel.add(new JScrollPane(graph), BorderLayout.CENTER);
 
 		// END
+		
+		// Legend
+		JPanel legendPanel = new JPanel();
+		legendPanel.add(new JLabel("Legend"));
+		rightPanel.add(legendPanel, BorderLayout.SOUTH);
+		
+		this.add(rightPanel, BorderLayout.CENTER);
+		
+		/*
+
 		*/
 	}
 
