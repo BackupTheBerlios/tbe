@@ -1,17 +1,16 @@
 package ch.tbe;
 
 import java.util.ArrayList;
+import ch.tbe.framework.Tool;
 
 public class ToolFactory {
- 
-	private ArrayList tools;
-	 
-	public void ToolFactory(Sport sport) {
+	
+	private ToolFactory(){};
+	public static ArrayList<Tool> getShapeTool(){
+		ArrayList<Tool> shapeTools = new ArrayList<Tool>();
+		
+		
+		return shapeTools;
 	}
-	 
-	public ArrayList getTools() {
-		return null;
-	}
-	 
 }
  

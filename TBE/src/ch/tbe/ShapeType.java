@@ -6,8 +6,10 @@ public class ShapeType
 {
 	private String description;
 	private Icon picture;
+	private String name;
 	
-	public ShapeType(Icon picture, String description){
+	public ShapeType(String name, Icon picture, String description){
+		this.name = name;
 		this.picture = picture;
 		this.description = description;
 	}
@@ -30,6 +32,16 @@ public class ShapeType
 	public void setPicture(Icon picture)
 	{
 		this.picture = picture;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 }

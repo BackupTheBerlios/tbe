@@ -9,9 +9,6 @@ public class Sport
 	private List<ShapeType> shapes;
 	private String name;
 	
-	
-	public Sport(){}
-	
 	public Sport(String name)
 	{
 		this.name = name;
