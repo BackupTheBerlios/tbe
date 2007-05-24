@@ -37,7 +37,7 @@ public class XMLHandler{
 				}
 			}
 			
-			public void startElement(String name, Attributes atts) throws SAXException {
+			public void startElement(String name, AttributeList atts) throws SAXException {
 				if (name.equals("trainer")){
 					//tbe.setUser(atts.getValue("prename").toString(), atts.getValue("name").toString(), atts.getValue("name").toString());
 					System.out.println(atts.getValue("prename").toString());
