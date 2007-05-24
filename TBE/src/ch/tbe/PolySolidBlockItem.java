@@ -10,7 +10,7 @@ public class PolySolidBlockItem extends ArrowItem
 
 	public PolySolidBlockItem(List<Point2D> points)
 	{
-		super(points);
+
 		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_BLOCK);
 
 	}

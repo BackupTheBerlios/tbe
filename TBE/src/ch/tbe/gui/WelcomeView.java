@@ -141,11 +141,34 @@ public class WelcomeView extends View
 		newPanel.setBorder(newTitle);
 		newPanel.setBackground(Color.WHITE);
 		
-		
-		// TODO: Sportarten auslesen
+		// add available Sports
+		class NewListener extends MouseAdapter
+		{
+			Sport sport;
+			public NewListener(Sport sport)
+			{
+				this.sport = sport;
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				tbe.setView(new WorkingView(sport));
+			}
+		}
+		ArrayList<Sport> sports = tbe.getSports();
+		JPanel sportPanel = new JPanel();
+		sportPanel.setLayout(new GridLayout(7,1));
+		sportPanel.setPreferredSize(new Dimension(300, 200));
+		sportPanel.setBackground(Color.WHITE);
+		for(Sport s : sports)
+		{
+			JLabel sportLabel = new JLabel(s.getName());
+			sportLabel.addMouseListener(new NewListener(s));
+			sportPanel.add(sportLabel);
+			recentlyPanel.add(sportPanel);
+		}
 		
 		gridbag.setConstraints(newPanel, constraints);
 		add(newPanel);
 	}
 }
- 

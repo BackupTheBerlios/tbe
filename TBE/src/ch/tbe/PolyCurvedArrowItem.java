@@ -11,7 +11,7 @@ public class PolyCurvedArrowItem extends ArrowItem
 	public PolyCurvedArrowItem(List<Point2D> points)
 	
 	{
-		super(points);
+
 		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_CURVED);
 	}

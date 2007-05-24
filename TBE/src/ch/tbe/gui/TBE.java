@@ -13,6 +13,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import ch.tbe.*;
 import ch.tbe.framework.View;
+import ch.tbe.util.XMLHandler;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class TBE
 	private final int HEIGHT = 800;
 	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
+	private XMLHandler xmlHandler = XMLHandler.getInstance();
 	private JFrame frame;
 	private ArrayList<String> paths = new ArrayList<String>();
 	
@@ -84,6 +86,8 @@ public class TBE
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		splashScreen.blendOut();
 		frame.setVisible(true);
+		
+		xmlHandler.loadTBESettings();
 	}
 
 	public void setView(View newView)

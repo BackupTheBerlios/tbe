@@ -7,10 +7,6 @@ import ch.tbe.framework.ArrowItem;
 public class PolySolidArrowItem extends ArrowItem
 {
 
-	public PolySolidArrowItem(List<Point2D> points)
-	{
-		super(points);
 
-	}
 
 }

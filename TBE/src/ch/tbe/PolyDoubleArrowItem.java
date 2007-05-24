@@ -10,7 +10,7 @@ public class PolyDoubleArrowItem extends ArrowItem
 
 	public PolyDoubleArrowItem(List<Point2D> points)
 	{
-		super(points);
+
 		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_DOUBLELINE);
 	}
