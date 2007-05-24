@@ -76,7 +76,7 @@ public class WelcomeView extends View
 		constraints.gridy=0;
 		constraints.gridheight = 1;
 		constraints.anchor = GridBagConstraints.NORTHWEST;
-		JLabel titleLabel = new JLabel(welcomeViewLabels.getString("welcome"));
+		JLabel titleLabel = new JLabel(welcomeViewLabels.getString("welcome")+' '+tbe.getUserName()+' '+tbe.getUserPrename());
 		titleLabel.setFont(new Font("Sans Serif", Font.BOLD, 18));
 		gridbag.setConstraints(titleLabel, constraints);
 		add(titleLabel);

@@ -1,5 +1,5 @@
 # Title Welcome
-welcome = Herzlich Willkommen zum Tactic Board Editor
+welcome = Herzlich Willkommen
 
 # Recently Files Open
 open = Datei öffnen

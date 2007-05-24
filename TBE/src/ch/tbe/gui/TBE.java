@@ -61,10 +61,11 @@ public class TBE
 		{
 			e.printStackTrace();
 		}
+		
+		xmlHandler.loadTBESettings();
 
 		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
 		// PropertiesFile ausgelesen
-		lang = "deutsch";
 		
 		frame = new JFrame("TBE - Tactic Board Editor");
 		frame.setSize(this.WIDTH, this.HEIGHT);
@@ -86,8 +87,6 @@ public class TBE
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		splashScreen.blendOut();
 		frame.setVisible(true);
-		
-		xmlHandler.loadTBESettings();
 	}
 
 	public void setView(View newView)
@@ -190,6 +189,9 @@ public class TBE
 
 	public void setUser(String prename, String lastname, String email)
 	{
+		this.UserName = lastname;
+		this.UserPrename = prename;
+		this.UserEmail = email;
 	}
 	
 	public String getLang()
@@ -220,5 +222,15 @@ public class TBE
 	public static void main(String[] args)
 	{
 		TBE.getInstance().initialize();
+	}
+	
+	public String getUserPrename(){
+		return this.UserPrename;
+	}
+	public String getUserName(){
+		return this.UserName; 
+	}
+	public String getUserEmail(){
+		return this.UserEmail; 
 	}
 }
