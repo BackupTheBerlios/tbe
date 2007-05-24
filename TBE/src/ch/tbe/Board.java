@@ -40,7 +40,7 @@ public class Board
 		return this.items;
 	}
 	
-	public void addItems(ItemComponent i)
+	public void addItem(ItemComponent i)
 	{
 		this.items.add(i);
 	}

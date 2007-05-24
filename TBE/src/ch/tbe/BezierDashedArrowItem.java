@@ -10,11 +10,11 @@ public class BezierDashedArrowItem extends ArrowItem
 
 	private final float[] DASH = new float[] { 6, 6 };
 
-	public BezierDashedArrowItem(List<Point2D> points)
+	public BezierDashedArrowItem()
 	{
-		super(points);
+		super();
 		GraphConstants.setLineStyle(this.getAttributes(),
-				GraphConstants.STYLE_BEZIER);
+		GraphConstants.STYLE_BEZIER);
 		GraphConstants.setDashPattern(this.getAttributes(), DASH);
 	}
 

@@ -42,7 +42,6 @@ public class TBE
 
 	private TBE()
 	{
-		this.init();
 	}
 	
 	public static TBE getInstance() 
@@ -50,7 +49,7 @@ public class TBE
 		return instance;
 	}
 	
-	private void init()
+	private void initialize()
 	{
 		SplashScreen splashScreen = null;
 		try
@@ -183,7 +182,7 @@ public class TBE
 
 	public static void main(String[] args)
 	{
-		//new TBE();
+		TBE.getInstance().initialize();
 	}
 
 }
