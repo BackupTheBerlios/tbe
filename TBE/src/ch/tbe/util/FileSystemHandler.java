@@ -12,10 +12,12 @@ public final class FileSystemHandler
 		ArrayList<String> sports = new ArrayList<String>();
 		 
 		// Create a file object for your root directory
-		File f1 = new File ("src/tbe/config/sport");
+		File f1 = new File ("src/tbe/config/sport/");
 		
 		// Get all the files and directory under your diretcory
 		File[] strFilesDirs = f1.listFiles ( );
+		
+		System.out.println(strFilesDirs);
 		 
 		for ( int i = 0 ; i < strFilesDirs.length ; i ++ ) {
 			if ( strFilesDirs[i].isDirectory()){ 

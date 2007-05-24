@@ -2,22 +2,13 @@ package ch.tbe.util;
 
 import ch.tbe.Board;
 
-public class PrintHandler {
-	private static PrintHandler instance = null;
-	 
+public final class PrintHandler {
 	private PrintHandler(){}
 	
-	public static PrintHandler getInstance() {
-	      if(instance == null) {
-	         instance = new PrintHandler();
-	      }
-	      return instance;
-	   }
- 
-	public void print(Board board) {
+	public static void print(Board board) {
 	}
 	 
-	public void export(Board board) {
+	public static void export(Board board) {
 	}
 	 
 }

@@ -2,33 +2,23 @@ package ch.tbe.util;
 
 import java.util.List;
 
-public class FTPHandler {
-	private static FTPHandler instance = null;
- 
+public final class FTPHandler {
 	private FTPHandler(){}
 	
-	public static FTPHandler getInstance() {
-		if(instance == null) {
-			instance = new FTPHandler();
-		}
-		return instance;
-	}
-
-	
-	public List getAllSports() {
+	public static List getAllSports() {
 		return null;
 	}
 	 
-	public void installSport(List sports) {
+	public static void installSport(List sports) {
 	}
 	 
-	public void connect() {
+	public static void connect() {
 	}
 	 
-	public void upload(String path) {
+	public static void upload(String path) {
 	}
 	 
-	public void download(String path) {
+	public static void download(String path) {
 	}
 	 
 }

@@ -38,7 +38,6 @@ public class TBE
 	private final int HEIGHT = 800;
 	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
-	private XMLHandler xmlHandler = XMLHandler.getInstance();
 	private JFrame frame;
 	private List<String> paths = new ArrayList<String>();
 	private List<FTPServer> servers = new ArrayList<FTPServer>();
@@ -64,7 +63,7 @@ public class TBE
 			e.printStackTrace();
 		}
 		
-		xmlHandler.loadTBESettings();
+		XMLHandler.loadTBESettings();
 		
 		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
 		// PropertiesFile ausgelesen

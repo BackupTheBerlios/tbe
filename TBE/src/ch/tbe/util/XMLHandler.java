@@ -1,7 +1,6 @@
 package ch.tbe.util;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import ch.tbe.ArrowType;
@@ -10,7 +9,6 @@ import ch.tbe.FTPServer;
 import ch.tbe.Field;
 import ch.tbe.ShapeType;
 import ch.tbe.Sport;
-import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
 
 import java.io.*;
@@ -23,18 +21,10 @@ import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
 
-public class XMLHandler{
-	private static XMLHandler instance = null;
+public final class XMLHandler{
 	private XMLHandler(){}
-	
-	public static XMLHandler getInstance() {
-	      if(instance == null) {
-	         instance = new XMLHandler();
-	      }
-	      return instance;
-	   }
- 
-	public void loadTBESettings(){
+
+	public static void loadTBESettings(){
 		
 		class SaxHandler extends DefaultHandler{
 			private TBE tbe = TBE.getInstance();
@@ -76,14 +66,14 @@ public class XMLHandler{
 	
 	
 	
-	public void createXML(Board board) {
+	public static void createXML(Board board) {
 	}
 	
-	public Board openXML(String path) {
+	public static Board openXML(String path) {
 		return null;
 	}
 	
-	public List<Sport> getSports(){
+	public static ArrayList<Sport> getSports(){
 		ArrayList<Sport> sports = new ArrayList<Sport>(); 
 		ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
 		
@@ -94,9 +84,8 @@ public class XMLHandler{
 		return sports;
 	}
 	
-	private Sport openSport(String sport) {
+	private static Sport openSport(String sport) {
 		class SaxHandler extends DefaultHandler{
-			private TBE tbe = TBE.getInstance();
 			private ArrayList<ShapeType> shapes = new ArrayList<ShapeType>();
 			private ArrayList<ArrowType> arrows = new ArrayList<ArrowType>();
 			private ArrayList<Field> fields = new ArrayList<Field>();
@@ -149,7 +138,7 @@ public class XMLHandler{
 		return xml.loadSport("");
 	}
 	 
-	public void saveSettings(String prename, String lastname, String email, String language) {
+	public static void saveSettings(String prename, String lastname, String email, String language) {
 	}
 	 
 }
