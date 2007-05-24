@@ -39,7 +39,8 @@ public class TBE
 	private Invoker invoker = Invoker.getInstance();
 	private XMLHandler xmlHandler = XMLHandler.getInstance();
 	private JFrame frame;
-	private ArrayList<String> paths = new ArrayList<String>();
+	private List<String> paths = new ArrayList<String>();
+	private List<FTPServer> servers = new ArrayList<FTPServer>();
 	
 	private View view;
 
@@ -114,7 +115,7 @@ public class TBE
 		return sports;
 	}
 
-	public ArrayList<String> getRecently() 
+	public List<String> getRecently() 
 	{
 		// TODO: 6 Recently used Files auslesen
 		paths.add("file1.tbe");
@@ -199,7 +200,7 @@ public class TBE
 		return lang;
 	}
 
-	public ArrayList<String> getPaths()
+	public List<String> getPaths()
 	{
 		return paths;
 	}
@@ -232,5 +233,10 @@ public class TBE
 	}
 	public String getUserEmail(){
 		return this.UserEmail; 
+	}
+	
+	public void setFTPServers(List<FTPServer> servers){
+		this.servers = servers;
+		System.out.println("Ich bin ein Server");
 	}
 }

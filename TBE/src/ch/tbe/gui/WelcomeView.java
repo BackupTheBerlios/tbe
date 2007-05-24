@@ -7,13 +7,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.List;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
@@ -33,6 +33,7 @@ public class WelcomeView extends View
 {
 	private ResourceBundle welcomeViewLabels;
 	private TBE tbe = TBE.getInstance();
+	private List<String> paths;
 	
 	public WelcomeView(ArrayList sports, String lang) 
 	{
@@ -113,7 +114,7 @@ public class WelcomeView extends View
 				// tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
 			}
 		}
-		ArrayList<String> paths = tbe.getRecently();
+		paths = tbe.getRecently();
 		JPanel pathPanel = new JPanel();
 		pathPanel.setLayout(new GridLayout(7,1));
 		pathPanel.setPreferredSize(new Dimension(350, 200));

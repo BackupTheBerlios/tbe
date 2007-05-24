@@ -1,8 +1,10 @@
 package ch.tbe.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ch.tbe.Board;
+import ch.tbe.FTPServer;
 import ch.tbe.Sport;
 import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
@@ -28,8 +30,11 @@ public class XMLHandler{
 		
 		class SaxHandler extends DefaultHandler{
 			private TBE tbe = TBE.getInstance();
+			private List<FTPServer> servers = new ArrayList<FTPServer>();
+			
 			public void loadTBESettings(){
 				DefaultHandler handler = new SaxHandler();
+				
 				try{
 					System.out.println("Start reading xml-File");
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
@@ -46,9 +51,14 @@ public class XMLHandler{
 				if (qName.equals("defaultLanguage")){
 					tbe.setLang(atts.getValue("name").toString());
 				}
+				if (qName.equals("server")){
+					servers.add(new FTPServer(atts.getValue("name").toString(), atts.getValue("host").toString(), Integer.valueOf(atts.getValue("port")).intValue(), atts.getValue("username").toString(), atts.getValue("password").toString()));
+				}	
+			}
+			
+			public void endDocument() throws SAXException {
 				
 			}
-
 		}
 		
 		SaxHandler xml = new SaxHandler();
