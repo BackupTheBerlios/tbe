@@ -22,6 +22,7 @@ import ch.tbe.framework.ArrowItem;
 import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.*;
 import ch.tbe.jgraph.graph.*;
+import ch.tbe.util.PrintHandler;
 
 public class Line extends JFrame
 {
@@ -55,6 +56,7 @@ public class Line extends JFrame
 		frame.add(new JScrollPane(graph));
 		frame.pack();
 		frame.setVisible(true);
+		PrintHandler.export(graph);
 		
 	}
 	
