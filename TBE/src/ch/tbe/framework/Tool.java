@@ -1,11 +1,11 @@
 package ch.tbe.framework;
 
-
-
 import java.awt.event.MouseEvent;
 
+import javax.swing.Icon;
 
-public interface Tool {
+public interface Tool
+{
 	/**
 	 * Activates the tool for the given view. This method is called whenever the
 	 * user switches to this tool. Use this method to reinitialize a tool.
@@ -66,4 +66,7 @@ public interface Tool {
 	 *            The mouse event, contains state of modifiers.
 	 */
 	public void mouseOver(int x, int y, MouseEvent e);
+	
+	public ItemType getItemType();
+
 }

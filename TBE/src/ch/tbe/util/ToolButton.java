@@ -13,6 +13,8 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 
 import ch.tbe.framework.Tool;
+import ch.tbe.gui.TBE;
+import ch.tbe.gui.WorkingView;
 
 
 
@@ -24,12 +26,12 @@ import ch.tbe.framework.Tool;
  * 
  * @author Eric Dubuis
  */
-public class ToolButton extends JButton  {
+public class ToolButton extends JButton implements MouseListener,
+MouseMotionListener {
 
-/**
-	private Icon icon;
 
-	private Editor editor;
+
+	private TBE tbe = TBE.getInstance();
 
 	private Tool tool;
 
@@ -42,14 +44,13 @@ public class ToolButton extends JButton  {
 	private int width;
 
 	private int height;
+	private Icon icon;
 
-	public ToolButton(String text, Icon icon, final Tool tool,
-			final Editor editor) {
+	public ToolButton(final Tool tool) {
 		this.tool = tool;
-		this.editor = editor;
-		this.icon = icon;
-		this.width = icon != null ? icon.getIconWidth() : 24;
-		this.height = icon != null ? icon.getIconHeight() : 24;
+		icon = tool.getItemType().getIcon();
+		this.width = icon != null ? icon.getIconWidth() : 23;
+		this.height = icon != null ? icon.getIconHeight() : 23;
 
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -58,7 +59,7 @@ public class ToolButton extends JButton  {
 		setMinimumSize(new Dimension(width, height));
 		setMaximumSize(new Dimension(width, height));
 
-		setToolTipText(text);
+		//TODO setToolTipText(t);
 
 	}
 
@@ -127,7 +128,7 @@ public class ToolButton extends JButton  {
 	}
 
 	public void checkState() {
-		View v = editor.getView();
+		WorkingView v = (WorkingView) tbe.getView();
 		if (v != null) {
 			Tool t = v.getTool();
 			if (t != null) {
@@ -135,5 +136,5 @@ public class ToolButton extends JButton  {
 				
 			}
 		}
-	} */
+	} 
 }

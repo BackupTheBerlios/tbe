@@ -17,9 +17,9 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 
 		this.shapeType = shapeType;
 		GraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p
-				.getX(), p.getY(), shapeType.getPicture().getIconWidth(), shapeType
-				.getPicture().getIconHeight()));
-		GraphConstants.setIcon(this.getAttributes(), shapeType.getPicture());
+				.getX(), p.getY(), shapeType.getIcon().getIconWidth(), shapeType
+				.getIcon().getIconHeight()));
+		GraphConstants.setIcon(this.getAttributes(), shapeType.getIcon());
 	}
 
 	public ShapeType getIcon()

@@ -1,13 +1,19 @@
 package ch.tbe;
 
-public class ArrowType
+import javax.swing.Icon;
+
+import ch.tbe.framework.ItemType;
+
+public class ArrowType implements ItemType
 {
 	private String description;
 	private String type;
+	private Icon icon;
 	
 	public ArrowType(String type, String description){
 		this.type = type;
 		this.description = description;
+		this.icon =icon; //TODO read Icon
 	}
 
 	public String getDescription()
@@ -28,6 +34,12 @@ public class ArrowType
 	public void setType(String type)
 	{
 		this.type = type;
+	}
+
+	public Icon getIcon()
+	{
+		// TODO Auto-generated method stub
+		return icon;
 	}
 
 }

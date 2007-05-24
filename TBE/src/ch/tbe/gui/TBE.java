@@ -1,30 +1,19 @@
 package ch.tbe.gui;
 
-import java.awt.AWTException;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.ArrayList;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
+
 import ch.tbe.*;
+
 import ch.tbe.framework.View;
+
 import ch.tbe.util.XMLHandler;
 
 import java.util.List;
 
-import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+
+
 
 public class TBE
 {
@@ -226,4 +215,7 @@ public class TBE
 	public void setFTPServers(List<FTPServer> servers){
 		this.servers = servers;
 	}
+	
+
+	
 }

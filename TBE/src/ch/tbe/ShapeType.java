@@ -2,15 +2,17 @@ package ch.tbe;
 
 import javax.swing.Icon;
 
-public class ShapeType
+import ch.tbe.framework.ItemType;
+
+public class ShapeType implements ItemType
 {
 	private String description;
-	private Icon picture;
+	private Icon icon;
 	private String name;
 	
-	public ShapeType(String name, Icon picture, String description){
+	public ShapeType(String name, Icon icon, String description){
 		this.name = name;
-		this.picture = picture;
+		this.icon = icon;
 		this.description = description;
 	}
 
@@ -24,14 +26,14 @@ public class ShapeType
 		this.description = description;
 	}
 
-	public Icon getPicture()
+	public Icon getIcon()
 	{
-		return picture;
+		return icon;
 	}
 
-	public void setPicture(Icon picture)
+	public void setIcon(Icon picture)
 	{
-		this.picture = picture;
+		this.icon = picture;
 	}
 
 	public String getName()

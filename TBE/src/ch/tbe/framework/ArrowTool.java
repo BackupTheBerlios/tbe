@@ -2,9 +2,12 @@ package ch.tbe.framework;
 
 import java.awt.event.MouseEvent;
 
+import javax.swing.Icon;
+
 public class ArrowTool implements Tool
 {
 	protected final int DEFAULTLENGTH = 20;
+	
 
 	public void activate()
 	{
@@ -41,5 +44,12 @@ public class ArrowTool implements Tool
 		// TODO Auto-generated method stub
 
 	}
+
+	public ItemType getItemType()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
