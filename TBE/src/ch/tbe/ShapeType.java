@@ -1,11 +1,13 @@
 package ch.tbe;
 
+import javax.swing.Icon;
+
 public class ShapeType
 {
 	private String description;
-	private String picture;
+	private Icon picture;
 	
-	public ShapeType(String picture, String description){
+	public ShapeType(Icon picture, String description){
 		this.picture = picture;
 		this.description = description;
 	}
@@ -20,12 +22,12 @@ public class ShapeType
 		this.description = description;
 	}
 
-	public String getPicture()
+	public Icon getPicture()
 	{
 		return picture;
 	}
 
-	public void setPicture(String picture)
+	public void setPicture(Icon picture)
 	{
 		this.picture = picture;
 	}
