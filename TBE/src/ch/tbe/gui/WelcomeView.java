@@ -62,13 +62,24 @@ public class WelcomeView extends View
 	
 	private void createPanel()
 	{
-		this.setPreferredSize(new Dimension(700, 500));
-		this.setBackground(Color.WHITE);
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
+		GridBagLayout globalGridbag = new GridBagLayout();
+		GridBagConstraints globalConstraints = new GridBagConstraints();
+		globalConstraints.gridheight = 1;
+		globalConstraints.gridwidth = 1;
+		globalConstraints.anchor = GridBagConstraints.CENTER;
+		globalConstraints.fill = GridBagConstraints.NONE;
+
+		this.setLayout(globalGridbag);
+		
+		JPanel welcome = new JPanel();
+		
+		welcome.setPreferredSize(new Dimension(700, 500));
+		welcome.setBackground(Color.WHITE);
+		welcome.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
-		this.setLayout(gridbag);
+		welcome.setLayout(gridbag);
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.insets = new Insets(50, 10, 0, 0);
 		
@@ -80,7 +91,7 @@ public class WelcomeView extends View
 		JLabel titleLabel = new JLabel(welcomeViewLabels.getString("welcome")+' '+tbe.getUserName()+' '+tbe.getUserPrename());
 		titleLabel.setFont(new Font("Sans Serif", Font.BOLD, 18));
 		gridbag.setConstraints(titleLabel, constraints);
-		add(titleLabel);
+		welcome.add(titleLabel);
 		
 		// Logo
 		constraints.gridx = 1;
@@ -89,7 +100,7 @@ public class WelcomeView extends View
 		ImageIcon logoIcon = new ImageIcon(imgURL);
 		JLabel iconLabel = new JLabel(logoIcon);
 		gridbag.setConstraints(iconLabel, constraints);
-		add(iconLabel);
+		welcome.add(iconLabel);
 		
 		// recentlyUsedFiles
 		constraints.gridx=0; 
@@ -109,7 +120,7 @@ public class WelcomeView extends View
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				tbe.setView(new WorkingView(new Sport("")));
+				tbe.setView(new WorkingView(new Sport()));
 				// TODO: file öffnen 
 				// tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
 			}
@@ -131,7 +142,7 @@ public class WelcomeView extends View
 		pathPanel.add(moreLabel);
 		
 		gridbag.setConstraints(recentlyPanel, constraints);
-		add(recentlyPanel);
+		welcome.add(recentlyPanel);
 		
 		// Sports
 		constraints.gridx=1; 
@@ -168,10 +179,12 @@ public class WelcomeView extends View
 		}
 		// TODO: SportDownload öffnen
 		moreLabel = new JLabel(welcomeViewLabels.getString("more"));
-		moreLabel.addMouseListener(new NewListener(new Sport("")));
+		moreLabel.addMouseListener(new NewListener(new Sport()));
 		sportPanel.add(moreLabel);
 		
 		gridbag.setConstraints(newPanel, constraints);
-		add(newPanel);
+		welcome.add(newPanel);
+		
+		this.add(welcome);
 	}
 }

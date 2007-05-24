@@ -2,15 +2,14 @@ package ch.tbe;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import javax.swing.Icon;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 
  class ShapeTool {
 	
-	private Icon icon;
+	private ShapeType icon;
 	
-	public ShapeTool(Icon icon){
+	public ShapeTool(ShapeType icon){
 		this.icon = icon;
 	}
  
