@@ -37,7 +37,7 @@ public class TBE
 	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
 	private JFrame frame;
-
+	
 	private View view;
 
 	private TBE()
@@ -99,7 +99,12 @@ public class TBE
 		frame.add(view);
 		frame.repaint();
 	}
-
+	
+	public View getView()
+	{
+		return this.view;
+	}
+	
 	public ArrayList getSports()
 	{
 		return sports;
@@ -178,7 +183,7 @@ public class TBE
 
 	public static void main(String[] args)
 	{
-		new TBE();
+		//new TBE();
 	}
 
 }

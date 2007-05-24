@@ -9,13 +9,20 @@ import ch.tbe.jgraph.graph.GraphConstants;
 public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 {
 
-	protected ArrowItem(List<Point2D> points)
+	protected ArrowItem()
 	{
-		GraphConstants.setPoints(this.getAttributes(), points);
+		
 		GraphConstants.setLineEnd(this.getAttributes(),
 				GraphConstants.ARROW_CLASSIC);
 		GraphConstants.setEndFill(this.getAttributes(), true);
 		
+	}
+	public void setPoints(List<Point2D.Double> points){
+		GraphConstants.setPoints(this.getAttributes(), points);
+	}
+	
+	public List<Point2D.Double> getPoints(){
+		return GraphConstants.getPoints(this.getAttributes());
 	}
 
 	public void addPoint()

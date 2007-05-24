@@ -130,4 +130,9 @@ public class WorkingView extends View
 	{
 	}
 
+	public void setBoard(Board board)
+	{
+		this.board = board;
+	}
+
 }

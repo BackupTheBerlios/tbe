@@ -118,10 +118,9 @@ public class WelcomeView extends View
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				// TODO: File öffnen
-				System.out.println(path);
 				tbe.setView(new WorkingView(new Sport()));
-				//tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
+				// TODO: file öffnen 
+				// tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
 			}
 		}
 		ArrayList<String> paths = getRecently();
@@ -149,6 +148,7 @@ public class WelcomeView extends View
 		TitledBorder newTitle = BorderFactory.createTitledBorder(welcomeViewLabels.getString("new"));
 		newPanel.setBorder(newTitle);
 		newPanel.setBackground(Color.WHITE);
+
 		// TODO: Sportarten auslesen
 		
 		gridbag.setConstraints(newPanel, constraints);

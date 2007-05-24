@@ -39,6 +39,11 @@ public class Board
 	{
 		return this.items;
 	}
+	
+	public void addItems(ItemComponent i)
+	{
+		this.items.add(i);
+	}
 
 	public void setPath(String path)
 	{
