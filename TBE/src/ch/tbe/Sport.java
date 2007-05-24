@@ -6,7 +6,14 @@ public class Sport
 {
 	private List<Field> fields;
 	private String name;
-
+	
+	public Sport(){}
+	
+	public Sport(String name)
+	{
+		this.name = name;
+	}
+	
 	public List<Field> getFields()
 	{
 		return this.fields;
@@ -16,7 +23,7 @@ public class Sport
 	{
 		return name;
 	}
-
+	
 	public void setName(String name)
 	{
 		this.name = name;
@@ -26,8 +33,5 @@ public class Sport
 	{
 		this.fields = fields;
 	}
-	
-	
-	
 }
  

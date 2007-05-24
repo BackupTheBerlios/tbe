@@ -29,7 +29,7 @@ public class TBE
 {
 	private static TBE instance = new TBE();
 	
-	private ArrayList sports;
+	private ArrayList<Sport> sports = new ArrayList<Sport>();
 	private String lang;
 	private String UserName;
 	private String UserPrename;
@@ -107,8 +107,11 @@ public class TBE
 		return this.view;
 	}
 	
-	public ArrayList getSports()
+	public ArrayList<Sport> getSports()
 	{
+		sports.add(new Sport("Fussball"));
+		sports.add(new Sport("Football"));
+		sports.add(new Sport("Unihockey"));
 		return sports;
 	}
 
