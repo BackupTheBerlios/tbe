@@ -31,7 +31,7 @@ public class WorkingView extends View
 
 	public WorkingView(Board board)
 	{
-		
+			
 	}
 
 	public WorkingView(Sport sport)

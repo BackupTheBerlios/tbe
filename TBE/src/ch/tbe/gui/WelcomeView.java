@@ -31,7 +31,6 @@ import ch.tbe.util.XMLHandler;
 
 public class WelcomeView extends View
 {
-	private ArrayList<String> paths = new ArrayList<String>();
 	private ResourceBundle welcomeViewLabels;
 	private TBE tbe = TBE.getInstance();
 	
@@ -39,18 +38,6 @@ public class WelcomeView extends View
 	{
 		welcomeViewLabels = getResourceBundle(lang);
 		createPanel();
-	}
-	 
-	public ArrayList<String> getRecently() 
-	{
-		// TODO: 6 Recently used Files auslesen
-		paths.add("file1.tbe");
-		paths.add("file2.tbe");
-		paths.add("file3.tbe");
-		paths.add("file4.tbe");
-		paths.add("file5.tbe");
-		paths.add("file6.tbe");
-		return paths;
 	}
 	
 	private ResourceBundle getResourceBundle(String lang)
@@ -84,6 +71,7 @@ public class WelcomeView extends View
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.insets = new Insets(50, 10, 0, 0);
 		
+		// WelcomeText
 		constraints.gridx=0; 
 		constraints.gridy=0;
 		constraints.gridheight = 1;
@@ -93,6 +81,7 @@ public class WelcomeView extends View
 		gridbag.setConstraints(titleLabel, constraints);
 		add(titleLabel);
 		
+		// Logo
 		constraints.gridx = 1;
 		constraints.gridy = 0;
 		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
@@ -101,6 +90,7 @@ public class WelcomeView extends View
 		gridbag.setConstraints(iconLabel, constraints);
 		add(iconLabel);
 		
+		// recentlyUsedFiles
 		constraints.gridx=0; 
 		constraints.gridy=1;
 		JPanel recentlyPanel = new JPanel();
@@ -124,7 +114,7 @@ public class WelcomeView extends View
 				// tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
 			}
 		}
-		ArrayList<String> paths = getRecently();
+		ArrayList<String> paths = tbe.getRecently();
 		JPanel pathPanel = new JPanel();
 		pathPanel.setLayout(new GridLayout(7,1));
 		pathPanel.setPreferredSize(new Dimension(300, 200));
@@ -143,13 +133,15 @@ public class WelcomeView extends View
 		gridbag.setConstraints(recentlyPanel, constraints);
 		add(recentlyPanel);
 		
+		// Sports
 		constraints.gridx=1; 
 		constraints.gridy=1;
 		JPanel newPanel = new JPanel();
 		TitledBorder newTitle = BorderFactory.createTitledBorder(welcomeViewLabels.getString("new"));
 		newPanel.setBorder(newTitle);
 		newPanel.setBackground(Color.WHITE);
-
+		
+		
 		// TODO: Sportarten auslesen
 		
 		gridbag.setConstraints(newPanel, constraints);

@@ -37,12 +37,11 @@ public class TBE
 	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
 	private JFrame frame;
+	private ArrayList<String> paths = new ArrayList<String>();
 	
 	private View view;
 
-	private TBE()
-	{
-	}
+	private TBE(){}
 	
 	public static TBE getInstance() 
 	{
@@ -109,6 +108,18 @@ public class TBE
 		return sports;
 	}
 
+	public ArrayList<String> getRecently() 
+	{
+		// TODO: 6 Recently used Files auslesen
+		paths.add("file1.tbe");
+		paths.add("file2.tbe");
+		paths.add("file3.tbe");
+		paths.add("file4.tbe");
+		paths.add("file5.tbe");
+		paths.add("file6.tbe");
+		return paths;
+	}
+	
 	public void createBoard(Sport sport)
 	{
 	}
@@ -170,19 +181,42 @@ public class TBE
 	{
 	}
 
-	public void setUser(String prename, String lastname, String email,
-			String language)
+	public void setUser(String prename, String lastname, String email)
 	{
 	}
 
+	public String setLang()
+	{
+		return lang;
+	}
+	
 	public String getLang()
 	{
 		return lang;
 	}
 
+	public ArrayList<String> getPaths()
+	{
+		return paths;
+	}
+
+	public void setPaths(ArrayList<String> paths)
+	{
+		this.paths = paths;
+	}
+
+	public void setLang(String lang)
+	{
+		this.lang = lang;
+	}
+
+	public void setSports(ArrayList sports)
+	{
+		this.sports = sports;
+	}
+	
 	public static void main(String[] args)
 	{
 		TBE.getInstance().initialize();
 	}
-
 }
