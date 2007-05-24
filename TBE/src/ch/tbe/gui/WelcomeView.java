@@ -170,6 +170,7 @@ public class WelcomeView extends View
 		sportPanel.setLayout(new GridLayout(7,1));
 		sportPanel.setPreferredSize(new Dimension(150, 200));
 		sportPanel.setBackground(Color.WHITE);
+		
 		for(Sport s : sports)
 		{
 			JLabel sportLabel = new JLabel(s.getName());

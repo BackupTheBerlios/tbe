@@ -55,10 +55,8 @@ public class WorkingView extends View
 		this.add(toolbar, BorderLayout.NORTH);
 		
 		// Attributebar
-		JToolBar attributebar = new JToolBar();
-		attributebar.setOrientation(1);
-		attributebar.add(new JLabel("Attributes"));
-		this.add(attributebar, BorderLayout.WEST);
+		JToolBar sideBar = new SideBar(board);
+		this.add(sideBar, BorderLayout.WEST);
 		
 		// gemeinsames Panel für Board und Legend
 		JPanel rightPanel = new JPanel();

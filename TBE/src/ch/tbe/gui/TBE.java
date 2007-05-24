@@ -64,7 +64,7 @@ public class TBE
 		}
 		
 		XMLHandler.loadTBESettings();
-		sports = XMLHandler.getSports();
+		this.sports = XMLHandler.getSports();
 		
 		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
 		// PropertiesFile ausgelesen
@@ -106,6 +106,7 @@ public class TBE
 	
 	public ArrayList<Sport> getSports()
 	{
+		System.out.println(sports);
 		return sports;
 	}
 
@@ -209,7 +210,7 @@ public class TBE
 		this.lang = lang;
 	}
 
-	public void setSports(ArrayList sports)
+	public void setSports(ArrayList<Sport> sports)
 	{
 		this.sports = sports;
 	}

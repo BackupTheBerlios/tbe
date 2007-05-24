@@ -4,6 +4,8 @@ import java.io.* ;
 import java.util.ArrayList;
 import java.util.List;
 
+import ch.tbe.gui.Menu;
+
 public final class FileSystemHandler
 {
 	private FileSystemHandler(){}
@@ -12,16 +14,15 @@ public final class FileSystemHandler
 		ArrayList<String> sports = new ArrayList<String>();
 		 
 		// Create a file object for your root directory
-		File f1 = new File ("src/tbe/config/sport/");
+		String folderPath = Menu.class.getResource("../config/sport").getPath();
+		File f1 = new File(folderPath);
 		
 		// Get all the files and directory under your diretcory
 		File[] strFilesDirs = f1.listFiles ( );
 		
-		System.out.println(strFilesDirs);
-		 
 		for ( int i = 0 ; i < strFilesDirs.length ; i ++ ) {
 			if ( strFilesDirs[i].isDirectory()){ 
-				sports.add(strFilesDirs[i].toString());
+				sports.add(strFilesDirs[i].getName());
 			}
 		}
 		return sports;

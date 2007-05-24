@@ -1,0 +1,17 @@
+# Title Attribute
+attr = Attributes
+
+# new
+new = new Attribut
+
+# Title
+title = Title
+
+# Text
+text = Text
+
+# cancel
+cancel = Cancel
+
+# Save
+save = Save

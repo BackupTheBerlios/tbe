@@ -9,6 +9,7 @@ import ch.tbe.FTPServer;
 import ch.tbe.Field;
 import ch.tbe.ShapeType;
 import ch.tbe.Sport;
+import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
 
 import java.io.*;
@@ -23,6 +24,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public final class XMLHandler{
 	private XMLHandler(){}
+	private static ArrayList<Sport> sports = new ArrayList<Sport>();
 
 	public static void loadTBESettings(){
 		
@@ -35,7 +37,7 @@ public final class XMLHandler{
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse( new File("src/ch/tbe/config/tbe.config"), handler );
+					saxParser.parse( new File(Menu.class.getResource("../config/tbe.config").getPath()), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
 				}
@@ -74,33 +76,35 @@ public final class XMLHandler{
 	}
 	
 	public static ArrayList<Sport> getSports(){
-		ArrayList<Sport> sports = new ArrayList<Sport>(); 
 		ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
 		
+		System.out.println(installedSports);
+		sports.clear();
 		for (int i=0; i<= installedSports.size() -1; i++){
-			sports.add(openSport(installedSports.get(i)));
+			openSport(installedSports.get(i));
 		}
 		
+		System.out.print(sports);
 		return sports;
 	}
 	
-	private static Sport openSport(String sport) {
+	private static void openSport(String sport) {
 		class SaxHandler extends DefaultHandler{
 			private ArrayList<ShapeType> shapes = new ArrayList<ShapeType>();
 			private ArrayList<ArrowType> arrows = new ArrayList<ArrowType>();
 			private ArrayList<Field> fields = new ArrayList<Field>();
 			private Sport actSport;
 			
-			public Sport loadSport(String sport){
+			public void loadSport(String sport){
 				DefaultHandler handler = new SaxHandler();
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse( new File("src/ch/tbe/config/sport/"+sport+"/sport.config"), handler );
+					String filePath = Menu.class.getResource("../config/sport/"+sport+"/sport.config").getPath();
+					saxParser.parse( new File(filePath), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
 				}
-				return actSport;
 			}
 			
 			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
@@ -131,11 +135,16 @@ public final class XMLHandler{
 				actSport.setShapeTypes(shapes);
 				actSport.setArrowTypes(arrows);
 				actSport.setFields(fields);
+				System.out.println(actSport);
+				addSport(actSport);
 			}
 		}
 		
 		SaxHandler xml = new SaxHandler();
-		return xml.loadSport("");
+		xml.loadSport(sport);
+	}
+	private static void addSport(Sport sport){
+		sports.add(sport);
 	}
 	 
 	public static void saveSettings(String prename, String lastname, String email, String language) {
