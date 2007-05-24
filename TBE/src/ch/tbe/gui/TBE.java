@@ -237,6 +237,5 @@ public class TBE
 	
 	public void setFTPServers(List<FTPServer> servers){
 		this.servers = servers;
-		System.out.println("Ich bin ein Server");
 	}
 }

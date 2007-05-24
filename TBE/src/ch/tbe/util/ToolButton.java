@@ -24,10 +24,9 @@ import ch.tbe.framework.Tool;
  * 
  * @author Eric Dubuis
  */
-public class ToolButton extends JButton implements MouseListener,
-		MouseMotionListener {
+public class ToolButton extends JButton  {
 
-
+/**
 	private Icon icon;
 
 	private Editor editor;
@@ -136,5 +135,5 @@ public class ToolButton extends JButton implements MouseListener,
 				
 			}
 		}
-	}
+	} */
 }

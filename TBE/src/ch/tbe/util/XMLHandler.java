@@ -57,7 +57,7 @@ public class XMLHandler{
 			}
 			
 			public void endDocument() throws SAXException {
-				
+				tbe.setFTPServers(servers);
 			}
 		}
 		
