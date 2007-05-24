@@ -184,11 +184,6 @@ public class TBE
 	public void setUser(String prename, String lastname, String email)
 	{
 	}
-
-	public String setLang()
-	{
-		return lang;
-	}
 	
 	public String getLang()
 	{
