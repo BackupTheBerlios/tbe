@@ -2,6 +2,8 @@ package ch.tbe;
 
 import java.util.ArrayList;
 
+import ch.tbe.framework.ArrowTool;
+
 public class ToolFactory {
 	
 	private ToolFactory(){};
@@ -13,7 +15,7 @@ public class ToolFactory {
 		return shapeTools;
 	}
 	public static ArrayList<ArrowTool> getArrowItemTools(){
-		
+		return null;
 	}
 	public static TextBoxTool getTextBoxTool(){
 		return new TextBoxTool();

@@ -2,7 +2,7 @@ package ch.tbe.framework;
 
 import java.awt.event.MouseEvent;
 
-public class ArrowItemTool implements Tool
+public class ArrowTool implements Tool
 {
 	protected final int DEFAULTLENGTH = 20;
 

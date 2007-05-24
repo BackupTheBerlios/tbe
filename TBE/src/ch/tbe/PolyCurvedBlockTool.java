@@ -5,11 +5,11 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.tbe.framework.ArrowItemTool;
+import ch.tbe.framework.ArrowTool;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 
-public class PolyCurvedBlockTool extends ArrowItemTool {
+public class PolyCurvedBlockTool extends ArrowTool {
  
 	public void mouseDown(int x, int y, MouseEvent e)
 	{

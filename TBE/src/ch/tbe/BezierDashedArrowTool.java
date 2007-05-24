@@ -5,12 +5,12 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.tbe.framework.ArrowItemTool;
+import ch.tbe.framework.ArrowTool;
 
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 
-public class BezierDashedArrowTool extends ArrowItemTool
+public class BezierDashedArrowTool extends ArrowTool
 {
 
 	public void mouseDown(int x, int y, MouseEvent e)
