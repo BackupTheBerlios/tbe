@@ -8,6 +8,7 @@ import ch.tbe.jgraph.graph.GraphConstants;
 
 public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 {
+	protected final int DEFAULTLENGTH = 20;
 
 	protected ArrowItem()
 	{
@@ -33,7 +34,7 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 		double lastY = ((Point2D) GraphConstants
 				.getPoints(this.getAttributes()).get(size - 1)).getY();
 		GraphConstants.getPoints(this.getAttributes()).add(
-				new Point2D.Double(lastX + 10, lastY));
+				new Point2D.Double(lastX + DEFAULTLENGTH, lastY));
 
 	}
 
