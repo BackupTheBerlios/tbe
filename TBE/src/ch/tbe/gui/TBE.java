@@ -85,18 +85,11 @@ public class TBE
 	public void setView(View newView)
 	{
 		if(view != null)
-		{
 			frame.remove(this.view);
-			frame.repaint();
-		}
 		this.view = newView;
 		frame.add(view);
-		frame.repaint();
-		Component[] components = frame.getComponents();
-		for(Component c : components)
-		{
-			c.repaint();
-		}
+		frame.setVisible(false);
+		frame.setVisible(true);
 	}
 	
 	public View getView()
