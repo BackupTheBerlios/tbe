@@ -6,8 +6,6 @@ import java.util.List;
 
 public final class FileSystemHandler
 {
-	private static FileSystemHandler instance = null;
-	 
 	private FileSystemHandler(){}
 	
 	public static ArrayList<String> getInstalledSports(){
