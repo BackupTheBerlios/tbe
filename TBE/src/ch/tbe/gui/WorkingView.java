@@ -20,9 +20,9 @@ import javax.swing.JScrollPane;
 
 import ch.tbe.Sport;
 
-public class WorkingView extends JPanel implements View
+public class WorkingView extends View
 {
-	private TBE tbe;
+	private TBE tbe = TBE.getInstance();
 	private Invoker invoker;
 	private Board board;
 	private Tool currentTool;
@@ -31,11 +31,11 @@ public class WorkingView extends JPanel implements View
 
 	public WorkingView(Board board)
 	{
+		
 	}
 
-	public WorkingView(TBE tbe, Sport sport)
-	{	
-		this.tbe = tbe;
+	public WorkingView(Sport sport)
+	{
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model, new DefaultCellViewFactory());
 		JGraph graph = new JGraph(model, view);

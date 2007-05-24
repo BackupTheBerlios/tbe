@@ -25,17 +25,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import ch.tbe.Sport;
 import ch.tbe.framework.View;
+import ch.tbe.util.XMLHandler;
 
-public class WelcomeView extends JPanel implements View
+public class WelcomeView extends View
 {
 	private ArrayList<String> paths = new ArrayList<String>();
 	private ResourceBundle welcomeViewLabels;
-	private TBE tbe;
+	private TBE tbe = TBE.getInstance();
 	
-	public WelcomeView(TBE tbe, ArrayList sports, String lang) 
+	public WelcomeView(ArrayList sports, String lang) 
 	{
-		this.tbe = tbe;
 		welcomeViewLabels = getResourceBundle(lang);
 		createPanel();
 	}
@@ -119,7 +120,8 @@ public class WelcomeView extends JPanel implements View
 			{
 				// TODO: File öffnen
 				System.out.println(path);
-				tbe.openWorkingView(path);
+				tbe.setView(new WorkingView(new Sport()));
+				//tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
 			}
 		}
 		ArrayList<String> paths = getRecently();

@@ -1,6 +1,8 @@
 package ch.tbe.framework;
 
-public interface View
+import javax.swing.JPanel;
+
+public abstract class View extends JPanel 
 {
  
 }
