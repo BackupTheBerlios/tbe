@@ -14,6 +14,7 @@ public class PolyDashedArrowItem extends ArrowItem
 	{
 
 		GraphConstants.setDashPattern(this.getAttributes(), DASH);
+		setPoints(points);
 	}
 
 }

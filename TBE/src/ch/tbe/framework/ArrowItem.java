@@ -18,11 +18,11 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 		GraphConstants.setEndFill(this.getAttributes(), true);
 		
 	}
-	public void setPoints(List<Point2D.Double> points){
+	public void setPoints(List<Point2D> points){
 		GraphConstants.setPoints(this.getAttributes(), points);
 	}
 	
-	public List<Point2D.Double> getPoints(){
+	public List<Point2D> getPoints(){
 		return GraphConstants.getPoints(this.getAttributes());
 	}
 

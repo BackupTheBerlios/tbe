@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 
 public class ArrowItemTool implements Tool
 {
+	protected final int DEFAULTLENGTH = 20;
 
 	public void activate()
 	{

@@ -12,7 +12,7 @@ public class PolySolidBlockItem extends ArrowItem
 	{
 
 		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_BLOCK);
-
+		setPoints(points);
 	}
 
 }

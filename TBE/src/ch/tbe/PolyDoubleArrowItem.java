@@ -13,6 +13,7 @@ public class PolyDoubleArrowItem extends ArrowItem
 
 		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_DOUBLELINE);
+		setPoints(points);
 	}
 
 }

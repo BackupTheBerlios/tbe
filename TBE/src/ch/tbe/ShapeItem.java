@@ -11,7 +11,7 @@ import ch.tbe.jgraph.graph.GraphConstants;
 public class ShapeItem extends DefaultGraphCell implements ItemComponent
 {
 
-	public ShapeItem(Icon icon, Point2D.Double p)
+	public ShapeItem(Icon icon, Point2D p)
 	{
 
 		GraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p.getX(),p.getY(),icon.getIconWidth(),icon.getIconHeight()));

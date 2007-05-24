@@ -2,6 +2,8 @@ package ch.tbe;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import ch.tbe.framework.ArrowItemTool;
 
@@ -14,6 +16,10 @@ public class BezierDashedArrowTool extends ArrowItemTool
 	public void mouseDown(int x, int y, MouseEvent e)
 	{
 
-		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(new BezierDashedArrowItem(new Point2D.Double(x,y)));
+		List<Point2D> points = new ArrayList<Point2D>();
+		points.add(new Point2D.Double(x,y));
+		points.add(new Point2D.Double(x+DEFAULTLENGTH,y+DEFAULTLENGTH));
+		points.add(new Point2D.Double(x+2*DEFAULTLENGTH,y));
+		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(new BezierDashedArrowItem(points));
 	}
 }

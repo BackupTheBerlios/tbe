@@ -86,7 +86,32 @@ public class XMLHandler{
 	}
 	
 	private Sport openSport(String path) {
-		return null;
+		class SaxHandler extends DefaultHandler{
+			private TBE tbe = TBE.getInstance();
+			private List<FTPServer> servers = new ArrayList<FTPServer>();
+			private Sport actSport;
+			
+			public Sport loadSport(String filename){
+				DefaultHandler handler = new SaxHandler();
+				
+				try{
+					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+					saxParser.parse( new File(filename), handler );
+				}catch( Throwable t ) {
+					t.printStackTrace();
+				}
+				return actSport;
+			}
+			
+			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
+				if (qName.equals("sport")){
+					atts.getValue("prename").toString();
+				}	
+			}
+		}
+		
+		SaxHandler xml = new SaxHandler();
+		return xml.loadSport("");
 	}
 	 
 	public void saveSettings(String prename, String lastname, String email, String language) {

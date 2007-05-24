@@ -14,6 +14,7 @@ public class PolyCurvedArrowItem extends ArrowItem
 
 		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_CURVED);
+		setPoints(points);
 	}
 
 }

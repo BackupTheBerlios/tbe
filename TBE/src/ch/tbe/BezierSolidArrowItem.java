@@ -12,6 +12,7 @@ public class BezierSolidArrowItem extends ArrowItem
 	{
 		GraphConstants.setLineStyle(this.getAttributes(),
 				GraphConstants.STYLE_BEZIER);
+		setPoints(points);
 
 	}
 
