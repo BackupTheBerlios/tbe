@@ -4,23 +4,17 @@ import java.io.* ;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileSystemHandler
+public final class FileSystemHandler
 {
 	private static FileSystemHandler instance = null;
 	 
 	private FileSystemHandler(){}
 	
-	public static FileSystemHandler getInstance() {
-		if(instance == null) {
-			instance = new FileSystemHandler();
-		}
-		return instance;
-	}
-	public List<String> getInstalledSports(String strSportDirectory){
-		List<String> sports = new ArrayList<String>();
+	public static ArrayList<String> getInstalledSports(){
+		ArrayList<String> sports = new ArrayList<String>();
 		 
 		// Create a file object for your root directory
-		File f1 = new File ( strSportDirectory ) ;
+		File f1 = new File ("src/tbe/config/sport");
 		
 		// Get all the files and directory under your diretcory
 		File[] strFilesDirs = f1.listFiles ( );

@@ -84,11 +84,12 @@ public class XMLHandler{
 	}
 	
 	public List<Sport> getSports(){
-		List<Sport> sports = new ArrayList<Sport>();
+		ArrayList<Sport> sports = new ArrayList<Sport>(); 
+		ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
 		
-		// TO DO:
-		// sportarten auslesen und für jede sportart openSport ausführen
-		sports.add(openSport("path"));
+		for (int i=0; i<= installedSports.size() -1; i++){
+			sports.add(openSport(installedSports.get(i)));
+		}
 		
 		return sports;
 	}
