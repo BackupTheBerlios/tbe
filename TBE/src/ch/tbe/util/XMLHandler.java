@@ -36,7 +36,6 @@ public class XMLHandler{
 				DefaultHandler handler = new SaxHandler();
 				
 				try{
-					System.out.println("Start reading xml-File");
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 					saxParser.parse( new File("src/ch/tbe/config/tbe.config"), handler );
 				}catch( Throwable t ) {
@@ -76,7 +75,17 @@ public class XMLHandler{
 		return null;
 	}
 	
-	public Sport openSport(String path) {
+	public List<Sport> getSports(){
+		List<Sport> sports = new ArrayList<Sport>();
+		
+		// TO DO:
+		// sportarten auslesen und für jede sportart openSport ausführen
+		sports.add(openSport("path"));
+		
+		return sports;
+	}
+	
+	private Sport openSport(String path) {
 		return null;
 	}
 	 
