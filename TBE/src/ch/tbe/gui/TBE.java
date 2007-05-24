@@ -51,7 +51,7 @@ public class TBE
 		return instance;
 	}
 	
-	private void initialize()
+	public void initialize()
 	{
 		SplashScreen splashScreen = null;
 		try

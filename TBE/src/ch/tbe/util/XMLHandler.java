@@ -37,7 +37,7 @@ public final class XMLHandler{
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse( new File(Menu.class.getResource("../config/tbe.config").getPath()), handler );
+					saxParser.parse( new File("src/ch/tbe/config/tbe.config"), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
 				}
@@ -80,7 +80,7 @@ public final class XMLHandler{
 		
 		System.out.println(installedSports);
 		sports.clear();
-		for (int i=0; i<= installedSports.size() -1; i++){
+		for (int i=0; i< installedSports.size(); i++){
 			openSport(installedSports.get(i));
 		}
 		
@@ -100,7 +100,7 @@ public final class XMLHandler{
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					String filePath = Menu.class.getResource("../config/sport/"+sport+"/sport.config").getPath();
+					String filePath = "src/ch/tbe/config/sport/"+sport+"/sport.config";
 					saxParser.parse( new File(filePath), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
