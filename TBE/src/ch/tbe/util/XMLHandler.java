@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import ch.tbe.ArrowType;
 import ch.tbe.Board;
 import ch.tbe.FTPServer;
+import ch.tbe.Field;
+import ch.tbe.ShapeType;
 import ch.tbe.Sport;
 import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
 
 import java.io.*;
+import java.net.URL;
+
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.xml.parsers.*;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
@@ -86,18 +93,20 @@ public class XMLHandler{
 		return sports;
 	}
 	
-	private Sport openSport(String path) {
+	private Sport openSport(String sport) {
 		class SaxHandler extends DefaultHandler{
 			private TBE tbe = TBE.getInstance();
-			private List<FTPServer> servers = new ArrayList<FTPServer>();
+			private ArrayList<ShapeType> shapes = new ArrayList<ShapeType>();
+			private ArrayList<ArrowType> arrows = new ArrayList<ArrowType>();
+			private ArrayList<Field> fields = new ArrayList<Field>();
 			private Sport actSport;
 			
-			public Sport loadSport(String filename){
+			public Sport loadSport(String sport){
 				DefaultHandler handler = new SaxHandler();
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse( new File(filename), handler );
+					saxParser.parse( new File("src/ch/tbe/config/sport/"+sport+"/sport.config"), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
 				}
@@ -106,8 +115,32 @@ public class XMLHandler{
 			
 			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
 				if (qName.equals("sport")){
-					atts.getValue("prename").toString();
-				}	
+					actSport = new Sport(atts.getValue("name"));
+					actSport.setVersion(atts.getValue("version"));
+					actSport.setLcVersion(atts.getValue("lastCompatibleVersion"));
+				}
+
+				if (actSport != null){
+					if (qName.equals("shape")){
+						URL imgURL = TBE.class.getResource("../config/sport/"+actSport.getName()+"/"+ atts.getValue("picture"));
+						Icon actIcon = new ImageIcon(imgURL);
+						shapes.add(new ShapeType(atts.getValue("name"), actIcon, atts.getValue("description")));
+					}
+					
+					if (qName.equals("arrow")){
+						arrows.add(new ArrowType(atts.getValue("type"), atts.getValue("description")));
+					}
+					
+					if (qName.equals("field")){
+						fields.add(new Field(atts.getValue("name"), atts.getValue("picture")));
+					}
+				}
+			}
+			
+			public void endDocument() throws SAXException {
+				actSport.setShapeTypes(shapes);
+				actSport.setArrowTypes(arrows);
+				actSport.setFields(fields);
 			}
 		}
 		

@@ -8,6 +8,8 @@ public class Sport
 	private ArrayList<ArrowType> arrows;
 	private ArrayList<ShapeType> shapes;
 	private String name;
+	private String version;
+	private String lcVersion;
 	
 	public Sport(String name)
 	{
@@ -44,6 +46,22 @@ public class Sport
 	}
 	public ArrayList<ArrowType> getArrowTypes(){
 		return this.arrows;
+	}
+	public String getLcVersion()
+	{
+		return lcVersion;
+	}
+	public void setLcVersion(String lcVersion)
+	{
+		this.lcVersion = lcVersion;
+	}
+	public String getVersion()
+	{
+		return version;
+	}
+	public void setVersion(String version)
+	{
+		this.version = version;
 	}
 }
  
