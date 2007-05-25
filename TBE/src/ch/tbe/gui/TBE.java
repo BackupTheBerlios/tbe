@@ -93,13 +93,6 @@ public class TBE
 
 	public List<String> getRecently() 
 	{
-		// TODO: 6 Recently used Files auslesen
-		paths.add("file1.tbe");
-		paths.add("file2.tbe");
-		paths.add("file3.tbe");
-		paths.add("file4.tbe");
-		paths.add("file5.tbe");
-		paths.add("file6.tbe");
 		return paths;
 	}
 	
@@ -150,54 +143,43 @@ public class TBE
 	{
 	}
 
-	public void addFTPServer(String name, String host, int port,
-			String username, String password)
-	{
+	public void addFTPServer(String name, String host, int port, String username, String password){
 	}
 
-	public void editFTPServer(String name, String host, int port,
-			String username, String password)
-	{
+	public void editFTPServer(String name, String host, int port, String username, String password){
 	}
 
 	public void removeFTPServer(String name)
 	{
 	}
 
-	public void setUser(String prename, String lastname, String email)
-	{
+	public void setUser(String prename, String lastname, String email){
 		this.UserName = lastname;
 		this.UserPrename = prename;
 		this.UserEmail = email;
 	}
 	
-	public String getLang()
-	{
+	public String getLang(){
 		return lang;
 	}
 
-	public List<String> getPaths()
-	{
+	public List<String> getPaths(){
 		return paths;
 	}
 
-	public void setPaths(ArrayList<String> paths)
-	{
+	public void setPaths(ArrayList<String> paths){
 		this.paths = paths;
 	}
 
-	public void setLang(String lang)
-	{
+	public void setLang(String lang){
 		this.lang = lang;
 	}
 
-	public void setSports(ArrayList<Sport> sports)
-	{
+	public void setSports(ArrayList<Sport> sports){
 		this.sports = sports;
 	}
 	
-	public static void main(String[] args)
-	{
+	public static void main(String[] args){
 		TBE.getInstance().initialize();
 	}
 	
@@ -214,7 +196,4 @@ public class TBE
 	public void setFTPServers(List<FTPServer> servers){
 		this.servers = servers;
 	}
-	
-
-	
 }

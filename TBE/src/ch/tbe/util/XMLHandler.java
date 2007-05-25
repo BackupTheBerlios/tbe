@@ -28,7 +28,8 @@ public final class XMLHandler{
 		
 		class SaxHandler extends DefaultHandler{
 			private TBE tbe = TBE.getInstance();
-			private List<FTPServer> servers = new ArrayList<FTPServer>();
+			private ArrayList<FTPServer> servers = new ArrayList<FTPServer>();
+			private ArrayList<String> paths = new ArrayList<String>();
 			
 			public void loadTBESettings(){
 				DefaultHandler handler = new SaxHandler();
@@ -50,11 +51,16 @@ public final class XMLHandler{
 				}
 				if (qName.equals("server")){
 					servers.add(new FTPServer(atts.getValue("name").toString(), atts.getValue("host").toString(), Integer.valueOf(atts.getValue("port")).intValue(), atts.getValue("username").toString(), atts.getValue("password").toString()));
-				}	
+				}
+				
+				if (qName.equals("recentlyOpened")){
+					paths.add(atts.getValue("path").toString());
+				}
 			}
 			
 			public void endDocument() throws SAXException {
 				tbe.setFTPServers(servers);
+				tbe.setPaths(paths);
 			}
 		}
 		
