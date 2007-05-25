@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Sport 
 {
 	private ArrayList<Field> fields;
-	private ArrayList<ArrowType> arrows;
+	private ArrayList<ShapeType> arrows;
 	private ArrayList<ShapeType> shapes;
 	private String name;
 	private String version;
@@ -33,7 +33,7 @@ public class Sport
 	{
 		this.fields = fields;
 	}
-	public void setArrowTypes(ArrayList<ArrowType> arrows){
+	public void setArrowTypes(ArrayList<ShapeType> arrows){
 		this.arrows = arrows;
 	}
 	
@@ -44,7 +44,7 @@ public class Sport
 	public ArrayList<ShapeType> getShapeTypes(){
 		return this.shapes;
 	}
-	public ArrayList<ArrowType> getArrowTypes(){
+	public ArrayList<ShapeType> getArrowTypes(){
 		return this.arrows;
 	}
 	public String getLcVersion()

@@ -3,13 +3,11 @@ package ch.tbe.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import ch.tbe.ArrowType;
 import ch.tbe.Board;
 import ch.tbe.FTPServer;
 import ch.tbe.Field;
 import ch.tbe.ShapeType;
 import ch.tbe.Sport;
-import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
 
 import java.io.*;
@@ -91,7 +89,7 @@ public final class XMLHandler{
 	private static void openSport(String sport) {
 		class SaxHandler extends DefaultHandler{
 			private ArrayList<ShapeType> shapes = new ArrayList<ShapeType>();
-			private ArrayList<ArrowType> arrows = new ArrayList<ArrowType>();
+			private ArrayList<ShapeType> arrows = new ArrayList<ShapeType>();
 			private ArrayList<Field> fields = new ArrayList<Field>();
 			private Sport actSport;
 			
@@ -118,11 +116,16 @@ public final class XMLHandler{
 					if (qName.equals("shape")){
 						URL imgURL = TBE.class.getResource("../config/sport/"+actSport.getName()+"/"+ atts.getValue("picture"));
 						Icon actIcon = new ImageIcon(imgURL);
-						shapes.add(new ShapeType(atts.getValue("name"), actIcon, atts.getValue("description")));
+						shapes.add(new ShapeType(atts.getValue("name"), atts.getValue("description"),actIcon));
 					}
 					
 					if (qName.equals("arrow")){
-						arrows.add(new ArrowType(atts.getValue("type"), atts.getValue("description")));
+						
+						//TODO
+						//ARROW ICON !!!
+						URL imgURL = TBE.class.getResource("../config/sport/"+actSport.getName()+"/"+ atts.getValue("picture"));
+						Icon actIcon = new ImageIcon(imgURL);
+						arrows.add(new ShapeType(atts.getValue("type"), atts.getValue("description"),actIcon));
 					}
 					
 					if (qName.equals("field")){

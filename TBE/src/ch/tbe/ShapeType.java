@@ -10,7 +10,7 @@ public class ShapeType implements ItemType
 	private Icon icon;
 	private String name;
 	
-	public ShapeType(String name, Icon icon, String description){
+	public ShapeType(String name, String description, Icon icon){
 		this.name = name;
 		this.icon = icon;
 		this.description = description;

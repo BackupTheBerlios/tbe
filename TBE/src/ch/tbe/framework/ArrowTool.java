@@ -3,9 +3,16 @@ package ch.tbe.framework;
 import java.awt.event.MouseEvent;
 
 import javax.swing.Icon;
+import ch.tbe.ShapeType;
 
-public class ArrowTool implements Tool
+public abstract class ArrowTool extends Tool
 {
+	public ArrowTool(ShapeType shapeType)
+	{
+		super(shapeType);
+		// TODO Auto-generated constructor stub
+	}
+
 	protected final int DEFAULTLENGTH = 20;
 	
 
