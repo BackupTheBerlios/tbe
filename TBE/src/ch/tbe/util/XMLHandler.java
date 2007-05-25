@@ -76,13 +76,11 @@ public final class XMLHandler{
 	public static ArrayList<Sport> getSports(){
 		ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
 		
-		System.out.println(installedSports);
 		sports.clear();
 		for (int i=0; i< installedSports.size(); i++){
 			openSport(installedSports.get(i));
 		}
 		
-		System.out.print(sports);
 		return sports;
 	}
 	
@@ -138,7 +136,6 @@ public final class XMLHandler{
 				actSport.setShapeTypes(shapes);
 				actSport.setArrowTypes(arrows);
 				actSport.setFields(fields);
-				System.out.println(actSport);
 				addSport(actSport);
 			}
 		}

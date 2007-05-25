@@ -88,7 +88,6 @@ public class TBE
 	
 	public ArrayList<Sport> getSports()
 	{
-		System.out.println(sports);
 		return sports;
 	}
 
