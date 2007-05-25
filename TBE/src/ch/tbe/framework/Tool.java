@@ -8,7 +8,7 @@ import ch.tbe.ShapeType;
 
 public abstract class Tool {
 	
-	private ShapeType shapeType;
+	protected ShapeType shapeType;
 	
 	public Tool(ShapeType shapeType)
 	{

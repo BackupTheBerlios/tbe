@@ -1,7 +1,14 @@
 package ch.tbe.gui;
 
+import ch.tbe.Attribute;
 import ch.tbe.Invoker;
 import ch.tbe.Board;
+import ch.tbe.PolyDoubleArrowTool;
+import ch.tbe.ShapeTool;
+import ch.tbe.ShapeType;
+
+import ch.tbe.ToolFactory;
+import ch.tbe.framework.ArrowTool;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
@@ -11,20 +18,20 @@ import ch.tbe.jgraph.graph.DefaultGraphCell;
 import ch.tbe.jgraph.graph.DefaultGraphModel;
 import ch.tbe.jgraph.graph.GraphLayoutCache;
 import ch.tbe.jgraph.graph.GraphModel;
-import ch.tbe.util.ToolButton;
-import ch.tbe.Attribute;
 import ch.tbe.Field;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import ch.tbe.Sport;
@@ -35,10 +42,13 @@ public class WorkingView extends View
 	private Invoker invoker;
 	private Board board;
 	private Tool currentTool;
+	private JButton currentButton;
 	private ItemComponent currentItem;
 	private Attribute currentAttribute;
 	private JToolBar toolbar = new JToolBar();
-	private List<ToolButton> toolButtons = new ArrayList<ToolButton>();
+	private List<JButton> toolButtons = new ArrayList<JButton>();
+	private JPanel rightPanel;
+	private JGraph graph;
 
 	public WorkingView(Board board)
 	{
@@ -51,7 +61,6 @@ public class WorkingView extends View
 		this.setBackground(Color.WHITE);
 
 		// Toolbar
-		toolbar.add(new JButton("Tool 1"));
 		this.add(toolbar, BorderLayout.NORTH);
 
 		// Attributebar
@@ -59,29 +68,68 @@ public class WorkingView extends View
 		this.add(sideBar, BorderLayout.WEST);
 
 		// gemeinsames Panel für Board und Legend
-		JPanel rightPanel = new JPanel();
+		rightPanel = new JPanel();
 		rightPanel.setLayout(new BorderLayout());
 
 		// Board
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new DefaultCellViewFactory());
-		JGraph graph = new JGraph(model, view);
-
-		// TODO this is only for testing (by David Meier)
+		graph = new JGraph(model, view);
 
 		this.board = new Board(new Field("", ""));
-		List<ItemComponent> items = board.getItems();
 
-		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
-		for (int i = 0; i < items.size(); i++)
+		rightPanel.add(graph, BorderLayout.CENTER);
+		class ViewMouseListener implements MouseListener
 		{
-			cells[i] = (DefaultGraphCell) items.get(i);
+
+			public void mouseClicked(MouseEvent e)
+			{
+
+			}
+
+			public void mouseEntered(MouseEvent e)
+			{
+
+			}
+
+			public void mouseExited(MouseEvent e)
+			{
+
+			}
+
+			public void mousePressed(MouseEvent e)
+			{
+
+				Point p = new Point(e.getX(), e.getY());
+				((WorkingView) TBE.getInstance().getView()).getTool()
+						.mouseDown(p.x, p.y, e);
+			}
+
+			public void mouseReleased(MouseEvent e)
+			{
+
+				Point p = new Point(e.getX(), e.getY());
+				((WorkingView) TBE.getInstance().getView()).getTool().mouseUp(
+						p.x, p.y, e);
+				((WorkingView) TBE.getInstance().getView()).getTool()
+						.mouseOver(p.x, p.y, e);
+			}
 		}
-
-		graph.getGraphLayoutCache().insert(cells);
-		rightPanel.add(new JScrollPane(graph), BorderLayout.CENTER);
-
+		this.installToolInToolBar(toolbar, ToolFactory.getCursorTool());
+		this.installToolInToolBar(toolbar, new PolyDoubleArrowTool(
+				new ShapeType("DoubleArrow", "", null))); //TODO only for debugging
+		
+		for (ShapeTool s : ToolFactory.getShapeTools(sport))
+		{
+			this.installToolInToolBar(toolbar, s);
+		}
+		for (ArrowTool a : ToolFactory.getArrowTools(sport))
+		{
+			this.installToolInToolBar(toolbar, a);
+		}
+		
+		graph.addMouseListener(new ViewMouseListener());
 		// END
 
 		// Legend
@@ -98,7 +146,7 @@ public class WorkingView extends View
 
 	public Board getBoard()
 	{
-		return null;
+		return this.board;
 	}
 
 	public void changeField(Field field)
@@ -176,39 +224,62 @@ public class WorkingView extends View
 
 	public void installToolInToolBar(JToolBar toolbar, final Tool tool)
 	{
-		ToolButton button;
-		button = new ToolButton(tool);
+		final JButton button;
+		button = new JButton();
+		// button.setIcon(tool.getShapeType().getIcon());
+		// button.setToolTipText(tool.getShapeType().getName());
+		button.setText("Test"); // For Debugging
 		toolbar.add(button);
 		toolButtons.add(button);
 		button.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				WorkingView.this.setTool(tool);
+
+				WorkingView.this.setTool(tool, button);
+
 			}
 
 		});
 	}
 
-	public void setTool(Tool tool)
+	public void setTool(Tool tool, JButton button)
 	{
+
 		if (tool == null)
 			throw new IllegalArgumentException("Tool must not be null.");
 
 		if (this.currentTool != tool)
 		{
-			if (this.currentTool != null)
-				this.currentTool.deactivate();
-			this.currentTool = tool;
-			this.currentTool.activate();
+			if (this.currentButton != null)
+			{
+				this.currentButton.setEnabled(true);
+			}
+			this.currentButton = button;
+			// TODO button.setDisabledIcon(arg0);
 
-			repaint();
+			this.currentTool = tool;
+
 		}
 	}
 
 	public Tool getTool()
 	{
 		return this.currentTool;
+	}
+
+	public void refresh()
+	{
+
+		List<ItemComponent> items = board.getItems();
+
+		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
+		for (int i = 0; i < items.size(); i++)
+		{
+			cells[i] = (DefaultGraphCell) items.get(i);
+		}
+		graph.getGraphLayoutCache().insert(cells);
+
 	}
 
 }

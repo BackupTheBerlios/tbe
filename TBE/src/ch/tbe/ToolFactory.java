@@ -4,9 +4,14 @@ import java.util.ArrayList;
 
 import ch.tbe.framework.ArrowTool;
 
-public class ToolFactory {
+public final class ToolFactory {
 	
 	private ToolFactory(){};
+	
+	public static CursorTool getCursorTool(){
+		return new CursorTool(null); //TODO Icon ???
+	}
+	
 	public static ArrayList<ShapeTool> getShapeTools(Sport sport){
 		ArrayList<ShapeTool> shapeTools = new ArrayList<ShapeTool>();
 		for(ShapeType types : sport.getShapeTypes()){
@@ -34,7 +39,7 @@ public class ToolFactory {
 		return arrowTools;
 	}
 	public static TextBoxTool getTextBoxTool(){
-		return new TextBoxTool();
+		return new TextBoxTool(null); //TODO Icon???
 	}
 }
  
