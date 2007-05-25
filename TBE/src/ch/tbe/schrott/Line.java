@@ -5,16 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-import ch.tbe.BezierDashedArrowItem;
-import ch.tbe.BezierDoubleArrowItem;
 import ch.tbe.BezierSolidArrowItem;
-import ch.tbe.PolyCurvedArrowItem;
-import ch.tbe.PolyCurvedBlockItem;
-import ch.tbe.PolyDashedArrowItem;
-import ch.tbe.PolyDashedBlockItem;
-import ch.tbe.PolyDoubleArrowItem;
-import ch.tbe.PolySolidArrowItem;
-import ch.tbe.PolySolidBlockItem;
 import ch.tbe.ShapeItem;
 import ch.tbe.ShapeType;
 import ch.tbe.TextBoxItem;
@@ -48,7 +39,7 @@ public class Line extends JFrame
 		
 		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
 		Icon logoIcon = new ImageIcon(imgURL);
-		ShapeType icon = new ShapeType("test",logoIcon,"test");
+		ShapeType icon = new ShapeType("test","test",logoIcon);
 		cells[2] = new ShapeItem(icon, new Point2D.Double(200,200));
 		
 		graph.getGraphLayoutCache().insert(cells);
