@@ -76,6 +76,6 @@ public abstract class Tool {
 	 */
 	public abstract void mouseOver(int x, int y, MouseEvent e);
 	
-	public abstract ItemType getItemType();
+	public abstract ShapeType getShapeType();
 
 }

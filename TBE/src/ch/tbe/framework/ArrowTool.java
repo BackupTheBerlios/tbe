@@ -52,7 +52,7 @@ public abstract class ArrowTool extends Tool
 
 	}
 
-	public ItemType getItemType()
+	public ShapeType getShapeType()
 	{
 		// TODO Auto-generated method stub
 		return null;

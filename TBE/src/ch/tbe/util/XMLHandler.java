@@ -123,7 +123,7 @@ public final class XMLHandler{
 						
 						//TODO
 						//ARROW ICON !!!
-						URL imgURL = TBE.class.getResource("../config/sport/"+actSport.getName()+"/"+ atts.getValue("picture"));
+						URL imgURL = TBE.class.getResource("../config/sport/soccer/ball.gif");
 						Icon actIcon = new ImageIcon(imgURL);
 						arrows.add(new ShapeType(atts.getValue("type"), atts.getValue("description"),actIcon));
 					}

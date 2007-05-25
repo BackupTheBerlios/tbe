@@ -2,9 +2,8 @@ package ch.tbe;
 
 import javax.swing.Icon;
 
-import ch.tbe.framework.ItemType;
 
-public class ShapeType implements ItemType
+public class ShapeType
 {
 	private String description;
 	private Icon icon;

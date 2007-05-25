@@ -48,7 +48,7 @@ MouseMotionListener {
 
 	public ToolButton(final Tool tool) {
 		this.tool = tool;
-		icon = tool.getItemType().getIcon();
+		icon = tool.getShapeType().getIcon();
 		this.width = icon != null ? icon.getIconWidth() : 23;
 		this.height = icon != null ? icon.getIconHeight() : 23;
 
