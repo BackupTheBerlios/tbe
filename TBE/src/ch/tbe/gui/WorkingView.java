@@ -1,6 +1,7 @@
 package ch.tbe.gui;
 
 import ch.tbe.Attribute;
+import ch.tbe.CursorTool;
 import ch.tbe.Invoker;
 import ch.tbe.Board;
 import ch.tbe.PolyDoubleArrowTool;
@@ -13,6 +14,7 @@ import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
 import ch.tbe.jgraph.JGraph;
+import ch.tbe.jgraph.event.GraphSelectionListener;
 import ch.tbe.jgraph.graph.DefaultCellViewFactory;
 import ch.tbe.jgraph.graph.DefaultGraphCell;
 import ch.tbe.jgraph.graph.DefaultGraphModel;
@@ -28,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -47,8 +50,9 @@ public class WorkingView extends View
 	private Attribute currentAttribute;
 	private JToolBar toolbar = new JToolBar();
 	private List<JButton> toolButtons = new ArrayList<JButton>();
-	private JPanel rightPanel;
+
 	private JGraph graph;
+	private MouseListener[] listeners = new MouseListener[2];
 
 	public WorkingView(Board board)
 	{
@@ -68,7 +72,7 @@ public class WorkingView extends View
 		this.add(sideBar, BorderLayout.WEST);
 
 		// gemeinsames Panel für Board und Legend
-		rightPanel = new JPanel();
+		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BorderLayout());
 
 		// Board
@@ -116,10 +120,14 @@ public class WorkingView extends View
 						.mouseOver(p.x, p.y, e);
 			}
 		}
-		this.installToolInToolBar(toolbar, ToolFactory.getCursorTool());
+		currentTool = ToolFactory.getCursorTool();
+		this.installToolInToolBar(toolbar, currentTool);
+		currentButton = (JButton) toolbar.getComponent(0);
+		currentButton.setText("Cursor");//TODO only for Debugging
 		this.installToolInToolBar(toolbar, new PolyDoubleArrowTool(
-				new ShapeType("DoubleArrow", "", null))); //TODO only for debugging
-		
+				new ShapeType("DoubleArrow", "", null))); // TODO only for
+		// debugging
+
 		for (ShapeTool s : ToolFactory.getShapeTools(sport))
 		{
 			this.installToolInToolBar(toolbar, s);
@@ -128,9 +136,12 @@ public class WorkingView extends View
 		{
 			this.installToolInToolBar(toolbar, a);
 		}
-		
-		graph.addMouseListener(new ViewMouseListener());
-		// END
+
+		listeners[0] = graph.getMouseListeners()[0];
+
+		listeners[1] = new ViewMouseListener();
+		graph.removeMouseListener(listeners[0]);
+		graph.addMouseListener(listeners[1]);
 
 		// Legend
 		JPanel legendPanel = new JPanel();
@@ -228,7 +239,7 @@ public class WorkingView extends View
 		button = new JButton();
 		// button.setIcon(tool.getShapeType().getIcon());
 		// button.setToolTipText(tool.getShapeType().getName());
-		button.setText("Test"); // For Debugging
+		button.setText("Tool"); // For Debugging
 		toolbar.add(button);
 		toolButtons.add(button);
 		button.addActionListener(new ActionListener()
@@ -246,6 +257,18 @@ public class WorkingView extends View
 	public void setTool(Tool tool, JButton button)
 	{
 
+		if (this.currentTool instanceof CursorTool
+				&& !(tool instanceof CursorTool))
+		{
+			graph.removeMouseListener(graph.getMouseListeners()[0]);
+			graph.addMouseListener(listeners[1]);
+
+		} else if (tool instanceof CursorTool
+				&& !(this.currentTool instanceof CursorTool))
+		{
+			graph.removeMouseListener(graph.getMouseListeners()[0]);
+			graph.addMouseListener(listeners[0]);
+		}
 		if (tool == null)
 			throw new IllegalArgumentException("Tool must not be null.");
 
@@ -279,7 +302,7 @@ public class WorkingView extends View
 			cells[i] = (DefaultGraphCell) items.get(i);
 		}
 		graph.getGraphLayoutCache().insert(cells);
-
+		graph.setSelectionCell(items.get(items.size() - 1));
 	}
 
 }
