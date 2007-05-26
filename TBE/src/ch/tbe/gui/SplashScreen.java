@@ -49,7 +49,7 @@ public class SplashScreen implements ActionListener
 
         public SplashScreen() throws IOException, AWTException 
         { 
-                final URL url = TBE.class.getResource("../pics/logo.jpg"); 
+                final URL url = TBE.class.getResource("../pics/logo_anim.gif"); 
                 image = ImageIO.read(url); 
 
                 currentImage = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(image.getWidth(null), image.getHeight(null)); 

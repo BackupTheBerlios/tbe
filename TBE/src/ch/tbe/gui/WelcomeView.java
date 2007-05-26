@@ -1,12 +1,12 @@
 package ch.tbe.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
@@ -20,7 +20,6 @@ import java.util.ResourceBundle;
 import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
@@ -60,6 +59,14 @@ public class WelcomeView extends View
 		return labels;
 	}
 	
+	private JLabel createIcon(String path)
+	{
+		URL folderURL = WelcomeView.class.getResource(path);
+		ImageIcon folderIcon = new ImageIcon(folderURL);
+		JLabel folderLabel = new JLabel(folderIcon);
+		return folderLabel;
+	}
+	
 	private void createPanel()
 	{
 		GridBagLayout globalGridbag = new GridBagLayout();
@@ -68,47 +75,44 @@ public class WelcomeView extends View
 		globalConstraints.gridwidth = 1;
 		globalConstraints.anchor = GridBagConstraints.CENTER;
 		globalConstraints.fill = GridBagConstraints.NONE;
-
 		this.setLayout(globalGridbag);
 		
 		JPanel welcome = new JPanel();
-		
 		welcome.setPreferredSize(new Dimension(700, 500));
 		welcome.setBackground(Color.WHITE);
 		welcome.setBorder(BorderFactory.createLineBorder(Color.black));
+		welcome.setLayout(new BorderLayout());
 		
-		GridBagLayout gridbag = new GridBagLayout();
-		GridBagConstraints constraints = new GridBagConstraints();
-		welcome.setLayout(gridbag);
-		constraints.fill = GridBagConstraints.BOTH;
-		constraints.insets = new Insets(50, 10, 0, 0);
+		// oberes Panel
+		JPanel topPanel = new JPanel();
+		topPanel.setBackground(Color.WHITE);
 		
 		// WelcomeText
-		constraints.gridx=0; 
-		constraints.gridy=0;
-		constraints.gridheight = 1;
-		constraints.anchor = GridBagConstraints.NORTHWEST;
 		JLabel titleLabel = new JLabel(welcomeViewLabels.getString("welcome")+' '+tbe.getUserName()+' '+tbe.getUserPrename());
 		titleLabel.setFont(new Font("Sans Serif", Font.BOLD, 18));
-		gridbag.setConstraints(titleLabel, constraints);
-		welcome.add(titleLabel);
+		topPanel.add(titleLabel);
 		
 		// Logo
-		constraints.gridx = 1;
-		constraints.gridy = 0;
-		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
+		URL imgURL = WelcomeView.class.getResource("../pics/logo.jpg");
 		ImageIcon logoIcon = new ImageIcon(imgURL);
 		JLabel iconLabel = new JLabel(logoIcon);
-		gridbag.setConstraints(iconLabel, constraints);
-		welcome.add(iconLabel);
+		topPanel.add(iconLabel);
+		
+		welcome.add(topPanel, BorderLayout.NORTH);
+		
+		// zentriertes Panel
+		JPanel centerPanel = new JPanel();
+		centerPanel.setBackground(Color.WHITE);
+		centerPanel.setLayout(new GridLayout(1, 2, 20, 0));
+		centerPanel.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, Color.WHITE));
 		
 		// recentlyUsedFiles
-		constraints.gridx=0; 
-		constraints.gridy=1;
 		JPanel recentlyPanel = new JPanel();
+		recentlyPanel.setLayout(new BorderLayout());
 		TitledBorder recentlyTitle = BorderFactory.createTitledBorder(welcomeViewLabels.getString("open"));
 		recentlyPanel.setBorder(recentlyTitle);
 		recentlyPanel.setBackground(Color.WHITE);
+		
 		// add Paths for Recently Files
 		class PathListener extends MouseAdapter
 		{
@@ -122,32 +126,42 @@ public class WelcomeView extends View
 			{
 				tbe.setView(new WorkingView(new Sport("Unihockey")));
 				// TODO: file öffnen 
-				// tbe.setView(new WorkingView(XMLHandler.getInstance().openXML(path)));
+				//tbe.setView(new WorkingView(XMLHandler.openXML(path)));
 			}
 		}
 		paths = tbe.getRecently();
 		JPanel pathPanel = new JPanel();
 		pathPanel.setLayout(new GridLayout(7,1));
-		pathPanel.setPreferredSize(new Dimension(350, 200));
 		pathPanel.setBackground(Color.WHITE);
 		for(String s : paths)
 		{
+			JPanel onePath = new JPanel();
+			onePath.setBackground(Color.WHITE);
+			onePath.setLayout(new GridLayout(1, 2, 0, 5));
 			JLabel pathLabel = new JLabel(s);
 			pathLabel.addMouseListener(new PathListener(s));
-			pathPanel.add(pathLabel);
-			recentlyPanel.add(pathPanel);
+			onePath.add(createIcon("../pics/logo_little.jpg"));
+			onePath.add(pathLabel);
+			pathPanel.add(onePath);
 		}
-		JLabel moreLabel = new JLabel(welcomeViewLabels.getString("more"));
-		moreLabel.addMouseListener(new PathListener("more"));
-		pathPanel.add(moreLabel);
 		
-		gridbag.setConstraints(recentlyPanel, constraints);
-		welcome.add(recentlyPanel);
+		// TODO: Open-View öffnen
+		JPanel moreFilesPath = new JPanel();
+		moreFilesPath.setBackground(Color.WHITE);
+		moreFilesPath.setLayout(new GridLayout(1, 2, 0, 5));
+		JLabel moreFilesLabel = new JLabel(welcomeViewLabels.getString("more"));
+		moreFilesLabel.addMouseListener(new PathListener("more"));
+		moreFilesPath.add(createIcon("../pics/folder.gif"));
+		moreFilesPath.add(moreFilesLabel);
+		pathPanel.add(moreFilesPath);
 		
-		// Sports
-		constraints.gridx=1; 
-		constraints.gridy=1;
+		recentlyPanel.add(pathPanel, BorderLayout.WEST);
+		
+		centerPanel.add(recentlyPanel);
+		
+		// Sports / new File
 		JPanel newPanel = new JPanel();
+		newPanel.setLayout(new BorderLayout());
 		TitledBorder newTitle = BorderFactory.createTitledBorder(welcomeViewLabels.getString("new"));
 		newPanel.setBorder(newTitle);
 		newPanel.setBackground(Color.WHITE);
@@ -167,24 +181,37 @@ public class WelcomeView extends View
 		}
 		ArrayList<Sport> sports = tbe.getSports();
 		JPanel sportPanel = new JPanel();
-		sportPanel.setLayout(new GridLayout(7,1));
-		sportPanel.setPreferredSize(new Dimension(150, 200));
+		sportPanel.setLayout(new GridLayout(7, 1));
 		sportPanel.setBackground(Color.WHITE);
 		
 		for(Sport s : sports)
 		{
+			JPanel onePath = new JPanel();
+			onePath.setBackground(Color.WHITE);
+			onePath.setLayout(new GridLayout(1, 2, 0, 5));
 			JLabel sportLabel = new JLabel(s.getName());
 			sportLabel.addMouseListener(new NewListener(s));
-			sportPanel.add(sportLabel);
-			newPanel.add(sportPanel);
+			
+			onePath.add(createIcon("../config/sport/"+ s.getName() +"/ball.gif"));
+			onePath.add(sportLabel);
+			sportPanel.add(onePath);
 		}
-		// TODO: SportDownload öffnen
-		moreLabel = new JLabel(welcomeViewLabels.getString("more"));
-		moreLabel.addMouseListener(new NewListener(new Sport("Unihockey")));
-		sportPanel.add(moreLabel);
 		
-		gridbag.setConstraints(newPanel, constraints);
-		welcome.add(newPanel);
+		// TODO: SportDownload öffnen
+		JPanel moreSportsPath = new JPanel();
+		moreSportsPath.setBackground(Color.WHITE);
+		moreSportsPath.setLayout(new GridLayout(1, 2, 0, 5));
+		JLabel moreSportsLabel = new JLabel(welcomeViewLabels.getString("more"));
+		moreSportsLabel.addMouseListener(new NewListener(new Sport("Unihockey")));
+		moreSportsPath.add(createIcon("../pics/folder.gif"));
+		moreSportsPath.add(moreSportsLabel);
+		sportPanel.add(moreSportsPath);
+		
+		newPanel.add(sportPanel, BorderLayout.WEST);
+		
+		centerPanel.add(newPanel);
+		
+		welcome.add(centerPanel, BorderLayout.CENTER);
 		
 		this.add(welcome);
 	}
