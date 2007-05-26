@@ -43,6 +43,7 @@ public class TBE
 	public void initialize()
 	{
 		SplashScreen splashScreen = new SplashScreen();
+		splashScreen.setProgressMax(100);
 		splashScreen.setScreenVisible(true);
 		splashScreen.setProgress("Read Settings", 0);
 		XMLHandler.loadTBESettings();
