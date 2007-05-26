@@ -15,3 +15,9 @@ cancel = Abbrechen
 
 # Save
 save = Speichern
+
+# Demand to give in a title
+titleInput = Geben Sie einen Titel ein
+
+# Demand to give in a text
+textInput = Geben Sie einen Text ein

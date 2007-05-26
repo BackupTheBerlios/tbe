@@ -15,3 +15,9 @@ cancel = Cancel
 
 # Save
 save = Save
+
+# Demand to give in a title
+titleInput = Give in a title
+
+# Demand to give in a text
+textInput = Give in a text
