@@ -15,6 +15,7 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 		
 		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_CLASSIC);
 		GraphConstants.setEndFill(this.getAttributes(), true);
+		GraphConstants.setEditable(this.getAttributes(), false);
 		
 	}
 	public void setPoints(List<Point2D> points){
