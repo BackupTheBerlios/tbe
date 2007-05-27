@@ -1,5 +1,7 @@
 package ch.tbe.gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
@@ -224,6 +226,14 @@ public class Menu extends JMenuBar
 				Invoker.getInstance().undo();
 			}
 		}
+		
+		class editUndoListenerShortcut implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				Invoker.getInstance().undo();
+			}
+		}
+		editUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
+		editUndo.addActionListener(new editUndoListenerShortcut());
 		editUndo.addMouseListener(new editUndoListener());
 
 		editRedo = new JMenuItem(menuLabels.getString("edit6"));
@@ -235,10 +245,15 @@ public class Menu extends JMenuBar
 				Invoker.getInstance().redo();
 			}
 		}
-		editRedo.addMouseListener(new editRedoListener());
 		
+		class editRedoListenerShortcut implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				Invoker.getInstance().redo();
+			}
+		}
 		editRedo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
-		editUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
+		editRedo.addActionListener(new editRedoListenerShortcut());
+		editRedo.addMouseListener(new editRedoListener());
 
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
