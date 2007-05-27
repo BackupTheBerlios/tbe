@@ -24,6 +24,7 @@ import ch.tbe.Field;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -235,12 +236,14 @@ public class WorkingView extends View
 
 	public void installToolInToolBar(JToolBar toolbar, final Tool tool)
 	{
+		Insets margins = new Insets(0, 0, 0, 0);
 		final JButton button;
 		button = new JButton();
 		
 		if (tool.getShapeType() != null){
 			button.setIcon(tool.getShapeType().getIcon());
 			button.setToolTipText(tool.getShapeType().getName());
+			button.setMargin(margins);
 		}else{
 			button.setText("Tool"); // For Debugging	
 		}
