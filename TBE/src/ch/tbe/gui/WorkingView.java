@@ -237,9 +237,13 @@ public class WorkingView extends View
 	{
 		final JButton button;
 		button = new JButton();
-		// button.setIcon(tool.getShapeType().getIcon());
-		// button.setToolTipText(tool.getShapeType().getName());
-		button.setText("Tool"); // For Debugging
+		
+		if (tool.getShapeType() != null){
+			button.setIcon(tool.getShapeType().getIcon());
+			button.setToolTipText(tool.getShapeType().getName());
+		}else{
+			button.setText("Tool"); // For Debugging	
+		}
 		toolbar.add(button);
 		toolButtons.add(button);
 		button.addActionListener(new ActionListener()

@@ -38,13 +38,6 @@ import ch.tbe.gui.WorkingView;
 	}
 
 	@Override
-	public ShapeType getShapeType()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void mouseDrag(int x, int y, MouseEvent e)
 	{
 		// TODO Auto-generated method stub
