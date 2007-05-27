@@ -37,6 +37,7 @@ public class SideBar extends JToolBar
 	private Board board;
 	private Attribute currentAttribute;
 	private JTextArea titleInputArea, textInputArea;
+	private JPanel sidePanel;
 	
 	public SideBar(Board board)
 	{
@@ -50,7 +51,7 @@ public class SideBar extends JToolBar
 	private void createPanel()
 	{
 		//List<Attribute> attributes = board.getDescription().getAttributes();
-		JPanel sidePanel = new JPanel();
+		sidePanel = new JPanel();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;
@@ -173,26 +174,29 @@ public class SideBar extends JToolBar
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				System.out.println(titleInputArea.getText());
-				System.out.println(textInputArea.getText());
-				if(titleInputArea.getText() == "")
+				if(currentAttribute != null)
 				{
-					System.out.println("Title leer!");
-					titleInputArea.setText(sideBarLabels.getString("titleInput"));
-				}
-				else if(textInputArea.getText() == null)
-				{
-					System.out.println("TEXT leer!");
-					textInputArea.setText(sideBarLabels.getString("textInput"));
-				}
-				else
-				{
-					currentAttribute.setTitle(titleInputArea.getText());
-					currentAttribute.setText(textInputArea.getText());
-					titleInputArea.setText("");
-					textInputArea.setText("");
-					currentAttribute = null;
-					//sidePanel.repaint();
+					if(titleInputArea.getText().equals("") || titleInputArea.getText().equals(sideBarLabels.getString("titleInput")))
+					{
+						System.out.println("Title leer!");
+						titleInputArea.setText(sideBarLabels.getString("titleInput"));
+					}
+					else if(textInputArea.getText().equals("") || textInputArea.getText().equals(sideBarLabels.getString("textInput")))
+					{
+						System.out.println("TEXT leer!");
+						textInputArea.setText(sideBarLabels.getString("textInput"));
+					}
+					else
+					{
+						board.removeAttribute(currentAttribute);
+						currentAttribute.setTitle(titleInputArea.getText());
+						currentAttribute.setText(textInputArea.getText());
+						board.addAttribute(currentAttribute.getTitle(), currentAttribute.getText());
+						titleInputArea.setText("");
+						textInputArea.setText("");
+						currentAttribute = null;
+						// TODO: reload, Toolbar neu aufbauen, Attribute neu auslesen
+					}
 				}
 			}
 		}
