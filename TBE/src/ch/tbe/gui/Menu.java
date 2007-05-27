@@ -21,6 +21,9 @@ public class Menu extends JMenuBar
 	private Invoker invoker = Invoker.getInstance();
 	private TBE tbe = TBE.getInstance();
 	
+	private JMenuItem editRedo;
+	private JMenuItem editUndo;
+	
 	
 	public Menu(String lang)
 	{	
@@ -211,43 +214,27 @@ public class Menu extends JMenuBar
 		}
 		editInsert.addMouseListener(new editInsertListener());
 
-		JMenuItem editUndo = new JMenuItem(menuLabels.getString("edit5"));
+		editUndo = new JMenuItem(menuLabels.getString("edit5"));
 		class editUndoListener extends MouseAdapter
 		{
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				// TODO
+				Invoker.getInstance().undo();
 			}
 		}
 		editUndo.addMouseListener(new editUndoListener());
 
-		JMenuItem editRedo = new JMenuItem(menuLabels.getString("edit6"));
+		editRedo = new JMenuItem(menuLabels.getString("edit6"));
 		class editRedoListener extends MouseAdapter
 		{
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				// TODO
+				Invoker.getInstance().redo();
 			}
 		}
 		editRedo.addMouseListener(new editRedoListener());
-
-		if (this.invoker.canUndo())
-		{
-			editUndo.setEnabled(true);
-		} else
-		{
-			editUndo.setEnabled(false);
-		}
-
-		if (this.invoker.canRedo())
-		{
-			editRedo.setEnabled(true);
-		} else
-		{
-			editRedo.setEnabled(false);
-		}
 
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
@@ -256,6 +243,7 @@ public class Menu extends JMenuBar
 		editmenu.add(editUndo);
 		editmenu.add(editRedo);
 
+		this.refreshInvokerVisibility();
 		return editmenu;
 	}
 
@@ -335,5 +323,23 @@ public class Menu extends JMenuBar
 		tbemenu.add(tbeAbout);
 
 		return tbemenu;
+	}
+	
+	public void refreshInvokerVisibility(){
+		if (this.invoker.canRedo())
+		{
+			editRedo.setEnabled(true);
+		} else
+		{
+			editRedo.setEnabled(false);
+		}
+		
+		if (this.invoker.canUndo())
+		{
+			editUndo.setEnabled(true);
+		} else
+		{
+			editUndo.setEnabled(false);
+		}
 	}
 }

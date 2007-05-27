@@ -33,7 +33,7 @@ public class Invoker {
 			actCommands = doneCommands.pop();
 			undoneCommands.push(actCommands);
 			
-			for (int i=0; i< actCommands.size()-1; i++){
+			for (int i=0; i<= actCommands.size()-1; i++){
 				actCommands.get(i).undo();
 			}
 		}
@@ -44,7 +44,7 @@ public class Invoker {
 			actCommands = undoneCommands.pop();
 			doneCommands.push(actCommands);
 		
-			for (int i=0; i< actCommands.size()-1; i++){
+			for (int i=0; i<= actCommands.size()-1; i++){
 				actCommands.get(i).redo();
 			}
 		}

@@ -302,14 +302,20 @@ public class WorkingView extends View
 	{
 
 		List<ItemComponent> items = board.getItems();
+		System.out.println(items.size());
 
 		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
 		for (int i = 0; i < items.size(); i++)
 		{
 			cells[i] = (DefaultGraphCell) items.get(i);
 		}
+		graph.getGraphLayoutCache().remove(graph.getGraphLayoutCache().getCells(graph.getGraphLayoutCache().getAllViews()));
 		graph.getGraphLayoutCache().insert(cells);
-		graph.setSelectionCell(items.get(items.size() - 1));
+		
+		if (items.size() > 0){
+			graph.setSelectionCell(items.get(items.size() - 1));
+		}
+		
+		tbe.getMenu().refreshInvokerVisibility();
 	}
-
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import ch.tbe.*;
 
+import ch.tbe.framework.Command;
 import ch.tbe.framework.View;
 
 import ch.tbe.util.XMLHandler;
@@ -30,6 +31,7 @@ public class TBE
 	private JFrame frame;
 	private List<String> paths = new ArrayList<String>();
 	private List<FTPServer> servers = new ArrayList<FTPServer>();
+	private Menu menu;
 	
 	private View view;
 
@@ -58,7 +60,8 @@ public class TBE
 		splashScreen.setProgress(20);
 		frame.setSize(this.WIDTH, this.HEIGHT);
 		splashScreen.setProgress(40);
-		frame.setJMenuBar(new Menu(lang));
+		menu = new Menu(lang);
+		frame.setJMenuBar(menu);
 		splashScreen.setProgress(100);
 		
 		// TODO: check ob FirstStart oder nicht!
@@ -197,5 +200,13 @@ public class TBE
 	
 	public void setFTPServers(List<FTPServer> servers){
 		this.servers = servers;
+	}
+	
+	public void addCommands(List<Command> actCommands){
+		this.invoker.execute(actCommands);
+	}
+	
+	public Menu getMenu(){
+		return this.menu;
 	}
 }

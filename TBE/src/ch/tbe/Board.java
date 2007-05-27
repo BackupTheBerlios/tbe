@@ -34,6 +34,12 @@ public class Board
 		this.items.add(i);
 		((WorkingView) TBE.getInstance().getView()).refresh();
 	}
+	
+	public void removeItem(ItemComponent i)
+	{
+		this.items.remove(i);
+		((WorkingView) TBE.getInstance().getView()).refresh();
+	}
 
 	public void setPath(String path)
 	{

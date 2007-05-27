@@ -1,12 +1,16 @@
 package ch.tbe.framework;
 
+import ch.tbe.gui.TBE;
+
 public abstract class Command {
- 
-	public void undo() {
+	protected ItemComponent item;
+	protected TBE tbe = TBE.getInstance();
+	
+	public Command(ItemComponent item){
+		this.item = item;
 	}
-	 
-	public void redo() {
-	}
+	public void undo(){}
+	public void redo(){}
 	 
 }
  

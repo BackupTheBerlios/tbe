@@ -2,6 +2,7 @@ package ch.tbe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Color;
@@ -58,9 +59,31 @@ public class SideBar extends JToolBar
 		constraints.insets = new Insets(0, 10, 0, 10);
 		sidePanel.setLayout(gridbag);
 		
-		class DeleteButtonListener extends MouseAdapter
+		class DeleteAttrListener extends MouseAdapter
 		{
-			// TODO: DeleteAttr-Listener
+			Attribute myAttr;
+			public DeleteAttrListener(Attribute attr)
+			{
+				myAttr = attr;
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				// TODO: Alert ob wirklich löschen!
+				// board.removeAttribute(myAttr);
+				currentAttribute = null;
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 			
 		}
 		// List of all Attributes
@@ -85,6 +108,16 @@ public class SideBar extends JToolBar
 				titleInputArea.setText(currentAttribute.getTitle());
 				textInputArea.setText(currentAttribute.getText());
 			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 		}
 		
 		JPanel attrPanel = new JPanel();
@@ -96,7 +129,7 @@ public class SideBar extends JToolBar
 			attrPanel.add(attrTitle);
 			JLabel deleteLabel = new JLabel("X");
 			deleteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-			deleteLabel.addMouseListener(new DeleteButtonListener());
+			deleteLabel.addMouseListener(new DeleteAttrListener(attr));
 			attrPanel.add(deleteLabel);
 		}
 		
@@ -112,7 +145,17 @@ public class SideBar extends JToolBar
 				currentAttribute = new Attribute("", "");
 				titleInputArea.setText(sideBarLabels.getString("titleInput"));
 				textInputArea.setText(sideBarLabels.getString("textInput"));
-			}	
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 		}
 		
 		JLabel addAttr = new JLabel(sideBarLabels.getString("new"));
