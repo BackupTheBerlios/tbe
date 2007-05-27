@@ -13,8 +13,7 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 	protected ArrowItem()
 	{
 		
-		GraphConstants.setLineEnd(this.getAttributes(),
-				GraphConstants.ARROW_CLASSIC);
+		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_CLASSIC);
 		GraphConstants.setEndFill(this.getAttributes(), true);
 		
 	}
@@ -49,7 +48,4 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 
 		}
 	}
-	
-	
-
 }
