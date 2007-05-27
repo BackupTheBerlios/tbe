@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
 
 import ch.tbe.Invoker;
 
@@ -235,6 +236,9 @@ public class Menu extends JMenuBar
 			}
 		}
 		editRedo.addMouseListener(new editRedoListener());
+		
+		editRedo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
+		editUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
 
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
