@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.tbe.framework.ArrowTool;
+import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 
@@ -24,7 +25,10 @@ public class BezierSolidArrowTool extends ArrowTool {
 		points.add(new Point2D.Double(x,y));
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y+DEFAULTLENGTH));
 		points.add(new Point2D.Double(x+2*DEFAULTLENGTH,y));
-		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(new BezierSolidArrowItem(points));
+		
+		ItemComponent item = new BezierSolidArrowItem(points);
+		super.createCommand(item);
+		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(item);
 	}
 }
  

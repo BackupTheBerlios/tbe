@@ -2,6 +2,7 @@ package ch.tbe.gui;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.net.URL; 
 import javax.swing.ImageIcon;
@@ -41,6 +42,7 @@ public class SplashScreen extends JWindow {
 	    this.add(southPanel, BorderLayout.SOUTH);	    
 	    southPanel.add(progressBar, null);
 	    this.pack();
+	    southPanel.setBackground(Color.white);
 	    this.setLocationRelativeTo(null);
 	  }
 

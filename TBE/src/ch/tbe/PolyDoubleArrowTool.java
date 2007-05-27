@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ch.tbe.framework.ArrowTool;
+import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 
@@ -23,7 +24,10 @@ public class PolyDoubleArrowTool extends ArrowTool {
 		List<Point2D> points = new ArrayList<Point2D>();
 		points.add(new Point2D.Double(x,y));		
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y));
-		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(new PolyDoubleArrowItem(points));
+		
+		ItemComponent item = new PolyDoubleArrowItem(points);
+		super.createCommand(item);
+		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(item);
 	}
  
 }

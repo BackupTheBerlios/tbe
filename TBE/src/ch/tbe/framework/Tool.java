@@ -3,7 +3,11 @@ package ch.tbe.framework;
 
 
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import ch.tbe.CreateCommand;
 import ch.tbe.ShapeType;
+import ch.tbe.gui.TBE;
 
 
 public abstract class Tool {
@@ -78,6 +82,13 @@ public abstract class Tool {
 	
 	public ShapeType getShapeType(){
 		return this.shapeType;
+	}
+	
+	public void createCommand(ItemComponent item){
+		ArrayList<Command> actCommands = new ArrayList<Command>();
+		actCommands.add(new CreateCommand(item));
+		
+		TBE.getInstance().addCommands(actCommands);
 	}
 
 }
