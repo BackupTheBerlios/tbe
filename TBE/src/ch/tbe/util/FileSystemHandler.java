@@ -30,4 +30,26 @@ public final class FileSystemHandler
 		}
 		return sports;
 	}
+	
+	public static ArrayList<String> getInstalledLanguages(){
+		ArrayList<String> langs = new ArrayList<String>();
+		 
+		// Create a file object for your root directory
+		String folderPath = "src/ch/tbe/config/lang";
+		File f1 = new File(folderPath);
+		
+		// Get all the files and directory under your diretcory
+		File[] strFilesDirs = f1.listFiles( );
+
+		
+		for ( int i = 0 ; i < strFilesDirs.length ; i ++ ) {
+			// TODO: sinnvollere überprüfung...
+			File f2 = new File(strFilesDirs[i].getPath()+"\\menuLabels.txt");
+			if ( strFilesDirs[i].isDirectory() && f2.exists()){
+
+				langs.add(strFilesDirs[i].getName());
+			}
+		}
+		return langs;
+	}
 }

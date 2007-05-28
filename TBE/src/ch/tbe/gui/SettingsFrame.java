@@ -11,9 +11,11 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -27,6 +29,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
 import ch.tbe.FTPServer;
+import ch.tbe.util.FileSystemHandler;
+import ch.tbe.util.XMLHandler;
 
 public class SettingsFrame
 {
@@ -84,8 +88,13 @@ public class SettingsFrame
 		formPanel.add(mailArea);
 
 		formPanel.add(new JLabel(settingsLabels.getString("lang")));
-		// TODO: Sprachen auslesen
-		langBox = new JComboBox();
+		ArrayList<String> langs = FileSystemHandler.getInstalledLanguages();
+		Vector<String> languages = new Vector<String>();
+		for(String s : langs)
+		{
+			languages.add(s);
+		}
+		langBox = new JComboBox(languages);
 
 		langBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
@@ -123,7 +132,10 @@ public class SettingsFrame
 			{
 				tbe.setUser(prenameArea.getText(),
 						lastnameArea.getText(), mailArea.getText());
-				//tbe.setLang(langBox.getName());
+				tbe.setLang((String)langBox.getSelectedItem());
+				// TODO: View refreshen 
+				// TODO: SettingsFrame refreshen
+				//((WorkingView)tbe.getView()).refresh();
 			}
 		}
 		saveButton.addMouseListener(new saveButtonListener());
