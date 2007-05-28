@@ -154,8 +154,8 @@ public class WorkingView extends View
 
 	private void installAddRemovePointButtons()
 	{
-		JButton add = new JButton("+");
-		JButton rem = new JButton("-");
+		JButton add = new JButton("+"); // TODO Item
+		JButton rem = new JButton("-");// TODO Item
 		add.setToolTipText("Add Point"); // TODO Language
 		rem.setToolTipText("Remove Point"); // TODO Language
 		add.addActionListener(new ActionListener()
