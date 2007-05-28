@@ -267,8 +267,7 @@ public class SideBar extends JToolBar
 				}
 			}
 		}
-
-		textInputArea = new JTextArea(10, 13);
+		textInputArea = new JTextArea(10, 1);
 		textInputArea.setLineWrap(true);
 		textInputArea.addMouseListener(new TextInputListener());
 		inputConstraints.gridx = 1;

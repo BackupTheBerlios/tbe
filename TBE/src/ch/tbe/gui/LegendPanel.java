@@ -17,18 +17,25 @@ public class LegendPanel extends JPanel
 		showLegend();
 	}
 	
-	public void showLegend()
+	private void showLegend()
 	{
 		List<ItemComponent> items = board.getItems();
+		
+		
+		
 		for(ItemComponent i : items)
 		{
 			System.out.println(i.getClass());
+			
 		}
-		// TODO: Aktualisierung?!?
+		
+		
 	}
 	
 	public void reload()
 	{
-		
+		showLegend();
+		this.setVisible(false);
+		this.setVisible(true);
 	}
 }
