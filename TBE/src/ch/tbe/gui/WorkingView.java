@@ -68,19 +68,19 @@ public class WorkingView extends View
 		this.board = new Board(sport);
 		createWorkingView();
 	}
-	
+
 	public WorkingView(Board board)
 	{
 		this.sport = board.getSport();
 		this.board = board;
 		createWorkingView();
 	}
-	
+
 	private void createWorkingView()
 	{
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
-		
+
 		// Toolbar
 		this.add(toolbar, BorderLayout.NORTH);
 
@@ -130,7 +130,6 @@ public class WorkingView extends View
 		listeners[0] = graph.getMouseListeners()[0];
 
 		listeners[1] = new ViewMouseListener();
-		graph.removeMouseListener(listeners[0]);
 		graph.addMouseListener(listeners[1]);
 
 		// Legend
@@ -157,9 +156,8 @@ public class WorkingView extends View
 			public void actionPerformed(ActionEvent e)
 			{
 				WorkingView.this.addRemovePoint(true);
-				}
 			}
-		);
+		});
 		rem.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -168,12 +166,12 @@ public class WorkingView extends View
 			}
 		});
 
-
 		toolbar.add(add);
 		toolbar.add(rem);
 	}
-	
-	public void addRemovePoint(boolean b){
+
+	public void addRemovePoint(boolean b)
+	{
 
 		if (graph.getSelectionCount() == 1)
 		{
@@ -181,8 +179,13 @@ public class WorkingView extends View
 			{
 
 				ArrowItem a = (ArrowItem) graph.getSelectionCell();
-				if(b){a.addPoint();}
-				else{a.removePoint();}
+				if (b)
+				{
+					a.addPoint();
+				} else
+				{
+					a.removePoint();
+				}
 				WorkingView.this.refresh();
 				graph.setSelectionCell(a);
 				WorkingView.this.currentTool = WorkingView.this.cursorTool;
@@ -300,18 +303,19 @@ public class WorkingView extends View
 
 	public void setTool(Tool tool, JButton button)
 	{
-
+		// IF NO CURSORTOOL
 		if (this.currentTool instanceof CursorTool
 				&& !(tool instanceof CursorTool))
 		{
-			graph.removeMouseListener(graph.getMouseListeners()[0]);
-			graph.addMouseListener(listeners[1]);
 
+			graph.removeMouseListener(listeners[0]);
+
+			// IF CURSORTOOL
 		} else if (tool instanceof CursorTool
 				&& !(this.currentTool instanceof CursorTool))
 		{
-			graph.removeMouseListener(graph.getMouseListeners()[0]);
 			graph.addMouseListener(listeners[0]);
+
 		}
 		if (tool == null)
 			throw new IllegalArgumentException("Tool must not be null.");
