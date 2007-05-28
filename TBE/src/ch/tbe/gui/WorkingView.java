@@ -2,6 +2,7 @@ package ch.tbe.gui;
 
 import ch.tbe.Attribute;
 import ch.tbe.BezierSolidArrowTool;
+import ch.tbe.CreateCommand;
 import ch.tbe.CursorTool;
 import ch.tbe.Invoker;
 import ch.tbe.Board;
@@ -11,6 +12,7 @@ import ch.tbe.ShapeType;
 import ch.tbe.ToolFactory;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ArrowTool;
+import ch.tbe.framework.Command;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;

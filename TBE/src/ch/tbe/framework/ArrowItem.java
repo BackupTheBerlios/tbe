@@ -3,6 +3,7 @@ package ch.tbe.framework;
 import java.awt.geom.Point2D;
 import java.util.List;
 
+import ch.tbe.Invoker;
 import ch.tbe.jgraph.graph.DefaultEdge;
 import ch.tbe.jgraph.graph.GraphConstants;
 
@@ -15,7 +16,6 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 		
 		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_CLASSIC);
 		GraphConstants.setEndFill(this.getAttributes(), true);
-		GraphConstants.setEditable(this.getAttributes(), false);
 		
 	}
 	public void setPoints(List<Point2D> points){
@@ -29,13 +29,11 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 	public void addPoint()
 	{
 		int size = GraphConstants.getPoints(this.getAttributes()).size();
-		double lastX = ((Point2D) GraphConstants
-				.getPoints(this.getAttributes()).get(size - 1)).getX();
-		double lastY = ((Point2D) GraphConstants
-				.getPoints(this.getAttributes()).get(size - 1)).getY();
-		GraphConstants.getPoints(this.getAttributes()).add(
-				new Point2D.Double(lastX + DEFAULTLENGTH, lastY));
-
+		double lastX = ((Point2D) GraphConstants.getPoints(this.getAttributes()).get(size - 1)).getX();
+		double lastY = ((Point2D) GraphConstants.getPoints(this.getAttributes()).get(size - 1)).getY();
+		
+		Point2D point = new Point2D.Double(lastX + DEFAULTLENGTH, lastY);
+		GraphConstants.getPoints(this.getAttributes()).add(point);
 	}
 
 	public void removePoint()
@@ -43,8 +41,7 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 		if (GraphConstants.getPoints(this.getAttributes()).size() > 2)
 		{
 			int size = GraphConstants.getPoints(this.getAttributes()).size();
-			Point2D lastP = ((Point2D) GraphConstants.getPoints(
-					this.getAttributes()).get(size - 1));
+			Point2D lastP = ((Point2D) GraphConstants.getPoints(this.getAttributes()).get(size - 1));
 			GraphConstants.getPoints(this.getAttributes()).remove(lastP);
 
 		}
