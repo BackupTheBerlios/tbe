@@ -1,0 +1,26 @@
+# General
+general = General
+
+# ftp
+ftp = FTP
+
+# Sport
+sport = Sport
+
+# Prename
+prename = Prename
+
+# Lastname
+lastname = Lastname
+
+# E-MailAdress
+mail = Mailaddress
+
+# Language
+lang = Language
+
+# Save
+save = Save
+
+# Cancel
+cancel = Cancel

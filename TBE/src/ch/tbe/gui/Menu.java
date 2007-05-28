@@ -351,7 +351,16 @@ public class Menu extends JMenuBar
 		JMenu tbemenu = new JMenu(menuLabels.getString("title4"));
 
 		JMenuItem tbeSettings = new JMenuItem(menuLabels.getString("tbe1"));
-
+		class tbeSettingsListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				new SettingsFrame();
+			}
+		}
+		tbeSettings.addMouseListener(new tbeSettingsListener());
+		
 		JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
 
 		tbemenu.add(tbeSettings);

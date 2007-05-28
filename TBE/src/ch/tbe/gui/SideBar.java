@@ -352,13 +352,13 @@ public class SideBar extends JToolBar
 
 	private ResourceBundle getResourceBundle(String lang)
 	{
-		InputStream SideBarStream;
+		InputStream sideBarStream;
 		ResourceBundle labels = null;
 		try
 		{
-			SideBarStream = SideBar.class.getResourceAsStream("../config/lang/"
+			sideBarStream = SideBar.class.getResourceAsStream("../config/lang/"
 					+ lang + "/sideBar.txt");
-			labels = new PropertyResourceBundle(SideBarStream);
+			labels = new PropertyResourceBundle(sideBarStream);
 		} catch (FileNotFoundException fnne)
 		{
 			System.out.println("LanguageFile for SideBar not found !");
