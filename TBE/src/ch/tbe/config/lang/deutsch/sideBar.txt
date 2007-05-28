@@ -21,3 +21,15 @@ titleInput = Geben Sie einen Titel ein
 
 # Demand to give in a text
 textInput = Geben Sie einen Text ein
+
+# Demand if Really Remove Attribute
+removeAttr = Wollen Sie das folgende Attribut wirklich löschen?
+
+# Yes, delete
+yes = Ja, löschen
+
+# No, don't delete
+no = Nein, nicht löschen
+
+# No Attribute choosen
+noAttr = Es ist kein Attribut ausgewählt

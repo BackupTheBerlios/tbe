@@ -21,3 +21,15 @@ titleInput = Give in a title
 
 # Demand to give in a text
 textInput = Give in a text
+
+# Demand if Really Remove Attribute
+removeAttr = Do you really want to delete the following Attribute?
+
+# Yes, delete
+yes = Yes, delete
+
+# No, don't delete
+no = no, don't delete
+
+# No Attribute choosen
+noAttr = There is no Attribute choosen
