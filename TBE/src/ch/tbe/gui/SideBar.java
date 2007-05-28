@@ -305,14 +305,18 @@ public class SideBar extends JToolBar
 							|| titleInputArea.getText().equals(
 									sideBarLabels.getString("titleInput")))
 					{
-						titleInputArea.setText(sideBarLabels
+						titleInputArea.setText("");
+						JOptionPane.showMessageDialog(null, sideBarLabels
 								.getString("titleInput"));
+						titleInputArea.requestFocus();
 					} else if (textInputArea.getText().equals("")
 							|| textInputArea.getText().equals(
 									sideBarLabels.getString("textInput")))
 					{
-						textInputArea.setText(sideBarLabels
+						textInputArea.setText("");
+						JOptionPane.showMessageDialog(null, sideBarLabels
 								.getString("textInput"));
+						textInputArea.requestFocus();
 					} else
 					{
 						board.removeAttribute(currentAttribute);
