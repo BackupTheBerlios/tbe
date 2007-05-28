@@ -22,6 +22,8 @@ edit3=Copy
 edit4=Insert
 edit5=Undo
 edit6=Redo
+edit5=Add Point
+edit6=Remove Point
 
 # Menuitems BoardMenu
 board1=Change Field

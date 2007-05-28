@@ -20,38 +20,35 @@ import ch.tbe.Invoker;
 public class Menu extends JMenuBar
 {
 	private ResourceBundle menuLabels;
-	
+
 	private Invoker invoker = Invoker.getInstance();
 	private TBE tbe = TBE.getInstance();
-	
+
 	private JMenuItem editRedo;
 	private JMenuItem editUndo;
-	
-	
+
 	public Menu(String lang)
-	{	
+	{
 		InputStream menuLabelStream;
 		try
 		{
 			menuLabelStream = Menu.class.getResourceAsStream("../config/lang/"
 					+ lang + "/menuLabels.txt");
 			menuLabels = new PropertyResourceBundle(menuLabelStream);
-		} 
-		catch (FileNotFoundException fnne)
+		} catch (FileNotFoundException fnne)
 		{
 			System.out.println("LanguageFile for MenuItems not found !");
-		} 
-		catch (IOException ioe)
+		} catch (IOException ioe)
 		{
 			System.out.println("Error with ResourceBundle MenuLabels!");
 		}
-		
+
 		this.add(createFileMenu());
 		this.add(createEditMenu());
 		this.add(createBoardMenu());
 		this.add(createTBEMenu());
 	}
-	
+
 	private JMenu createFileMenu()
 	{
 		JMenu filemenu = new JMenu(menuLabels.getString("title1"));
@@ -226,13 +223,16 @@ public class Menu extends JMenuBar
 				Invoker.getInstance().undo();
 			}
 		}
-		
-		class editUndoListenerShortcut implements ActionListener{
-			public void actionPerformed(ActionEvent e){
+
+		class editUndoListenerShortcut implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				Invoker.getInstance().undo();
 			}
 		}
-		editUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
+		editUndo.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
 		editUndo.addActionListener(new editUndoListenerShortcut());
 		editUndo.addMouseListener(new editUndoListener());
 
@@ -245,15 +245,73 @@ public class Menu extends JMenuBar
 				Invoker.getInstance().redo();
 			}
 		}
-		
-		class editRedoListenerShortcut implements ActionListener{
-			public void actionPerformed(ActionEvent e){
+
+		class editRedoListenerShortcut implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
 				Invoker.getInstance().redo();
 			}
 		}
-		editRedo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
+		editRedo.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
 		editRedo.addActionListener(new editRedoListenerShortcut());
 		editRedo.addMouseListener(new editRedoListener());
+
+		JMenuItem editAddPoint = new JMenuItem(menuLabels.getString("edit7"));
+		class editAddPointListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+					((WorkingView) tbe.getView()).addRemovePoint(true);
+				}
+			}
+		}
+		class editAddPointListenerShortcut implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+					((WorkingView) tbe.getView()).addRemovePoint(true);
+				}
+			}
+		}
+		editAddPoint.addMouseListener(new editInsertListener());
+		editAddPoint.addActionListener(new editAddPointListenerShortcut());
+		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_P, java.awt.Event.CTRL_MASK));
+
+		JMenuItem editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
+		class editRemovePointListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+					((WorkingView) tbe.getView()).addRemovePoint(false);
+				}
+			}
+		}
+		class editRemovePointListenerShortcut implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+					((WorkingView) tbe.getView()).addRemovePoint(false);
+				}
+			}
+		}
+		editRemovePoint.addMouseListener(new editInsertListener());
+		editRemovePoint
+				.addActionListener(new editRemovePointListenerShortcut());
+		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_M, java.awt.Event.CTRL_MASK));
 
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
@@ -261,6 +319,8 @@ public class Menu extends JMenuBar
 		editmenu.add(editInsert);
 		editmenu.add(editUndo);
 		editmenu.add(editRedo);
+		editmenu.add(editAddPoint);
+		editmenu.add(editRemovePoint);
 
 		this.refreshInvokerVisibility();
 		return editmenu;
@@ -343,8 +403,9 @@ public class Menu extends JMenuBar
 
 		return tbemenu;
 	}
-	
-	public void refreshInvokerVisibility(){
+
+	public void refreshInvokerVisibility()
+	{
 		if (this.invoker.canRedo())
 		{
 			editRedo.setEnabled(true);
@@ -352,7 +413,7 @@ public class Menu extends JMenuBar
 		{
 			editRedo.setEnabled(false);
 		}
-		
+
 		if (this.invoker.canUndo())
 		{
 			editUndo.setEnabled(true);

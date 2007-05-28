@@ -56,10 +56,9 @@ public class WorkingView extends View
 	private JButton currentButton;
 	private JButton cursorButton;
 	private ItemComponent currentItem;
-	private Attribute currentAttribute;
 	private JToolBar toolbar = new JToolBar();
 	private List<JButton> toolButtons = new ArrayList<JButton>();
-	private LegendPanel legendPanel;
+	private JPanel legendPanel;
 	private JGraph graph;
 	private MouseListener[] listeners = new MouseListener[2];
 
@@ -135,7 +134,8 @@ public class WorkingView extends View
 		graph.addMouseListener(listeners[1]);
 
 		// Legend
-		legendPanel = new LegendPanel(board);
+		// TODO
+		legendPanel = new JPanel();
 		legendPanel.add(new JLabel("Legend"));
 		rightPanel.add(legendPanel, BorderLayout.SOUTH);
 
@@ -357,7 +357,5 @@ public class WorkingView extends View
 		}
 
 		tbe.getMenu().refreshInvokerVisibility();
-		
-		this.legendPanel.reload();
 	}
 }
