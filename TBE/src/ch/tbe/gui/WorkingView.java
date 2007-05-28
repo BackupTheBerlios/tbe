@@ -167,27 +167,13 @@ public class WorkingView extends View
 				WorkingView.this.addRemovePoint(false);
 			}
 		});
-		add.addKeyListener(new KeyAdapter() {
-		      public void keyPressed(KeyEvent e) {
-		    	  System.out.println(e);
-		        String modifiers = e.getKeyModifiersText(e.getModifiers());
-		        if (e.getKeyCode() == KeyEvent.VK_P && modifiers.equalsIgnoreCase("CTRL")){
-		        	System.out.println("test");
-		        	
-		        	WorkingView.this.addRemovePoint(true);}
-		      }});
-		rem.addKeyListener(new KeyAdapter() {
-		      public void keyPressed(KeyEvent e) {
-		        String modifiers = e.getKeyModifiersText(e.getModifiers());
-		        if (e.getKeyCode() == KeyEvent.VK_M && modifiers.equalsIgnoreCase("CTRL"))
-		        	WorkingView.this.addRemovePoint(false);
-		      }});
+
 
 		toolbar.add(add);
 		toolbar.add(rem);
 	}
 	
-	private void addRemovePoint(boolean b){
+	public void addRemovePoint(boolean b){
 
 		if (graph.getSelectionCount() == 1)
 		{
