@@ -26,6 +26,8 @@ public class Menu extends JMenuBar
 
 	private JMenuItem editRedo;
 	private JMenuItem editUndo;
+	private JMenuItem editAddPoint;
+	private JMenuItem editRemovePoint;
 
 	public Menu(String lang)
 	{
@@ -258,7 +260,7 @@ public class Menu extends JMenuBar
 		editRedo.addActionListener(new editRedoListenerShortcut());
 		editRedo.addMouseListener(new editRedoListener());
 
-		JMenuItem editAddPoint = new JMenuItem(menuLabels.getString("edit7"));
+		editAddPoint = new JMenuItem(menuLabels.getString("edit7"));
 		class editAddPointListener extends MouseAdapter
 		{
 			@Override
@@ -285,7 +287,7 @@ public class Menu extends JMenuBar
 		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_P, java.awt.Event.CTRL_MASK));
 
-		JMenuItem editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
+		editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
 		class editRemovePointListener extends MouseAdapter
 		{
 			@Override
@@ -313,6 +315,8 @@ public class Menu extends JMenuBar
 		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_M, java.awt.Event.CTRL_MASK));
 
+		activatePoints(false);
+		
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
 		editmenu.add(editCopy);
@@ -421,5 +425,9 @@ public class Menu extends JMenuBar
 		{
 			editUndo.setEnabled(false);
 		}
+	}
+	public void activatePoints(boolean b){
+		editAddPoint.setEnabled(b);
+		editRemovePoint.setEnabled(b);
 	}
 }

@@ -55,6 +55,8 @@ public class WorkingView extends View
 	private Tool currentTool;
 	private JButton currentButton;
 	private JButton cursorButton;
+	JButton add;
+	JButton rem;
 	private ItemComponent currentItem;
 	private JToolBar toolbar = new JToolBar();
 	private List<JButton> toolButtons = new ArrayList<JButton>();
@@ -105,8 +107,15 @@ public class WorkingView extends View
 			{
 
 				Point p = new Point(e.getX(), e.getY());
-				((WorkingView) TBE.getInstance().getView()).getTool()
-						.mouseDown(p.x, p.y, e);
+				WorkingView.this.getTool().mouseDown(p.x, p.y, e);
+				if (WorkingView.this.graph.getSelectionCount() == 1
+						&& WorkingView.this.graph.getSelectionCell() instanceof ArrowItem)
+				{
+					WorkingView.this.activatePoints(true);
+				} else
+				{
+					WorkingView.this.activatePoints(false);
+				}
 			}
 		}
 		cursorTool = currentTool = ToolFactory.getCursorTool();
@@ -139,16 +148,27 @@ public class WorkingView extends View
 		rightPanel.add(legendPanel, BorderLayout.SOUTH);
 
 		this.add(rightPanel, BorderLayout.CENTER);
+		this.activatePoints(false);
 
 		/*
 		 * 
 		 */
 	}
 
+	public void activatePoints(boolean b)
+	{
+		tbe.getMenu().activatePoints(b);
+		rem.setEnabled(b);
+		add.setEnabled(b);
+		rem.repaint();
+		add.repaint();
+
+	}
+
 	private void installAddRemovePointButtons()
 	{
-		JButton add = new JButton("+"); // TODO Item
-		JButton rem = new JButton("-");// TODO Item
+		add = new JButton("+"); // TODO Item
+		rem = new JButton("-");// TODO Item
 		add.setToolTipText("Add Point"); // TODO Language
 		rem.setToolTipText("Remove Point"); // TODO Language
 		add.addActionListener(new ActionListener()
@@ -307,14 +327,15 @@ public class WorkingView extends View
 		if (this.currentTool instanceof CursorTool
 				&& !(tool instanceof CursorTool))
 		{
-
 			graph.removeMouseListener(listeners[0]);
-
+			
 			// IF CURSORTOOL
 		} else if (tool instanceof CursorTool
 				&& !(this.currentTool instanceof CursorTool))
 		{
+			graph.removeMouseListener(listeners[1]); //Reihenfolge wichtig!!
 			graph.addMouseListener(listeners[0]);
+			graph.addMouseListener(listeners[1]);
 
 		}
 		if (tool == null)
@@ -342,7 +363,6 @@ public class WorkingView extends View
 	public void refresh()
 	{
 		List<ItemComponent> items = board.getItems();
-		System.out.println(items.size());
 
 		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
 		for (int i = 0; i < items.size(); i++)
