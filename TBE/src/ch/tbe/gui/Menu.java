@@ -217,62 +217,30 @@ public class Menu extends JMenuBar
 		editInsert.addMouseListener(new editInsertListener());
 
 		editUndo = new JMenuItem(menuLabels.getString("edit5"));
-		class editUndoListener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				Invoker.getInstance().undo();
-			}
-		}
-
-		class editUndoListenerShortcut implements ActionListener
+		class editUndoListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				Invoker.getInstance().undo();
 			}
 		}
-		editUndo.setAccelerator(KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
-		editUndo.addActionListener(new editUndoListenerShortcut());
-		editUndo.addMouseListener(new editUndoListener());
+		editUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
+		editUndo.addActionListener(new editUndoListener());
 
 		editRedo = new JMenuItem(menuLabels.getString("edit6"));
-		class editRedoListener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				Invoker.getInstance().redo();
-			}
-		}
 
-		class editRedoListenerShortcut implements ActionListener
+		class editRedoListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
 				Invoker.getInstance().redo();
 			}
 		}
-		editRedo.setAccelerator(KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
-		editRedo.addActionListener(new editRedoListenerShortcut());
-		editRedo.addMouseListener(new editRedoListener());
+		editRedo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
+		editRedo.addActionListener(new editRedoListener());
 
 		editAddPoint = new JMenuItem(menuLabels.getString("edit7"));
-		class editAddPointListener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				if (tbe.getView() instanceof WorkingView)
-				{
-					((WorkingView) tbe.getView()).addRemovePoint(true);
-				}
-			}
-		}
-		class editAddPointListenerShortcut implements ActionListener
+		class editAddPointListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -282,24 +250,11 @@ public class Menu extends JMenuBar
 				}
 			}
 		}
-		editAddPoint.addMouseListener(new editInsertListener());
-		editAddPoint.addActionListener(new editAddPointListenerShortcut());
-		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_P, java.awt.Event.CTRL_MASK));
+		editAddPoint.addActionListener(new editAddPointListener());
+		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.Event.CTRL_MASK));
 
 		editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
-		class editRemovePointListener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				if (tbe.getView() instanceof WorkingView)
-				{
-					((WorkingView) tbe.getView()).addRemovePoint(false);
-				}
-			}
-		}
-		class editRemovePointListenerShortcut implements ActionListener
+		class editRemovePointListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
 			{
@@ -309,11 +264,8 @@ public class Menu extends JMenuBar
 				}
 			}
 		}
-		editRemovePoint.addMouseListener(new editInsertListener());
-		editRemovePoint
-				.addActionListener(new editRemovePointListenerShortcut());
-		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_M, java.awt.Event.CTRL_MASK));
+		editRemovePoint.addActionListener(new editRemovePointListener());
+		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.Event.CTRL_MASK));
 
 		activatePoints(false);
 		

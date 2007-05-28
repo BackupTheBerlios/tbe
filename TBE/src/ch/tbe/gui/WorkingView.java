@@ -166,9 +166,6 @@ public class WorkingView extends View
 		tbe.getMenu().activatePoints(b);
 		rem.setEnabled(b);
 		add.setEnabled(b);
-		rem.repaint();
-		add.repaint();
-
 	}
 
 	private void installAddRemovePointButtons()
@@ -214,7 +211,6 @@ public class WorkingView extends View
 				}
 				WorkingView.this.refresh();
 				graph.setSelectionCell(a);
-				WorkingView.this.currentTool = WorkingView.this.cursorTool;
 				setTool(cursorTool, cursorButton);
 			}
 		}
