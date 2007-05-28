@@ -29,6 +29,8 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -39,6 +41,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 
 import ch.tbe.Sport;
 
@@ -153,41 +156,53 @@ public class WorkingView extends View
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				if (graph.getSelectionCount() == 1)
-				{
-					if (graph.getSelectionCell() instanceof ArrowItem)
-					{
-						ArrowItem a = (ArrowItem) graph.getSelectionCell();
-						a.addPoint();
-						WorkingView.this.refresh();
-						graph.setSelectionCell(a);
-						setTool(cursorTool, cursorButton);
-					}
+				WorkingView.this.addRemovePoint(true);
 				}
 			}
-		});
+		);
 		rem.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-
-				if (graph.getSelectionCount() == 1)
-				{
-					if (graph.getSelectionCell() instanceof ArrowItem)
-					{
-
-						ArrowItem a = (ArrowItem) graph.getSelectionCell();
-						a.removePoint();
-						WorkingView.this.refresh();
-						graph.setSelectionCell(a);
-						WorkingView.this.currentTool = WorkingView.this.cursorTool;
-						setTool(cursorTool, cursorButton);
-					}
-				}
+				WorkingView.this.addRemovePoint(false);
 			}
 		});
+		add.addKeyListener(new KeyAdapter() {
+		      public void keyPressed(KeyEvent e) {
+		    	  System.out.println(e);
+		        String modifiers = e.getKeyModifiersText(e.getModifiers());
+		        if (e.getKeyCode() == KeyEvent.VK_P && modifiers.equalsIgnoreCase("CTRL")){
+		        	System.out.println("test");
+		        	
+		        	WorkingView.this.addRemovePoint(true);}
+		      }});
+		rem.addKeyListener(new KeyAdapter() {
+		      public void keyPressed(KeyEvent e) {
+		        String modifiers = e.getKeyModifiersText(e.getModifiers());
+		        if (e.getKeyCode() == KeyEvent.VK_M && modifiers.equalsIgnoreCase("CTRL"))
+		        	WorkingView.this.addRemovePoint(false);
+		      }});
+
 		toolbar.add(add);
 		toolbar.add(rem);
+	}
+	
+	private void addRemovePoint(boolean b){
+
+		if (graph.getSelectionCount() == 1)
+		{
+			if (graph.getSelectionCell() instanceof ArrowItem)
+			{
+
+				ArrowItem a = (ArrowItem) graph.getSelectionCell();
+				if(b){a.addPoint();}
+				else{a.removePoint();}
+				WorkingView.this.refresh();
+				graph.setSelectionCell(a);
+				WorkingView.this.currentTool = WorkingView.this.cursorTool;
+				setTool(cursorTool, cursorButton);
+			}
+		}
 	}
 
 	public Board getBoard()
