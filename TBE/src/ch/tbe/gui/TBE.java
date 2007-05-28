@@ -49,27 +49,27 @@ public class TBE
 		splashScreen.setScreenVisible(true);
 		splashScreen.setProgress("Read Settings", 0);
 		XMLHandler.loadTBESettings();
-		splashScreen.setProgress(100);
+		
 		this.sports = XMLHandler.getSports();
 		
 		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
 		// PropertiesFile ausgelesen
-		splashScreen.setProgress("Create Frame", 0);
+		splashScreen.setProgress("Create Frame", 5);
 	
 		frame = new JFrame("TBE - Tactic Board Editor");
-		splashScreen.setProgress(20);
+		splashScreen.setProgress(10);
 		frame.setSize(this.WIDTH, this.HEIGHT);
-		splashScreen.setProgress(40);
+		splashScreen.setProgress(20);
 		menu = new Menu(lang);
 		frame.setJMenuBar(menu);
-		splashScreen.setProgress(100);
+		splashScreen.setProgress(30);
 		
 		// TODO: check ob FirstStart oder nicht!
 		// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
-		splashScreen.setProgress("Create WelcomeView", 0);
+		splashScreen.setProgress("Create WelcomeView", 40);
 		this.setView(new WelcomeView(sports, lang));
 		splashScreen.setProgress(100);
-		splashScreen.setProgress("Prepare to show", 0);
+		splashScreen.setProgress("Prepare to show", 90);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		splashScreen.setProgress(100);
 		splashScreen.setScreenVisible(false);

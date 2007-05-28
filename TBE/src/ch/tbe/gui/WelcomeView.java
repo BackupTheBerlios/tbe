@@ -2,6 +2,7 @@ package ch.tbe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -33,6 +34,7 @@ public class WelcomeView extends View
 	private ResourceBundle welcomeViewLabels;
 	private TBE tbe = TBE.getInstance();
 	private List<String> paths;
+	JPanel welcome;
 	
 	public WelcomeView(ArrayList sports, String lang) 
 	{
@@ -77,7 +79,7 @@ public class WelcomeView extends View
 		globalConstraints.fill = GridBagConstraints.NONE;
 		this.setLayout(globalGridbag);
 		
-		JPanel welcome = new JPanel();
+		welcome = new JPanel();
 		welcome.setPreferredSize(new Dimension(700, 500));
 		welcome.setBackground(Color.WHITE);
 		welcome.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -128,6 +130,16 @@ public class WelcomeView extends View
 				// TODO: file öffnen 
 				//tbe.setView(new WorkingView(XMLHandler.openXML(path)));
 			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				welcome.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				welcome.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
 		}
 		paths = tbe.getRecently();
 		JPanel pathPanel = new JPanel();
@@ -177,6 +189,16 @@ public class WelcomeView extends View
 			public void mouseReleased(MouseEvent arg0)
 			{
 				tbe.setView(new WorkingView(sport));
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				welcome.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				welcome.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		}
 		ArrayList<Sport> sports = tbe.getSports();
