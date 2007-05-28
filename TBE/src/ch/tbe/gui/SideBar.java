@@ -39,6 +39,7 @@ public class SideBar extends JToolBar
 	private Attribute currentAttribute;
 	private JTextArea titleInputArea, textInputArea;
 	private JPanel sidePanel;
+	private GridBagConstraints sideBarConstraints;
 	
 	public SideBar(Board board)
 	{
@@ -54,117 +55,13 @@ public class SideBar extends JToolBar
 		//List<Attribute> attributes = board.getDescription().getAttributes();
 		sidePanel = new JPanel();
 		GridBagLayout gridbag = new GridBagLayout();
-		GridBagConstraints constraints = new GridBagConstraints();
-		constraints.fill = GridBagConstraints.HORIZONTAL;
-		constraints.insets = new Insets(0, 10, 0, 10);
+		sideBarConstraints = new GridBagConstraints();
+		sideBarConstraints.fill = GridBagConstraints.HORIZONTAL;
+		sideBarConstraints.insets = new Insets(0, 10, 0, 10);
 		sidePanel.setLayout(gridbag);
 		
-		class DeleteAttrListener extends MouseAdapter
-		{
-			Attribute myAttr;
-			public DeleteAttrListener(Attribute attr)
-			{
-				myAttr = attr;
-			}
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				// TODO: Alert ob wirklich löschen!
-				// board.removeAttribute(myAttr);
-				currentAttribute = null;
-				
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0)
-			{
-				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0)
-			{
-				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-			
-		}
 		// List of all Attributes
-		// TODO: List of all Attributes dynamisch auslesen
-		//List<Attribute> attributes = board.getDescription().getAttributes();
-		List<Attribute> attributes = new ArrayList<Attribute>();
-		attributes.add(new Attribute("blabla", "Titel"));
-		attributes.add(new Attribute("fdsafdsafdsa", "Beschreibung"));
-		attributes.add(new Attribute("Hütchen", "Material"));
-		
-		class editAttrListener extends MouseAdapter
-		{
-			Attribute myAttr;
-			public editAttrListener(Attribute attr)
-			{
-				myAttr = attr;
-			}
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				currentAttribute = myAttr;
-				titleInputArea.setText(currentAttribute.getTitle());
-				textInputArea.setText(currentAttribute.getText());
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0)
-			{
-				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0)
-			{
-				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-		}
-		
-		JPanel attrPanel = new JPanel();
-		attrPanel.setLayout(new GridLayout(attributes.size(), 2, 5, 5));
-		for(Attribute attr : attributes)
-		{
-			JLabel attrTitle = new JLabel(attr.getTitle());
-			attrTitle.addMouseListener(new editAttrListener(attr));
-			attrPanel.add(attrTitle);
-			JLabel deleteLabel = new JLabel("X");
-			deleteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-			deleteLabel.addMouseListener(new DeleteAttrListener(attr));
-			attrPanel.add(deleteLabel);
-		}
-		
-		constraints.gridy = 0;
-		sidePanel.add(attrPanel, constraints);
-		
-		// new Attribute
-		class AddAttributeListener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				currentAttribute = new Attribute("", "");
-				titleInputArea.setText(sideBarLabels.getString("titleInput"));
-				textInputArea.setText(sideBarLabels.getString("textInput"));
-			}
-			@Override
-			public void mouseExited(MouseEvent arg0)
-			{
-				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
-			@Override
-			public void mouseEntered(MouseEvent arg0)
-			{
-				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-		}
-		
-		JLabel addAttr = new JLabel(sideBarLabels.getString("new"));
-		addAttr.addMouseListener(new AddAttributeListener());
-		
-		addAttr.setBorder(BorderFactory.createMatteBorder(20, 0, 20, 0, new Color(0, 0 ,0 , 1)));
-		
-		constraints.gridy = 1;
-		sidePanel.add(addAttr, constraints);
+		createAttributeList();
 		
 		// Title & Text Input
 		GridBagLayout gridbagTEST = new GridBagLayout();
@@ -194,8 +91,8 @@ public class SideBar extends JToolBar
 		constraintsTEST.gridy = 1;
 		inputPanel.add(textInputArea, constraintsTEST);
 		
-		constraints.gridy = 2;
-		sidePanel.add(inputPanel, constraints);
+		sideBarConstraints.gridy = 2;
+		sidePanel.add(inputPanel, sideBarConstraints);
 		
 		// Buttons
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
@@ -238,7 +135,10 @@ public class SideBar extends JToolBar
 						titleInputArea.setText("");
 						textInputArea.setText("");
 						currentAttribute = null;
-						// TODO: reload, Toolbar neu aufbauen, Attribute neu auslesen
+						List <Attribute> allAttributes = board.getDescription().getAttributes();
+						for(Attribute a : allAttributes)
+							System.out.println(a.getText() + a.getTitle());
+						createAttributeList();
 					}
 				}
 			}
@@ -248,12 +148,116 @@ public class SideBar extends JToolBar
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(saveButton);
 		
-		constraints.gridy = 3;
-		sidePanel.add(buttonPanel, constraints);
+		sideBarConstraints.gridy = 3;
+		sidePanel.add(buttonPanel, sideBarConstraints);
 		
 		this.setLayout(new BorderLayout());
 		this.setBorder(BorderFactory.createMatteBorder(30, 0, 0, 0, new Color(0, 0 ,0 , 1)));
 		this.add(sidePanel, BorderLayout.NORTH);
+	}
+	
+	private void createAttributeList()
+	{
+		List<Attribute> attributes = board.getDescription().getAttributes();
+		
+		class DeleteAttrListener extends MouseAdapter
+		{
+			Attribute myAttr;
+			public DeleteAttrListener(Attribute attr)
+			{
+				myAttr = attr;
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				// TODO: Alert ob wirklich löschen!
+				// board.removeAttribute(myAttr);
+				currentAttribute = null;
+				
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		}
+		
+		class editAttrListener extends MouseAdapter
+		{
+			Attribute myAttr;
+			public editAttrListener(Attribute attr)
+			{
+				myAttr = attr;
+			}
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				currentAttribute = myAttr;
+				titleInputArea.setText(currentAttribute.getTitle());
+				textInputArea.setText(currentAttribute.getText());
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		}
+		
+		JPanel attrPanel = new JPanel();
+		attrPanel.setLayout(new GridLayout(attributes.size(), 2, 5, 5));
+		for(Attribute attr : attributes)
+		{
+			JLabel attrTitle = new JLabel(attr.getTitle());
+			attrTitle.addMouseListener(new editAttrListener(attr));
+			attrPanel.add(attrTitle);
+			JLabel deleteLabel = new JLabel("X");
+			deleteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+			deleteLabel.addMouseListener(new DeleteAttrListener(attr));
+			attrPanel.add(deleteLabel);
+		}
+		
+		sideBarConstraints.gridy = 0;
+		sidePanel.add(attrPanel, sideBarConstraints);
+		
+		// new Attribute
+		class AddAttributeListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				currentAttribute = new Attribute("", "");
+				titleInputArea.setText(sideBarLabels.getString("titleInput"));
+				textInputArea.setText(sideBarLabels.getString("textInput"));
+			}
+			@Override
+			public void mouseExited(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			@Override
+			public void mouseEntered(MouseEvent arg0)
+			{
+				sidePanel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		}
+		
+		JLabel addAttr = new JLabel(sideBarLabels.getString("new"));
+		addAttr.addMouseListener(new AddAttributeListener());
+		
+		addAttr.setBorder(BorderFactory.createMatteBorder(20, 0, 20, 0, new Color(0, 0 ,0 , 1)));
+		
+		sideBarConstraints.gridy = 1;
+		sidePanel.add(addAttr, sideBarConstraints);
 	}
 	
 	private ResourceBundle getResourceBundle(String lang)

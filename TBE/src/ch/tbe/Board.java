@@ -13,15 +13,18 @@ public class Board
 	private String path;
 	private Field field;
 	private Description description;
+	private Sport sport;
 
-	public Board(Field field)
+	public Board(Field field, Sport sport)
 	{
+		this.sport = sport;
 		this.field = field;
-
+		this.description = new Description();
 	}
 
 	public void clear()
 	{
+		
 	}
 
 	public List<ItemComponent> getItems()
@@ -64,5 +67,10 @@ public class Board
 	public Description getDescription()
 	{
 		return this.description;
+	}
+	
+	public Sport getSport()
+	{
+		return this.sport;
 	}
 }

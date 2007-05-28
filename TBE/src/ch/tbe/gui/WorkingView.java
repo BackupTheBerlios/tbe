@@ -29,6 +29,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ public class WorkingView extends View
 	private TBE tbe = TBE.getInstance();
 	private Invoker invoker;
 	private Board board;
+	private Sport sport;
 	private Tool currentTool;
 	private JButton currentButton;
 	private ItemComponent currentItem;
@@ -56,16 +58,25 @@ public class WorkingView extends View
 	private JGraph graph;
 	private MouseListener[] listeners = new MouseListener[2];
 
+	public WorkingView(Sport sport)
+	{
+		this.sport = sport;
+		this.board = new Board(sport.getFields().get(0), sport);
+		createWorkingView();
+	}
+	
 	public WorkingView(Board board)
 	{
-
+		this.sport = board.getSport();
+		this.board = board;
+		createWorkingView();
 	}
-
-	public WorkingView(Sport sport)
+	
+	private void createWorkingView()
 	{
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
-
+		
 		// Toolbar
 		this.add(toolbar, BorderLayout.NORTH);
 
@@ -83,38 +94,15 @@ public class WorkingView extends View
 				new DefaultCellViewFactory());
 		graph = new JGraph(model, view);
 
-		this.board = new Board(new Field("", ""));
-
 		rightPanel.add(graph, BorderLayout.CENTER);
-		class ViewMouseListener implements MouseListener
+		class ViewMouseListener extends MouseAdapter
 		{
-
-			public void mouseClicked(MouseEvent e)
-			{
-
-			}
-
-			public void mouseEntered(MouseEvent e)
-			{
-
-			}
-
-			public void mouseExited(MouseEvent e)
-			{
-
-			}
-
 			public void mousePressed(MouseEvent e)
 			{
 
 				Point p = new Point(e.getX(), e.getY());
 				((WorkingView) TBE.getInstance().getView()).getTool()
 						.mouseDown(p.x, p.y, e);
-			}
-
-			public void mouseReleased(MouseEvent e)
-			{
-
 			}
 		}
 		currentTool = ToolFactory.getCursorTool();
@@ -123,7 +111,8 @@ public class WorkingView extends View
 		currentButton = (JButton) toolbar.getComponent(0);
 		currentButton.setText("Cursor");// TODO only for Debugging
 		this.installToolInToolBar(toolbar, new BezierSolidArrowTool(
-				new ShapeType("BezierSolidArrow", "", null))); // TODO only for debugging
+				new ShapeType("BezierSolidArrow", "", null))); // TODO only for
+		// debugging
 
 		for (ShapeTool s : ToolFactory.getShapeTools(sport))
 		{
@@ -162,21 +151,17 @@ public class WorkingView extends View
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-
 				if (graph.getSelectionCount() == 1)
 				{
 					if (graph.getSelectionCell() instanceof ArrowItem)
 					{
-
 						ArrowItem a = (ArrowItem) graph.getSelectionCell();
 						a.addPoint();
 						WorkingView.this.refresh();
 						graph.setSelectionCell(a);
 					}
 				}
-
 			}
-
 		});
 		rem.addActionListener(new ActionListener()
 		{
@@ -192,16 +177,12 @@ public class WorkingView extends View
 						a.removePoint();
 						WorkingView.this.refresh();
 						graph.setSelectionCell(a);
-
 					}
 				}
-
 			}
-
 		});
 		toolbar.add(add);
 		toolbar.add(rem);
-
 	}
 
 	public Board getBoard()
