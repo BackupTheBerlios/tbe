@@ -15,10 +15,10 @@ public class Board
 	private Description description;
 	private Sport sport;
 
-	public Board(Field field, Sport sport)
+	public Board(Sport sport)
 	{
 		this.sport = sport;
-		this.field = field;
+		this.field = sport.getFields().get(0);
 		this.description = new Description();
 	}
 
