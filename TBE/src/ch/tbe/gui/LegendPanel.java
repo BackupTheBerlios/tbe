@@ -20,9 +20,15 @@ public class LegendPanel extends JPanel
 	public void showLegend()
 	{
 		List<ItemComponent> items = board.getItems();
+		for(ItemComponent i : items)
+		{
+			System.out.println(i.getClass());
+		}
 		// TODO: Aktualisierung?!?
 	}
 	
-	
-	
+	public void reload()
+	{
+		
+	}
 }

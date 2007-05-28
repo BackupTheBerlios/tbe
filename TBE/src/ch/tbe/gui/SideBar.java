@@ -120,6 +120,7 @@ public class SideBar extends JToolBar
 			public void mouseReleased(MouseEvent arg0)
 			{
 				currentAttribute = myAttr;
+				reloadPanel();
 				titleInputArea.setText(currentAttribute.getTitle());
 				textInputArea.setText(currentAttribute.getText());
 			}
@@ -144,22 +145,27 @@ public class SideBar extends JToolBar
 		JPanel eastPanel = new JPanel(new GridLayout(attributes.size(), 1));
 		for (Attribute attr : attributes)
 		{
-			JLabel attrTitle = new JLabel(attr.getTitle());
+			JTextArea attrTitle = new JTextArea(attr.getTitle());
+			attrTitle.setLineWrap(true);
+			attrTitle.setEditable(false);
+			attrTitle.setBackground(new Color(0, 0, 0, 1));
 			attrTitle.addMouseListener(new editAttrListener(attr));
 			westPanel.add(attrTitle);
 
 			JLabel deleteLabel = new JLabel("X");
+			deleteLabel.setBorder(BorderFactory.createMatteBorder(0, 5, 0, 0,
+					new Color(0, 0, 0, 1)));
 			deleteLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			deleteLabel.addMouseListener(new DeleteAttrListener(attr));
 
 			eastPanel.add(deleteLabel);
 		}
-		attrPanel.add(westPanel, BorderLayout.WEST);
+		attrPanel.add(westPanel, BorderLayout.CENTER);
 		attrPanel.add(eastPanel, BorderLayout.EAST);
 
 		sideBarConstraints.gridy = 0;
 		sidePanel.add(attrPanel, sideBarConstraints);
-		
+
 		// new Attribute
 		class AddAttributeListener extends MouseAdapter
 		{
@@ -167,6 +173,7 @@ public class SideBar extends JToolBar
 			public void mouseReleased(MouseEvent arg0)
 			{
 				currentAttribute = new Attribute("", "");
+				reloadPanel();
 				titleInputArea.setText(sideBarLabels.getString("titleInput"));
 				textInputArea.setText(sideBarLabels.getString("textInput"));
 			}
@@ -185,73 +192,94 @@ public class SideBar extends JToolBar
 		}
 
 		JLabel addAttr = new JLabel(sideBarLabels.getString("new"));
+		addAttr.setPreferredSize(new Dimension(200, 20));
 		addAttr.addMouseListener(new AddAttributeListener());
 
-		addAttr.setBorder(BorderFactory.createMatteBorder(20, 0, 20, 0,
+		addAttr.setBorder(BorderFactory.createMatteBorder(50, 0, 50, 0,
 				new Color(0, 0, 0, 1)));
 
 		sideBarConstraints.gridy = 1;
 		sidePanel.add(addAttr, sideBarConstraints);
 
-		// Title & Text Input
+		if (currentAttribute != null)
+		{
+			// Title & Text Input
+			sideBarConstraints.gridy = 2;
+			sidePanel.add(createInputPanel(), sideBarConstraints);
+
+			// Buttons
+			sideBarConstraints.gridy = 3;
+			sidePanel.add(createButtonPanel(), sideBarConstraints);
+		}
+		this.setLayout(new BorderLayout());
+		this.setBorder(BorderFactory.createMatteBorder(30, 0, 0, 0, new Color(
+				0, 0, 0, 1)));
+		this.add(sidePanel, BorderLayout.NORTH);
+	}
+
+	private JPanel createInputPanel()
+	{
 		GridBagLayout gridbagTEST = new GridBagLayout();
-		GridBagConstraints constraintsTEST = new GridBagConstraints();
-		constraintsTEST.fill = GridBagConstraints.HORIZONTAL;
-		constraintsTEST.anchor = GridBagConstraints.NORTH;
-		constraintsTEST.insets = new Insets(10, 0, 10, 10);
+		GridBagConstraints inputConstraints = new GridBagConstraints();
+		inputConstraints.fill = GridBagConstraints.HORIZONTAL;
+		inputConstraints.anchor = GridBagConstraints.NORTH;
+		inputConstraints.insets = new Insets(10, 0, 10, 10);
 
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(gridbagTEST);
 
-		constraintsTEST.gridx = 0;
-		constraintsTEST.gridy = 0;
+		inputConstraints.gridx = 0;
+		inputConstraints.gridy = 0;
 		inputPanel.add(new JLabel(sideBarLabels.getString("title")),
-				constraintsTEST);
+				inputConstraints);
 		class TitleInputListener extends MouseAdapter
 		{
 			@Override
 			public void mousePressed(MouseEvent arg0)
 			{
-				if(titleInputArea.getText().equals(sideBarLabels.getString("titleInput")))
+				if (titleInputArea.getText().equals(
+						sideBarLabels.getString("titleInput")))
 				{
 					titleInputArea.setText("");
 				}
 			}
 		}
-		titleInputArea = new JTextArea(1, 15);
+		titleInputArea = new JTextArea(1, 13);
 		titleInputArea.setLineWrap(true);
 		titleInputArea.addMouseListener(new TitleInputListener());
-		constraintsTEST.gridx = 1;
-		constraintsTEST.gridy = 0;
-		inputPanel.add(titleInputArea, constraintsTEST);
+		inputConstraints.gridx = 1;
+		inputConstraints.gridy = 0;
+		inputPanel.add(titleInputArea, inputConstraints);
 
-		constraintsTEST.gridx = 0;
-		constraintsTEST.gridy = 1;
+		inputConstraints.gridx = 0;
+		inputConstraints.gridy = 1;
 		inputPanel.add(new JLabel(sideBarLabels.getString("text")),
-				constraintsTEST);
+				inputConstraints);
 		class TextInputListener extends MouseAdapter
 		{
 			@Override
 			public void mousePressed(MouseEvent arg0)
 			{
-				if(textInputArea.getText().equals(sideBarLabels.getString("textInput")))
+				if (textInputArea.getText().equals(
+						sideBarLabels.getString("textInput")))
 				{
 					textInputArea.setText("");
 				}
 			}
 		}
-		
-		textInputArea = new JTextArea(10, 15);
+
+		textInputArea = new JTextArea(10, 13);
 		textInputArea.setLineWrap(true);
 		textInputArea.addMouseListener(new TextInputListener());
-		constraintsTEST.gridx = 1;
-		constraintsTEST.gridy = 1;
-		inputPanel.add(textInputArea, constraintsTEST);
+		inputConstraints.gridx = 1;
+		inputConstraints.gridy = 1;
+		inputPanel.add(textInputArea, inputConstraints);
 
-		sideBarConstraints.gridy = 2;
-		sidePanel.add(inputPanel, sideBarConstraints);
+		return inputPanel;
+	}
 
-		// Buttons
+	private JPanel createButtonPanel()
+	{
 		JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
 		JButton cancelButton = new JButton(sideBarLabels.getString("cancel"));
 		class cancelButtonListener extends MouseAdapter
@@ -262,6 +290,7 @@ public class SideBar extends JToolBar
 				currentAttribute = null;
 				titleInputArea.setText("");
 				textInputArea.setText("");
+				reloadPanel();
 			}
 		}
 		cancelButton.addMouseListener(new cancelButtonListener());
@@ -297,11 +326,6 @@ public class SideBar extends JToolBar
 						currentAttribute = null;
 						reloadPanel();
 					}
-				} else
-				{
-					String warning = sideBarLabels.getString("noAttr");
-					JOptionPane.showMessageDialog(null, warning, null,
-							JOptionPane.ERROR_MESSAGE, null);
 				}
 			}
 		}
@@ -310,15 +334,10 @@ public class SideBar extends JToolBar
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(saveButton);
 
-		sideBarConstraints.gridy = 3;
-		sidePanel.add(buttonPanel, sideBarConstraints);
-
-		this.setLayout(new BorderLayout());
-		this.setBorder(BorderFactory.createMatteBorder(30, 0, 0, 0, new Color(
-				0, 0, 0, 1)));
-		this.add(sidePanel, BorderLayout.NORTH);
+		return buttonPanel;
 	}
 
+	
 	private void reloadPanel()
 	{
 		this.remove(sidePanel);
