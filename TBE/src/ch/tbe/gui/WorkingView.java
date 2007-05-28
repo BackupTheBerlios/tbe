@@ -1,14 +1,15 @@
 package ch.tbe.gui;
 
 import ch.tbe.Attribute;
+import ch.tbe.BezierSolidArrowTool;
 import ch.tbe.CursorTool;
 import ch.tbe.Invoker;
 import ch.tbe.Board;
-import ch.tbe.PolyDoubleArrowTool;
 import ch.tbe.ShapeTool;
 import ch.tbe.ShapeType;
 
 import ch.tbe.ToolFactory;
+import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ArrowTool;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
@@ -114,20 +115,15 @@ public class WorkingView extends View
 			public void mouseReleased(MouseEvent e)
 			{
 
-				Point p = new Point(e.getX(), e.getY());
-				((WorkingView) TBE.getInstance().getView()).getTool().mouseUp(
-						p.x, p.y, e);
-				((WorkingView) TBE.getInstance().getView()).getTool()
-						.mouseOver(p.x, p.y, e);
 			}
 		}
 		currentTool = ToolFactory.getCursorTool();
 		this.installToolInToolBar(toolbar, currentTool);
+		installAddRemovePointButtons();
 		currentButton = (JButton) toolbar.getComponent(0);
-		currentButton.setText("Cursor");//TODO only for Debugging
-		this.installToolInToolBar(toolbar, new PolyDoubleArrowTool(
-				new ShapeType("DoubleArrow", "", null))); // TODO only for
-		// debugging
+		currentButton.setText("Cursor");// TODO only for Debugging
+		this.installToolInToolBar(toolbar, new BezierSolidArrowTool(
+				new ShapeType("BezierSolidArrow", "", null))); // TODO only for debugging
 
 		for (ShapeTool s : ToolFactory.getShapeTools(sport))
 		{
@@ -154,6 +150,58 @@ public class WorkingView extends View
 		/*
 		 * 
 		 */
+	}
+
+	private void installAddRemovePointButtons()
+	{
+		JButton add = new JButton("+");
+		JButton rem = new JButton("-");
+		add.setToolTipText("Add Point"); // TODO Language
+		rem.setToolTipText("Remove Point"); // TODO Language
+		add.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+
+				if (graph.getSelectionCount() == 1)
+				{
+					if (graph.getSelectionCell() instanceof ArrowItem)
+					{
+
+						ArrowItem a = (ArrowItem) graph.getSelectionCell();
+						a.addPoint();
+						WorkingView.this.refresh();
+						graph.setSelectionCell(a);
+					}
+				}
+
+			}
+
+		});
+		rem.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+
+				if (graph.getSelectionCount() == 1)
+				{
+					if (graph.getSelectionCell() instanceof ArrowItem)
+					{
+
+						ArrowItem a = (ArrowItem) graph.getSelectionCell();
+						a.removePoint();
+						WorkingView.this.refresh();
+						graph.setSelectionCell(a);
+
+					}
+				}
+
+			}
+
+		});
+		toolbar.add(add);
+		toolbar.add(rem);
+
 	}
 
 	public Board getBoard()
@@ -239,13 +287,15 @@ public class WorkingView extends View
 		Insets margins = new Insets(0, 0, 0, 0);
 		final JButton button;
 		button = new JButton();
-		
-		if (tool.getShapeType() != null){
+
+		if (tool.getShapeType() != null)
+		{
 			button.setIcon(tool.getShapeType().getIcon());
 			button.setToolTipText(tool.getShapeType().getName());
 			button.setMargin(margins);
-		}else{
-			button.setText("Tool"); // For Debugging	
+		} else
+		{
+			button.setText("Tool"); // For Debugging
 		}
 		toolbar.add(button);
 		toolButtons.add(button);
@@ -309,13 +359,17 @@ public class WorkingView extends View
 		{
 			cells[i] = (DefaultGraphCell) items.get(i);
 		}
-		graph.getGraphLayoutCache().remove(graph.getGraphLayoutCache().getCells(graph.getGraphLayoutCache().getAllViews()));
+		graph.getGraphLayoutCache().remove(
+				graph.getGraphLayoutCache().getCells(
+						graph.getGraphLayoutCache().getAllViews()));
 		graph.getGraphLayoutCache().insert(cells);
-		
-		if (items.size() > 0){
+
+		if (items.size() > 0)
+		{
 			graph.setSelectionCell(items.get(items.size() - 1));
+
 		}
-		
+
 		tbe.getMenu().refreshInvokerVisibility();
 	}
 }
