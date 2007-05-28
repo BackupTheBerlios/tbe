@@ -21,6 +21,7 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 				.getIcon().getIconHeight()));
 		GraphConstants.setIcon(this.getAttributes(), shapeType.getIcon());
 		GraphConstants.setEditable(this.getAttributes(), false);
+		GraphConstants.setSizeable(this.getAttributes(), false);
 	}
 
 	public ShapeType getIcon()

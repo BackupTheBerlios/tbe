@@ -48,8 +48,10 @@ public class WorkingView extends View
 	private Invoker invoker;
 	private Board board;
 	private Sport sport;
+	private Tool cursorTool;
 	private Tool currentTool;
 	private JButton currentButton;
+	private JButton cursorButton;
 	private ItemComponent currentItem;
 	private Attribute currentAttribute;
 	private JToolBar toolbar = new JToolBar();
@@ -105,10 +107,10 @@ public class WorkingView extends View
 						.mouseDown(p.x, p.y, e);
 			}
 		}
-		currentTool = ToolFactory.getCursorTool();
+		cursorTool = currentTool = ToolFactory.getCursorTool();
 		this.installToolInToolBar(toolbar, currentTool);
 		installAddRemovePointButtons();
-		currentButton = (JButton) toolbar.getComponent(0);
+		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
 		currentButton.setText("Cursor");// TODO only for Debugging
 		this.installToolInToolBar(toolbar, new BezierSolidArrowTool(
 				new ShapeType("BezierSolidArrow", "", null))); // TODO only for
@@ -159,6 +161,7 @@ public class WorkingView extends View
 						a.addPoint();
 						WorkingView.this.refresh();
 						graph.setSelectionCell(a);
+						setTool(cursorTool, cursorButton);
 					}
 				}
 			}
@@ -177,6 +180,8 @@ public class WorkingView extends View
 						a.removePoint();
 						WorkingView.this.refresh();
 						graph.setSelectionCell(a);
+						WorkingView.this.currentTool = WorkingView.this.cursorTool;
+						setTool(cursorTool, cursorButton);
 					}
 				}
 			}
