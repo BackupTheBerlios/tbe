@@ -108,6 +108,11 @@ public class WorkingView extends View
 
 				Point p = new Point(e.getX(), e.getY());
 				WorkingView.this.getTool().mouseDown(p.x, p.y, e);
+
+			}
+
+			public void mouseReleased(MouseEvent e)
+			{
 				if (WorkingView.this.graph.getSelectionCount() == 1
 						&& WorkingView.this.graph.getSelectionCell() instanceof ArrowItem)
 				{
@@ -116,6 +121,7 @@ public class WorkingView extends View
 				{
 					WorkingView.this.activatePoints(false);
 				}
+
 			}
 		}
 		cursorTool = currentTool = ToolFactory.getCursorTool();
@@ -328,14 +334,13 @@ public class WorkingView extends View
 				&& !(tool instanceof CursorTool))
 		{
 			graph.removeMouseListener(listeners[0]);
-			
+
 			// IF CURSORTOOL
 		} else if (tool instanceof CursorTool
 				&& !(this.currentTool instanceof CursorTool))
 		{
-			graph.removeMouseListener(listeners[1]); //Reihenfolge wichtig!!
+
 			graph.addMouseListener(listeners[0]);
-			graph.addMouseListener(listeners[1]);
 
 		}
 		if (tool == null)
