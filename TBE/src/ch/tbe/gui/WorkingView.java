@@ -61,7 +61,7 @@ public class WorkingView extends View
 	public WorkingView(Sport sport)
 	{
 		this.sport = sport;
-		this.board = new Board(sport.getFields().get(0), sport);
+		this.board = new Board(sport);
 		createWorkingView();
 	}
 	

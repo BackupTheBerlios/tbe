@@ -24,7 +24,8 @@ public class Board
 
 	public void clear()
 	{
-		
+		this.items.clear();
+		((WorkingView) TBE.getInstance().getView()).refresh();
 	}
 
 	public List<ItemComponent> getItems()
