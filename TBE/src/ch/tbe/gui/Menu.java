@@ -172,8 +172,9 @@ public class Menu extends JMenuBar
 		fileNew.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
 		fileOpen.setIcon(new ImageIcon(TBE.class.getResource("../pics/open.png")));
 		fileShare.setIcon(new ImageIcon(TBE.class.getResource("../pics/share.png")));
+		fileExport.setIcon(new ImageIcon(TBE.class.getResource("../pics/export.png")));
 		fileSave.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
-		fileSaveAs.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
+		filePrint.setIcon(new ImageIcon(TBE.class.getResource("../pics/print.png")));
 		
 		filemenu.add(fileNew);
 		filemenu.add(fileOpen);
@@ -387,6 +388,8 @@ public class Menu extends JMenuBar
 		
 		JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
 
+		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
+		
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
 
