@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -168,6 +169,12 @@ public class Menu extends JMenuBar
 		}
 		fileQuit.addMouseListener(new fileQuitListener());
 
+		fileNew.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
+		fileOpen.setIcon(new ImageIcon(TBE.class.getResource("../pics/open.png")));
+		fileShare.setIcon(new ImageIcon(TBE.class.getResource("../pics/share.png")));
+		fileSave.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
+		fileSaveAs.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
+		
 		filemenu.add(fileNew);
 		filemenu.add(fileOpen);
 		filemenu.add(fileSave);
@@ -228,8 +235,9 @@ public class Menu extends JMenuBar
 			}
 		}
 		editInsert.addMouseListener(new editInsertListener());
-
 		editUndo = new JMenuItem(menuLabels.getString("edit5"));
+		
+		
 		class editUndoListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
@@ -281,6 +289,9 @@ public class Menu extends JMenuBar
 		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.Event.CTRL_MASK));
 
 		activatePoints(false);
+		
+		editUndo.setIcon(new ImageIcon(TBE.class.getResource("../pics/undo.png")));
+		editRedo.setIcon(new ImageIcon(TBE.class.getResource("../pics/redo.png")));
 		
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
