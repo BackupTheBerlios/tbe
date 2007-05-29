@@ -353,6 +353,8 @@ public class SideBar extends JToolBar
 		}
 		this.createPanel();
 		this.repaint();
+		this.setVisible(false);
+		this.setVisible(true);
 	}
 
 	private ResourceBundle getResourceBundle(String lang)
