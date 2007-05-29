@@ -37,7 +37,8 @@ public class SettingsFrame
 	private TBE tbe = TBE.getInstance();
 	private ResourceBundle settingsLabels;
 	private JTextArea prenameArea, lastnameArea, mailArea;
-	private JComboBox langBox;
+	private JTextArea FTPnameArea, FTPhostArea, FTPportArea, FTPuserArea, FTPpwArea;
+	private JComboBox langBox, FTPBox;
 	private JTabbedPane tabs;
 	private JFrame frame;
 
@@ -66,10 +67,14 @@ public class SettingsFrame
 	{
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.insets = new Insets(20, 20, 20, 20);
 		constraints.fill = GridBagConstraints.NONE;
 
-		JPanel panel = new JPanel(gridbag);
+		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
+		
+		JPanel westPanel = new JPanel(gridbag);
+		westPanel.setBackground(Color.WHITE);
 
 		JPanel formPanel = new JPanel(new GridLayout(4, 2, 5, 5));
 		formPanel.setBackground(Color.WHITE);
@@ -111,11 +116,13 @@ public class SettingsFrame
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
-		panel.add(formPanel, constraints);
-
+		westPanel.add(formPanel, constraints);
+		
+		panel.add(westPanel, BorderLayout.WEST);
+		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.WHITE);
-
+		
 		JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
 		class cancelButtonListener extends MouseAdapter
 		{
@@ -128,7 +135,7 @@ public class SettingsFrame
 			}
 		}
 		cancelButton.addMouseListener(new cancelButtonListener());
-
+		
 		JButton saveButton = new JButton(settingsLabels.getString("save"));
 		class saveButtonListener extends MouseAdapter
 		{
@@ -144,29 +151,139 @@ public class SettingsFrame
 			}
 		}
 		saveButton.addMouseListener(new saveButtonListener());
-
+		
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(saveButton);
-
-		constraints.gridx = 0;
-		constraints.gridy = 1;
-		constraints.anchor = GridBagConstraints.EAST;
-		panel.add(buttonPanel, constraints);
-
+		
+		panel.add(buttonPanel, BorderLayout.SOUTH);
+		
 		return panel;
 	}
 
 	private JPanel createFTPPanel()
 	{
-		JPanel panel = new JPanel();
+		GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.insets = new Insets(20, 20, 20, 20);
+		constraints.fill = GridBagConstraints.NONE;
 
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBackground(Color.WHITE);
+		
+		JPanel northPanel = new JPanel(new BorderLayout());
+		northPanel.setBackground(Color.WHITE);
+		
+		northPanel.add(new JLabel(settingsLabels.getString("lang")));
+		// TODO: Alle FTP-Server auslesen
+		ArrayList<String> servers = null;
+		//ArrayList<String> servers = XMLHandler.getAllFTP();
+		Vector<String> allFTP = new Vector<String>();
+		for (String s : servers)
+		{
+			allFTP.add(s);
+		}
+		FTPBox = new JComboBox(allFTP);
+		//FTPBox.setSelectedItem(tbe.getPublicServer());
+		FTPBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		northPanel.add(FTPBox);
+		
+		JButton newFTPbutton = new JButton(settingsLabels.getString("new"));
+		
+		panel.add(northPanel, BorderLayout.NORTH);
+		
+		JPanel westPanel = new JPanel(gridbag);
+		westPanel.setBackground(Color.WHITE);
+		
+		JPanel formPanel = new JPanel(new GridLayout(5, 2, 5, 5));
+		formPanel.setBackground(Color.WHITE);
+		
+		formPanel.add(new JLabel(settingsLabels.getString("FTPname")));
+		FTPnameArea = new JTextArea(1, 15);
+		FTPnameArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		formPanel.add(FTPnameArea);
+
+		formPanel.add(new JLabel(settingsLabels.getString("FTPhost")));
+		FTPhostArea = new JTextArea(1, 15);
+		FTPhostArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		formPanel.add(FTPhostArea);
+
+		formPanel.add(new JLabel(settingsLabels.getString("FTPport")));
+		FTPportArea = new JTextArea(1, 15);
+		FTPportArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		formPanel.add(FTPportArea);
+		
+		formPanel.add(new JLabel(settingsLabels.getString("FTPuser")));
+		FTPuserArea = new JTextArea(1, 15);
+		FTPuserArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		formPanel.add(FTPuserArea);
+		
+		formPanel.add(new JLabel(settingsLabels.getString("FTPpw")));
+		FTPpwArea = new JTextArea(1, 15);
+		
+		FTPpwArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		formPanel.add(FTPpwArea);
+		
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		westPanel.add(formPanel, constraints);
+		
+		panel.add(westPanel, BorderLayout.WEST);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(Color.WHITE);
+		
+		JButton deleteButton = new JButton(settingsLabels.getString("delete"));
+		class deleteButtonListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				
+			}
+		}
+		deleteButton.addMouseListener(new deleteButtonListener());
+		
+		JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
+		class cancelButtonListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				
+			}
+		}
+		cancelButton.addMouseListener(new cancelButtonListener());
+		
+		JButton saveButton = new JButton(settingsLabels.getString("save"));
+		class saveButtonListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				
+			}
+		}
+		saveButton.addMouseListener(new saveButtonListener());
+		
+		buttonPanel.add(deleteButton);
+		buttonPanel.add(cancelButton);
+		buttonPanel.add(saveButton);
+		
+		panel.add(buttonPanel, BorderLayout.SOUTH);
+		
 		return panel;
 	}
 
 	private JPanel createSportPanel()
 	{
 		JPanel panel = new JPanel();
-
+		
 		return panel;
 	}
 

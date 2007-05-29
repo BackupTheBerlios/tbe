@@ -1,26 +1,23 @@
-# General
+# Tabs
 general = General
-
-# ftp
 ftp = FTP
-
-# Sport
 sport = Sport
 
-# Prename
-prename = Prename
-
-# Lastname
+# General Settings
+prename = Firstname
 lastname = Lastname
-
-# E-MailAdress
 mail = Mailaddress
-
-# Language
 lang = Language
 
-# Save
-save = Save
+# FTP Settings
+FTPname = Name
+FTPhost = Host
+FTPport = Port
+FTPuser = Username
+FTPpw = Password
 
-# Cancel
+# Buttons
+delete = Delete
 cancel = Cancel
+save = Save
+new = New

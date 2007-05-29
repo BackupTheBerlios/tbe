@@ -1,35 +1,21 @@
 # Title Attribute
 attr = Attributes
 
-# new
+# Add / Change Attribute
 new = new Attribut
-
-# Title
 title = Title
-
-# Text
 text = Text
 
-# cancel
-cancel = Cancel
-
-# Save
-save = Save
-
-# Demand to give in a title
+# Demands
 titleInput = Give in a title
-
-# Demand to give in a text
 textInput = Give in a text
-
-# Demand if Really Remove Attribute
 removeAttr = Do you really want to delete the following Attribute?
 
-# Yes, delete
+# Buttons
 yes = Yes, delete
-
-# No, don't delete
 no = no, don't delete
+cancel = Cancel
+save = Save
 
-# No Attribute choosen
+# Errors
 noAttr = There is no Attribute choosen
