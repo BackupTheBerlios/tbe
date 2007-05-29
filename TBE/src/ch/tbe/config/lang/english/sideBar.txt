@@ -2,7 +2,7 @@
 attr = Attributes
 
 # Add / Change Attribute
-new = new Attribut
+new = New Attribut
 title = Title
 text = Text
 
@@ -13,7 +13,7 @@ removeAttr = Do you really want to delete the following Attribute?
 
 # Buttons
 yes = Yes, delete
-no = no, don't delete
+no = No, don't delete
 cancel = Cancel
 save = Save
 

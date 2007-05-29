@@ -2,6 +2,7 @@ package ch.tbe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -25,8 +26,9 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 import ch.tbe.FTPServer;
 import ch.tbe.util.FileSystemHandler;
@@ -36,11 +38,14 @@ public class SettingsFrame
 {
 	private TBE tbe = TBE.getInstance();
 	private ResourceBundle settingsLabels;
-	private JTextArea prenameArea, lastnameArea, mailArea;
-	private JTextArea FTPnameArea, FTPhostArea, FTPportArea, FTPuserArea, FTPpwArea;
+	private JTextField prenameField, lastnameField, mailField;
+	private JTextField ftpNameField, ftpHostField, ftpPortField, ftpUserField;
+	private JPasswordField ftpPwField;
 	private JComboBox langBox, FTPBox;
 	private JTabbedPane tabs;
 	private JFrame frame;
+	private FTPServer currentFTP = null;
+	private JPanel FTPPanel;
 
 	public SettingsFrame()
 	{
@@ -58,7 +63,8 @@ public class SettingsFrame
 	{
 		tabs = new JTabbedPane();
 		tabs.addTab(settingsLabels.getString("general"), createGeneralPanel());
-		tabs.addTab(settingsLabels.getString("ftp"), createFTPPanel());
+		FTPPanel = createFTPPanel();
+		tabs.addTab(settingsLabels.getString("ftp"), FTPPanel);
 		tabs.addTab(settingsLabels.getString("sport"), createSportPanel());
 		return tabs;
 	}
@@ -80,22 +86,22 @@ public class SettingsFrame
 		formPanel.setBackground(Color.WHITE);
 
 		formPanel.add(new JLabel(settingsLabels.getString("prename")));
-		prenameArea = new JTextArea(1, 15);
-		prenameArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		prenameField = new JTextField(15);
+		prenameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
-		formPanel.add(prenameArea);
+		formPanel.add(prenameField);
 
 		formPanel.add(new JLabel(settingsLabels.getString("lastname")));
-		lastnameArea = new JTextArea(1, 15);
-		lastnameArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		lastnameField = new JTextField(15);
+		lastnameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
-		formPanel.add(lastnameArea);
+		formPanel.add(lastnameField);
 
 		formPanel.add(new JLabel(settingsLabels.getString("mail")));
-		mailArea = new JTextArea(1, 15);
-		mailArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		mailField = new JTextField(15);
+		mailField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
-		formPanel.add(mailArea);
+		formPanel.add(mailField);
 
 		formPanel.add(new JLabel(settingsLabels.getString("lang")));
 		ArrayList<String> langs = FileSystemHandler.getInstalledLanguages();
@@ -110,9 +116,9 @@ public class SettingsFrame
 				Color.BLACK));
 		formPanel.add(langBox);
 		
-		prenameArea.setText(tbe.getUserPrename());
-		lastnameArea.setText(tbe.getUserName());
-		mailArea.setText(tbe.getUserEmail());
+		prenameField.setText(tbe.getUserPrename());
+		lastnameField.setText(tbe.getUserName());
+		mailField.setText(tbe.getUserEmail());
 
 		constraints.gridx = 0;
 		constraints.gridy = 0;
@@ -129,9 +135,9 @@ public class SettingsFrame
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				prenameArea.setText(tbe.getUserPrename());
-				lastnameArea.setText(tbe.getUserName());
-				mailArea.setText(tbe.getUserEmail());
+				prenameField.setText(tbe.getUserPrename());
+				lastnameField.setText(tbe.getUserName());
+				mailField.setText(tbe.getUserEmail());
 			}
 		}
 		cancelButton.addMouseListener(new cancelButtonListener());
@@ -142,8 +148,8 @@ public class SettingsFrame
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				tbe.setUser(prenameArea.getText(), lastnameArea.getText(),
-						mailArea.getText());
+				tbe.setUser(prenameField.getText(), lastnameField.getText(),
+						mailField.getText());
 				tbe.setLang((String) langBox.getSelectedItem());
 				tbe.changeLang();
 				// TODO: SettingsFrame refreshen
@@ -172,11 +178,10 @@ public class SettingsFrame
 		
 		JPanel northPanel = new JPanel(new BorderLayout());
 		northPanel.setBackground(Color.WHITE);
-		
+		/*
 		northPanel.add(new JLabel(settingsLabels.getString("lang")));
 		// TODO: Alle FTP-Server auslesen
-		ArrayList<String> servers = null;
-		//ArrayList<String> servers = XMLHandler.getAllFTP();
+		ArrayList<String> servers = XMLHandler.getAllFTP();
 		Vector<String> allFTP = new Vector<String>();
 		for (String s : servers)
 		{
@@ -187,96 +192,119 @@ public class SettingsFrame
 		FTPBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
 		northPanel.add(FTPBox);
-		
+		*/
 		JButton newFTPbutton = new JButton(settingsLabels.getString("new"));
+		class newServerListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				currentFTP = new FTPServer("", "", 0, "", "");
+				refresh();
+				tabs.setSelectedIndex(1);
+			}
+			
+		}
+		newFTPbutton.addMouseListener(new newServerListener());
+		northPanel.add(newFTPbutton);
 		
 		panel.add(northPanel, BorderLayout.NORTH);
 		
-		JPanel westPanel = new JPanel(gridbag);
-		westPanel.setBackground(Color.WHITE);
-		
-		JPanel formPanel = new JPanel(new GridLayout(5, 2, 5, 5));
-		formPanel.setBackground(Color.WHITE);
-		
-		formPanel.add(new JLabel(settingsLabels.getString("FTPname")));
-		FTPnameArea = new JTextArea(1, 15);
-		FTPnameArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-				Color.BLACK));
-		formPanel.add(FTPnameArea);
-
-		formPanel.add(new JLabel(settingsLabels.getString("FTPhost")));
-		FTPhostArea = new JTextArea(1, 15);
-		FTPhostArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-				Color.BLACK));
-		formPanel.add(FTPhostArea);
-
-		formPanel.add(new JLabel(settingsLabels.getString("FTPport")));
-		FTPportArea = new JTextArea(1, 15);
-		FTPportArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-				Color.BLACK));
-		formPanel.add(FTPportArea);
-		
-		formPanel.add(new JLabel(settingsLabels.getString("FTPuser")));
-		FTPuserArea = new JTextArea(1, 15);
-		FTPuserArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-				Color.BLACK));
-		formPanel.add(FTPuserArea);
-		
-		formPanel.add(new JLabel(settingsLabels.getString("FTPpw")));
-		FTPpwArea = new JTextArea(1, 15);
-		
-		FTPpwArea.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-				Color.BLACK));
-		formPanel.add(FTPpwArea);
-		
-		constraints.gridx = 0;
-		constraints.gridy = 0;
-		westPanel.add(formPanel, constraints);
-		
-		panel.add(westPanel, BorderLayout.WEST);
-		
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBackground(Color.WHITE);
-		
-		JButton deleteButton = new JButton(settingsLabels.getString("delete"));
-		class deleteButtonListener extends MouseAdapter
+		if(currentFTP != null)
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			JPanel westPanel = new JPanel(gridbag);
+			westPanel.setBackground(Color.WHITE);
+			
+			JPanel formPanel = new JPanel(new GridLayout(5, 2, 5, 5));
+			formPanel.setBackground(Color.WHITE);
+			
+			formPanel.add(new JLabel(settingsLabels.getString("FTPname")));
+			ftpNameField = new JTextField(15);
+			ftpNameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+					Color.BLACK));
+			formPanel.add(ftpNameField);
+	
+			formPanel.add(new JLabel(settingsLabels.getString("FTPhost")));
+			ftpHostField = new JTextField(15);
+			ftpHostField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+					Color.BLACK));
+			formPanel.add(ftpHostField);
+	
+			formPanel.add(new JLabel(settingsLabels.getString("FTPport")));
+			ftpPortField = new JTextField(15);
+			ftpPortField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+					Color.BLACK));
+			formPanel.add(ftpPortField);
+			
+			formPanel.add(new JLabel(settingsLabels.getString("FTPuser")));
+			ftpUserField = new JTextField(15);
+			ftpUserField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+					Color.BLACK));
+			formPanel.add(ftpUserField);
+			
+			formPanel.add(new JLabel(settingsLabels.getString("FTPpw")));
+			ftpPwField = new JPasswordField(15);
+			
+			ftpPwField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+					Color.BLACK));
+			formPanel.add(ftpPwField);
+			
+			// TODO: Startwerte einfügen
+			
+			constraints.gridx = 0;
+			constraints.gridy = 0;
+			westPanel.add(formPanel, constraints);
+			
+			panel.add(westPanel, BorderLayout.WEST);
+			
+			JPanel buttonPanel = new JPanel();
+			buttonPanel.setBackground(Color.WHITE);
+			
+			JButton deleteButton = new JButton(settingsLabels.getString("delete"));
+			class deleteButtonListener extends MouseAdapter
 			{
-				
+				@Override
+				public void mouseReleased(MouseEvent arg0)
+				{
+					// TODO: FTP-Server aus Liste entfernen
+					currentFTP = null;
+					refresh();
+					tabs.setSelectedIndex(1);
+				}
 			}
-		}
-		deleteButton.addMouseListener(new deleteButtonListener());
-		
-		JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
-		class cancelButtonListener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			deleteButton.addMouseListener(new deleteButtonListener());
+			
+			JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
+			class cancelButtonListener extends MouseAdapter
 			{
-				
+				@Override
+				public void mouseReleased(MouseEvent arg0)
+				{
+					// TODO: Startwerte wieder einfügen
+					
+				}
 			}
-		}
-		cancelButton.addMouseListener(new cancelButtonListener());
-		
-		JButton saveButton = new JButton(settingsLabels.getString("save"));
-		class saveButtonListener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			cancelButton.addMouseListener(new cancelButtonListener());
+			
+			JButton saveButton = new JButton(settingsLabels.getString("save"));
+			class saveButtonListener extends MouseAdapter
 			{
-				
+				@Override
+				public void mouseReleased(MouseEvent arg0)
+				{
+					// TODO: Check ob alle Felder ausgefüllt
+					
+					// TODO: Server speichern
+				}
 			}
+			saveButton.addMouseListener(new saveButtonListener());
+			
+			buttonPanel.add(deleteButton);
+			buttonPanel.add(cancelButton);
+			buttonPanel.add(saveButton);
+			
+			panel.add(buttonPanel, BorderLayout.SOUTH);
 		}
-		saveButton.addMouseListener(new saveButtonListener());
-		
-		buttonPanel.add(deleteButton);
-		buttonPanel.add(cancelButton);
-		buttonPanel.add(saveButton);
-		
-		panel.add(buttonPanel, BorderLayout.SOUTH);
-		
 		return panel;
 	}
 

@@ -2,7 +2,7 @@
 welcome = Welcome
 
 # Recently Files Open
-open = open File
+open = Open File
 
 # New Board
 new = New File
@@ -14,4 +14,4 @@ recently = Recently Used Files
 sport = Choose Sport
 
 # more
-more = more
+more = More
