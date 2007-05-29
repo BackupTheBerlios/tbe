@@ -50,7 +50,6 @@ import ch.tbe.Sport;
 public class WorkingView extends View
 {
 	private TBE tbe = TBE.getInstance();
-	private Invoker invoker;
 	private Board board;
 	private Sport sport;
 	private Tool cursorTool;
@@ -59,7 +58,6 @@ public class WorkingView extends View
 	private JButton cursorButton;
 	JButton add;
 	JButton rem;
-	private ItemComponent currentItem;
 	private JToolBar toolbar = new JToolBar();
 	private JToolBar sideBar;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
