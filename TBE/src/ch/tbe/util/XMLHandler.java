@@ -36,7 +36,7 @@ public final class XMLHandler{
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse( new File(TBE.class.getResource("../config/tbe.config").getPath()), handler );
+					saxParser.parse( new File("src/ch/tbe/config/tbe.config"), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
 				}
@@ -102,7 +102,7 @@ public final class XMLHandler{
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					String filePath = TBE.class.getResource("../config/sport/"+sport+"/sport.config").getPath();
+					String filePath ="src/ch/tbe/config/sport/"+sport+"/sport.config";
 					saxParser.parse( new File(filePath), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
@@ -114,7 +114,7 @@ public final class XMLHandler{
 					actSport = new Sport(atts.getValue("name"));
 					actSport.setVersion(atts.getValue("version"));
 					actSport.setLcVersion(atts.getValue("lastCompatibleVersion"));
-					actSport.setIcon(new ImageIcon(TBE.class.getResource("../config/sport/"+actSport.getName()+"/"+atts.getValue("picture"))));
+					actSport.setIcon(new ImageIcon("src/ch/tbe/config/sport/"+actSport.getName()+"/"+atts.getValue("picture")));
 				}
 
 				if (actSport != null){
