@@ -34,7 +34,7 @@ public class WelcomeView extends View
 	private ResourceBundle welcomeViewLabels;
 	private TBE tbe = TBE.getInstance();
 	private List<String> paths;
-	JPanel welcome;
+	private JPanel welcome;
 	
 	public WelcomeView(ArrayList sports, String lang) 
 	{
@@ -236,5 +236,15 @@ public class WelcomeView extends View
 		welcome.add(centerPanel, BorderLayout.CENTER);
 		
 		this.add(welcome);
+	}
+	
+	public void refresh()
+	{
+		welcomeViewLabels = getResourceBundle(tbe.getLang());
+		this.remove(welcome);
+		this.repaint();
+		this.createPanel();
+		this.setVisible(false);
+		this.setVisible(true);
 	}
 }

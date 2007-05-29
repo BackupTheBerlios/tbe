@@ -49,12 +49,13 @@ public class SideBar extends JToolBar
 		this.board = board;
 		sideBarLabels = this.getResourceBundle(tbe.getLang());
 		this.setOrientation(1);
-		this.add(new JLabel(sideBarLabels.getString("attr")));
 		this.createPanel();
 	}
 
 	private void createPanel()
 	{
+		this.add(new JLabel(sideBarLabels.getString("attr")));
+		
 		sidePanel = new JPanel();
 		GridBagLayout gridbag = new GridBagLayout();
 		sideBarConstraints = new GridBagConstraints();
@@ -90,7 +91,7 @@ public class SideBar extends JToolBar
 				{
 					board.removeAttribute(myAttr);
 					currentAttribute = null;
-					reloadPanel();
+					refresh();
 				}
 			}
 
@@ -120,7 +121,7 @@ public class SideBar extends JToolBar
 			public void mouseReleased(MouseEvent arg0)
 			{
 				currentAttribute = myAttr;
-				reloadPanel();
+				refresh();
 				titleInputArea.setText(currentAttribute.getTitle());
 				textInputArea.setText(currentAttribute.getText());
 			}
@@ -173,7 +174,7 @@ public class SideBar extends JToolBar
 			public void mouseReleased(MouseEvent arg0)
 			{
 				currentAttribute = new Attribute("", "");
-				reloadPanel();
+				refresh();
 				titleInputArea.setText(sideBarLabels.getString("titleInput"));
 				textInputArea.setText(sideBarLabels.getString("textInput"));
 			}
@@ -289,7 +290,7 @@ public class SideBar extends JToolBar
 				currentAttribute = null;
 				titleInputArea.setText("");
 				textInputArea.setText("");
-				reloadPanel();
+				refresh();
 			}
 		}
 		cancelButton.addMouseListener(new cancelButtonListener());
@@ -327,7 +328,7 @@ public class SideBar extends JToolBar
 						titleInputArea.setText("");
 						textInputArea.setText("");
 						currentAttribute = null;
-						reloadPanel();
+						refresh();
 					}
 				}
 			}
@@ -341,13 +342,17 @@ public class SideBar extends JToolBar
 	}
 
 	
-	private void reloadPanel()
+	public void refresh()
 	{
-		this.remove(sidePanel);
-		this.repaint();
+		sideBarLabels = this.getResourceBundle(tbe.getLang());
+		
+		Component[] components = this.getComponents();
+		for(int i=0; i < components.length; i++)
+		{
+			this.remove(components[i]);
+		}
 		this.createPanel();
-		this.setVisible(false);
-		this.setVisible(true);
+		this.repaint();
 	}
 
 	private ResourceBundle getResourceBundle(String lang)

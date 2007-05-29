@@ -209,4 +209,10 @@ public class TBE
 	public Menu getMenu(){
 		return this.menu;
 	}
+	
+	public void changeLang()
+	{
+		menu.refresh();
+		view.refresh();
+	}
 }

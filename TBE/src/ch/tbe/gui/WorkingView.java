@@ -61,6 +61,7 @@ public class WorkingView extends View
 	JButton rem;
 	private ItemComponent currentItem;
 	private JToolBar toolbar = new JToolBar();
+	private JToolBar sideBar;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private JPanel legendPanel;
 	private JGraph graph;
@@ -89,7 +90,7 @@ public class WorkingView extends View
 		this.add(toolbar, BorderLayout.NORTH);
 
 		// Attributebar
-		JToolBar sideBar = new SideBar(board);
+		sideBar = new SideBar(board);
 		this.add(sideBar, BorderLayout.WEST);
 
 		// gemeinsames Panel für Board und Legend
@@ -197,12 +198,10 @@ public class WorkingView extends View
 
 	public void addRemovePoint(boolean b)
 	{
-
 		if (graph.getSelectionCount() == 1)
 		{
 			if (graph.getSelectionCell() instanceof ArrowItem)
 			{
-
 				ArrowItem a = (ArrowItem) graph.getSelectionCell();
 				if (b)
 				{
@@ -317,11 +316,8 @@ public class WorkingView extends View
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-
 				WorkingView.this.setTool(tool, button);
-
 			}
-
 		});
 	}
 
@@ -365,6 +361,8 @@ public class WorkingView extends View
 
 	public void refresh()
 	{
+		// TODO: Tools refreshen für ChangeLang!
+		((SideBar)this.sideBar).refresh();
 		List<ItemComponent> items = board.getItems();
 
 		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
@@ -380,7 +378,6 @@ public class WorkingView extends View
 		if (items.size() > 0)
 		{
 			graph.setSelectionCell(items.get(items.size() - 1));
-
 		}
 
 		tbe.getMenu().refreshInvokerVisibility();

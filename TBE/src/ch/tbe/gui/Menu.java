@@ -1,5 +1,6 @@
 package ch.tbe.gui;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -31,12 +32,28 @@ public class Menu extends JMenuBar
 
 	public Menu(String lang)
 	{
+		menuLabels = getResourceBundle(lang);
+		
+		createMenu();
+	}
+	
+	private void createMenu()
+	{
+		this.add(createFileMenu());
+		this.add(createEditMenu());
+		this.add(createBoardMenu());
+		this.add(createTBEMenu());
+	}
+	
+	private ResourceBundle getResourceBundle(String lang)
+	{
+		ResourceBundle labels = null;
 		InputStream menuLabelStream;
 		try
 		{
 			menuLabelStream = Menu.class.getResourceAsStream("../config/lang/"
 					+ lang + "/menuLabels.txt");
-			menuLabels = new PropertyResourceBundle(menuLabelStream);
+			labels = new PropertyResourceBundle(menuLabelStream);
 		} catch (FileNotFoundException fnne)
 		{
 			System.out.println("LanguageFile for MenuItems not found !");
@@ -44,13 +61,9 @@ public class Menu extends JMenuBar
 		{
 			System.out.println("Error with ResourceBundle MenuLabels!");
 		}
-
-		this.add(createFileMenu());
-		this.add(createEditMenu());
-		this.add(createBoardMenu());
-		this.add(createTBEMenu());
+		return labels;
 	}
-
+	
 	private JMenu createFileMenu()
 	{
 		JMenu filemenu = new JMenu(menuLabels.getString("title1"));
@@ -277,7 +290,7 @@ public class Menu extends JMenuBar
 		editmenu.add(editRedo);
 		editmenu.add(editAddPoint);
 		editmenu.add(editRemovePoint);
-
+		
 		this.refreshInvokerVisibility();
 		return editmenu;
 	}
@@ -390,5 +403,18 @@ public class Menu extends JMenuBar
 	public void activatePoints(boolean b){
 		editAddPoint.setEnabled(b);
 		editRemovePoint.setEnabled(b);
+	}
+	public void refresh()
+	{
+		Component[] components = this.getComponents();
+		for(int i=0; i < components.length; i++)
+		{
+			this.remove(components[i]);
+		}
+		this.repaint();
+		
+		menuLabels = getResourceBundle(tbe.getLang());
+		
+		this.createMenu();
 	}
 }

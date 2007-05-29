@@ -38,23 +38,28 @@ public class SettingsFrame
 	private ResourceBundle settingsLabels;
 	private JTextArea prenameArea, lastnameArea, mailArea;
 	private JComboBox langBox;
+	private JTabbedPane tabs;
+	private JFrame frame;
 
 	public SettingsFrame()
 	{
-		JFrame frame = new JFrame();
+		frame = new JFrame();
 		settingsLabels = getResourceBundle(tbe.getLang());
-
-		JTabbedPane tabs = new JTabbedPane();
-
-		tabs.addTab(settingsLabels.getString("general"), createGeneralPanel());
-		tabs.addTab(settingsLabels.getString("ftp"), createFTPPanel());
-		tabs.addTab(settingsLabels.getString("sport"), createSportPanel());
-
-		frame.add(tabs);
-
+		
+		frame.add(createTabbedPane());
+		
 		frame.setSize(500, 300);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setVisible(true);
+	}
+	
+	private JTabbedPane createTabbedPane()
+	{
+		tabs = new JTabbedPane();
+		tabs.addTab(settingsLabels.getString("general"), createGeneralPanel());
+		tabs.addTab(settingsLabels.getString("ftp"), createFTPPanel());
+		tabs.addTab(settingsLabels.getString("sport"), createSportPanel());
+		return tabs;
 	}
 
 	private JPanel createGeneralPanel()
@@ -90,12 +95,12 @@ public class SettingsFrame
 		formPanel.add(new JLabel(settingsLabels.getString("lang")));
 		ArrayList<String> langs = FileSystemHandler.getInstalledLanguages();
 		Vector<String> languages = new Vector<String>();
-		for(String s : langs)
+		for (String s : langs)
 		{
 			languages.add(s);
 		}
 		langBox = new JComboBox(languages);
-
+		langBox.setSelectedItem(tbe.getLang());
 		langBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
 		formPanel.add(langBox);
@@ -103,7 +108,7 @@ public class SettingsFrame
 		prenameArea.setText(tbe.getUserPrename());
 		lastnameArea.setText(tbe.getUserName());
 		mailArea.setText(tbe.getUserEmail());
-		
+
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		panel.add(formPanel, constraints);
@@ -130,12 +135,12 @@ public class SettingsFrame
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				tbe.setUser(prenameArea.getText(),
-						lastnameArea.getText(), mailArea.getText());
-				tbe.setLang((String)langBox.getSelectedItem());
-				// TODO: View refreshen 
+				tbe.setUser(prenameArea.getText(), lastnameArea.getText(),
+						mailArea.getText());
+				tbe.setLang((String) langBox.getSelectedItem());
+				tbe.changeLang();
 				// TODO: SettingsFrame refreshen
-				//((WorkingView)tbe.getView()).refresh();
+				refresh();
 			}
 		}
 		saveButton.addMouseListener(new saveButtonListener());
@@ -207,5 +212,15 @@ public class SettingsFrame
 			System.out.println("Error with ResourceBundle SettingsFrame!");
 		}
 		return labels;
+	}
+
+	public void refresh()
+	{
+		settingsLabels = getResourceBundle(tbe.getLang());
+		frame.remove(tabs);
+		frame.repaint();
+		frame.add(createTabbedPane());
+		frame.setVisible(false);
+		frame.setVisible(true);
 	}
 }
