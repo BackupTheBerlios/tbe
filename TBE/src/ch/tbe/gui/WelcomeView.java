@@ -214,7 +214,7 @@ public class WelcomeView extends View
 			JLabel sportLabel = new JLabel(s.getName());
 			sportLabel.addMouseListener(new NewListener(s));
 			
-			onePath.add(createIcon("../config/sport/"+ s.getName() +"/ball.gif"));
+			onePath.add(new JLabel(s.getIcon()));
 			onePath.add(sportLabel);
 			sportPanel.add(onePath);
 		}

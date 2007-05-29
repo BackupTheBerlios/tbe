@@ -51,12 +51,4 @@ public abstract class ArrowTool extends Tool
 		// TODO Auto-generated method stub
 
 	}
-
-	public ShapeType getShapeType()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }

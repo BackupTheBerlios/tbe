@@ -36,7 +36,7 @@ public final class XMLHandler{
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse( new File("src/ch/tbe/config/tbe.config"), handler );
+					saxParser.parse( new File(TBE.class.getResource("../config/tbe.config").getPath()), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
 				}
@@ -102,7 +102,7 @@ public final class XMLHandler{
 				
 				try{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					String filePath = "src/ch/tbe/config/sport/"+sport+"/sport.config";
+					String filePath = TBE.class.getResource("../config/sport/"+sport+"/sport.config").getPath();
 					saxParser.parse( new File(filePath), handler );
 				}catch( Throwable t ) {
 					t.printStackTrace();
@@ -114,6 +114,7 @@ public final class XMLHandler{
 					actSport = new Sport(atts.getValue("name"));
 					actSport.setVersion(atts.getValue("version"));
 					actSport.setLcVersion(atts.getValue("lastCompatibleVersion"));
+					actSport.setIcon(new ImageIcon(TBE.class.getResource("../config/sport/"+actSport.getName()+"/"+atts.getValue("picture"))));
 				}
 
 				if (actSport != null){
@@ -124,12 +125,7 @@ public final class XMLHandler{
 					}
 					
 					if (qName.equals("arrow")){
-						
-						//TODO
-						//ARROW ICON !!!
-						URL imgURL = TBE.class.getResource("../config/sport/soccer/ball.gif");
-						Icon actIcon = new ImageIcon(imgURL);
-						arrows.add(new ShapeType(atts.getValue("type"), atts.getValue("description"),actIcon));
+						arrows.add(new ShapeType(atts.getValue("type"), atts.getValue("description")));
 					}
 					
 					if (qName.equals("field")){

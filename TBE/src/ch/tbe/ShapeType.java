@@ -14,6 +14,11 @@ public class ShapeType
 		this.icon = icon;
 		this.description = description;
 	}
+	
+	public ShapeType(String name, String description){
+		this.name = name;
+		this.description = description;
+	}
 
 	public String getDescription()
 	{
@@ -30,9 +35,9 @@ public class ShapeType
 		return icon;
 	}
 
-	public void setIcon(Icon picture)
+	public void setIcon(Icon icon)
 	{
-		this.icon = picture;
+		this.icon = icon;
 	}
 
 	public String getName()

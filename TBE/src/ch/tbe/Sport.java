@@ -2,6 +2,8 @@ package ch.tbe;
 
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+
 public class Sport 
 {
 	private ArrayList<Field> fields;
@@ -10,6 +12,7 @@ public class Sport
 	private String name;
 	private String version;
 	private String lcVersion;
+	private ImageIcon icon;
 	
 	public Sport(String name)
 	{
@@ -27,6 +30,14 @@ public class Sport
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+	
+	public void setIcon(ImageIcon icon){
+		this.icon = icon;
+	}
+	
+	public ImageIcon getIcon(){
+		return this.icon;
 	}
 
 	public void setFields(ArrayList<Field> fields)

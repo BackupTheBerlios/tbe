@@ -132,10 +132,7 @@ public class WorkingView extends View
 		installAddRemovePointButtons();
 		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
 		currentButton.setText("Cursor");// TODO only for Debugging
-		this.installToolInToolBar(toolbar, new BezierSolidArrowTool(
-				new ShapeType("BezierSolidArrow", "", null))); // TODO only for
-		// debugging
-
+		
 		for (ShapeTool s : ToolFactory.getShapeTools(sport))
 		{
 			this.installToolInToolBar(toolbar, s);
@@ -319,6 +316,16 @@ public class WorkingView extends View
 				WorkingView.this.setTool(tool, button);
 			}
 		});
+		button.setBorderPainted(false);
+		  button.addMouseListener(new MouseAdapter () {
+		    public void mouseEntered(MouseEvent e) {
+		      ((JButton) e.getSource ()).setBorderPainted(true);
+		    }
+		    public void mouseExited(MouseEvent e) {
+		      ((JButton) e.getSource ()).setBorderPainted(false);
+		    }
+		  });
+
 	}
 
 	public void setTool(Tool tool, JButton button)
