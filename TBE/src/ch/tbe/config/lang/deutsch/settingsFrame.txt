@@ -21,3 +21,8 @@ delete = Löschen
 cancel = Abbrechen
 save = Speichern
 new = Neu
+connect = Verbinden
+install = Installieren
+
+# Demands
+chooseServer = Server auswählen

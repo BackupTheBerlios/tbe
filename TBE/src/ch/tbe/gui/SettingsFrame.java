@@ -3,6 +3,7 @@ package ch.tbe.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -21,16 +22,19 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import ch.tbe.FTPServer;
+import ch.tbe.Sport;
 import ch.tbe.util.FileSystemHandler;
 import ch.tbe.util.XMLHandler;
 
@@ -41,7 +45,7 @@ public class SettingsFrame
 	private JTextField prenameField, lastnameField, mailField;
 	private JTextField ftpNameField, ftpHostField, ftpPortField, ftpUserField;
 	private JPasswordField ftpPwField;
-	private JComboBox langBox, FTPBox;
+	private JComboBox langBox, ftpBox;
 	private JTabbedPane tabs;
 	private JFrame frame;
 	private FTPServer currentFTP = null;
@@ -176,23 +180,25 @@ public class SettingsFrame
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
 		
-		JPanel northPanel = new JPanel(new BorderLayout());
+		JPanel northPanel = new JPanel();
 		northPanel.setBackground(Color.WHITE);
-		/*
-		northPanel.add(new JLabel(settingsLabels.getString("lang")));
+		
 		// TODO: Alle FTP-Server auslesen
-		ArrayList<String> servers = XMLHandler.getAllFTP();
 		Vector<String> allFTP = new Vector<String>();
+		allFTP.add(settingsLabels.getString("chooseServer"));
+		/*
+		ArrayList<String> servers = XMLHandler.getAllFTP();
 		for (String s : servers)
 		{
 			allFTP.add(s);
 		}
-		FTPBox = new JComboBox(allFTP);
-		//FTPBox.setSelectedItem(tbe.getPublicServer());
-		FTPBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-				Color.BLACK));
-		northPanel.add(FTPBox);
 		*/
+		ftpBox = new JComboBox(allFTP);
+		//FTPBox.setSelectedItem(tbe.getPublicServer());
+		ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		northPanel.add(ftpBox);
+		
 		JButton newFTPbutton = new JButton(settingsLabels.getString("new"));
 		class newServerListener extends MouseAdapter
 		{
@@ -310,7 +316,91 @@ public class SettingsFrame
 
 	private JPanel createSportPanel()
 	{
-		JPanel panel = new JPanel();
+		GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints constraints = new GridBagConstraints();
+		constraints.fill = GridBagConstraints.BOTH;
+
+		JPanel panel = new JPanel(new BorderLayout());
+		panel.setBackground(Color.WHITE);
+		
+		JPanel westPanel = new JPanel(gridbag);
+		westPanel.setBackground(Color.WHITE);
+		
+		JButton connectButton = new JButton(settingsLabels.getString("connect"));
+		class connectListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				// TODO: connect with PublicServer
+			}
+			
+		}
+		connectButton.addMouseListener(new connectListener());
+		
+		constraints.insets = new Insets(5, 10, 5, 10);
+		constraints.gridx = 0;
+		constraints.gridy = 0;
+		westPanel.add(connectButton, constraints);
+		
+		JPanel formPanel = new JPanel();
+		formPanel.setBackground(Color.WHITE);
+		formPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+		
+		GridBagLayout gridBagForm = new GridBagLayout();
+		GridBagConstraints formConstraints = new GridBagConstraints();
+		formConstraints.insets = new Insets(5, 10, 5, 10);
+		
+		JPanel listPanel = new JPanel(gridBagForm);
+		listPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.RED));
+		// TODO: not InstalledSports, but all Sports on Server!
+		ArrayList<String> sports = FileSystemHandler.getInstalledSports();
+		// only for testing PanelSize!
+		sports.add("Eishockey");
+		sports.add("Basketball");
+		sports.add("Volleyball");
+		sports.add("Baseball");
+		sports.add("Rugby");
+		//END
+		for(int i = 0; i < sports.size(); i++)
+		{
+			int xpos = (i/3)*2;
+			int ypos = i%3;
+			
+			formConstraints.gridx = xpos;
+			formConstraints.gridy = ypos;
+			formConstraints.anchor = GridBagConstraints.WEST;
+			listPanel.add(new JLabel(sports.get(i)), formConstraints);
+			formConstraints.anchor = GridBagConstraints.EAST;
+			formConstraints.gridx = xpos + 1;
+			formConstraints.gridy = ypos;
+			listPanel.add(new JCheckBox(), formConstraints);
+		}
+		formPanel.add(listPanel);	
+		
+		constraints.gridx = 0;
+		constraints.gridy = 1;
+		westPanel.add(formPanel, constraints);
+		
+		panel.add(westPanel, BorderLayout.WEST);
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBackground(Color.WHITE);
+		
+		JButton installButton = new JButton(settingsLabels.getString("install"));
+		class installButtonListener extends MouseAdapter
+		{
+			@Override
+			public void mouseReleased(MouseEvent arg0)
+			{
+				// TODO: install Sports
+			}
+		}
+		installButton.addMouseListener(new installButtonListener());
+		
+		buttonPanel.add(installButton);
+		
+		panel.add(buttonPanel, BorderLayout.SOUTH);
 		
 		return panel;
 	}

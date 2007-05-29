@@ -21,3 +21,8 @@ delete = Delete
 cancel = Cancel
 save = Save
 new = New
+connect = Connect
+install = Install
+
+# Demands
+chooseServer = Choose Server
