@@ -14,6 +14,8 @@ import ch.tbe.jgraph.TBECellViewFactory;
 import ch.tbe.Field;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,6 +24,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -339,6 +343,10 @@ public class WorkingView extends View
 			this.currentTool = tool;
 
 		}
+		Cursor c = getToolkit().createCustomCursor( 
+				  (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(), 
+				  new Point(10,10), "Cursor" ); 
+				setCursor( c );
 	}
 	
 	public void closeOrNew(){
