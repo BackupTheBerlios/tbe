@@ -69,10 +69,9 @@ public final class XMLHandler
 				if (qName.equals("server"))
 				{
 					servers.add(new FTPServer(atts.getValue("name").toString(),
-							atts.getValue("host").toString(), Integer.valueOf(
-									atts.getValue("port")).intValue(), atts
-									.getValue("username").toString(), atts
-									.getValue("password").toString()));
+							atts.getValue("host").toString(), atts.getValue(
+									"username").toString(), atts.getValue(
+									"password").toString()));
 				}
 
 				if (qName.equals("recentlyOpened"))
@@ -203,7 +202,7 @@ public final class XMLHandler
 	public static void saveSettings(String prename, String lastname,
 			String email, String language)
 	{
-		
+
 	}
 
 }

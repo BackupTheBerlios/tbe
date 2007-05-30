@@ -1,8 +1,14 @@
 package ch.tbe.util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-public final class FTPHandler
+import ch.tbe.FTPServer;
+
+import com.enterprisedt.net.ftp.FTPClient;
+import com.enterprisedt.net.ftp.FTPException;
+
+public final class FTPHandler 
 {
 	private FTPHandler()
 	{
@@ -18,12 +24,83 @@ public final class FTPHandler
 	{
 		
 	}
-
-	public static void connect()
+	
+	public static void disconnect(FTPClient client)
 	{
+		try
+		{
+			System.out.println("quit");
+			client.quit();
+		}
+		catch (IOException e)
+		{
+			System.out.println("quit IO");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (FTPException e)
+		{
+			System.out.println("quit FTPEx");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static FTPClient connect(FTPServer server)
+	{
+		FTPClient client = new FTPClient();
+		try
+		{
+			client.setRemoteHost(server.getHost());
+			client.connect();
+			System.out.println("login");
+			client.login(server.getUsername(), server.getPassword());
+		}
+		catch (IOException e)
+		{
+			System.out.println("connect IO");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (FTPException e)
+		{
+			System.out.println("client is already connected to the server");
+			e.printStackTrace();
+		}
+		return client;
+	}
+	
+	public static void getDir(FTPServer server, String dir)
+	{
+		FTPClient client = connect(server);
+		System.out.println("connected");
+		try
+		{
+			String[] s = client.dir(dir);
+			for(int i = 0; i < s.length; i++)
+			{
+				System.out.println(s[i]);
+			}
+		}
+		catch (IOException e)
+		{
+			System.out.println("IO getDir");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (FTPException e)
+		{
+			System.out.println("FTPex getDir");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			disconnect(client);
+		}
 		
 	}
-
+	
 	public static void upload(String path)
 	{
 		
@@ -33,5 +110,4 @@ public final class FTPHandler
 	{
 		
 	}
-
 }

@@ -47,7 +47,7 @@ public class SettingsFrame
 	private TBE tbe = TBE.getInstance();
 	private ResourceBundle settingsLabels;
 	private JTextField prenameField, lastnameField, mailField;
-	private JTextField ftpNameField, ftpHostField, ftpPortField, ftpUserField;
+	private JTextField ftpNameField, ftpHostField, ftpUserField;
 	private JPasswordField ftpPwField;
 	private JComboBox langBox, ftpBox;
 	private JTabbedPane tabs;
@@ -212,12 +212,11 @@ public class SettingsFrame
 			{
 				// TODO currentFTP = getFTPServerbyName
 				currentFTP = new FTPServer(((String) ftpBox.getSelectedItem()),
-						"", 0, "", "");
+						"", "", "");
 				refresh();
 				tabs.setSelectedIndex(1);
 				ftpNameField.setText(currentFTP.getName());
 				ftpHostField.setText(currentFTP.getHost());
-				ftpPortField.setText(Integer.toString(currentFTP.getPort()));
 				ftpUserField.setText(currentFTP.getUsername());
 				ftpPwField.setText(currentFTP.getPassword());
 			}
@@ -231,7 +230,7 @@ public class SettingsFrame
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				currentFTP = new FTPServer("", "", 0, "", "");
+				currentFTP = new FTPServer("", "", "", "");
 				refresh();
 				tabs.setSelectedIndex(1);
 			}
@@ -247,7 +246,7 @@ public class SettingsFrame
 			JPanel westPanel = new JPanel(gridbag);
 			westPanel.setBackground(Color.WHITE);
 
-			JPanel formPanel = new JPanel(new GridLayout(5, 2, 5, 5));
+			JPanel formPanel = new JPanel(new GridLayout(4, 2, 5, 5));
 			formPanel.setBackground(Color.WHITE);
 
 			formPanel.add(new JLabel(settingsLabels.getString("FTPname")));
@@ -261,12 +260,6 @@ public class SettingsFrame
 			ftpHostField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
 			formPanel.add(ftpHostField);
-
-			formPanel.add(new JLabel(settingsLabels.getString("FTPport")));
-			ftpPortField = new JTextField(15);
-			ftpPortField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-					Color.BLACK));
-			formPanel.add(ftpPortField);
 
 			formPanel.add(new JLabel(settingsLabels.getString("FTPuser")));
 			ftpUserField = new JTextField(15);
@@ -317,8 +310,6 @@ public class SettingsFrame
 					// TODO: Startwerte wieder einfügen
 					ftpNameField.setText(currentFTP.getName());
 					ftpHostField.setText(currentFTP.getHost());
-					ftpPortField
-							.setText(Integer.toString(currentFTP.getPort()));
 					ftpUserField.setText(currentFTP.getUsername());
 					ftpPwField.setText(currentFTP.getPassword());
 				}
@@ -451,16 +442,7 @@ public class SettingsFrame
 	private boolean checkFTPForm()
 	{
 		boolean isCorrect = false;
-		boolean port = true;
-
-		for (int i = 0; i < ftpPortField.getText().length(); i++)
-		{
-			char c = ftpPortField.getText().charAt(i);
-			if (c < '0' || c > '9')
-			{
-				port = false;
-			}
-		}
+		
 		if (ftpNameField.getText().equals(""))
 		{
 			JOptionPane.showMessageDialog(null, settingsLabels
@@ -470,11 +452,6 @@ public class SettingsFrame
 		{
 			JOptionPane.showMessageDialog(null, settingsLabels
 					.getString("FTPhost"));
-		}
-		else if (port == false)
-		{
-			JOptionPane.showMessageDialog(null, settingsLabels
-					.getString("FTPport"));
 		}
 		else if (ftpUserField.getText().equals(""))
 		{
