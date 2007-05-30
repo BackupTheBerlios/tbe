@@ -1,4 +1,4 @@
-package ch.tbe.jgraph.util;
+package ch.tbe.jgraph;
 
 import java.awt.geom.Point2D;
 

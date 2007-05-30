@@ -4,8 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.*;
+
+import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultCellViewFactory;
+import org.jgraph.graph.DefaultEdge;
+import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphConstants;
+import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.GraphModel;
+
 import ch.tbe.jgraph.*;
-import ch.tbe.jgraph.graph.*;
 
 public class ArrowGUI extends JFrame
 {

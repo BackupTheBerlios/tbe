@@ -3,7 +3,7 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.util.List;
 import ch.tbe.framework.ArrowItem;
-import ch.tbe.jgraph.graph.GraphConstants;
+import ch.tbe.jgraph.TBEGraphConstants;
 
 public class PolyCurvedArrowItem extends ArrowItem
 {
@@ -12,8 +12,8 @@ public class PolyCurvedArrowItem extends ArrowItem
 	
 	{
 
-		GraphConstants.setLineStyle(this.getAttributes(),
-				GraphConstants.STYLE_CURVED);
+		TBEGraphConstants.setLineStyle(this.getAttributes(),
+				TBEGraphConstants.STYLE_CURVED);
 		setPoints(points);
 	}
 

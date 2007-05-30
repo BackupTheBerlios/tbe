@@ -3,15 +3,15 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.util.List;
 import ch.tbe.framework.ArrowItem;
-import ch.tbe.jgraph.graph.GraphConstants;
+import ch.tbe.jgraph.TBEGraphConstants;
 
 public class BezierSolidArrowItem extends ArrowItem
 {
 
 	public BezierSolidArrowItem(List<Point2D> points)
 	{
-		GraphConstants.setLineStyle(this.getAttributes(),
-				GraphConstants.STYLE_BEZIER);
+		TBEGraphConstants.setLineStyle(this.getAttributes(),
+				TBEGraphConstants.STYLE_BEZIER);
 		setPoints(points);
 
 	}

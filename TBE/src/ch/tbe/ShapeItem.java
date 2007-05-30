@@ -4,9 +4,12 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.Icon;
+
+import org.jgraph.graph.DefaultGraphCell;
+
 import ch.tbe.framework.ItemComponent;
-import ch.tbe.jgraph.graph.DefaultGraphCell;
-import ch.tbe.jgraph.graph.GraphConstants;
+import ch.tbe.jgraph.TBEGraphConstants;
+
 
 public class ShapeItem extends DefaultGraphCell implements ItemComponent
 {
@@ -16,12 +19,12 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 	{
 
 		this.shapeType = shapeType;
-		GraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p
+		TBEGraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p
 				.getX(), p.getY(), shapeType.getIcon().getIconWidth(), shapeType
 				.getIcon().getIconHeight()));
-		GraphConstants.setIcon(this.getAttributes(), shapeType.getIcon());
-		GraphConstants.setEditable(this.getAttributes(), false);
-		GraphConstants.setSizeable(this.getAttributes(), false);
+		TBEGraphConstants.setIcon(this.getAttributes(), shapeType.getIcon());
+		TBEGraphConstants.setEditable(this.getAttributes(), false);
+		TBEGraphConstants.setSizeable(this.getAttributes(), false);
 	}
 
 	public ShapeType getIcon()

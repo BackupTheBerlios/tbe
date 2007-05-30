@@ -16,13 +16,7 @@ import ch.tbe.framework.Command;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
-import ch.tbe.jgraph.JGraph;
-import ch.tbe.jgraph.event.GraphSelectionListener;
-import ch.tbe.jgraph.graph.DefaultCellViewFactory;
-import ch.tbe.jgraph.graph.DefaultGraphCell;
-import ch.tbe.jgraph.graph.DefaultGraphModel;
-import ch.tbe.jgraph.graph.GraphLayoutCache;
-import ch.tbe.jgraph.graph.GraphModel;
+import ch.tbe.jgraph.TBECellViewFactory;
 import ch.tbe.Field;
 
 import java.awt.BorderLayout;
@@ -44,6 +38,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+
+import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultCellViewFactory;
+import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.GraphModel;
 
 import ch.tbe.Sport;
 
@@ -98,7 +99,7 @@ public class WorkingView extends View
 		// Board
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
-				new DefaultCellViewFactory());
+				new TBECellViewFactory());
 		graph = new JGraph(model, view);
 
 		rightPanel.add(graph, BorderLayout.CENTER);

@@ -3,7 +3,7 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.util.List;
 import ch.tbe.framework.ArrowItem;
-import ch.tbe.jgraph.graph.GraphConstants;
+import ch.tbe.jgraph.TBEGraphConstants;
 
 public class BezierDashedArrowItem extends ArrowItem
 {
@@ -13,9 +13,9 @@ public class BezierDashedArrowItem extends ArrowItem
 	public BezierDashedArrowItem(List<Point2D> points)
 	{
 		super();
-		GraphConstants.setLineStyle(this.getAttributes(),
-		GraphConstants.STYLE_BEZIER);
-		GraphConstants.setDashPattern(this.getAttributes(), DASH);
+		TBEGraphConstants.setLineStyle(this.getAttributes(),
+		TBEGraphConstants.STYLE_BEZIER);
+		TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
 		setPoints(points);
 	}
 

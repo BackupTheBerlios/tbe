@@ -3,7 +3,7 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.util.List;
 import ch.tbe.framework.ArrowItem;
-import ch.tbe.jgraph.graph.GraphConstants;
+import ch.tbe.jgraph.TBEGraphConstants;
 
 public class PolyCurvedBlockItem extends ArrowItem
 {
@@ -12,9 +12,10 @@ public class PolyCurvedBlockItem extends ArrowItem
 	
 	{
 
-		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_BLOCK);
-		GraphConstants.setLineStyle(this.getAttributes(),
-				GraphConstants.STYLE_CURVED);
+		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_BLOCK);
+		TBEGraphConstants.setEndFill(this.getAttributes(), false);
+		TBEGraphConstants.setLineStyle(this.getAttributes(),
+				TBEGraphConstants.STYLE_CURVED);
 		setPoints(points);
 	}
 

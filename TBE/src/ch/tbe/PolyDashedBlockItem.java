@@ -3,7 +3,7 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.util.List;
 import ch.tbe.framework.ArrowItem;
-import ch.tbe.jgraph.graph.GraphConstants;
+import ch.tbe.jgraph.TBEGraphConstants;
 
 public class PolyDashedBlockItem extends ArrowItem
 {
@@ -13,8 +13,9 @@ public class PolyDashedBlockItem extends ArrowItem
 	public PolyDashedBlockItem(List<Point2D> points)
 	{
 
-		GraphConstants.setLineEnd(this.getAttributes(), GraphConstants.ARROW_BLOCK);
-		GraphConstants.setDashPattern(this.getAttributes(), DASH);
+		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_BLOCK);
+		TBEGraphConstants.setEndFill(this.getAttributes(), false);
+		TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
 		setPoints(points);
 	}
 

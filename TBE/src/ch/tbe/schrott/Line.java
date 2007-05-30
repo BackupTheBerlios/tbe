@@ -5,13 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
+import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultCellViewFactory;
+import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.GraphModel;
+
+import ch.tbe.BezierDoubleArrowItem;
 import ch.tbe.BezierSolidArrowItem;
+import ch.tbe.PolyCurvedArrowItem;
+import ch.tbe.PolyCurvedBlockItem;
 import ch.tbe.ShapeItem;
 import ch.tbe.ShapeType;
 import ch.tbe.TextBoxItem;
 import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.*;
-import ch.tbe.jgraph.graph.*;
+
 
 public class Line extends JFrame
 {
@@ -19,11 +29,11 @@ public class Line extends JFrame
 	public static void main(String[] args)
 	{
 		GraphModel model = new DefaultGraphModel();
-		GraphLayoutCache view = new GraphLayoutCache(model,	new	DefaultCellViewFactory());
+		GraphLayoutCache view = new GraphLayoutCache(model,	new	TBECellViewFactory());
 		JGraph graph = new JGraph(model, view);
 		DefaultGraphCell[] cells = new DefaultGraphCell[3];
 		
-
+		
 		List<Point2D> myPoints = new ArrayList<Point2D>();
 		myPoints.add(new Point2D.Double(40, 40));
 		myPoints.add(new Point2D.Double(140, 100));	
@@ -31,9 +41,11 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		cells[0] = new BezierSolidArrowItem(myPoints);
+		cells[0] = new PolyCurvedBlockItem(myPoints);
 		
 		cells[1] = new TextBoxItem(new Rectangle2D.Double(100,100,120,120));
+		
+		
 		
 		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
 		Icon logoIcon = new ImageIcon(imgURL);
