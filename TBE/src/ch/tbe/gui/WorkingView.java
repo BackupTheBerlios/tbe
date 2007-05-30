@@ -64,13 +64,16 @@ public class WorkingView extends View
 	private JToolBar sideBar;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private JPanel legendPanel;
-	private JGraph graph;
+	//private JGraph graph;
 	private MouseListener[] listeners = new MouseListener[2];
 
 	public WorkingView(Sport sport)
 	{
 		this.sport = sport;
-		this.board = new Board(sport);
+		GraphModel model = new DefaultGraphModel();
+		GraphLayoutCache view = new GraphLayoutCache(model,
+				new TBECellViewFactory());
+		this.board = new Board(model, view ,sport);
 		createWorkingView();
 	}
 
@@ -98,12 +101,12 @@ public class WorkingView extends View
 		rightPanel.setLayout(new BorderLayout());
 
 		// Board
-		GraphModel model = new DefaultGraphModel();
-		GraphLayoutCache view = new GraphLayoutCache(model,
-				new TBECellViewFactory());
-		graph = new JGraph(model, view);
+//		GraphModel model = new DefaultGraphModel();
+//		GraphLayoutCache view = new GraphLayoutCache(model,
+//				new TBECellViewFactory());
+//		graph = new JGraph(model, view);
 
-		rightPanel.add(graph, BorderLayout.CENTER);
+		rightPanel.add(board, BorderLayout.CENTER);
 		class ViewMouseListener extends MouseAdapter
 		{
 			public void mousePressed(MouseEvent e)
@@ -116,8 +119,8 @@ public class WorkingView extends View
 
 			public void mouseReleased(MouseEvent e)
 			{
-				if (WorkingView.this.graph.getSelectionCount() == 1
-						&& WorkingView.this.graph.getSelectionCell() instanceof ArrowItem)
+				if (WorkingView.this.board.getSelectionCount() == 1
+						&& WorkingView.this.board.getSelectionCell() instanceof ArrowItem)
 				{
 					WorkingView.this.activatePoints(true);
 				} else
@@ -145,10 +148,10 @@ public class WorkingView extends View
 			this.installToolInToolBar(toolbar, a);
 		}
 
-		listeners[0] = graph.getMouseListeners()[0];
+		listeners[0] = board.getMouseListeners()[0];
 
 		listeners[1] = new ViewMouseListener();
-		graph.addMouseListener(listeners[1]);
+		board.addMouseListener(listeners[1]);
 
 		// Legend
 		// TODO
@@ -198,11 +201,11 @@ public class WorkingView extends View
 
 	public void addRemovePoint(boolean b)
 	{
-		if (graph.getSelectionCount() == 1)
+		if (board.getSelectionCount() == 1)
 		{
-			if (graph.getSelectionCell() instanceof ArrowItem)
+			if (board.getSelectionCell() instanceof ArrowItem)
 			{
-				ArrowItem a = (ArrowItem) graph.getSelectionCell();
+				ArrowItem a = (ArrowItem) board.getSelectionCell();
 				if (b)
 				{
 					a.addPoint();
@@ -211,7 +214,7 @@ public class WorkingView extends View
 					a.removePoint();
 				}
 				WorkingView.this.refresh();
-				graph.setSelectionCell(a);
+				board.setSelectionCell(a);
 				setTool(cursorTool, cursorButton);
 			}
 		}
@@ -336,14 +339,14 @@ public class WorkingView extends View
 		if (this.currentTool instanceof CursorTool
 				&& !(tool instanceof CursorTool))
 		{
-			graph.removeMouseListener(listeners[0]);
+			board.removeMouseListener(listeners[0]);
 
 			// IF CURSORTOOL
 		} else if (tool instanceof CursorTool
 				&& !(this.currentTool instanceof CursorTool))
 		{
 
-			graph.addMouseListener(listeners[0]);
+			board.addMouseListener(listeners[0]);
 
 		}
 		if (tool == null)
@@ -374,27 +377,15 @@ public class WorkingView extends View
 		return this.currentTool;
 	}
 
-	public void refresh()
-	{
-		// TODO: Tools refreshen für ChangeLang!
-		((SideBar)this.sideBar).refresh();
-		List<ItemComponent> items = board.getItems();
-
-		DefaultGraphCell[] cells = new DefaultGraphCell[items.size()];
-		for (int i = 0; i < items.size(); i++)
-		{
-			cells[i] = (DefaultGraphCell) items.get(i);
-		}
-		graph.getGraphLayoutCache().remove(
-				graph.getGraphLayoutCache().getCells(
-						graph.getGraphLayoutCache().getAllViews()));
-		graph.getGraphLayoutCache().insert(cells);
-
-		if (items.size() > 0)
-		{
-			graph.setSelectionCell(items.get(items.size() - 1));
-		}
-
-		tbe.getMenu().refreshInvokerVisibility();
-	}
+	/**
+	 * Braucht es das noch? aus meiner Sicht nicht. by Dave
+	 */
+//	public void refreshX()
+//	{
+//		// TODO: Tools refreshen für ChangeLang!
+//		((SideBar)this.sideBar).refresh();
+//		board.repaint();
+//
+//		tbe.getMenu().refreshInvokerVisibility();
+//	}
 }

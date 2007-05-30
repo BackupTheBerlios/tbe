@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultCellViewFactory;
+import org.jgraph.graph.DefaultEdge;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
@@ -42,10 +43,9 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(300, 150));
 
 		cells[0] = new PolyCurvedBlockItem(myPoints);
-		
+		DefaultGraphCell[] cells2 = new DefaultGraphCell[1];
+		cells2[0] = new TextBoxItem(new Rectangle2D.Double(50,50,120,120));;
 		cells[1] = new TextBoxItem(new Rectangle2D.Double(100,100,120,120));
-		
-		
 		
 		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
 		Icon logoIcon = new ImageIcon(imgURL);
@@ -53,6 +53,9 @@ public class Line extends JFrame
 		cells[2] = new ShapeItem(icon, new Point2D.Double(200,200));
 		
 		graph.getGraphLayoutCache().insert(cells);
+		
+		graph.getGraphLayoutCache().insert(cells2);
+		
 		JFrame frame = new JFrame();
 		frame.add(new JScrollPane(graph));
 		frame.pack();
