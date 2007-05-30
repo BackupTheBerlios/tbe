@@ -9,10 +9,18 @@ public class FTPHandlerTester
 	{
 		FTPServer server = new FTPServer("capsTest", "ftp.berncapitals.ch",
 				"testberncapitals", "hovcapyod9");
-
+		
 		// FTPHandler.connect(server);
-
-		FTPHandler.getDir(server, "include");
-
+		
+		/*
+		String[] s = FTPHandler.getDir(server, "test");
+		for(int i = 0; i < s.length; i++)
+		{
+			System.out.println(s[i]);
+		}
+		*/
+		FTPHandler.upload(server, "D:/webkey.txt", "test/tbe/test.txt");
+		
+		
 	}
 }

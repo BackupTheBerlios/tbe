@@ -70,17 +70,15 @@ public final class FTPHandler
 		return client;
 	}
 	
-	public static void getDir(FTPServer server, String dir)
+	public static String[] getDir(FTPServer server, String dir)
 	{
 		FTPClient client = connect(server);
-		System.out.println("connected");
+		
+		String[] s = new String[]{};
+		
 		try
 		{
-			String[] s = client.dir(dir);
-			for(int i = 0; i < s.length; i++)
-			{
-				System.out.println(s[i]);
-			}
+			s = client.dir(dir);
 		}
 		catch (IOException e)
 		{
@@ -98,12 +96,33 @@ public final class FTPHandler
 		{
 			disconnect(client);
 		}
-		
+		return s;
 	}
 	
-	public static void upload(String path)
+	public static void upload(FTPServer server, String localPath, String remotePath)
 	{
+		FTPClient client = connect(server);
 		
+		try
+		{
+			client.put(localPath, remotePath);
+		}
+		catch (IOException e)
+		{
+			System.out.println("IO upload");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (FTPException e)
+		{
+			System.out.println("FTPex download");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally
+		{
+			disconnect(client);
+		}
 	}
 
 	public static void download(String path)
