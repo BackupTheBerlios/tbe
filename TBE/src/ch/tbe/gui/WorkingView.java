@@ -125,7 +125,6 @@ public class WorkingView extends View
 		}
 
 		listeners[0] = board.getMouseListeners()[0];
-		System.out.println(listeners[0]);
 		listeners[1] = new ViewMouseListener();
 		board.addMouseListener(listeners[1]);
 

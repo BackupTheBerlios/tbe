@@ -5,6 +5,7 @@ package ch.tbe.gui;
 import javax.swing.JPanel;
 
 import ch.tbe.Board;
+import ch.tbe.framework.ItemComponent;
 
 public class LegendPanel extends JPanel
 {
@@ -18,11 +19,11 @@ public class LegendPanel extends JPanel
 	
 	private void showLegend()
 	{
-		Object[] items = board.getItems(); //TODO: muss noch kucken by dave ;-)
+		ItemComponent[] items = board.getItems();
 		
 		
 		
-		for(Object i : items)
+		for(ItemComponent i : items)
 		{
 			System.out.println(i.getClass());
 			

@@ -31,10 +31,26 @@ public class Board extends JGraph
 		this.refresh();
 	}
 
-	public Object[] getItems()
+	public ItemComponent[] getItems()
 	{
 
-		return this.getGraphLayoutCache().getCells(true, true, true, true);
+		Object[] objects = this.getGraphLayoutCache().getCells(true, true, true, true);
+		ItemComponent[] comps = new ItemComponent[objects.length];
+		for(int i = 0; i < objects.length; i++){
+			comps[i] = (ItemComponent) objects[i];
+		}
+		return comps;
+
+	}
+	
+	public ItemComponent[] getSelectedItems()
+	{
+		Object[] objects = this.getSelectionCells();
+		ItemComponent[] comps = new ItemComponent[objects.length];
+		for(int i = 0; i < objects.length; i++){
+			comps[i] = (ItemComponent) objects[i];
+		}
+		return comps;
 	}
 	
 	public void addItem(ItemComponent[] i)

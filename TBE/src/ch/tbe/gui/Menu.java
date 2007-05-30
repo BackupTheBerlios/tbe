@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
@@ -17,7 +18,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import ch.tbe.Board;
+import ch.tbe.CreateCommand;
+import ch.tbe.DeleteCommand;
 import ch.tbe.Invoker;
+import ch.tbe.framework.Command;
+import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
 
 public class Menu extends JMenuBar
@@ -208,15 +214,25 @@ public class Menu extends JMenuBar
 		JMenu editmenu = new JMenu(menuLabels.getString("title2"));
 
 		JMenuItem editDelete = new JMenuItem(menuLabels.getString("edit1"));
-		class editDeleteListener extends MouseAdapter
+		class editDeleteListener implements ActionListener
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
-				// TODO
+				if (tbe.getView() instanceof WorkingView)
+				{
+					
+					Board b = ((WorkingView) tbe.getView()).getBoard();
+					ItemComponent[] items = b.getSelectedItems();
+					DeleteCommand del = new DeleteCommand(items);
+					ArrayList<Command> actCommands = new ArrayList<Command>();
+					actCommands.add(del);					
+					tbe.addCommands(actCommands);
+					b.removeItem(items);
+				}
 			}
 		}
-		editDelete.addMouseListener(new editDeleteListener());
+		editDelete.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE,0));
+		editDelete.addActionListener(new editDeleteListener());
 
 		JMenuItem editCut = new JMenuItem(menuLabels.getString("edit2"));
 		class editCutListener extends MouseAdapter
