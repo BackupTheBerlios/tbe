@@ -132,10 +132,13 @@ public class WorkingView extends View
 		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
 		currentButton.setText("Cursor");// TODO only for Debugging
 		
+		toolbar.addSeparator();
+		
 		for (ShapeTool s : ToolFactory.getShapeTools(sport))
 		{
 			this.installToolInToolBar(toolbar, s);
 		}
+		toolbar.addSeparator();
 		for (ArrowTool a : ToolFactory.getArrowTools(sport))
 		{
 			this.installToolInToolBar(toolbar, a);
@@ -293,14 +296,14 @@ public class WorkingView extends View
 
 	public void installToolInToolBar(JToolBar toolbar, final Tool tool)
 	{
-		Insets margins = new Insets(0, 0, 0, 0);
+		Insets margins = new Insets(2, 2, 2, 2);
 		final JButton button;
 		button = new JButton();
 
 		if (tool.getShapeType() != null)
 		{
 			button.setIcon(tool.getShapeType().getIcon());
-			button.setToolTipText(tool.getShapeType().getName());
+			button.setToolTipText(tool.getShapeType().getDescription());
 			button.setMargin(margins);
 		} else
 		{
@@ -315,15 +318,16 @@ public class WorkingView extends View
 				WorkingView.this.setTool(tool, button);
 			}
 		});
+		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
-		  button.addMouseListener(new MouseAdapter () {
-		    public void mouseEntered(MouseEvent e) {
-		      ((JButton) e.getSource ()).setBorderPainted(true);
-		    }
-		    public void mouseExited(MouseEvent e) {
-		      ((JButton) e.getSource ()).setBorderPainted(false);
-		    }
-		  });
+		button.addMouseListener(new MouseAdapter () {
+		  public void mouseEntered(MouseEvent e) {
+		    ((JButton) e.getSource ()).setBorderPainted(true);
+		  }
+		  public void mouseExited(MouseEvent e) {
+		    ((JButton) e.getSource ()).setBorderPainted(false);
+		  }
+		});
 
 	}
 

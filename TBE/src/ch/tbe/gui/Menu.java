@@ -273,7 +273,7 @@ public class Menu extends JMenuBar
 			}
 		}
 		editAddPoint.addActionListener(new editAddPointListener());
-		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.Event.CTRL_MASK));
+		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_PLUS, java.awt.Event.CTRL_MASK));
 
 		editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
 		class editRemovePointListener implements ActionListener
@@ -287,8 +287,7 @@ public class Menu extends JMenuBar
 			}
 		}
 		editRemovePoint.addActionListener(new editRemovePointListener());
-		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.Event.CTRL_MASK));
-
+		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_MINUS, java.awt.Event.CTRL_MASK));
 		activatePoints(false);
 		
 		editUndo.setIcon(new ImageIcon(TBE.class.getResource("../pics/undo.png")));
