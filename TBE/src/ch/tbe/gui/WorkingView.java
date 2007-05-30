@@ -35,6 +35,7 @@ import java.util.EventListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -360,6 +361,12 @@ public class WorkingView extends View
 			this.currentTool = tool;
 
 		}
+	}
+	
+	public void closeOrNew(){
+		//TODO Save???
+		
+		tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
 	}
 
 	public Tool getTool()

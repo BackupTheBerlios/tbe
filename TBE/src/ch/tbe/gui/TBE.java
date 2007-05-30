@@ -67,9 +67,9 @@ public class TBE
 		// TODO: check ob FirstStart oder nicht!
 		// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 		splashScreen.setProgress("Create WelcomeView", 40);
-		this.setView(new WelcomeView(sports, lang));
-		splashScreen.setProgress(100);
-		splashScreen.setProgress("Prepare to show", 90);
+		this.setView(new WelcomeView(sports, lang, splashScreen));
+		
+		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		splashScreen.setProgress(100);
 		splashScreen.setScreenVisible(false);
@@ -104,7 +104,7 @@ public class TBE
 	public void createBoard(Sport sport)
 	{
 	}
-
+	
 	public void saveAs()
 	{
 	}

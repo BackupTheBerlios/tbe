@@ -18,6 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import ch.tbe.Invoker;
+import ch.tbe.framework.View;
 
 public class Menu extends JMenuBar
 {
@@ -70,15 +71,22 @@ public class Menu extends JMenuBar
 		JMenu filemenu = new JMenu(menuLabels.getString("title1"));
 
 		JMenuItem fileNew = new JMenuItem(menuLabels.getString("file1"));
-		class fileNewListener extends MouseAdapter
+		class fileNewListener implements ActionListener
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+
+			public void actionPerformed(ActionEvent arg0)
 			{
-				// TODO
+				View v = tbe.getView();
+				if(v instanceof WorkingView){
+					((WorkingView) v).closeOrNew();
+				}
+				
 			}
+		
 		}
-		fileNew.addMouseListener(new fileNewListener());
+		fileNew.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.Event.CTRL_MASK));
+		fileNew.addActionListener(new fileNewListener());
+		
 
 		JMenuItem fileOpen = new JMenuItem(menuLabels.getString("file2"));
 		class fileOpenListener extends MouseAdapter
@@ -147,15 +155,21 @@ public class Menu extends JMenuBar
 		filePrint.addMouseListener(new filePrintListener());
 
 		JMenuItem fileClose = new JMenuItem(menuLabels.getString("file8"));
-		class fileCloseListener extends MouseAdapter
+		class fileCloseListener implements ActionListener
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+
+			public void actionPerformed(ActionEvent arg0)
 			{
-				// TODO
+				View v = tbe.getView();
+				if(v instanceof WorkingView){
+					((WorkingView) v).closeOrNew();
+				}
+				
 			}
 		}
-		fileClose.addMouseListener(new fileCloseListener());
+		fileClose.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.Event.CTRL_MASK));
+		fileClose.addActionListener(new fileCloseListener());
+		
 
 		JMenuItem fileQuit = new JMenuItem(menuLabels.getString("file9"));
 		class fileQuitListener extends MouseAdapter
@@ -273,7 +287,7 @@ public class Menu extends JMenuBar
 			}
 		}
 		editAddPoint.addActionListener(new editAddPointListener());
-		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_PLUS, java.awt.Event.CTRL_MASK));
+		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 
 		editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
 		class editRemovePointListener implements ActionListener
@@ -287,7 +301,7 @@ public class Menu extends JMenuBar
 			}
 		}
 		editRemovePoint.addActionListener(new editRemovePointListener());
-		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_MINUS, java.awt.Event.CTRL_MASK));
+		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.Event.CTRL_MASK));
 		activatePoints(false);
 		
 		editUndo.setIcon(new ImageIcon(TBE.class.getResource("../pics/undo.png")));
@@ -316,7 +330,11 @@ public class Menu extends JMenuBar
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				tbe.clear();
+				View v = tbe.getView();
+				if(v instanceof WorkingView){
+					
+					((WorkingView) v).getBoard().clear();
+				}
 			}
 		}
 		boardClear.addMouseListener(new boardClearListener());
