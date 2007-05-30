@@ -1,21 +1,16 @@
 package ch.tbe;
 
-public class FTPServer {
+public class FTPServer
+{
 	private String name;
 	private String host;
 	private int port;
 	private String username;
 	private String password;
 	
-	public FTPServer(String name, String host, int port, String username, String password) {
-		this.name = name;
-		this.host = host;
-		this.port = port;
-		this.username = username;
-		this.password = password;
-	}
-	 
-	public void setFTPServer(String name, String host, int port, String username, String password) {
+	public FTPServer(String name, String host, int port, String username,
+			String password)
+	{
 		this.name = name;
 		this.host = host;
 		this.port = port;
@@ -23,25 +18,38 @@ public class FTPServer {
 		this.password = password;
 	}
 	
-	public String getName(){
+	public void setFTPServer(String name, String host, int port,
+			String username, String password)
+	{
+		this.name = name;
+		this.host = host;
+		this.port = port;
+		this.username = username;
+		this.password = password;
+	}
+	
+	public String getName()
+	{
 		return this.name;
 	}
 	
-	public String getHost(){
+	public String getHost()
+	{
 		return this.host;
 	}
 	
-	public int getPort(){
+	public int getPort()
+	{
 		return this.port;
 	}
 	
-	public String getUsername(){
+	public String getUsername()
+	{
 		return this.username;
 	}
 	
-	public String getPassword(){
+	public String getPassword()
+	{
 		return this.password;
 	}
-	 
 }
- 

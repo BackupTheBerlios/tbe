@@ -8,6 +8,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
@@ -27,6 +29,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -35,6 +38,7 @@ import javax.swing.JTextField;
 
 import ch.tbe.FTPServer;
 import ch.tbe.Sport;
+import ch.tbe.util.FTPHandler;
 import ch.tbe.util.FileSystemHandler;
 import ch.tbe.util.XMLHandler;
 
@@ -55,14 +59,14 @@ public class SettingsFrame
 	{
 		frame = new JFrame();
 		settingsLabels = getResourceBundle(tbe.getLang());
-		
+
 		frame.add(createTabbedPane());
-		
+
 		frame.setSize(500, 300);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setVisible(true);
 	}
-	
+
 	private JTabbedPane createTabbedPane()
 	{
 		tabs = new JTabbedPane();
@@ -82,7 +86,7 @@ public class SettingsFrame
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
-		
+
 		JPanel westPanel = new JPanel(gridbag);
 		westPanel.setBackground(Color.WHITE);
 
@@ -119,7 +123,7 @@ public class SettingsFrame
 		langBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
 		formPanel.add(langBox);
-		
+
 		prenameField.setText(tbe.getUserPrename());
 		lastnameField.setText(tbe.getUserName());
 		mailField.setText(tbe.getUserEmail());
@@ -127,12 +131,12 @@ public class SettingsFrame
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		westPanel.add(formPanel, constraints);
-		
+
 		panel.add(westPanel, BorderLayout.WEST);
-		
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.WHITE);
-		
+
 		JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
 		class cancelButtonListener extends MouseAdapter
 		{
@@ -145,7 +149,7 @@ public class SettingsFrame
 			}
 		}
 		cancelButton.addMouseListener(new cancelButtonListener());
-		
+
 		JButton saveButton = new JButton(settingsLabels.getString("save"));
 		class saveButtonListener extends MouseAdapter
 		{
@@ -155,18 +159,20 @@ public class SettingsFrame
 				tbe.setUser(prenameField.getText(), lastnameField.getText(),
 						mailField.getText());
 				tbe.setLang((String) langBox.getSelectedItem());
+				XMLHandler.saveSettings(prenameField.getText(), lastnameField
+						.getText(), mailField.getText(), (String) langBox
+						.getSelectedItem());
 				tbe.changeLang();
-				// TODO: SettingsFrame refreshen
 				refresh();
 			}
 		}
 		saveButton.addMouseListener(new saveButtonListener());
-		
+
 		buttonPanel.add(cancelButton);
 		buttonPanel.add(saveButton);
-		
+
 		panel.add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		return panel;
 	}
 
@@ -179,26 +185,46 @@ public class SettingsFrame
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
-		
+
 		JPanel northPanel = new JPanel();
 		northPanel.setBackground(Color.WHITE);
-		
+
 		// TODO: Alle FTP-Server auslesen
 		Vector<String> allFTP = new Vector<String>();
 		allFTP.add(settingsLabels.getString("chooseServer"));
-		/*
-		ArrayList<String> servers = XMLHandler.getAllFTP();
+
+		// ArrayList<String> servers = XMLHandler.getAllFTP();
+		// OHNE PUBLIC!!! DARF NICHT BEARBEITET WERDEN!!!
+		ArrayList<String> servers = new ArrayList<String>();
+		servers.add("Berncapitals");
+		servers.add("Bienna Jets");
+		servers.add("SC Rüti");
 		for (String s : servers)
 		{
 			allFTP.add(s);
 		}
-		*/
 		ftpBox = new JComboBox(allFTP);
-		//FTPBox.setSelectedItem(tbe.getPublicServer());
 		ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 				Color.BLACK));
+		class ftpBoxListener implements ActionListener
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				// TODO currentFTP = getFTPServerbyName
+				currentFTP = new FTPServer(((String) ftpBox.getSelectedItem()),
+						"", 0, "", "");
+				refresh();
+				tabs.setSelectedIndex(1);
+				ftpNameField.setText(currentFTP.getName());
+				ftpHostField.setText(currentFTP.getHost());
+				ftpPortField.setText(Integer.toString(currentFTP.getPort()));
+				ftpUserField.setText(currentFTP.getUsername());
+				ftpPwField.setText(currentFTP.getPassword());
+			}
+		}
+		ftpBox.addActionListener(new ftpBoxListener());
 		northPanel.add(ftpBox);
-		
+
 		JButton newFTPbutton = new JButton(settingsLabels.getString("new"));
 		class newServerListener extends MouseAdapter
 		{
@@ -209,64 +235,65 @@ public class SettingsFrame
 				refresh();
 				tabs.setSelectedIndex(1);
 			}
-			
+
 		}
 		newFTPbutton.addMouseListener(new newServerListener());
 		northPanel.add(newFTPbutton);
-		
+
 		panel.add(northPanel, BorderLayout.NORTH);
-		
-		if(currentFTP != null)
+
+		if (currentFTP != null)
 		{
 			JPanel westPanel = new JPanel(gridbag);
 			westPanel.setBackground(Color.WHITE);
-			
+
 			JPanel formPanel = new JPanel(new GridLayout(5, 2, 5, 5));
 			formPanel.setBackground(Color.WHITE);
-			
+
 			formPanel.add(new JLabel(settingsLabels.getString("FTPname")));
 			ftpNameField = new JTextField(15);
 			ftpNameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
 			formPanel.add(ftpNameField);
-	
+
 			formPanel.add(new JLabel(settingsLabels.getString("FTPhost")));
 			ftpHostField = new JTextField(15);
 			ftpHostField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
 			formPanel.add(ftpHostField);
-	
+
 			formPanel.add(new JLabel(settingsLabels.getString("FTPport")));
 			ftpPortField = new JTextField(15);
 			ftpPortField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
 			formPanel.add(ftpPortField);
-			
+
 			formPanel.add(new JLabel(settingsLabels.getString("FTPuser")));
 			ftpUserField = new JTextField(15);
 			ftpUserField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
 			formPanel.add(ftpUserField);
-			
+
 			formPanel.add(new JLabel(settingsLabels.getString("FTPpw")));
 			ftpPwField = new JPasswordField(15);
-			
+
 			ftpPwField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
 			formPanel.add(ftpPwField);
-			
+
 			// TODO: Startwerte einfügen
-			
+
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			westPanel.add(formPanel, constraints);
-			
+
 			panel.add(westPanel, BorderLayout.WEST);
-			
+
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setBackground(Color.WHITE);
-			
-			JButton deleteButton = new JButton(settingsLabels.getString("delete"));
+
+			JButton deleteButton = new JButton(settingsLabels
+					.getString("delete"));
 			class deleteButtonListener extends MouseAdapter
 			{
 				@Override
@@ -279,36 +306,44 @@ public class SettingsFrame
 				}
 			}
 			deleteButton.addMouseListener(new deleteButtonListener());
-			
-			JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
+
+			JButton cancelButton = new JButton(settingsLabels
+					.getString("cancel"));
 			class cancelButtonListener extends MouseAdapter
 			{
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
 					// TODO: Startwerte wieder einfügen
-					
+					ftpNameField.setText(currentFTP.getName());
+					ftpHostField.setText(currentFTP.getHost());
+					ftpPortField
+							.setText(Integer.toString(currentFTP.getPort()));
+					ftpUserField.setText(currentFTP.getUsername());
+					ftpPwField.setText(currentFTP.getPassword());
 				}
 			}
 			cancelButton.addMouseListener(new cancelButtonListener());
-			
+
 			JButton saveButton = new JButton(settingsLabels.getString("save"));
 			class saveButtonListener extends MouseAdapter
 			{
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
-					// TODO: Check ob alle Felder ausgefüllt
-					
-					// TODO: Server speichern
+					if (checkFTPForm() == true)
+					{
+						// TODO: Server speichern
+						System.out.println("Alles Okey");
+					}
 				}
 			}
 			saveButton.addMouseListener(new saveButtonListener());
-			
+
 			buttonPanel.add(deleteButton);
 			buttonPanel.add(cancelButton);
 			buttonPanel.add(saveButton);
-			
+
 			panel.add(buttonPanel, BorderLayout.SOUTH);
 		}
 		return panel;
@@ -322,10 +357,13 @@ public class SettingsFrame
 
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
-		
+
+		JPanel northPanel = new JPanel();
+		panel.setBackground(Color.WHITE);
+
 		JPanel westPanel = new JPanel(gridbag);
 		westPanel.setBackground(Color.WHITE);
-		
+
 		JButton connectButton = new JButton(settingsLabels.getString("connect"));
 		class connectListener extends MouseAdapter
 		{
@@ -334,39 +372,44 @@ public class SettingsFrame
 			{
 				// TODO: connect with PublicServer
 			}
-			
+
 		}
 		connectButton.addMouseListener(new connectListener());
-		
+
 		constraints.insets = new Insets(5, 10, 5, 10);
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		westPanel.add(connectButton, constraints);
-		
+
 		JPanel formPanel = new JPanel();
 		formPanel.setBackground(Color.WHITE);
-		formPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-		
+		formPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+
 		GridBagLayout gridBagForm = new GridBagLayout();
 		GridBagConstraints formConstraints = new GridBagConstraints();
 		formConstraints.insets = new Insets(5, 10, 5, 10);
-		
+
 		JPanel listPanel = new JPanel(gridBagForm);
-		listPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.RED));
+		listPanel.setBackground(Color.WHITE);
 		// TODO: not InstalledSports, but all Sports on Server!
-		ArrayList<String> sports = FileSystemHandler.getInstalledSports();
+		// ArrayList<String> sports = FTPHandler.getAllSports();
+		ArrayList<String> sports = new ArrayList<String>();
 		// only for testing PanelSize!
+		sports.add("Football");
+		sports.add("Fussball");
+		sports.add("Unihockey");
 		sports.add("Eishockey");
 		sports.add("Basketball");
 		sports.add("Volleyball");
 		sports.add("Baseball");
 		sports.add("Rugby");
-		//END
-		for(int i = 0; i < sports.size(); i++)
+		// END
+		for (int i = 0; i < sports.size(); i++)
 		{
-			int xpos = (i/3)*2;
-			int ypos = i%3;
-			
+			int xpos = (i / 3) * 2;
+			int ypos = i % 3;
+
 			formConstraints.gridx = xpos;
 			formConstraints.gridy = ypos;
 			formConstraints.anchor = GridBagConstraints.WEST;
@@ -376,17 +419,17 @@ public class SettingsFrame
 			formConstraints.gridy = ypos;
 			listPanel.add(new JCheckBox(), formConstraints);
 		}
-		formPanel.add(listPanel);	
-		
+		formPanel.add(listPanel);
+
 		constraints.gridx = 0;
 		constraints.gridy = 1;
 		westPanel.add(formPanel, constraints);
-		
+
 		panel.add(westPanel, BorderLayout.WEST);
-		
+
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBackground(Color.WHITE);
-		
+
 		JButton installButton = new JButton(settingsLabels.getString("install"));
 		class installButtonListener extends MouseAdapter
 		{
@@ -397,12 +440,57 @@ public class SettingsFrame
 			}
 		}
 		installButton.addMouseListener(new installButtonListener());
-		
+
 		buttonPanel.add(installButton);
-		
+
 		panel.add(buttonPanel, BorderLayout.SOUTH);
-		
+
 		return panel;
+	}
+
+	private boolean checkFTPForm()
+	{
+		boolean isCorrect = false;
+		boolean port = true;
+
+		for (int i = 0; i < ftpPortField.getText().length(); i++)
+		{
+			char c = ftpPortField.getText().charAt(i);
+			if (c < '0' || c > '9')
+			{
+				port = false;
+			}
+		}
+		if (ftpNameField.getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(null, settingsLabels
+					.getString("FTPname"));
+		}
+		else if (ftpHostField.getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(null, settingsLabels
+					.getString("FTPhost"));
+		}
+		else if (port == false)
+		{
+			JOptionPane.showMessageDialog(null, settingsLabels
+					.getString("FTPport"));
+		}
+		else if (ftpUserField.getText().equals(""))
+		{
+			JOptionPane.showMessageDialog(null, settingsLabels
+					.getString("FTPuser"));
+		}
+		else if (ftpPwField.getPassword().length == 0)
+		{
+			JOptionPane.showMessageDialog(null, settingsLabels
+					.getString("FTPpw"));
+		}
+		else
+		{
+			isCorrect = true;
+		}
+		return isCorrect;
 	}
 
 	public void showAllSports()
@@ -439,10 +527,12 @@ public class SettingsFrame
 					.getResourceAsStream("../config/lang/" + lang
 							+ "/settingsFrame.txt");
 			labels = new PropertyResourceBundle(settingsStream);
-		} catch (FileNotFoundException fnne)
+		}
+		catch (FileNotFoundException fnne)
 		{
 			System.out.println("LanguageFile for SettingsFrame not found !");
-		} catch (IOException ioe)
+		}
+		catch (IOException ioe)
 		{
 			System.out.println("Error with ResourceBundle SettingsFrame!");
 		}
