@@ -343,10 +343,15 @@ public class WorkingView extends View
 			this.currentTool = tool;
 
 		}
+		if(tool instanceof CursorTool){
+			board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+		}
+		else{
 		Cursor c = getToolkit().createCustomCursor( 
 				  (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(), 
 				  new Point(10,10), "Cursor" ); 
-				setCursor( c );
+				board.setCursor( c );
+		}
 	}
 	
 	public void closeOrNew(){
