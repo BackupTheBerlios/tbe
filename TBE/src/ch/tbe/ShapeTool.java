@@ -22,9 +22,9 @@ import ch.tbe.gui.WorkingView;
  
 	public void mouseDown(int x, int y, MouseEvent e)
 	{
-		ItemComponent item = new ShapeItem(shapeType ,new Point2D.Double(x,y)); 
-		super.createCommand(item);
-		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(item);
+		ItemComponent[] items = new ItemComponent[] {new ShapeItem(shapeType ,new Point2D.Double(x,y))}; 
+		super.createCommand(items);
+		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}
 
 	@Override

@@ -26,9 +26,9 @@ public class BezierSolidArrowTool extends ArrowTool {
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y+DEFAULTLENGTH));
 		points.add(new Point2D.Double(x+2*DEFAULTLENGTH,y));
 		
-		ItemComponent item = new BezierSolidArrowItem(points);
-		super.createCommand(item);
-		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(item);
+		ItemComponent[] items = new ItemComponent[] {new BezierSolidArrowItem(points)};
+		super.createCommand(items);
+		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}
 }
  

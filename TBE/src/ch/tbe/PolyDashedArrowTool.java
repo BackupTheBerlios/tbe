@@ -25,9 +25,9 @@ public class PolyDashedArrowTool extends ArrowTool {
 		points.add(new Point2D.Double(x,y));		
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y));
 		
-		ItemComponent item = new PolyDashedArrowItem(points);
-		super.createCommand(item);
-		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(item);
+		ItemComponent[] items = new ItemComponent[] { new PolyDashedArrowItem(points)};
+		super.createCommand(items);
+		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}
  
 }

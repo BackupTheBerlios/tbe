@@ -37,16 +37,16 @@ public class Board extends JGraph
 		return this.getGraphLayoutCache().getCells(true, true, true, true);
 	}
 	
-	public void addItem(ItemComponent i)
+	public void addItem(ItemComponent[] i)
 	{
 		this.getGraphLayoutCache().insert(i);
 		this.refresh();
 	}
 	
-	public void removeItem(ItemComponent i)
+	public void removeItem(ItemComponent[] i)
 	{
-		ItemComponent[] ii = new ItemComponent[]{i};
-		this.getGraphLayoutCache().removeCells(ii);
+
+		this.getGraphLayoutCache().removeCells(i);
 		this.refresh();
 	}
 

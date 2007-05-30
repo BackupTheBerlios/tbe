@@ -7,19 +7,19 @@ import ch.tbe.gui.WorkingView;
 public class CreateCommand extends Command{
 	private Board board;
 	
-	public CreateCommand(ItemComponent item) {
-		super(item);
+	public CreateCommand(ItemComponent[] items) {
+		super(items);
 		this.board = ((WorkingView) TBE.getInstance().getView()).getBoard();
 	}
 
 	public void redo()
 	{
-		board.addItem(item);
+		board.addItem(items);
 	}
 
 	public void undo()
 	{
-		board.removeItem(item);
+		board.removeItem(items);
 		
 	}
 	 

@@ -84,9 +84,9 @@ public abstract class Tool {
 		return this.shapeType;
 	}
 	
-	public void createCommand(ItemComponent item){
+	public void createCommand(ItemComponent[] items){
 		ArrayList<Command> actCommands = new ArrayList<Command>();
-		actCommands.add(new CreateCommand(item));
+		actCommands.add(new CreateCommand(items));
 		
 		TBE.getInstance().addCommands(actCommands);
 	}
