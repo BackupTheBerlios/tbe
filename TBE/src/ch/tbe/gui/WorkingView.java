@@ -296,7 +296,6 @@ public class WorkingView extends View
 
 	public void installToolInToolBar(JToolBar toolbar, final Tool tool)
 	{
-		Insets margins = new Insets(2, 2, 2, 2);
 		final JButton button;
 		button = new JButton();
 
@@ -304,7 +303,6 @@ public class WorkingView extends View
 		{
 			button.setIcon(tool.getShapeType().getIcon());
 			button.setToolTipText(tool.getShapeType().getDescription());
-			button.setMargin(margins);
 		} else
 		{
 			button.setText("Tool"); // For Debugging
