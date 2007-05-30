@@ -1,52 +1,34 @@
 package ch.tbe.gui;
 
 import ch.tbe.Attribute;
-import ch.tbe.BezierSolidArrowTool;
-import ch.tbe.CreateCommand;
 import ch.tbe.CursorTool;
-import ch.tbe.Invoker;
 import ch.tbe.Board;
 import ch.tbe.ShapeTool;
-import ch.tbe.ShapeType;
-
 import ch.tbe.ToolFactory;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ArrowTool;
-import ch.tbe.framework.Command;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
 import ch.tbe.jgraph.TBECellViewFactory;
 import ch.tbe.Field;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.EventListener;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-
-import org.jgraph.JGraph;
-import org.jgraph.graph.DefaultCellViewFactory;
-import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
-
 import ch.tbe.Sport;
 
 public class WorkingView extends View
@@ -64,7 +46,6 @@ public class WorkingView extends View
 	private JToolBar sideBar;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private JPanel legendPanel;
-	//private JGraph graph;
 	private MouseListener[] listeners = new MouseListener[2];
 
 	public WorkingView(Sport sport)
@@ -101,11 +82,6 @@ public class WorkingView extends View
 		rightPanel.setLayout(new BorderLayout());
 
 		// Board
-//		GraphModel model = new DefaultGraphModel();
-//		GraphLayoutCache view = new GraphLayoutCache(model,
-//				new TBECellViewFactory());
-//		graph = new JGraph(model, view);
-
 		rightPanel.add(board, BorderLayout.CENTER);
 		class ViewMouseListener extends MouseAdapter
 		{
