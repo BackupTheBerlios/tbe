@@ -204,5 +204,8 @@ public final class XMLHandler
 	{
 
 	}
-
+	
+	public void saveFTPServers(ArrayList<FTPServer> servers){
+		
+	}
 }
