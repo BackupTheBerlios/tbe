@@ -246,6 +246,17 @@ public class WorkingView extends View
 		tbe.getClipboard().setContents(contents, cut);
 		board.removeItem(items);
 	}
+	
+	public void copy(){
+		ItemComponent[] items = board.getSelectedItems();
+		CutCommand cut = new CutCommand(items);
+		ArrayList<Command> actCommands = new ArrayList<Command>();
+		actCommands.add(cut);
+		tbe.addCommands(actCommands);
+		ComponentSelection contents = new ComponentSelection(items);
+		tbe.getClipboard().setContents(contents, cut);
+		
+	}
 
 	public void paste()
 	{

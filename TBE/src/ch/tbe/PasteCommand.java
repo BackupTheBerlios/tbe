@@ -13,53 +13,29 @@ import ch.tbe.util.ComponentSelection;
 public class PasteCommand extends Command implements ClipboardOwner
 {
 
-	private Board board;
-	private Clipboard cb = TBE.getInstance().getClipboard();
+	private WorkingView view;
 
 	public PasteCommand(ItemComponent[] items)
 	{
 		super(items);
-		this.board = ((WorkingView) TBE.getInstance().getView()).getBoard();
+		this.view = ((WorkingView) TBE.getInstance().getView());
 	}
 
 	public void redo()
 	{
-		ComponentSelection clipboardContent = (ComponentSelection) cb
-				.getContents(this);
 
-		if ((clipboardContent != null)
-				&& (clipboardContent
-						.isDataFlavorSupported(ComponentSelection.itemFlavor)))
-		{
-			try
-			{
-				Object[] tempItems = clipboardContent
-						.getTransferData(ComponentSelection.itemFlavor);
-				ItemComponent[] comps = new ItemComponent[tempItems.length];
-				for (int i = 0; i < tempItems.length; i++)
-				{
-					comps[i] = (ItemComponent) tempItems[i];
-				}
-				board.addItem(comps);
-				board.removeItem(comps);
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
+		view.paste();
 
 	}
 
 	public void undo()
 	{
 
-		board.removeItem(items);
+		view.getBoard().removeItem(items);
 	}
 
 	public void lostOwnership(Clipboard arg0, Transferable arg1)
 	{
-		System.out.println("Lost ownership");
 
 	}
 

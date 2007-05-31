@@ -11,34 +11,32 @@ import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.util.ComponentSelection;
 
-public class CutCommand extends Command implements ClipboardOwner{
- 
-	private Board board;
-	private Clipboard cb = TBE.getInstance().getClipboard();
-	
-	public CutCommand(ItemComponent[] items) {
+public class CutCommand extends Command implements ClipboardOwner
+{
+
+	private WorkingView view;
+
+	public CutCommand(ItemComponent[] items)
+	{
 		super(items);
-		this.board = ((WorkingView) TBE.getInstance().getView()).getBoard();
+		this.view = ((WorkingView) TBE.getInstance().getView());
 	}
 
 	public void redo()
 	{
-		 ComponentSelection contents = new ComponentSelection (items);
-	       cb.setContents (contents, this);
-		board.removeItem(items);
+
+		view.cut();
 	}
 
 	public void undo()
 	{
-		
-		board.addItem(items);
+
+		view.getBoard().addItem(items);
 	}
 
 	public void lostOwnership(Clipboard arg0, Transferable arg1)
 	{
-		System.out.println("Lost ownership");
-		
+
 	}
-	 
+
 }
- 
