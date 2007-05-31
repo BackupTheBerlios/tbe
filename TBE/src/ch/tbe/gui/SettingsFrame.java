@@ -51,7 +51,8 @@ public class SettingsFrame
 	private boolean connected = false;
 	private ArrayList<String> toInstall = new ArrayList<String>();
 	private ArrayList<String> toDelete = new ArrayList<String>();
-	private ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
+	private ArrayList<String> installedSports = FileSystemHandler
+			.getInstalledSports();
 
 	public SettingsFrame()
 	{
@@ -191,15 +192,15 @@ public class SettingsFrame
 		Vector<String> allFTP = new Vector<String>();
 		allFTP.add(settingsLabels.getString("chooseServer"));
 
-		// ArrayList<String> servers = XMLHandler.getAllFTP();
-		// OHNE PUBLIC!!! DARF NICHT BEARBEITET WERDEN!!!
-		ArrayList<String> servers = new ArrayList<String>();
-		servers.add("Berncapitals");
-		servers.add("Bienna Jets");
-		servers.add("SC Rüti");
-		for (String s : servers)
+		ArrayList<FTPServer> servers = tbe.getServers();
+
+		for (FTPServer s : servers)
 		{
-			allFTP.add(s);
+			// OHNE PUBLIC!!! DARF NICHT BEARBEITET WERDEN!!!
+			if (!s.getName().equals("Public"))
+			{
+				allFTP.add(s.getName());
+			}
 		}
 		ftpBox = new JComboBox(allFTP);
 		ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
@@ -208,9 +209,15 @@ public class SettingsFrame
 		{
 			public void actionPerformed(ActionEvent arg0)
 			{
-				// TODO currentFTP = getFTPServerbyName
-				currentFTP = new FTPServer(((String) ftpBox.getSelectedItem()),
-						"", "", "");
+				ArrayList<FTPServer> servers = tbe.getServers();
+				for (FTPServer s : servers)
+				{
+					if (s.getName().equals(ftpBox.getSelectedItem()))
+						;
+					{
+						currentFTP = s;
+					}
+				}
 				refresh();
 				tabs.setSelectedIndex(1);
 				ftpNameField.setText(currentFTP.getName());
@@ -251,6 +258,7 @@ public class SettingsFrame
 			ftpNameField = new JTextField(15);
 			ftpNameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
+			ftpNameField.setEditable(false);
 			formPanel.add(ftpNameField);
 
 			formPanel.add(new JLabel(settingsLabels.getString("FTPhost")));
@@ -272,7 +280,13 @@ public class SettingsFrame
 					Color.BLACK));
 			formPanel.add(ftpPwField);
 
-			// TODO: Startwerte einfügen
+			if (currentFTP != null)
+			{
+				ftpNameField.setText(currentFTP.getName());
+				ftpHostField.setText(currentFTP.getHost());
+				ftpUserField.setText(currentFTP.getUsername());
+				ftpPwField.setText(currentFTP.getPassword());
+			}
 
 			constraints.gridx = 0;
 			constraints.gridy = 0;
@@ -290,7 +304,7 @@ public class SettingsFrame
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
-					// TODO: FTP-Server aus Liste entfernen
+					tbe.removeFTPServer(currentFTP.getName());
 					currentFTP = null;
 					refresh();
 					tabs.setSelectedIndex(1);
@@ -305,7 +319,6 @@ public class SettingsFrame
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
-					// TODO: Startwerte wieder einfügen
 					ftpNameField.setText(currentFTP.getName());
 					ftpHostField.setText(currentFTP.getHost());
 					ftpUserField.setText(currentFTP.getUsername());
@@ -320,10 +333,26 @@ public class SettingsFrame
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
+					System.out.println("SAVE!");
 					if (checkFTPForm() == true)
 					{
-						// TODO: Server speichern
-						System.out.println("Alles Okey");
+						String pw = new String(ftpPwField.getPassword());
+						// neuer Server hinzufügen
+						if (currentFTP.getName().equals(""))
+						{
+							tbe.addFTPServer(ftpNameField.getText(),
+									ftpHostField.getText(), ftpUserField
+											.getText(), pw);
+						}
+						else
+						{
+							tbe.editFTPServer(ftpNameField.getText(),
+									ftpHostField.getText(), ftpUserField
+											.getText(), pw);
+						}
+						currentFTP = null;
+						refresh();
+						tabs.setSelectedIndex(1);
 					}
 				}
 			}
@@ -344,7 +373,7 @@ public class SettingsFrame
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.BOTH;
 		constraints.insets = new Insets(5, 10, 5, 10);
-		
+
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
 
@@ -352,10 +381,11 @@ public class SettingsFrame
 
 		JPanel westPanel = new JPanel(gridbag);
 		westPanel.setBackground(Color.WHITE);
-		
-		if(connected == false)
+
+		if (connected == false)
 		{
-			JButton connectButton = new JButton(settingsLabels.getString("connect"));
+			JButton connectButton = new JButton(settingsLabels
+					.getString("connect"));
 			class connectListener extends MouseAdapter
 			{
 				@Override
@@ -365,28 +395,28 @@ public class SettingsFrame
 					refresh();
 					tabs.setSelectedIndex(2);
 				}
-	
+
 			}
 			connectButton.addMouseListener(new connectListener());
-	
+
 			constraints.gridx = 0;
 			constraints.gridy = 0;
 			westPanel.add(connectButton, constraints);
 		}
-		if(connected == true)
+		if (connected == true)
 		{
 			JPanel formPanel = new JPanel();
 			formPanel.setBackground(Color.WHITE);
 			formPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 					Color.BLACK));
-	
+
 			GridBagLayout gridBagForm = new GridBagLayout();
 			GridBagConstraints formConstraints = new GridBagConstraints();
 			formConstraints.insets = new Insets(5, 10, 5, 10);
-			
+
 			JPanel listPanel = new JPanel(gridBagForm);
 			listPanel.setBackground(Color.WHITE);
-			
+
 			ArrayList<String> sports = FTPHandler.getAllSports();
 			// only for testing PanelSize!
 			sports.add("Eishockey");
@@ -395,54 +425,51 @@ public class SettingsFrame
 			sports.add("Baseball");
 			sports.add("Rugby");
 			// END
-			
+
 			class checkBoxListener extends MouseAdapter
 			{
 				private String sport;
 				private JCheckBox myBox;
-				
+
 				public checkBoxListener(JCheckBox myBox, String sport)
 				{
 					this.myBox = myBox;
 					this.sport = sport;
 				}
+
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
-					if(myBox.isSelected())
+					if (myBox.isSelected())
 					{
-						if(!installedSports.contains(sport))
+						if (!installedSports.contains(sport))
 						{
-							System.out.println("To Install!");
 							toInstall.add(sport);
 						}
-						if(toDelete.contains(sport))
+						if (toDelete.contains(sport))
 						{
-							System.out.println("Not to Remove!");
 							toDelete.remove(sport);
 						}
 					}
 					else
 					{
-						if(installedSports.contains(sport))
+						if (installedSports.contains(sport))
 						{
-							System.out.println("To Remove!");
 							toDelete.add(sport);
 						}
-						if(toInstall.contains(sport))
+						if (toInstall.contains(sport))
 						{
-							System.out.println("Not To install!");
 							toInstall.remove(sport);
 						}
 					}
 				}
 			}
-			
+
 			for (int i = 0; i < sports.size(); i++)
 			{
 				int xpos = (i / 3) * 2;
 				int ypos = i % 3;
-	
+
 				formConstraints.gridx = xpos;
 				formConstraints.gridy = ypos;
 				formConstraints.anchor = GridBagConstraints.WEST;
@@ -450,33 +477,35 @@ public class SettingsFrame
 				formConstraints.anchor = GridBagConstraints.EAST;
 				formConstraints.gridx = xpos + 1;
 				formConstraints.gridy = ypos;
-				
+
 				JCheckBox checkBox = new JCheckBox();
 				checkBox.setBackground(Color.WHITE);
-				if(installedSports.contains(sports.get(i)))
+				if (installedSports.contains(sports.get(i)))
 				{
 					checkBox.setSelected(true);
 				}
-				
-				checkBox.addMouseListener(new checkBoxListener(checkBox, sports.get(i)));
+
+				checkBox.addMouseListener(new checkBoxListener(checkBox, sports
+						.get(i)));
 				listPanel.add(checkBox, formConstraints);
 			}
-			
+
 			formPanel.add(listPanel);
 
 			constraints.gridx = 0;
 			constraints.gridy = 1;
 			westPanel.add(formPanel, constraints);
 		}
-		
+
 		panel.add(westPanel, BorderLayout.WEST);
-		
-		if(connected == true)
+
+		if (connected == true)
 		{
 			JPanel buttonPanel = new JPanel();
 			buttonPanel.setBackground(Color.WHITE);
-	
-			JButton installButton = new JButton(settingsLabels.getString("install"));
+
+			JButton installButton = new JButton(settingsLabels
+					.getString("install"));
 			class installButtonListener extends MouseAdapter
 			{
 				@Override
@@ -487,18 +516,18 @@ public class SettingsFrame
 				}
 			}
 			installButton.addMouseListener(new installButtonListener());
-	
+
 			buttonPanel.add(installButton);
-	
+
 			panel.add(buttonPanel, BorderLayout.SOUTH);
 		}
 		return panel;
-	}	
+	}
 
 	private boolean checkFTPForm()
 	{
 		boolean isCorrect = false;
-		
+
 		if (ftpNameField.getText().equals(""))
 		{
 			JOptionPane.showMessageDialog(null, settingsLabels
@@ -525,7 +554,6 @@ public class SettingsFrame
 		}
 		return isCorrect;
 	}
-
 
 	public void installSport(List sports)
 	{
