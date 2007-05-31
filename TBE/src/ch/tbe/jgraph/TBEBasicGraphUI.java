@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,12 +55,16 @@ public class TBEBasicGraphUI extends BasicGraphUI
 		protected transient Cursor previousCursor = null;
 		
 		protected MoveCommand mc;
+		protected Point2D mouseDown;
 
 		/**
 		 * Invoked when a mouse button has been pressed on a component.
 		 */
 		public void mousePressed(MouseEvent e)
 		{
+			
+			mc = null;
+			
 			handler = null;
 			if (!e.isConsumed() && graph.isEnabled())
 			{
@@ -96,13 +101,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 							handle.mousePressed(e);
 							handler = handle;
 							
-							//Insertet by David Meier
-							Object[] temp = graph.getSelectionCells();
-							ItemComponent[] items = new ItemComponent[temp.length]; 
-							for(int i = 0; i < temp.length; i++){
-								items[i] = (ItemComponent) temp[i];
-							}
-							mc = new MoveCommand(items);
+							
 						}
 						// Immediate Selection
 						if (!e.isConsumed() && cell != null
@@ -117,6 +116,8 @@ public class TBEBasicGraphUI extends BasicGraphUI
 							}
 							e.consume();
 							cell = null;
+							
+
 						}
 					}
 				}
@@ -129,6 +130,17 @@ public class TBEBasicGraphUI extends BasicGraphUI
 					handler = marquee;
 				}
 			}
+			if(graph.getSelectionCount() > 0){
+//				Insertet by David Meier
+				mouseDown = new Point2D.Double(e.getX(),e.getY());
+				Object[] temp = graph.getSelectionCells();
+				ItemComponent[] items = new ItemComponent[temp.length]; 
+				for(int i = 0; i < temp.length; i++){
+					items[i] = (ItemComponent) temp[i];
+				}
+				mc = new MoveCommand(items);
+			}
+			
 		}
 
 		/**
@@ -214,6 +226,9 @@ public class TBEBasicGraphUI extends BasicGraphUI
 						handle.mouseReleased(e);
 
 						// Insertet by David Meier
+						Point2D mouseUP = new Point2D.Double(e.getX(),e.getY());
+						if( !mouseDown.equals(mouseUP)){
+							
 						Object[] temp = graph.getSelectionCells();
 						ItemComponent[] items = new ItemComponent[temp.length]; 
 						for(int i = 0; i < temp.length; i++){
@@ -223,7 +238,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 						ArrayList<Command> actCommands = new ArrayList<Command>();
 						actCommands.add(mc);
 						TBE.getInstance().addCommands(actCommands);
-						
+						}
 					}
 					if (isDescendant(cell, focus) && e.getModifiers() != 0)
 					{
