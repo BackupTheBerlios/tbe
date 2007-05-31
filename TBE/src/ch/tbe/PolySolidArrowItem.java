@@ -11,6 +11,6 @@ public class PolySolidArrowItem extends ArrowItem
 	}
 
 	public String getType(){
-		return "PolySolidArrowItem";
+		return "PolySolidArrowTool";
 	}
 }

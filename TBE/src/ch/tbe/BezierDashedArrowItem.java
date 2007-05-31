@@ -20,7 +20,7 @@ public class BezierDashedArrowItem extends ArrowItem
 	}
 	
 	public String getType(){
-		return "BezierDashedArrowItem";
+		return "BezierDashedArrowTool";
 	}
 
 }

@@ -20,6 +20,6 @@ public class PolyCurvedBlockItem extends ArrowItem
 	}
 
 	public String getType(){
-		return "PolyCurvedBlockItem";
+		return "PolyCurvedBlockTool";
 	}
 }

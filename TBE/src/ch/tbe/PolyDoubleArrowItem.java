@@ -20,6 +20,6 @@ public class PolyDoubleArrowItem extends ArrowItem
 	}
 
 	public String getType(){
-		return "PolyDoubleArrowItem";
+		return "PolyDoubleArrowTool";
 	}
 }

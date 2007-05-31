@@ -1,6 +1,7 @@
 package ch.tbe.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import ch.tbe.*;
 import ch.tbe.framework.*;
@@ -19,7 +20,6 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.*;
 
-import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
@@ -102,33 +102,14 @@ public final class XMLHandler
 		xml.loadTBESettings();
 	}
 
-	public static Board openXML()
+	public static Board openXML(String path)
 	{
-		String path;
-		JFileChooser chooser = new JFileChooser();
-
-		chooser.setFileFilter(new FileFilter()
-		{
-			public boolean accept(File f)
-			{
-				return f.getName().toLowerCase().endsWith(".tbe")
-						|| f.isDirectory();
-			}
-
-			public String getDescription()
-			{
-				return "TBE (*.tbe)";
-			}
-		});
-		chooser.showOpenDialog(new Frame());
-
-		File filename = chooser.getSelectedFile();
-		path = filename.getPath();
-		
 		class SaxHandler extends DefaultHandler
 		{
 			GraphModel model = new DefaultGraphModel();
 			GraphLayoutCache view = new GraphLayoutCache(model, new TBECellViewFactory());
+			String actArrowType;
+			List<Point2D> actPoints = new ArrayList<Point2D>();
 			
 			public void loadFile(String path){
 				DefaultHandler handler = new SaxHandler();
@@ -147,10 +128,8 @@ public final class XMLHandler
 			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
 				if (qName.equals("sport")){
 					Sport sport = null;
-					System.out.println("find Sport!");
 					for (Sport s: TBE.getInstance().getSports()){
-						if (s.equals(atts.getValue("name"))){
-							System.out.println("Sport found!");
+						if (s.getName().equals(atts.getValue("name"))){
 							sport = s;
 						}
 					}
@@ -158,19 +137,49 @@ public final class XMLHandler
 					//TODO: check sport-version
 					
 					if (sport != null){
-						Board board = new Board(model, view ,sport);
+						board = new Board(model, view ,sport);
 					}
 				}
 				if (board != null){
 					if (qName.equals("attribute")){
 						board.addAttribute(atts.getValue("title"), atts.getValue("text"));
 					}
+
+					if (qName.equals("shape")){
+						Point2D point = new Point2D.Double(Double.valueOf(atts.getValue("xCoordinate")).doubleValue(), Double.valueOf(atts.getValue("yCoordinate")));
+						ShapeItem item = ItemFactory.getShapeItem(board.getSport(), atts.getValue("type"), point);
+						if (item != null){
+							board.addItem(item);
+						}
+					}
+					
+					if (qName.equals("arrow")){
+						if (actArrowType != null){
+							ArrowItem item = ItemFactory.getArrowItem(board.getSport(), actArrowType, actPoints);
+							if (item != null){
+								board.addItem(item);
+							}
+							actArrowType = null;
+							actPoints.clear();
+						}
+						actArrowType = atts.getValue("type");
+					}
+					
+					if (qName.equals("point")){
+						actPoints.add(new Point2D.Double(Double.valueOf(atts.getValue("xCoordinate")).doubleValue(), Double.valueOf(atts.getValue("yCoordinate"))));
+					}
 				}
-				
-				
 			}
 			
 			public void endDocument() throws SAXException{
+				if (actArrowType != null){
+					ArrowItem item = ItemFactory.getArrowItem(board.getSport(), actArrowType, actPoints);
+					if (item != null){
+						board.addItem(item);
+					}
+					actArrowType = null;
+					actPoints.clear();
+				}
 				setBoard(board);
 			}
 		}
@@ -179,6 +188,7 @@ public final class XMLHandler
 		xml.loadFile(path);
 		
 		Board actBoard = board;
+		actBoard.setPath(path);
 		board = null;
 		
 		return actBoard;
@@ -320,6 +330,8 @@ public final class XMLHandler
 
 			File filename = chooser.getSelectedFile();
 			board.setPath(filename.getPath());
+			
+			// TODO: Dateiendung immer .TBE
 		}		
 
 		if (!board.getPath().equals("")){

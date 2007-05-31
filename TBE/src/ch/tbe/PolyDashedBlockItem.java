@@ -20,7 +20,7 @@ public class PolyDashedBlockItem extends ArrowItem
 	}
 	
 	public String getType(){
-		return "PolyDashedBlockItem";
+		return "PolyDashedBlockTool";
 	}
 
 }

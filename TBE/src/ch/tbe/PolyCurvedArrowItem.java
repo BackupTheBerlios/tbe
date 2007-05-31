@@ -18,7 +18,7 @@ public class PolyCurvedArrowItem extends ArrowItem
 	}
 	
 	public String getType(){
-		return "PolyCurvedArrowItem";
+		return "PolyCurvedArrowTool";
 	}
 
 }

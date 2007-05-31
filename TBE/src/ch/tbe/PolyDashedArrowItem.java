@@ -18,6 +18,6 @@ public class PolyDashedArrowItem extends ArrowItem
 	}
 
 	public String getType(){
-		return "PolyDashedArrowItem";
+		return "PolyDashedArrowTool";
 	}
 }

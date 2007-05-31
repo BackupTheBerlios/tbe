@@ -1,6 +1,8 @@
 package ch.tbe.gui;
 
+import java.awt.Frame;
 import java.awt.datatransfer.Clipboard;
+import java.io.File;
 import java.util.ArrayList;
 
 import ch.tbe.*;
@@ -12,7 +14,9 @@ import ch.tbe.util.XMLHandler;
 
 import java.util.List;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileFilter;
 
 public class TBE
 {
@@ -130,7 +134,25 @@ public class TBE
 
 	public void load()
 	{
-		System.out.println("Load!");
+		JFileChooser chooser = new JFileChooser();
+
+		chooser.setFileFilter(new FileFilter()
+		{
+			public boolean accept(File f)
+			{
+				return f.getName().toLowerCase().endsWith(".tbe")
+						|| f.isDirectory();
+			}
+
+			public String getDescription()
+			{
+				return "TBE (*.tbe)";
+			}
+		});
+		chooser.showOpenDialog(new Frame());
+
+		File filename = chooser.getSelectedFile();
+		this.setView(new WorkingView(XMLHandler.openXML(filename.getPath())));
 	}
 
 	public void share()

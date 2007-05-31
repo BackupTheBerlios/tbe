@@ -53,6 +53,12 @@ public class Board extends JGraph
 		this.refresh();
 	}
 	
+	public void addItem(ItemComponent item)
+	{
+		this.getGraphLayoutCache().insert(item);
+		this.refresh();
+	}
+	
 	public void removeItem(ItemComponent[] i)
 	{
 

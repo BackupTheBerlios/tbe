@@ -16,7 +16,7 @@ public class BezierDoubleArrowItem extends ArrowItem
 	}
 	
 	public String getType(){
-		return "BezierDoubleArrowItem";
+		return "BezierDoubleArrowTool";
 	}
 
 }
