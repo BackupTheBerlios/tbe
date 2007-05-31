@@ -17,4 +17,7 @@ public class PolyDashedArrowItem extends ArrowItem
 		setPoints(points);
 	}
 
+	public String getType(){
+		return "PolyDashedArrowItem";
+	}
 }

@@ -15,6 +15,10 @@ public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 		super(new String("Text"));
 		TBEGraphConstants.setBounds(this.getAttributes(), rect);
 	}
+	
+	public String getType(){
+		return "TextBox";
+	}
 
 }
  

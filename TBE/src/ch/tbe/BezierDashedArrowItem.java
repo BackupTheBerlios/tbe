@@ -18,5 +18,9 @@ public class BezierDashedArrowItem extends ArrowItem
 		TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
 		setPoints(points);
 	}
+	
+	public String getType(){
+		return "BezierDashedArrowItem";
+	}
 
 }

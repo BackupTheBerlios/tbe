@@ -2,13 +2,13 @@ package ch.tbe.util;
 
 import java.util.ArrayList;
 
-import ch.tbe.Board;
-import ch.tbe.FTPServer;
-import ch.tbe.Field;
-import ch.tbe.ShapeType;
-import ch.tbe.Sport;
+import ch.tbe.*;
+import ch.tbe.framework.*;
 import ch.tbe.gui.TBE;
+import ch.tbe.jgraph.*;
 
+
+import java.awt.geom.Point2D;
 import java.io.*;
 import java.net.URL;
 
@@ -16,6 +16,10 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.xml.parsers.*;
 
+import org.jdom.DocType;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -89,10 +93,6 @@ public final class XMLHandler
 
 		SaxHandler xml = new SaxHandler();
 		xml.loadTBESettings();
-	}
-
-	public static void createXML(Board board)
-	{
 	}
 
 	public static Board openXML(String path)
@@ -207,5 +207,77 @@ public final class XMLHandler
 	public void saveFTPServers(ArrayList<FTPServer> servers){
 
 		
+	}
+	
+	public static void createXML(Board board)
+	{
+		try {
+
+			
+            Element eTbe = new Element("TBE");
+            Element eSport = new Element("sport");
+            Element eCreator = new Element("creator");
+            Element eHistory = new Element("history");
+            Element eModifier = new Element("modifier");
+            Element eDescription = new Element("description");
+            Element eItemComponents = new Element("itemComponents");
+            
+            eTbe.setAttribute("version", TBE.getInstance().getVersion());
+            eTbe.addContent(eSport);
+            eTbe.addContent(eCreator);
+            eTbe.addContent(eHistory);
+            eTbe.addContent(eDescription);
+            eTbe.addContent(eItemComponents);
+            
+            eSport.setAttribute("name", board.getSport().getName());
+            eSport.setAttribute("version", board.getSport().getVersion());
+            
+            eCreator.setAttribute("name", TBE.getInstance().getUserName());
+            eCreator.setAttribute("prename", TBE.getInstance().getUserPrename());
+            eCreator.setAttribute("email", TBE.getInstance().getUserEmail());
+            
+            for (Attribute attribute:board.getDescription().getAttributes()){
+            	Element eAttribute = new Element("attribute");
+            	eAttribute.setAttribute("title", attribute.getTitle());
+            	eAttribute.setAttribute("text", attribute.getText());
+            	eDescription.addContent(eAttribute);
+            }
+            
+            for (ItemComponent item: board.getItems()){
+            	Element eItemComponent;
+            	
+            	if (item instanceof ArrowItem){
+            		eItemComponent = new Element("arrow");
+            		eItemComponent.setAttribute("type", item.getType());
+            		for (Point2D point: ((ArrowItem)item).getPoints()){
+            			Element ePoint = new Element("point");
+            			ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
+            			ePoint.setAttribute("yCoordinate", String.valueOf(point.getY()));
+            			eItemComponent.addContent(ePoint);
+            		}
+            	}else{
+            		eItemComponent = new Element("shape");
+            		eItemComponent.setAttribute("type", item.getType());
+            		
+            		Point2D actPosition = (Point2D)TBEGraphConstants.getPoints(((ShapeItem)item).getAttributes()).get(0);
+            		eItemComponent.setAttribute("xCoordinate", String.valueOf(actPosition.getX()));
+            		eItemComponent.setAttribute("yCoordinate", String.valueOf(actPosition.getY()));
+            	}
+            	
+            	eItemComponents.addContent(eItemComponent);
+            }
+            
+            
+            Document document = new Document(eTbe);
+            
+            XMLOutputter out = new XMLOutputter();
+            java.io.FileWriter writer = new java.io.FileWriter("test.xml");
+            out.output(document, writer);
+            writer.flush();
+            writer.close();
+            
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 	}
 }

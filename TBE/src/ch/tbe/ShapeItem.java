@@ -24,5 +24,9 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 		TBEGraphConstants.setEditable(this.getAttributes(), false);
 		TBEGraphConstants.setSizeable(this.getAttributes(), false);
 	}
+	
+	public String getType(){
+		return shapeType.getName();
+	}
 
 }

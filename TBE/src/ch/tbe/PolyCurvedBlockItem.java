@@ -19,4 +19,7 @@ public class PolyCurvedBlockItem extends ArrowItem
 		setPoints(points);
 	}
 
+	public String getType(){
+		return "PolyCurvedBlockItem";
+	}
 }

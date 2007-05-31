@@ -16,5 +16,9 @@ public class PolySolidBlockItem extends ArrowItem
 		TBEGraphConstants.setEndFill(this.getAttributes(), false);
 		setPoints(points);
 	}
+	
+	public String getType(){
+		return "PolySolidBlockItem";
+	}
 
 }

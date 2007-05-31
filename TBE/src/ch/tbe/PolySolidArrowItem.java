@@ -10,5 +10,7 @@ public class PolySolidArrowItem extends ArrowItem
 		setPoints(points);
 	}
 
-
+	public String getType(){
+		return "PolySolidArrowItem";
+	}
 }

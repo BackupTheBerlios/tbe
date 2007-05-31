@@ -16,5 +16,9 @@ public class PolyCurvedArrowItem extends ArrowItem
 				TBEGraphConstants.STYLE_CURVED);
 		setPoints(points);
 	}
+	
+	public String getType(){
+		return "PolyCurvedArrowItem";
+	}
 
 }

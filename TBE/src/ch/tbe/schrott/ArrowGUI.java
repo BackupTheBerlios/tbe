@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.*;
+import ch.tbe.util.*;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultCellViewFactory;

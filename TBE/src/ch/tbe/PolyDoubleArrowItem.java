@@ -19,5 +19,7 @@ public class PolyDoubleArrowItem extends ArrowItem
 		setPoints(points);
 	}
 
-
+	public String getType(){
+		return "PolyDoubleArrowItem";
+	}
 }

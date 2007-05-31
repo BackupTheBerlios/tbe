@@ -16,4 +16,7 @@ public class BezierSolidArrowItem extends ArrowItem
 
 	}
 
+	public String getType(){
+		return "BezierSolidArrowItem";
+	}
 }

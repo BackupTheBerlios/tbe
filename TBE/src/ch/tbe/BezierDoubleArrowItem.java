@@ -14,5 +14,9 @@ public class BezierDoubleArrowItem extends ArrowItem
 		TBEGraphConstants.setLineStyle(this.getAttributes(),
 				TBEGraphConstants.STYLE_DOUBLEBEZIER);
 	}
+	
+	public String getType(){
+		return "BezierDoubleArrowItem";
+	}
 
 }
