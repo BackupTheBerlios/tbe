@@ -259,15 +259,20 @@ public class Menu extends JMenuBar
 		editCut.addActionListener(new editCutListener());
 
 		JMenuItem editCopy = new JMenuItem(menuLabels.getString("edit3"));
-		class editCopyListener extends MouseAdapter
+		class editCopyListener implements ActionListener
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
-				// TODO
+				if (tbe.getView() instanceof WorkingView)
+				{
+					((WorkingView) tbe.getView()).copy();
+					
+				}
 			}
 		}
-		editCopy.addMouseListener(new editCopyListener());
+		editCopy.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_C, java.awt.Event.CTRL_MASK));
+		editCopy.addActionListener(new editCopyListener());
 
 		JMenuItem editInsert = new JMenuItem(menuLabels.getString("edit4"));
 		class editInsertListener implements ActionListener

@@ -23,6 +23,9 @@ import org.jdom.DocType;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.GraphModel;
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -33,6 +36,7 @@ public final class XMLHandler
 	}
 
 	private static ArrayList<Sport> sports = new ArrayList<Sport>();
+	private static Board board = null;
 
 	public static void loadTBESettings()
 	{
@@ -98,9 +102,87 @@ public final class XMLHandler
 		xml.loadTBESettings();
 	}
 
-	public static Board openXML(String path)
+	public static Board openXML()
 	{
-		return null;
+		String path;
+		JFileChooser chooser = new JFileChooser();
+
+		chooser.setFileFilter(new FileFilter()
+		{
+			public boolean accept(File f)
+			{
+				return f.getName().toLowerCase().endsWith(".tbe")
+						|| f.isDirectory();
+			}
+
+			public String getDescription()
+			{
+				return "TBE (*.tbe)";
+			}
+		});
+		chooser.showOpenDialog(new Frame());
+
+		File filename = chooser.getSelectedFile();
+		path = filename.getPath();
+		
+		class SaxHandler extends DefaultHandler
+		{
+			GraphModel model = new DefaultGraphModel();
+			GraphLayoutCache view = new GraphLayoutCache(model, new TBECellViewFactory());
+			
+			public void loadFile(String path){
+				DefaultHandler handler = new SaxHandler();
+				
+				try
+				{
+					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+					saxParser.parse(new File(path), handler);
+				}
+				catch (Throwable t)
+				{
+					t.printStackTrace();
+				}
+			}
+
+			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
+				if (qName.equals("sport")){
+					Sport sport = null;
+					System.out.println("find Sport!");
+					for (Sport s: TBE.getInstance().getSports()){
+						if (s.equals(atts.getValue("name"))){
+							System.out.println("Sport found!");
+							sport = s;
+						}
+					}
+					
+					//TODO: check sport-version
+					
+					if (sport != null){
+						Board board = new Board(model, view ,sport);
+					}
+				}
+				if (board != null){
+					if (qName.equals("attribute")){
+						board.addAttribute(atts.getValue("title"), atts.getValue("text"));
+					}
+				}
+				
+				
+			}
+			
+			public void endDocument() throws SAXException{
+				setBoard(board);
+			}
+		}
+		
+		SaxHandler xml = new SaxHandler();
+		xml.loadFile(path);
+		
+		Board actBoard = board;
+		board = null;
+		
+		return actBoard;
+		
 	}
 
 	public static ArrayList<Sport> getSports()
@@ -201,6 +283,10 @@ public final class XMLHandler
 	{
 		sports.add(sport);
 	}
+	
+	private static void setBoard(Board myBoard){
+		board = myBoard;
+	}
 
 	public static void saveSettings(String prename, String lastname, String email, String language)
 	{
@@ -211,7 +297,7 @@ public final class XMLHandler
 
 		
 	}
-	
+
 	public static void createXML(Board board)
 	{
 		if (board.getPath().equals("")){
