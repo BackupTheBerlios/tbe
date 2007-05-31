@@ -36,6 +36,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+
+import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
@@ -134,7 +136,6 @@ public class WorkingView extends View
 		{
 			this.installToolInToolBar(toolbar, a);
 		}
-
 		listeners[0] = board.getMouseListeners()[0];
 		listeners[1] = new ViewMouseListener();
 		board.addMouseListener(listeners[1]);
@@ -242,7 +243,7 @@ public class WorkingView extends View
 		ArrayList<Command> actCommands = new ArrayList<Command>();
 		actCommands.add(cut);
 		tbe.addCommands(actCommands);
-		ComponentSelection contents = new ComponentSelection(items);
+		ComponentSelection contents = new ComponentSelection(this.cloneItems(items));
 		tbe.getClipboard().setContents(contents, cut);
 		board.removeItem(items);
 	}
@@ -253,7 +254,7 @@ public class WorkingView extends View
 		ArrayList<Command> actCommands = new ArrayList<Command>();
 		actCommands.add(cut);
 		tbe.addCommands(actCommands);
-		ComponentSelection contents = new ComponentSelection(items);
+		ComponentSelection contents = new ComponentSelection(this.cloneItems(items));
 		tbe.getClipboard().setContents(contents, cut);
 		
 	}
@@ -286,15 +287,20 @@ public class WorkingView extends View
 
 				e1.printStackTrace();
 			}
-			ItemComponent[] comps = new ItemComponent[tempItems.length];
-			for (int i = 0; i < tempItems.length; i++)
-			{
-				comps[i] = (ItemComponent) tempItems[i];
-			}
-			board.addItem(comps);
+
+			board.addItem(this.cloneItems(tempItems));
 
 		}
 	}
+	private ItemComponent[] cloneItems(Object[] cArray){
+		ItemComponent[] rArray = new ItemComponent[cArray.length];
+		for (int i = 0; i < cArray.length; i++)
+		{
+			rArray[i] = (ItemComponent) ((DefaultGraphCell) cArray[i]).clone();
+		}
+		return rArray;
+	}
+	
 
 	public void undo()
 	{

@@ -11,7 +11,7 @@ public class Board extends JGraph
 {
 	
 
-	private String path;
+	private String path = "";
 	private Field field;
 	private Description description;
 	private Sport sport;
@@ -63,6 +63,11 @@ public class Board extends JGraph
 	public void setPath(String path)
 	{
 		this.path = path;
+	}
+	
+	public String getPath()
+	{
+		return this.path;
 	}
 
 	public void setField(Field field)

@@ -8,12 +8,15 @@ import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.*;
 
 
+import java.awt.Frame;
 import java.awt.geom.Point2D;
 import java.io.*;
 import java.net.URL;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.*;
 
 import org.jdom.DocType;
@@ -211,72 +214,95 @@ public final class XMLHandler
 	
 	public static void createXML(Board board)
 	{
-		try {
+		if (board.getPath().equals("")){
+			JFileChooser chooser = new JFileChooser();
 
-			
-            Element eTbe = new Element("TBE");
-            Element eSport = new Element("sport");
-            Element eCreator = new Element("creator");
-            Element eHistory = new Element("history");
-            Element eModifier = new Element("modifier");
-            Element eDescription = new Element("description");
-            Element eItemComponents = new Element("itemComponents");
-            
-            eTbe.setAttribute("version", TBE.getInstance().getVersion());
-            eTbe.addContent(eSport);
-            eTbe.addContent(eCreator);
-            eTbe.addContent(eHistory);
-            eTbe.addContent(eDescription);
-            eTbe.addContent(eItemComponents);
-            
-            eSport.setAttribute("name", board.getSport().getName());
-            eSport.setAttribute("version", board.getSport().getVersion());
-            
-            eCreator.setAttribute("name", TBE.getInstance().getUserName());
-            eCreator.setAttribute("prename", TBE.getInstance().getUserPrename());
-            eCreator.setAttribute("email", TBE.getInstance().getUserEmail());
-            
-            for (Attribute attribute:board.getDescription().getAttributes()){
-            	Element eAttribute = new Element("attribute");
-            	eAttribute.setAttribute("title", attribute.getTitle());
-            	eAttribute.setAttribute("text", attribute.getText());
-            	eDescription.addContent(eAttribute);
-            }
-            
-            for (ItemComponent item: board.getItems()){
-            	Element eItemComponent;
-            	
-            	if (item instanceof ArrowItem){
-            		eItemComponent = new Element("arrow");
-            		eItemComponent.setAttribute("type", item.getType());
-            		for (Point2D point: ((ArrowItem)item).getPoints()){
-            			Element ePoint = new Element("point");
-            			ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
-            			ePoint.setAttribute("yCoordinate", String.valueOf(point.getY()));
-            			eItemComponent.addContent(ePoint);
-            		}
-            	}else{
-            		eItemComponent = new Element("shape");
-            		eItemComponent.setAttribute("type", item.getType());
-            		
-            		eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterX()));
-            		eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterY()));
-            	}
-            	
-            	eItemComponents.addContent(eItemComponent);
-            }
-            
-            
-            Document document = new Document(eTbe);
-            
-            XMLOutputter out = new XMLOutputter();
-            java.io.FileWriter writer = new java.io.FileWriter("test.xml");
-            out.output(document, writer);
-            writer.flush();
-            writer.close();
-            
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+			chooser.setFileFilter(new FileFilter()
+			{
+				public boolean accept(File f)
+				{
+					return f.getName().toLowerCase().endsWith(".tbe")
+							|| f.isDirectory();
+				}
+
+				public String getDescription()
+				{
+					return "TBE (*.tbe)";
+				}
+			});
+			chooser.showSaveDialog(new Frame());
+
+			File filename = chooser.getSelectedFile();
+			board.setPath(filename.getPath());
+		}		
+
+		if (!board.getPath().equals("")){
+			try {
+	            Element eTbe = new Element("TBE");
+	            Element eSport = new Element("sport");
+	            Element eCreator = new Element("creator");
+	            Element eHistory = new Element("history");
+	            Element eModifier = new Element("modifier");
+	            Element eDescription = new Element("description");
+	            Element eItemComponents = new Element("itemComponents");
+	            
+	            eTbe.setAttribute("version", TBE.getInstance().getVersion());
+	            eTbe.addContent(eSport);
+	            eTbe.addContent(eCreator);
+	            eTbe.addContent(eModifier);
+	            eTbe.addContent(eHistory);
+	            eTbe.addContent(eDescription);
+	            eTbe.addContent(eItemComponents);
+	            
+	            eSport.setAttribute("name", board.getSport().getName());
+	            eSport.setAttribute("version", board.getSport().getVersion());
+	            
+	            eCreator.setAttribute("name", TBE.getInstance().getUserName());
+	            eCreator.setAttribute("prename", TBE.getInstance().getUserPrename());
+	            eCreator.setAttribute("email", TBE.getInstance().getUserEmail());
+	            
+	            for (Attribute attribute:board.getDescription().getAttributes()){
+	            	Element eAttribute = new Element("attribute");
+	            	eAttribute.setAttribute("title", attribute.getTitle());
+	            	eAttribute.setAttribute("text", attribute.getText());
+	            	eDescription.addContent(eAttribute);
+	            }
+	            
+	            for (ItemComponent item: board.getItems()){
+	            	Element eItemComponent;
+	            	
+	            	if (item instanceof ArrowItem){
+	            		eItemComponent = new Element("arrow");
+	            		eItemComponent.setAttribute("type", item.getType());
+	            		for (Point2D point: ((ArrowItem)item).getPoints()){
+	            			Element ePoint = new Element("point");
+	            			ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
+	            			ePoint.setAttribute("yCoordinate", String.valueOf(point.getY()));
+	            			eItemComponent.addContent(ePoint);
+	            		}
+	            	}else{
+	            		eItemComponent = new Element("shape");
+	            		eItemComponent.setAttribute("type", item.getType());
+	            		
+	            		eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterX()));
+	            		eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterY()));
+	            	}
+	            	
+	            	eItemComponents.addContent(eItemComponent);
+	            }
+	            
+	            
+	            Document document = new Document(eTbe);
+	            
+	            XMLOutputter out = new XMLOutputter();
+	            java.io.FileWriter writer = new java.io.FileWriter(board.getPath());
+	            out.output(document, writer);
+	            writer.flush();
+	            writer.close();
+	            
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
+		}
 	}
 }

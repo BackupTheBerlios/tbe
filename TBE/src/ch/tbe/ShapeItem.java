@@ -3,6 +3,7 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
+import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultGraphCell;
 
 import ch.tbe.framework.ItemComponent;
@@ -27,6 +28,13 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 	
 	public String getType(){
 		return shapeType.getName();
+	}
+	
+	public ShapeItem clone(){
+		ShapeItem s = (ShapeItem) super.clone();
+		s.attributes = (AttributeMap) attributes.clone();
+		s.shapeType = this.shapeType;
+		return s;
 	}
 
 }
