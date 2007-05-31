@@ -25,12 +25,6 @@ public class Board extends JGraph
 		this.description = new Description();
 	}
 
-	public void clear()
-	{
-		this.getGraphLayoutCache().removeCells(this.getGraphLayoutCache().getCells(true, true, true, true));
-		this.refresh();
-	}
-
 	public ItemComponent[] getItems()
 	{
 

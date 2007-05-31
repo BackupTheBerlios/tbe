@@ -341,19 +341,25 @@ public class Menu extends JMenuBar
 		JMenu boardmenu = new JMenu(menuLabels.getString("title3"));
 
 		JMenuItem boardClear = new JMenuItem(menuLabels.getString("board2"));
-		class boardClearListener extends MouseAdapter
+		class boardClearListener implements ActionListener
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
-				View v = tbe.getView();
-				if(v instanceof WorkingView){
+				if (tbe.getView() instanceof WorkingView)
+				{
 					
-					((WorkingView) v).getBoard().clear();
+					Board b = ((WorkingView) tbe.getView()).getBoard();
+					ItemComponent[] items = b.getItems();
+					DeleteCommand del = new DeleteCommand(items);
+					ArrayList<Command> actCommands = new ArrayList<Command>();
+					actCommands.add(del);					
+					tbe.addCommands(actCommands);
+					b.removeItem(items);
 				}
 			}
 		}
-		boardClear.addMouseListener(new boardClearListener());
+		boardClear.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, java.awt.Event.CTRL_MASK));
+		boardClear.addActionListener(new boardClearListener());
 
 		boardmenu.add(createFieldMenu());
 		boardmenu.add(boardClear);
