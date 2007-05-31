@@ -1,6 +1,7 @@
 package ch.tbe.gui;
 
 import ch.tbe.Attribute;
+import ch.tbe.BezierSolidArrowTool;
 import ch.tbe.CursorTool;
 import ch.tbe.Board;
 import ch.tbe.CutCommand;
@@ -136,7 +137,9 @@ public class WorkingView extends View
 		{
 			this.installToolInToolBar(toolbar, a);
 		}
+		this.installToolInToolBar(toolbar, new BezierSolidArrowTool(null));
 		listeners[0] = board.getMouseListeners()[0];
+		
 		listeners[1] = new ViewMouseListener();
 		board.addMouseListener(listeners[1]);
 
@@ -145,6 +148,7 @@ public class WorkingView extends View
 		legendPanel = new JPanel();
 		legendPanel.add(new JLabel("Legend"));
 		rightPanel.add(legendPanel, BorderLayout.SOUTH);
+		
 
 		this.add(rightPanel, BorderLayout.CENTER);
 		this.activatePoints(false);
@@ -292,7 +296,7 @@ public class WorkingView extends View
 
 		}
 	}
-	private ItemComponent[] cloneItems(Object[] cArray){
+	public ItemComponent[] cloneItems(Object[] cArray){
 		ItemComponent[] rArray = new ItemComponent[cArray.length];
 		for (int i = 0; i < cArray.length; i++)
 		{

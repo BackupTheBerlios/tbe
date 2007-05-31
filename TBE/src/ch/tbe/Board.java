@@ -3,9 +3,9 @@ package ch.tbe;
 import org.jgraph.JGraph;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
-
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
+import ch.tbe.jgraph.TBEBasicGraphUI;
 
 public class Board extends JGraph
 {
@@ -20,6 +20,7 @@ public class Board extends JGraph
 	public Board(GraphModel model, GraphLayoutCache view, Sport sport)
 	{
 		super(model, view);
+		this.setUI(new TBEBasicGraphUI());
 		this.sport = sport;
 		this.field = sport.getFields().get(0);
 		this.description = new Description();
