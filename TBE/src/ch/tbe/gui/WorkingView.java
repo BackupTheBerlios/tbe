@@ -51,6 +51,7 @@ public class WorkingView extends View
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private JPanel legendPanel;
 	private MouseListener[] listeners = new MouseListener[2];
+	private JPanel rightPanel = new JPanel();
 
 	public WorkingView(Sport sport)
 	{
@@ -82,11 +83,11 @@ public class WorkingView extends View
 		this.add(sideBar, BorderLayout.WEST);
 
 		// gemeinsames Panel für Board und Legend
-		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new BorderLayout());
-
+		
 		// Board
 		rightPanel.add(board, BorderLayout.CENTER);
+		
 		class ViewMouseListener extends MouseAdapter
 		{
 			public void mousePressed(MouseEvent e)
@@ -347,9 +348,14 @@ public class WorkingView extends View
 			board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
 		else{
+			//Cursor c = getToolkit().createCustomCursor( 
+			//	  (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(), 
+			//	  new Point(10,10), "Cursor" );
+			
 			Cursor c = getToolkit().createCustomCursor( 
-				  (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(), 
-				  new Point(10,10), "Cursor" ); 
+				  CursorImage.getMergedImage((Image)((ImageIcon)tool.getShapeType().getIcon()).getImage()), 
+				  new Point(10,10), "Cursor" );
+			
 				board.setCursor( c );
 		}
 	}
