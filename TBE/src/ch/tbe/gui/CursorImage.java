@@ -7,7 +7,7 @@ import javax.swing.*;
 public class CursorImage {
  
     public static BufferedImage getMergedImage(Image hi) {
-    	Image lo = new ImageIcon("src/ch/tbe/pics/cursor.gif").getImage();
+    	Image lo = new ImageIcon("src/ch/tbe/pics/cursor.png").getImage();
     	
     	int w = Math.max(hi.getHeight(null), lo.getWidth(null));
         int h = Math.max(hi.getHeight(null), lo.getHeight(null));
