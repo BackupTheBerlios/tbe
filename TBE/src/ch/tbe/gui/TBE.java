@@ -253,4 +253,8 @@ public class TBE
 	{
 		return clipboard;
 	}
+	
+	public String getVersion(){
+		return "1.0";
+	}
 }
