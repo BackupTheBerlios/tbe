@@ -3,20 +3,26 @@ package ch.tbe.gui;
 import ch.tbe.Attribute;
 import ch.tbe.CursorTool;
 import ch.tbe.Board;
+import ch.tbe.CutCommand;
+import ch.tbe.DeleteCommand;
+import ch.tbe.PasteCommand;
 import ch.tbe.ShapeTool;
 import ch.tbe.ToolFactory;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ArrowTool;
+import ch.tbe.framework.Command;
 import ch.tbe.framework.Tool;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
 import ch.tbe.jgraph.TBECellViewFactory;
+import ch.tbe.util.ComponentSelection;
 import ch.tbe.Field;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -211,6 +217,13 @@ public class WorkingView extends View
 
 	public void clear()
 	{
+		
+		ItemComponent[] items = board.getItems();
+		DeleteCommand del = new DeleteCommand(items);
+		ArrayList<Command> actCommands = new ArrayList<Command>();
+		actCommands.add(del);
+		tbe.addCommands(actCommands);
+		board.removeItem(items);
 	}
 
 	public void select(ItemComponent item)
@@ -223,10 +236,53 @@ public class WorkingView extends View
 
 	public void cut()
 	{
+		
+		ItemComponent[] items = board.getSelectedItems();
+		CutCommand cut = new CutCommand(items);
+		ArrayList<Command> actCommands = new ArrayList<Command>();
+		actCommands.add(cut);
+		tbe.addCommands(actCommands);
+		ComponentSelection contents = new ComponentSelection(items);
+		tbe.getClipboard().setContents(contents, cut);
+		board.removeItem(items);
 	}
 
 	public void paste()
 	{
+		
+		ItemComponent[] items = board.getSelectedItems();
+		PasteCommand del = new PasteCommand(items);
+		ArrayList<Command> actCommands = new ArrayList<Command>();
+		actCommands.add(del);
+		tbe.addCommands(actCommands);
+
+		ComponentSelection clipboardContent = (ComponentSelection) tbe
+				.getClipboard().getContents(this);
+
+		if ((clipboardContent != null)
+				&& (clipboardContent
+						.isDataFlavorSupported(ComponentSelection.itemFlavor)))
+		{
+
+			Object[] tempItems = null;
+			try
+			{
+				tempItems = clipboardContent
+						.getTransferData(ComponentSelection.itemFlavor);
+			}
+			catch (UnsupportedFlavorException e1)
+			{
+
+				e1.printStackTrace();
+			}
+			ItemComponent[] comps = new ItemComponent[tempItems.length];
+			for (int i = 0; i < tempItems.length; i++)
+			{
+				comps[i] = (ItemComponent) tempItems[i];
+			}
+			board.addItem(comps);
+
+		}
 	}
 
 	public void undo()
@@ -255,6 +311,13 @@ public class WorkingView extends View
 
 	public void delete()
 	{
+		
+		ItemComponent[] items = board.getSelectedItems();
+		DeleteCommand del = new DeleteCommand(items);
+		ArrayList<Command> actCommands = new ArrayList<Command>();
+		actCommands.add(del);
+		tbe.addCommands(actCommands);
+		board.removeItem(items);
 	}
 
 	public void setCurrentTool(Tool tool)

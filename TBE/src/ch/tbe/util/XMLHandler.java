@@ -1,7 +1,6 @@
 package ch.tbe.util;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ch.tbe.Board;
 import ch.tbe.FTPServer;
@@ -16,6 +15,7 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.xml.parsers.*;
+
 import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -69,9 +69,9 @@ public final class XMLHandler
 				if (qName.equals("server"))
 				{
 					servers.add(new FTPServer(atts.getValue("name").toString(),
-							atts.getValue("host").toString(), atts.getValue(
-									"username").toString(), atts.getValue(
-									"password").toString()));
+							atts.getValue("host").toString(), 
+							atts.getValue("username").toString(), 
+							atts.getValue("password").toString()));
 				}
 
 				if (qName.equals("recentlyOpened"))
@@ -199,13 +199,13 @@ public final class XMLHandler
 		sports.add(sport);
 	}
 
-	public static void saveSettings(String prename, String lastname,
-			String email, String language)
+	public static void saveSettings(String prename, String lastname, String email, String language)
 	{
 
 	}
 	
 	public void saveFTPServers(ArrayList<FTPServer> servers){
+
 		
 	}
 }

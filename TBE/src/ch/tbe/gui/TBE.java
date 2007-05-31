@@ -1,5 +1,6 @@
 package ch.tbe.gui;
 
+import java.awt.datatransfer.Clipboard;
 import java.util.ArrayList;
 
 import ch.tbe.*;
@@ -29,7 +30,7 @@ public class TBE
 	private ArrayList<String> paths = new ArrayList<String>();
 	private ArrayList<FTPServer> servers = new ArrayList<FTPServer>();
 	private Menu menu;
-
+	private Clipboard clipboard = new Clipboard("TBE ClipBoard");
 	private View view;
 
 	private TBE()
@@ -246,5 +247,10 @@ public class TBE
 	public static void main(String[] args)
 	{
 		TBE.getInstance().initialize();
+	}
+
+	public Clipboard getClipboard()
+	{
+		return clipboard;
 	}
 }

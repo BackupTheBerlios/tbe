@@ -1,6 +1,7 @@
 package ch.tbe.gui;
 
 import java.awt.Component;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -20,11 +21,14 @@ import javax.swing.KeyStroke;
 
 import ch.tbe.Board;
 import ch.tbe.CreateCommand;
+import ch.tbe.CutCommand;
 import ch.tbe.DeleteCommand;
 import ch.tbe.Invoker;
+import ch.tbe.PasteCommand;
 import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
+import ch.tbe.util.ComponentSelection;
 
 public class Menu extends JMenuBar
 {
@@ -41,10 +45,10 @@ public class Menu extends JMenuBar
 	public Menu(String lang)
 	{
 		menuLabels = getResourceBundle(lang);
-		
+
 		createMenu();
 	}
-	
+
 	private void createMenu()
 	{
 		this.add(createFileMenu());
@@ -52,7 +56,7 @@ public class Menu extends JMenuBar
 		this.add(createBoardMenu());
 		this.add(createTBEMenu());
 	}
-	
+
 	private ResourceBundle getResourceBundle(String lang)
 	{
 		ResourceBundle labels = null;
@@ -62,16 +66,18 @@ public class Menu extends JMenuBar
 			menuLabelStream = Menu.class.getResourceAsStream("../config/lang/"
 					+ lang + "/menuLabels.txt");
 			labels = new PropertyResourceBundle(menuLabelStream);
-		} catch (FileNotFoundException fnne)
+		}
+		catch (FileNotFoundException fnne)
 		{
 			System.out.println("LanguageFile for MenuItems not found !");
-		} catch (IOException ioe)
+		}
+		catch (IOException ioe)
 		{
 			System.out.println("Error with ResourceBundle MenuLabels!");
 		}
 		return labels;
 	}
-	
+
 	private JMenu createFileMenu()
 	{
 		JMenu filemenu = new JMenu(menuLabels.getString("title1"));
@@ -83,16 +89,17 @@ public class Menu extends JMenuBar
 			public void actionPerformed(ActionEvent arg0)
 			{
 				View v = tbe.getView();
-				if(v instanceof WorkingView){
+				if (v instanceof WorkingView)
+				{
 					((WorkingView) v).closeOrNew();
 				}
-				
+
 			}
-		
+
 		}
-		fileNew.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.Event.CTRL_MASK));
+		fileNew.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_N, java.awt.Event.CTRL_MASK));
 		fileNew.addActionListener(new fileNewListener());
-		
 
 		JMenuItem fileOpen = new JMenuItem(menuLabels.getString("file2"));
 		class fileOpenListener extends MouseAdapter
@@ -167,15 +174,16 @@ public class Menu extends JMenuBar
 			public void actionPerformed(ActionEvent arg0)
 			{
 				View v = tbe.getView();
-				if(v instanceof WorkingView){
+				if (v instanceof WorkingView)
+				{
 					((WorkingView) v).closeOrNew();
 				}
-				
+
 			}
 		}
-		fileClose.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.Event.CTRL_MASK));
+		fileClose.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_E, java.awt.Event.CTRL_MASK));
 		fileClose.addActionListener(new fileCloseListener());
-		
 
 		JMenuItem fileQuit = new JMenuItem(menuLabels.getString("file9"));
 		class fileQuitListener extends MouseAdapter
@@ -189,13 +197,19 @@ public class Menu extends JMenuBar
 		}
 		fileQuit.addMouseListener(new fileQuitListener());
 
-		fileNew.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
-		fileOpen.setIcon(new ImageIcon(TBE.class.getResource("../pics/open.png")));
-		fileShare.setIcon(new ImageIcon(TBE.class.getResource("../pics/share.png")));
-		fileExport.setIcon(new ImageIcon(TBE.class.getResource("../pics/export.png")));
-		fileSave.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
-		filePrint.setIcon(new ImageIcon(TBE.class.getResource("../pics/print.png")));
-		
+		fileNew
+				.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
+		fileOpen.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/open.png")));
+		fileShare.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/share.png")));
+		fileExport.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/export.png")));
+		fileSave.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/save.png")));
+		filePrint.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/print.png")));
+
 		filemenu.add(fileNew);
 		filemenu.add(fileOpen);
 		filemenu.add(fileSave);
@@ -220,30 +234,30 @@ public class Menu extends JMenuBar
 			{
 				if (tbe.getView() instanceof WorkingView)
 				{
+					((WorkingView) tbe.getView()).delete();
 					
-					Board b = ((WorkingView) tbe.getView()).getBoard();
-					ItemComponent[] items = b.getSelectedItems();
-					DeleteCommand del = new DeleteCommand(items);
-					ArrayList<Command> actCommands = new ArrayList<Command>();
-					actCommands.add(del);					
-					tbe.addCommands(actCommands);
-					b.removeItem(items);
 				}
 			}
 		}
-		editDelete.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE,0));
+		editDelete.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_DELETE, 0));
 		editDelete.addActionListener(new editDeleteListener());
 
 		JMenuItem editCut = new JMenuItem(menuLabels.getString("edit2"));
-		class editCutListener extends MouseAdapter
+		class editCutListener implements ActionListener
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
-				// TODO
+				if (tbe.getView() instanceof WorkingView)
+				{
+					((WorkingView) tbe.getView()).cut();
+					
+				}
 			}
 		}
-		editCut.addMouseListener(new editCutListener());
+		editCut.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_X, java.awt.Event.CTRL_MASK));
+		editCut.addActionListener(new editCutListener());
 
 		JMenuItem editCopy = new JMenuItem(menuLabels.getString("edit3"));
 		class editCopyListener extends MouseAdapter
@@ -257,18 +271,23 @@ public class Menu extends JMenuBar
 		editCopy.addMouseListener(new editCopyListener());
 
 		JMenuItem editInsert = new JMenuItem(menuLabels.getString("edit4"));
-		class editInsertListener extends MouseAdapter
+		class editInsertListener implements ActionListener
 		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+			public void actionPerformed(ActionEvent e)
 			{
-				// TODO
+				if (tbe.getView() instanceof WorkingView)
+				{
+
+					((WorkingView) tbe.getView()).paste();
+
+				}
 			}
 		}
-		editInsert.addMouseListener(new editInsertListener());
+		editInsert.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_V, java.awt.Event.CTRL_MASK));
+		editInsert.addActionListener(new editInsertListener());
+
 		editUndo = new JMenuItem(menuLabels.getString("edit5"));
-		
-		
 		class editUndoListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
@@ -276,7 +295,8 @@ public class Menu extends JMenuBar
 				Invoker.getInstance().undo();
 			}
 		}
-		editUndo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
+		editUndo.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_Z, java.awt.Event.CTRL_MASK));
 		editUndo.addActionListener(new editUndoListener());
 
 		editRedo = new JMenuItem(menuLabels.getString("edit6"));
@@ -288,7 +308,8 @@ public class Menu extends JMenuBar
 				Invoker.getInstance().redo();
 			}
 		}
-		editRedo.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
+		editRedo.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_Y, java.awt.Event.CTRL_MASK));
 		editRedo.addActionListener(new editRedoListener());
 
 		editAddPoint = new JMenuItem(menuLabels.getString("edit7"));
@@ -303,7 +324,8 @@ public class Menu extends JMenuBar
 			}
 		}
 		editAddPoint.addActionListener(new editAddPointListener());
-		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
+		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 
 		editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
 		class editRemovePointListener implements ActionListener
@@ -317,12 +339,15 @@ public class Menu extends JMenuBar
 			}
 		}
 		editRemovePoint.addActionListener(new editRemovePointListener());
-		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.Event.CTRL_MASK));
+		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_R, java.awt.Event.CTRL_MASK));
 		activatePoints(false);
-		
-		editUndo.setIcon(new ImageIcon(TBE.class.getResource("../pics/undo.png")));
-		editRedo.setIcon(new ImageIcon(TBE.class.getResource("../pics/redo.png")));
-		
+
+		editUndo.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/undo.png")));
+		editRedo.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/redo.png")));
+
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
 		editmenu.add(editCopy);
@@ -331,7 +356,7 @@ public class Menu extends JMenuBar
 		editmenu.add(editRedo);
 		editmenu.add(editAddPoint);
 		editmenu.add(editRemovePoint);
-		
+
 		this.refreshInvokerVisibility();
 		return editmenu;
 	}
@@ -347,18 +372,14 @@ public class Menu extends JMenuBar
 			{
 				if (tbe.getView() instanceof WorkingView)
 				{
+
+					((WorkingView) tbe.getView()).clear();
 					
-					Board b = ((WorkingView) tbe.getView()).getBoard();
-					ItemComponent[] items = b.getItems();
-					DeleteCommand del = new DeleteCommand(items);
-					ArrayList<Command> actCommands = new ArrayList<Command>();
-					actCommands.add(del);					
-					tbe.addCommands(actCommands);
-					b.removeItem(items);
 				}
 			}
 		}
-		boardClear.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, java.awt.Event.CTRL_MASK));
+		boardClear.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_DELETE, java.awt.Event.CTRL_MASK));
 		boardClear.addActionListener(new boardClearListener());
 
 		boardmenu.add(createFieldMenu());
@@ -424,11 +445,12 @@ public class Menu extends JMenuBar
 			}
 		}
 		tbeSettings.addMouseListener(new tbeSettingsListener());
-		
+
 		JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
 
-		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
-		
+		tbeAbout.setIcon(new ImageIcon(TBE.class
+				.getResource("../pics/about.png")));
+
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
 
@@ -440,7 +462,8 @@ public class Menu extends JMenuBar
 		if (this.invoker.canRedo())
 		{
 			editRedo.setEnabled(true);
-		} else
+		}
+		else
 		{
 			editRedo.setEnabled(false);
 		}
@@ -448,26 +471,30 @@ public class Menu extends JMenuBar
 		if (this.invoker.canUndo())
 		{
 			editUndo.setEnabled(true);
-		} else
+		}
+		else
 		{
 			editUndo.setEnabled(false);
 		}
 	}
-	public void activatePoints(boolean b){
+
+	public void activatePoints(boolean b)
+	{
 		editAddPoint.setEnabled(b);
 		editRemovePoint.setEnabled(b);
 	}
+
 	public void refresh()
 	{
 		Component[] components = this.getComponents();
-		for(int i=0; i < components.length; i++)
+		for (int i = 0; i < components.length; i++)
 		{
 			this.remove(components[i]);
 		}
 		this.repaint();
-		
+
 		menuLabels = getResourceBundle(tbe.getLang());
-		
+
 		this.createMenu();
 	}
 }
