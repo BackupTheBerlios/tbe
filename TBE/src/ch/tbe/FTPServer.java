@@ -16,14 +16,6 @@ public class FTPServer
 		this.password = password;
 	}
 	
-	public void setFTPServer(String name, String host, String username, String password)
-	{
-		this.name = name;
-		this.host = host;
-		this.username = username;
-		this.password = password;
-	}
-	
 	public String getName()
 	{
 		return this.name;

@@ -1,6 +1,8 @@
 package ch.tbe.util;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import ch.tbe.FTPServer;
@@ -8,9 +10,14 @@ import ch.tbe.gui.TBE;
 
 import com.enterprisedt.net.ftp.FTPClient;
 import com.enterprisedt.net.ftp.FTPException;
+import com.enterprisedt.net.ftp.FTPFile;
 
 public final class FTPHandler 
 {
+	private final static String REMOTESPORTPATH = "sport";
+	private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";
+	private final static String PUBLICHOST = "tbe.netstyle.ch";
+	
 	private FTPHandler()
 	{
 		
@@ -18,23 +25,15 @@ public final class FTPHandler
 
 	public static ArrayList<String> getAllSports()
 	{
-		FTPServer server = new FTPServer("capsTest", "ftp.berncapitals.ch",
-				"testberncapitals", "hovcapyod9");
-		
-		ArrayList<FTPServer> servers = TBE.getInstance().getServers();
-		for(FTPServer ftp : servers)
-		{
-			
-		}
-		
+		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
 		
 		ArrayList<String> sports = new ArrayList<String>();
 		
-		String[] sportDir = getDir(server, "test/tbe/sports");
+		ArrayList<String> sportDir = getDir(server, REMOTESPORTPATH);
 		
-		for(int i = 0; i < sportDir.length; i++)
+		for(int i = 0; i < sportDir.size(); i++)
 		{
-			String sport = sportDir[i].substring(16);
+			String sport = sportDir.get(i).substring(6);
 			sports.add(sport);
 		}
 		return sports;
@@ -42,7 +41,25 @@ public final class FTPHandler
 
 	public static void installSport(ArrayList<String> sports)
 	{
+		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
 		
+		String remoteSport = (REMOTESPORTPATH + "/" + sports.get(0));
+		System.out.println(remoteSport);
+		
+		ArrayList<String> remotePaths = getDir(server, remoteSport);
+		ArrayList<String> localPaths = new ArrayList<String>(); 
+		for(String s : remotePaths)
+		{
+			String path = LOCALSPORTPATH + "/" + s.substring(REMOTESPORTPATH.length() + 1);
+			localPaths.add(path);
+		}
+		
+		download(server, localPaths, remotePaths);
+	}
+	
+	public static void deleteSport(ArrayList<String> sports)
+	{
+		// TODO
 	}
 	
 	public static void disconnect(FTPClient client)
@@ -69,6 +86,7 @@ public final class FTPHandler
 	public static FTPClient connect(FTPServer server)
 	{
 		FTPClient client = new FTPClient();
+		
 		try
 		{
 			client.setRemoteHost(server.getHost());
@@ -90,7 +108,7 @@ public final class FTPHandler
 		return client;
 	}
 	
-	public static String[] getDir(FTPServer server, String dir)
+	public static ArrayList<String> getDir(FTPServer server, String dir)
 	{
 		FTPClient client = connect(server);
 		
@@ -116,9 +134,13 @@ public final class FTPHandler
 		{
 			disconnect(client);
 		}
-		return s;
+		ArrayList<String> content = new ArrayList<String>();
+		for(int i = 0; i < s.length; i++)
+		{
+			content.add(s[i]);
+		}
+		return content;
 	}
-	
 	
 	public static void upload(FTPServer server, String localPath, String remotePath)
 	{
@@ -152,7 +174,17 @@ public final class FTPHandler
 		
 		try
 		{
-			client.get(remotePath, localPath);
+			String dir = localPath.substring(0, localPath.lastIndexOf("/"));
+			File myFile = new File(dir);
+			boolean mkdir = myFile.mkdirs();
+			if(myFile.isDirectory() || mkdir == true)
+			{
+				client.get(localPath, remotePath);
+			}
+			else
+			{
+				System.out.println("Ordner konnte nicht erstellt werden!");
+			}
 		}
 		catch (IOException e)
 		{
@@ -201,7 +233,7 @@ public final class FTPHandler
 		}
 	}
 	
-	public static void download(FTPServer server, ArrayList<String> remotePaths, ArrayList<String> localPaths)
+	public static void download(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths)
 	{
 		FTPClient client = connect(server);
 		
@@ -209,7 +241,27 @@ public final class FTPHandler
 		{
 			for(int i = 0; i < localPaths.size(); i++)
 			{
-				client.get(remotePaths.get(i), localPaths.get(i));
+				File localFile = new File(localPaths.get(i));
+				boolean mkdir;
+				if(!remotePaths.get(i).contains("."))
+				{
+					mkdir = localFile.mkdirs();
+				}
+				else
+				{
+					String dir = localPaths.get(i).substring(0, localPaths.get(i).lastIndexOf("/"));
+					localFile = new File(dir);
+					mkdir = localFile.mkdirs();
+					
+					if(localFile.isDirectory() || mkdir == true)
+					{
+						client.get(localPaths.get(i), remotePaths.get(i));
+					}
+					else
+					{
+						System.out.println("Ordner konnte nicht erstellt werden!");
+					}
+				}
 			}
 		}
 		catch (IOException e)
@@ -229,4 +281,5 @@ public final class FTPHandler
 			disconnect(client);
 		}
 	}
+
 }

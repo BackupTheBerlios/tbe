@@ -9,8 +9,16 @@ public class FTPHandlerTester
 {
 	public static void main(String[] args)
 	{
-		FTPServer server = new FTPServer("capsTest", "ftp.berncapitals.ch",
-				"testberncapitals", "hovcapyod9");
+		/*
+		 * PUBLIC - Server
+		 * 	domain: tbe.netstyle.ch
+		 *	users: 
+		 *  tbe_admin     pass: 4quabwej
+		 *	tbe_public      pass: carmad4
+		 */
+		
+		FTPServer server = new FTPServer("Public", "tbe.netstyle.ch", "tbe_admin", "4quabwej");
+		//FTPServer server = new FTPServer("Public", "tbe.netstyle.ch", "tbe_public", "carmad4");
 		
 		// FTPHandler.connect(server);
 		
@@ -22,9 +30,12 @@ public class FTPHandlerTester
 		}
 		*/
 		
-		// FTPHandler.upload(server, "D:/webkey.txt", "test/tbe/test.txt");
+		// FTPHandler.upload(server, "src/ch/tbe/config/sport/double.png", "sport/double.png");
 		
-		// FTPHandler.download(server, "test/tbe/test.txt", "D:/webkey.txt");
+		// FTPHandler.download(server, "src/ch/tbe/config/sport/test.txt", "sport/test.txt");
+		// inkl. Ordner erstellen!
+		// FTPHandler.download(server, "src/ch/tbe/config/sport/test/test.txt", "sport/test.txt");
+		// FTPHandler.download(server, "src/ch/tbe/config/sport/test/test.txt", "sport/test.txt");
 		
 		ArrayList<String> localPaths = new ArrayList<String>();
 		localPaths.add("D:/webkey.txt");
@@ -42,7 +53,12 @@ public class FTPHandlerTester
 		{
 			System.out.println(s);
 		}
+		/*
+		ArrayList<String> sports = new ArrayList<String>();
+		// sports.add("football");
+		sports.add("floorball");
 		
-		
+		FTPHandler.installSport(sports);
+		*/
 	}
 }
