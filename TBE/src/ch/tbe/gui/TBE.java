@@ -111,6 +111,9 @@ public class TBE
 
 	public void save()
 	{
+		if (view instanceof WorkingView){
+			XMLHandler.createXML(((WorkingView)view).getBoard());
+		}
 	}
 
 	public void load(String path)

@@ -259,9 +259,8 @@ public final class XMLHandler
             		eItemComponent = new Element("shape");
             		eItemComponent.setAttribute("type", item.getType());
             		
-            		Point2D actPosition = (Point2D)TBEGraphConstants.getPoints(((ShapeItem)item).getAttributes()).get(0);
-            		eItemComponent.setAttribute("xCoordinate", String.valueOf(actPosition.getX()));
-            		eItemComponent.setAttribute("yCoordinate", String.valueOf(actPosition.getY()));
+            		eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterX()));
+            		eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterY()));
             	}
             	
             	eItemComponents.addContent(eItemComponent);

@@ -45,7 +45,6 @@ public class Menu extends JMenuBar
 	public Menu(String lang)
 	{
 		menuLabels = getResourceBundle(lang);
-
 		createMenu();
 	}
 
