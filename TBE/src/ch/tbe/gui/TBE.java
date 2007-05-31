@@ -1,6 +1,5 @@
 package ch.tbe.gui;
 
-
 import java.util.ArrayList;
 
 import ch.tbe.*;
@@ -14,12 +13,10 @@ import java.util.List;
 
 import javax.swing.JFrame;
 
-
-
 public class TBE
 {
 	private static TBE instance = new TBE();
-	
+
 	private ArrayList<Sport> sports = new ArrayList<Sport>();
 	private String lang;
 	private String UserName;
@@ -29,19 +26,22 @@ public class TBE
 	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
 	private JFrame frame;
-	private List<String> paths = new ArrayList<String>();
-	private List<FTPServer> servers = new ArrayList<FTPServer>();
+	private ArrayList<String> paths = new ArrayList<String>();
+	private ArrayList<FTPServer> servers = new ArrayList<FTPServer>();
 	private Menu menu;
-	
+
 	private View view;
 
-	private TBE(){}
-	
-	public static TBE getInstance() 
+	private TBE()
+	{
+		
+	}
+
+	public static TBE getInstance()
 	{
 		return instance;
 	}
-	
+
 	public void initialize()
 	{
 		SplashScreen splashScreen = new SplashScreen();
@@ -49,13 +49,13 @@ public class TBE
 		splashScreen.setScreenVisible(true);
 		splashScreen.setProgress("Read Settings", 0);
 		XMLHandler.loadTBESettings();
-		
+
 		this.sports = XMLHandler.getSports();
-		
+
 		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
 		// PropertiesFile ausgelesen
 		splashScreen.setProgress("Create Frame", 5);
-	
+
 		frame = new JFrame("TBE - Tactic Board Editor");
 		splashScreen.setProgress(10);
 		frame.setSize(this.WIDTH, this.HEIGHT);
@@ -63,13 +63,12 @@ public class TBE
 		menu = new Menu(lang);
 		frame.setJMenuBar(menu);
 		splashScreen.setProgress(30);
-		
+
 		// TODO: check ob FirstStart oder nicht!
 		// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 		splashScreen.setProgress("Create WelcomeView", 40);
 		this.setView(new WelcomeView(sports, lang, splashScreen));
-		
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		splashScreen.setProgress(100);
 		splashScreen.setScreenVisible(false);
@@ -78,33 +77,33 @@ public class TBE
 
 	public void setView(View newView)
 	{
-		if(view != null)
+		if (view != null)
 			frame.remove(this.view);
 		this.view = newView;
 		frame.add(view);
 		frame.setVisible(false);
 		frame.setVisible(true);
 	}
-	
+
 	public View getView()
 	{
 		return this.view;
 	}
-	
+
 	public ArrayList<Sport> getSports()
 	{
 		return sports;
 	}
 
-	public List<String> getRecently() 
+	public ArrayList<String> getRecently()
 	{
 		return paths;
 	}
-	
+
 	public void createBoard(Sport sport)
 	{
 	}
-	
+
 	public void saveAs()
 	{
 	}
@@ -147,72 +146,105 @@ public class TBE
 	public void openSettings()
 	{
 	}
-
-	public void addFTPServer(String name, String host, int port, String username, String password){
+	
+	public ArrayList<FTPServer> getServers()
+	{
+		return this.servers;
+	}
+	
+	public void addFTPServer(String name, String host, String username,
+			String password)
+	{
+		servers.add(new FTPServer(name, host, username, password));
+		// XMLHandler die servers übergeben zum speichern
 	}
 
-	public void editFTPServer(String name, String host, int port, String username, String password){
+	public void editFTPServer(String name, String host, String username,
+			String password)
+	{
+		removeFTPServer(name);
+		addFTPServer(name, host, username, password);
 	}
 
 	public void removeFTPServer(String name)
 	{
+		for (FTPServer ftp : servers)
+		{
+			if (ftp.getName().equals(name))
+			{
+				servers.remove(ftp);
+				break;
+			}
+		}
+		// XMLHandler die servers übergeben zum speichern
 	}
 
-	public void setUser(String prename, String lastname, String email){
+	public void setUser(String prename, String lastname, String email)
+	{
 		this.UserName = lastname;
 		this.UserPrename = prename;
 		this.UserEmail = email;
 	}
-	
-	public String getLang(){
+
+	public String getLang()
+	{
 		return lang;
 	}
 
-	public List<String> getPaths(){
-		return paths;
-	}
-
-	public void setPaths(ArrayList<String> paths){
+	public void setPaths(ArrayList<String> paths)
+	{
 		this.paths = paths;
 	}
 
-	public void setLang(String lang){
+	public void setLang(String lang)
+	{
 		this.lang = lang;
 	}
 
-	public void setSports(ArrayList<Sport> sports){
+	public void setSports(ArrayList<Sport> sports)
+	{
 		this.sports = sports;
 	}
-	
-	public static void main(String[] args){
-		TBE.getInstance().initialize();
-	}
-	
-	public String getUserPrename(){
+
+	public String getUserPrename()
+	{
 		return this.UserPrename;
 	}
-	public String getUserName(){
-		return this.UserName; 
+
+	public String getUserName()
+	{
+		return this.UserName;
 	}
-	public String getUserEmail(){
-		return this.UserEmail; 
-	}
-	
-	public void setFTPServers(List<FTPServer> servers){
-		this.servers = servers;
-	}
-	
-	public void addCommands(List<Command> actCommands){
-		this.invoker.execute(actCommands);
+
+	public String getUserEmail()
+	{
+		return this.UserEmail;
 	}
 	
-	public Menu getMenu(){
+	public Menu getMenu()
+	{
 		return this.menu;
 	}
-	
+
+	public void setFTPServers(ArrayList<FTPServer> servers)
+	{
+		this.servers = servers;
+	}
+
+	public void addCommands(List<Command> actCommands)
+	{
+		this.invoker.execute(actCommands);
+	}
+
 	public void changeLang()
 	{
 		menu.refresh();
 		view.refresh();
+	}
+
+	// MAIN!
+	public static void main(String[] args)
+	{
+		TBE.getInstance().initialize();
 	}
 }

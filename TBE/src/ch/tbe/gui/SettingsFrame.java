@@ -383,9 +383,8 @@ public class SettingsFrame
 
 		JPanel listPanel = new JPanel(gridBagForm);
 		listPanel.setBackground(Color.WHITE);
-		// TODO: not InstalledSports, but all Sports on Server!
-		// ArrayList<String> sports = FTPHandler.getAllSports();
-		ArrayList<String> sports = new ArrayList<String>();
+		
+		ArrayList<String> sports = FTPHandler.getAllSports();
 		// only for testing PanelSize!
 		sports.add("Football");
 		sports.add("Fussball");
@@ -470,9 +469,6 @@ public class SettingsFrame
 		return isCorrect;
 	}
 
-	public void showAllSports()
-	{
-	}
 
 	public void installSport(List sports)
 	{

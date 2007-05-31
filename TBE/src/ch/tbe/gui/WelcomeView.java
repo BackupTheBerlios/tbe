@@ -33,7 +33,7 @@ public class WelcomeView extends View
 {
 	private ResourceBundle welcomeViewLabels;
 	private TBE tbe = TBE.getInstance();
-	private List<String> paths;
+	private ArrayList<String> paths;
 	private JPanel welcome;
 	private SplashScreen sp;
 	
