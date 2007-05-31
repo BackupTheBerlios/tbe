@@ -22,7 +22,7 @@ public final class FTPHandler
 	{
 		
 	}
-
+	
 	public static ArrayList<String> getAllSports()
 	{
 		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
@@ -38,7 +38,7 @@ public final class FTPHandler
 		}
 		return sports;
 	}
-
+	
 	public static void installSport(ArrayList<String> sports)
 	{
 		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
@@ -169,7 +169,7 @@ public final class FTPHandler
 			disconnect(client);
 		}
 	}
-
+	
 	public static void download(FTPServer server, String localPath, String remotePath)
 	{
 		FTPClient client = connect(server);
@@ -205,7 +205,7 @@ public final class FTPHandler
 			disconnect(client);
 		}
 	}
-
+	
 	public static void upload(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths)
 	{
 		FTPClient client = connect(server);
@@ -280,5 +280,5 @@ public final class FTPHandler
 			disconnect(client);
 		}
 	}
-
+	
 }
