@@ -11,7 +11,7 @@ public class CursorImage {
     	
     	int w = Math.max(hi.getHeight(null), lo.getWidth(null));
         int h = Math.max(hi.getHeight(null), lo.getHeight(null));
-        int type = BufferedImage.TYPE_INT_RGB;
+        int type = BufferedImage.TYPE_INT_ARGB;
         BufferedImage image = new BufferedImage(w, h, type);
         Graphics2D g2 = image.createGraphics();
         int x = (w - lo.getWidth(null))/2;
