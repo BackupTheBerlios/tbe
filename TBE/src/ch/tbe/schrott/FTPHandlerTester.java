@@ -54,11 +54,11 @@ public class FTPHandlerTester
 			System.out.println(s);
 		}
 		/*
-		ArrayList<String> sports = new ArrayList<String>();
-		// sports.add("football");
+		ArrayList<String> NEWsports = new ArrayList<String>();
+		sports.add("football");
 		sports.add("floorball");
 		
-		FTPHandler.installSport(sports);
+		FTPHandler.installSport(NEWsports);
 		*/
 	}
 }

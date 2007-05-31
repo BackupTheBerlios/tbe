@@ -42,19 +42,21 @@ public final class FTPHandler
 	public static void installSport(ArrayList<String> sports)
 	{
 		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
-		
-		String remoteSport = (REMOTESPORTPATH + "/" + sports.get(0));
-		System.out.println(remoteSport);
-		
-		ArrayList<String> remotePaths = getDir(server, remoteSport);
-		ArrayList<String> localPaths = new ArrayList<String>(); 
-		for(String s : remotePaths)
+		for(int i = 0; i < sports.size(); i++)
 		{
-			String path = LOCALSPORTPATH + "/" + s.substring(REMOTESPORTPATH.length() + 1);
-			localPaths.add(path);
+			String remoteSport = (REMOTESPORTPATH + "/" + sports.get(i));
+			System.out.println(remoteSport);
+			
+			ArrayList<String> remotePaths = getDir(server, remoteSport);
+			ArrayList<String> localPaths = new ArrayList<String>(); 
+			for(String s : remotePaths)
+			{
+				String path = LOCALSPORTPATH + "/" + s.substring(REMOTESPORTPATH.length() + 1);
+				localPaths.add(path);
+			}
+			
+			download(server, localPaths, remotePaths);
 		}
-		
-		download(server, localPaths, remotePaths);
 	}
 	
 	public static void deleteSport(ArrayList<String> sports)
@@ -243,11 +245,8 @@ public final class FTPHandler
 			{
 				File localFile = new File(localPaths.get(i));
 				boolean mkdir;
-				if(!remotePaths.get(i).contains("."))
-				{
-					mkdir = localFile.mkdirs();
-				}
-				else
+				// Nur
+				if(!remotePaths.get(i).contains("cvs"))
 				{
 					String dir = localPaths.get(i).substring(0, localPaths.get(i).lastIndexOf("/"));
 					localFile = new File(dir);
