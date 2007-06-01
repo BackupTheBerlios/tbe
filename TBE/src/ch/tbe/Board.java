@@ -106,6 +106,10 @@ public class Board extends JGraph
 	{
 		return this.sport;
 	}
+	
+	public Field getField(){
+		return this.field;
+	}
 
 	public void refresh()
 	{

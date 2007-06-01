@@ -152,17 +152,13 @@ public final class XMLHandler
 				{
 					if (qName.equals("attribute"))
 					{
-						board.addAttribute(atts.getValue("title"), atts
-								.getValue("text"));
+						board.addAttribute(atts.getValue("title"), atts.getValue("text"));
 					}
 
 					if (qName.equals("shape"))
 					{
-						Point2D point = new Point2D.Double(Double.valueOf(
-								atts.getValue("xCoordinate")).doubleValue(),
-								Double.valueOf(atts.getValue("yCoordinate")));
-						ShapeItem item = ItemFactory.getShapeItem(board
-								.getSport(), atts.getValue("type"), point);
+						Point2D point = new Point2D.Double(Double.valueOf(atts.getValue("xCoordinate")).doubleValue(),Double.valueOf(atts.getValue("yCoordinate")));
+						ShapeItem item = ItemFactory.getShapeItem(board.getSport(), atts.getValue("type"), point);
 						if (item != null)
 						{
 							board.addItem(item);
@@ -173,8 +169,7 @@ public final class XMLHandler
 					{
 						if (actArrowType != null)
 						{
-							ArrowItem item = ItemFactory.getArrowItem(board
-									.getSport(), actArrowType, actPoints);
+							ArrowItem item = ItemFactory.getArrowItem(board.getSport(), actArrowType, actPoints);
 							if (item != null)
 							{
 								board.addItem(item);
@@ -184,12 +179,19 @@ public final class XMLHandler
 						}
 						actArrowType = atts.getValue("type");
 					}
+					
+					if (qName.equals("field"))
+					{
+						for (Field field: board.getSport().getFields()){
+							if (field.getName().equals(atts.getValue("name"))){
+								board.setField(field);
+							}
+						}
+					}
 
 					if (qName.equals("point"))
 					{
-						actPoints.add(new Point2D.Double(Double.valueOf(
-								atts.getValue("xCoordinate")).doubleValue(),
-								Double.valueOf(atts.getValue("yCoordinate"))));
+						actPoints.add(new Point2D.Double(Double.valueOf(atts.getValue("xCoordinate")).doubleValue(),Double.valueOf(atts.getValue("yCoordinate"))));
 					}
 				}
 			}
@@ -388,14 +390,17 @@ public final class XMLHandler
 				Element eCreator = new Element("creator");
 				Element eHistory = new Element("history");
 				Element eModifier = new Element("modifier");
+				Element eField = new Element("field");
 				Element eDescription = new Element("description");
 				Element eItemComponents = new Element("itemComponents");
+				
 
 				eTbe.setAttribute("version", TBE.getInstance().getVersion());
 				eTbe.addContent(eSport);
 				eTbe.addContent(eCreator);
 				eTbe.addContent(eModifier);
 				eTbe.addContent(eHistory);
+				eTbe.addContent(eField);
 				eTbe.addContent(eDescription);
 				eTbe.addContent(eItemComponents);
 
@@ -403,11 +408,11 @@ public final class XMLHandler
 				eSport.setAttribute("version", board.getSport().getVersion());
 
 				eCreator.setAttribute("name", TBE.getInstance().getUserName());
-				eCreator.setAttribute("prename", TBE.getInstance()
-						.getUserPrename());
-				eCreator
-						.setAttribute("email", TBE.getInstance().getUserEmail());
+				eCreator.setAttribute("prename", TBE.getInstance().getUserPrename());
+				eCreator.setAttribute("email", TBE.getInstance().getUserEmail());
 
+				eField.setAttribute("name", board.getField().getName());
+				
 				for (Attribute attribute : board.getDescription()
 						.getAttributes())
 				{
@@ -440,14 +445,18 @@ public final class XMLHandler
 						eItemComponent = new Element("shape");
 						eItemComponent.setAttribute("type", item.getType());
 
+						double widthDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getWidth() / 2;
+						double heightDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getHeight() / 2;
+						
 						eItemComponent.setAttribute("xCoordinate", String
 								.valueOf(TBEGraphConstants.getBounds(
 										((ShapeItem) item).getAttributes())
-										.getCenterX()));
+										.getCenterX() - widthDiff));
+						
 						eItemComponent.setAttribute("yCoordinate", String
 								.valueOf(TBEGraphConstants.getBounds(
 										((ShapeItem) item).getAttributes())
-										.getCenterY()));
+										.getCenterY() - heightDiff));
 					}
 
 					eItemComponents.addContent(eItemComponent);

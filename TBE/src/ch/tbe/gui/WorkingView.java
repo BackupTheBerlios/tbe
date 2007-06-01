@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.RenderingHints;
 import java.awt.ScrollPane;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
@@ -73,7 +74,7 @@ public class WorkingView extends View
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new TBECellViewFactory());
 		this.board = new Board(model, view, sport);
-		this.board.setBackgroundImage((ImageIcon) sport.getFields().get(0).getIcon());
+		
 		createWorkingView();
 	}
 
@@ -88,6 +89,7 @@ public class WorkingView extends View
 	{
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
+		
 
 		// Toolbar
 		this.add(toolbar, BorderLayout.NORTH);
@@ -100,7 +102,9 @@ public class WorkingView extends View
 		rightPanel.setLayout(new BorderLayout());
 
 		// Board
+		this.board.setBackgroundImage((ImageIcon) sport.getFields().get(0).getIcon());
 		rightPanel.add(new JScrollPane(board), BorderLayout.CENTER);
+		
 
 		class ViewMouseListener extends MouseAdapter
 		{
@@ -408,7 +412,7 @@ public class WorkingView extends View
 		{
 			button.setIcon(tool.getShapeType().getIcon());
 			button.setToolTipText(tool.getShapeType().getDescription());
-			button.setSize(30, 30);
+			
 		}
 		else
 		{
