@@ -74,8 +74,8 @@ public class WorkingView extends View
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new TBECellViewFactory());
 		this.board = new Board(model, view, sport);
-		
 		createWorkingView();
+
 	}
 
 	public WorkingView(Board board)
@@ -89,7 +89,6 @@ public class WorkingView extends View
 	{
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
-		
 
 		// Toolbar
 		this.add(toolbar, BorderLayout.NORTH);
@@ -102,9 +101,9 @@ public class WorkingView extends View
 		rightPanel.setLayout(new BorderLayout());
 
 		// Board
-		this.board.setBackgroundImage((ImageIcon) sport.getFields().get(0).getIcon());
+		this.board.setBackgroundImage((ImageIcon) sport.getFields().get(0)
+				.getIcon());
 		rightPanel.add(new JScrollPane(board), BorderLayout.CENTER);
-		
 
 		class ViewMouseListener extends MouseAdapter
 		{
@@ -174,7 +173,7 @@ public class WorkingView extends View
 		toolbar.addSeparator();
 		installAddRemovePointButtons();
 		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
-		
+
 		toolbar.addSeparator();
 		this.installToolInToolBar(toolbar, ToolFactory.getTextBoxTool());
 		toolbar.addSeparator();
@@ -263,14 +262,6 @@ public class WorkingView extends View
 		board.removeItem(items);
 	}
 
-	public void select(ItemComponent item)
-	{
-	}
-
-	public void resize(ArrayList points)
-	{
-	}
-
 	public void cut()
 	{
 
@@ -347,30 +338,6 @@ public class WorkingView extends View
 		board.setSelectionCells(board.getItems());
 	}
 
-	public void undo()
-	{
-	}
-
-	public void redo()
-	{
-	}
-
-	public void selectAttribute(Attribute attribute)
-	{
-	}
-
-	public void saveAttribute(String title, String text)
-	{
-	}
-
-	public void setText(String text)
-	{
-	}
-
-	public void move(int xdiff, int ydiff)
-	{
-	}
-
 	public void delete()
 	{
 
@@ -380,22 +347,6 @@ public class WorkingView extends View
 		actCommands.add(del);
 		tbe.addCommands(actCommands);
 		board.removeItem(items);
-	}
-
-	public void setCurrentTool(Tool tool)
-	{
-	}
-
-	public void draw(int x, int y)
-	{
-	}
-
-	public void addAttribute(String title, String text)
-	{
-	}
-
-	public void removeAttribute(Attribute attribute)
-	{
 	}
 
 	public void setBoard(Board board)
@@ -412,7 +363,7 @@ public class WorkingView extends View
 		{
 			button.setIcon(tool.getShapeType().getIcon());
 			button.setToolTipText(tool.getShapeType().getDescription());
-			
+
 		}
 		else
 		{
@@ -487,10 +438,16 @@ public class WorkingView extends View
 			// (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(),
 			// new Point(10,10), "Cursor" );
 
-			Cursor c = getToolkit().createCustomCursor(
-					CursorImage.getMergedImage((Image) ((ImageIcon) tool
-							.getShapeType().getIcon()).getImage()),
-					new Point(16- tool.getShapeType().getIcon().getIconWidth() / 2, 16 - tool.getShapeType().getIcon().getIconHeight() / 2), "Cursor");
+			Cursor c = getToolkit()
+					.createCustomCursor(
+							CursorImage
+									.getMergedImage((Image) ((ImageIcon) tool
+											.getShapeType().getIcon())
+											.getImage()),
+							new Point(16 - tool.getShapeType().getIcon()
+									.getIconWidth() / 2,
+									16 - tool.getShapeType().getIcon()
+											.getIconHeight() / 2), "Cursor");
 
 			board.setCursor(c);
 		}
@@ -506,6 +463,42 @@ public class WorkingView extends View
 	public Tool getTool()
 	{
 		return this.currentTool;
+	}
+
+	public void hideSidebar()
+	{
+		if (this.sideBar.isVisible())
+		{
+			sideBar.setVisible(false);
+		}
+		else
+		{
+			sideBar.setVisible(true);
+		}
+	}
+
+	public void hideLegend()
+	{
+		if (this.legendPanel.isVisible())
+		{
+			legendPanel.setVisible(false);
+		}
+		else
+		{
+			legendPanel.setVisible(true);
+		}
+	}
+
+	public void hideToolbar()
+	{
+		if (this.toolbar.isVisible())
+		{
+			toolbar.setVisible(false);
+		}
+		else
+		{
+			toolbar.setVisible(true);
+		}
 	}
 
 	/**

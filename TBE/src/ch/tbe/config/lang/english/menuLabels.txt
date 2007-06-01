@@ -3,6 +3,7 @@ title1=File
 title2=Edit
 title3=Board
 title4=TBE
+title5=View
 
 # Menuitems FileMenu
 file1=New
@@ -29,6 +30,11 @@ edit9=Select All
 # Menuitems BoardMenu
 board1=Change Field
 board2=Clear Board
+
+# Menuitems ViewMenu
+view1=Toolbar
+view2=Attributes
+view3=Legend
 
 # Menuitems TBEMenu
 tbe1=Settings

@@ -3,6 +3,7 @@ title1=Datei
 title2=Bearbeiten
 title3=Board
 title4=TBE
+title5=Ansicht
 
 # Menuitems FileMenu
 file1=Neu
@@ -29,6 +30,11 @@ edit9=Alles auswählen
 # Menuitems BoardMenu
 board1=Spielfeld wechseln
 board2=Alles löschen
+
+# Menuitems viewMenu
+view1=Toolbar
+view2=Attribute
+view3=Legende
 
 # Menuitems TBEMenu
 tbe1=Einstellungen

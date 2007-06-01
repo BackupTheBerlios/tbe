@@ -1,7 +1,6 @@
 package ch.tbe.gui;
 
 import java.awt.Component;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,26 +8,15 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-
-import ch.tbe.Board;
-import ch.tbe.CreateCommand;
-import ch.tbe.CutCommand;
-import ch.tbe.DeleteCommand;
 import ch.tbe.Invoker;
-import ch.tbe.PasteCommand;
-import ch.tbe.framework.Command;
-import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.View;
-import ch.tbe.util.ComponentSelection;
 
 public class Menu extends JMenuBar
 {
@@ -53,6 +41,7 @@ public class Menu extends JMenuBar
 		this.add(createFileMenu());
 		this.add(createEditMenu());
 		this.add(createBoardMenu());
+		this.add(createViewMenu());
 		this.add(createTBEMenu());
 	}
 
@@ -406,6 +395,62 @@ public class Menu extends JMenuBar
 		boardmenu.add(boardClear);
 
 		return boardmenu;
+	}
+	
+	private JMenu createViewMenu()
+	{
+		JMenu viewMenu = new JMenu(menuLabels.getString("title5"));
+
+		JMenuItem viewToolbar = new JMenuItem(menuLabels.getString("view1"));
+		class viewToolbarListener implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+
+					((WorkingView) tbe.getView()).hideToolbar();
+					
+				}
+			}
+		}
+		viewToolbar.addActionListener(new viewToolbarListener());
+
+		JMenuItem viewSidebar = new JMenuItem(menuLabels.getString("view2"));
+		class viewSidebarListener implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+
+					((WorkingView) tbe.getView()).hideSidebar();
+					
+				}
+			}
+		}
+		viewSidebar.addActionListener(new viewSidebarListener());
+		
+		JMenuItem viewLegend = new JMenuItem(menuLabels.getString("view3"));
+		class viewLegendListener implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+
+					((WorkingView) tbe.getView()).hideLegend();
+					
+				}
+			}
+		}
+		viewLegend.addActionListener(new viewLegendListener());
+
+		viewMenu.add(viewToolbar);
+		viewMenu.add(viewSidebar);
+		viewMenu.add(viewLegend);
+
+		return viewMenu;
 	}
 
 	private JMenu createFieldMenu()
