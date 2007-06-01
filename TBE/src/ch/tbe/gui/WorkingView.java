@@ -9,6 +9,7 @@ import ch.tbe.DeleteCommand;
 import ch.tbe.MoveCommand;
 import ch.tbe.PasteCommand;
 import ch.tbe.ShapeTool;
+import ch.tbe.TextBoxTool;
 import ch.tbe.ToolFactory;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ArrowTool;
@@ -127,27 +128,11 @@ public class WorkingView extends View
 
 			}
 		}
-		cursorTool = currentTool = ToolFactory.getCursorTool();
-		this.installToolInToolBar(toolbar, currentTool);
-		toolbar.addSeparator();
-		installAddRemovePointButtons();
-		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
-		currentButton.setText("Cursor");// TODO only for Debugging
+		initDefaultTools();
 
-		toolbar.addSeparator();
+		initSportTools();
 
-		for (ShapeTool s : ToolFactory.getShapeTools(sport))
-		{
-			this.installToolInToolBar(toolbar, s);
-		}
-		toolbar.addSeparator();
-		for (ArrowTool a : ToolFactory.getArrowTools(sport))
-		{
-			this.installToolInToolBar(toolbar, a);
-		}
-		//this.installToolInToolBar(toolbar, new BezierSolidArrowTool(null));
 		listeners[0] = board.getMouseListeners()[0];
-
 		listeners[1] = new ViewMouseListener();
 		board.addMouseListener(listeners[1]);
 
@@ -160,9 +145,33 @@ public class WorkingView extends View
 		this.add(rightPanel, BorderLayout.CENTER);
 		this.activatePoints(false);
 
-		/*
-		 * 
-		 */
+	}
+
+	private void initSportTools()
+	{
+		for (ShapeTool s : ToolFactory.getShapeTools(sport))
+		{
+			this.installToolInToolBar(toolbar, s);
+		}
+		toolbar.addSeparator();
+		for (ArrowTool a : ToolFactory.getArrowTools(sport))
+		{
+			this.installToolInToolBar(toolbar, a);
+		}
+	}
+
+	private void initDefaultTools()
+	{
+		cursorTool = currentTool = ToolFactory.getCursorTool();
+		this.installToolInToolBar(toolbar, currentTool);
+		toolbar.addSeparator();
+		installAddRemovePointButtons();
+		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
+		currentButton.setText("Cursor");// TODO only for Debugging
+
+		toolbar.addSeparator();
+		this.installToolInToolBar(toolbar, ToolFactory.getTextBoxTool());
+		toolbar.addSeparator();
 	}
 
 	public void activatePoints(boolean b)
@@ -225,7 +234,6 @@ public class WorkingView extends View
 			actCommands.add(mc);
 			tbe.addCommands(actCommands);
 		}
-		
 
 	}
 
@@ -461,7 +469,8 @@ public class WorkingView extends View
 			this.currentTool = tool;
 
 		}
-		if (tool instanceof CursorTool || tool instanceof ArrowTool)
+		if (tool instanceof CursorTool || tool instanceof ArrowTool
+				|| tool instanceof TextBoxTool)
 		{
 			board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
