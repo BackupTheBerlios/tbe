@@ -7,19 +7,16 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-
 import javax.swing.ImageIcon;
-
 import ch.tbe.framework.ArrowTool;
 import ch.tbe.gui.TBE;
-import ch.tbe.gui.WelcomeView;
 
 public final class ToolFactory {
 	
 	private ToolFactory(){};
 	
 	public static CursorTool getCursorTool(){
-		URL imgURL = TBE.class.getResource("../pics/cursoricon.gif");
+		URL imgURL = ToolFactory.class.getResource("pics/cursoricon.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
 		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
 		return new CursorTool(new ShapeType(rb.getString("cursor"),rb.getString("cursor"),icon));
@@ -53,7 +50,7 @@ public final class ToolFactory {
 		return arrowTools;
 	}
 	public static TextBoxTool getTextBoxTool(){
-		URL imgURL = TBE.class.getResource("../pics/text.gif");
+		URL imgURL = ToolFactory.class.getResource("pics/text.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
 		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
 		return new TextBoxTool(new ShapeType(rb.getString("textbox"),rb.getString("textbox"),icon));
@@ -61,19 +58,19 @@ public final class ToolFactory {
 	
 	private static ResourceBundle getResourceBundle(String lang)
 	{
-		InputStream welcomeViewStream;
+		InputStream toolFactoryStream;
 		ResourceBundle labels = null;
 		try
 		{
-			welcomeViewStream = WelcomeView.class.getResourceAsStream("../config/lang/"
+			toolFactoryStream = ToolFactory.class.getResourceAsStream("config/lang/"
 					+ lang + "/toolFactory.txt");
-			labels = new PropertyResourceBundle(welcomeViewStream);
+			labels = new PropertyResourceBundle(toolFactoryStream);
 		} catch (FileNotFoundException fnne)
 		{
-			System.out.println("LanguageFile for WelcomeView not found !");
+			System.out.println("LanguageFile for ToolFactory not found !");
 		} catch (IOException ioe)
 		{
-			System.out.println("Error with ResourceBundle WelcomeView!");
+			System.out.println("Error with ResourceBundle ToolFactory!");
 		}
 		return labels;
 	}

@@ -10,7 +10,7 @@ public class CursorTool extends Tool
 	public CursorTool(ShapeType shapeType)
 	{
 		super(shapeType);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	@Override
@@ -27,12 +27,6 @@ public class CursorTool extends Tool
 
 	}
 
-	@Override
-	public ShapeType getShapeType()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void mouseDown(int x, int y, MouseEvent e)

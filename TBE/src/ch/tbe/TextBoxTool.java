@@ -42,12 +42,6 @@ public class TextBoxTool extends Tool
 
 	}
 
-	@Override
-	public ShapeType getShapeType()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void mouseDrag(int x, int y, MouseEvent e)

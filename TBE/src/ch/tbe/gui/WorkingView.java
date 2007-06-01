@@ -25,6 +25,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
+import java.awt.ScrollPane;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -38,6 +39,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import org.jgraph.graph.DefaultGraphCell;
@@ -72,7 +74,6 @@ public class WorkingView extends View
 				new TBECellViewFactory());
 		this.board = new Board(model, view, sport);
 		this.board.setBackgroundImage((ImageIcon) sport.getFields().get(0).getIcon());
-		this.board.setSize(100, 100);
 		createWorkingView();
 	}
 
@@ -99,7 +100,7 @@ public class WorkingView extends View
 		rightPanel.setLayout(new BorderLayout());
 
 		// Board
-		rightPanel.add(board, BorderLayout.CENTER);
+		rightPanel.add(new JScrollPane(board), BorderLayout.CENTER);
 
 		class ViewMouseListener extends MouseAdapter
 		{
@@ -170,7 +171,6 @@ public class WorkingView extends View
 		installAddRemovePointButtons();
 		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
 		
-
 		toolbar.addSeparator();
 		this.installToolInToolBar(toolbar, ToolFactory.getTextBoxTool());
 		toolbar.addSeparator();
@@ -408,6 +408,7 @@ public class WorkingView extends View
 		{
 			button.setIcon(tool.getShapeType().getIcon());
 			button.setToolTipText(tool.getShapeType().getDescription());
+			button.setSize(30, 30);
 		}
 		else
 		{
