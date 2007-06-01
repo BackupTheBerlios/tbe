@@ -139,7 +139,7 @@ public class Menu extends JMenuBar
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				tbe.share();
+				new ShareFrame();
 			}
 		}
 		fileShare.addMouseListener(new fileShareListener());

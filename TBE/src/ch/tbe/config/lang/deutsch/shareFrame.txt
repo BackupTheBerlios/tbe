@@ -1,0 +1,14 @@
+# Headers
+local = Lokale Dateien
+remote = Dateien auf dem gewählten FTP-Server
+
+# Buttons
+cancel = Abbrechen
+open = Öffnen
+connect = Verbinden
+
+# Demands
+chooseServer = Server auswählen
+
+# Error
+noServer = Es wurde kein Server ausgewählt

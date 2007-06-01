@@ -3,6 +3,7 @@ package ch.tbe.util;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import ch.tbe.FTPServer;
@@ -11,6 +12,8 @@ import ch.tbe.gui.TBE;
 import com.enterprisedt.net.ftp.FTPClient;
 import com.enterprisedt.net.ftp.FTPException;
 import com.enterprisedt.net.ftp.FTPFile;
+import com.enterprisedt.net.ftp.FTPFileFactory;
+import com.enterprisedt.net.ftp.UnixFileParser;
 
 public final class FTPHandler 
 {
@@ -29,11 +32,11 @@ public final class FTPHandler
 		
 		ArrayList<String> sports = new ArrayList<String>();
 		
-		ArrayList<String> sportDir = getDir(server, REMOTESPORTPATH);
+		ArrayList<FTPFile> sportDir = getDir(server, REMOTESPORTPATH);
 		
 		for(int i = 0; i < sportDir.size(); i++)
 		{
-			String sport = sportDir.get(i).substring(6);
+			String sport = sportDir.get(i).getPath().substring(6);
 			sports.add(sport);
 		}
 		return sports;
@@ -47,7 +50,12 @@ public final class FTPHandler
 			String remoteSport = (REMOTESPORTPATH + "/" + sports.get(i));
 			System.out.println(remoteSport);
 			
-			ArrayList<String> remotePaths = getDir(server, remoteSport);
+			ArrayList<FTPFile> remoteFiles = getDir(server, remoteSport);
+			ArrayList<String> remotePaths = new ArrayList<String>();
+			for(FTPFile f : remoteFiles)
+			{
+				remotePaths.add(f.getPath());
+			}
 			ArrayList<String> localPaths = new ArrayList<String>(); 
 			for(String s : remotePaths)
 			{
@@ -110,15 +118,18 @@ public final class FTPHandler
 		return client;
 	}
 	
-	public static ArrayList<String> getDir(FTPServer server, String dir)
+	public static ArrayList<FTPFile> getDir(FTPServer server, String dir)
 	{
 		FTPClient client = connect(server);
 		
-		String[] s = new String[]{};
+		FTPFile[] ftpFiles = new FTPFile[]{};
 		
 		try
 		{
-			s = client.dir(dir);
+			FTPFileFactory ff = new FTPFileFactory(new UnixFileParser());
+			System.out.println("Dir: " + dir);
+			ftpFiles = client.dirDetails(dir);
+			System.out.println(ftpFiles[0].toString());
 		}
 		catch (IOException e)
 		{
@@ -132,14 +143,19 @@ public final class FTPHandler
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		finally
 		{
 			disconnect(client);
 		}
-		ArrayList<String> content = new ArrayList<String>();
-		for(int i = 0; i < s.length; i++)
+		ArrayList<FTPFile> content = new ArrayList<FTPFile>();
+		for(int i = 0; i < ftpFiles.length; i++)
 		{
-			content.add(s[i]);
+			content.add(ftpFiles[i]);
 		}
 		return content;
 	}
