@@ -490,7 +490,7 @@ public class WorkingView extends View
 			Cursor c = getToolkit().createCustomCursor(
 					CursorImage.getMergedImage((Image) ((ImageIcon) tool
 							.getShapeType().getIcon()).getImage()),
-					new Point(10, 10), "Cursor");
+					new Point(16- tool.getShapeType().getIcon().getIconWidth() / 2, 16 - tool.getShapeType().getIcon().getIconHeight() / 2), "Cursor");
 
 			board.setCursor(c);
 		}
