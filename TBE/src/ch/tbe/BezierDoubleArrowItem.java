@@ -13,6 +13,7 @@ public class BezierDoubleArrowItem extends ArrowItem
 		
 		TBEGraphConstants.setLineStyle(this.getAttributes(),
 				TBEGraphConstants.STYLE_DOUBLEBEZIER);
+		setPoints(points);
 	}
 	
 	public String getType(){

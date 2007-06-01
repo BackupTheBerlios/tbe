@@ -129,6 +129,7 @@ public class WorkingView extends View
 		}
 		cursorTool = currentTool = ToolFactory.getCursorTool();
 		this.installToolInToolBar(toolbar, currentTool);
+		toolbar.addSeparator();
 		installAddRemovePointButtons();
 		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
 		currentButton.setText("Cursor");// TODO only for Debugging
@@ -192,6 +193,10 @@ public class WorkingView extends View
 			}
 		});
 
+		add.setContentAreaFilled(false);
+		add.setBorderPainted(false);
+		rem.setContentAreaFilled(false);
+		rem.setBorderPainted(false);
 		toolbar.add(add);
 		toolbar.add(rem);
 	}
