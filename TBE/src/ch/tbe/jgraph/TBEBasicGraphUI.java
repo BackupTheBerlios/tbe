@@ -16,6 +16,7 @@ import org.jgraph.plaf.basic.BasicGraphUI;
 
 import ch.tbe.Invoker;
 import ch.tbe.MoveCommand;
+import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
@@ -34,13 +35,13 @@ public class TBEBasicGraphUI extends BasicGraphUI
 	{
 		super();
 	}
-	
-//	/**
-//	 * Sets the marquee handler.
-//	 */
-//	public void setMarquee(BasicMarqueeHandler marqueeHandler) {
-//		marquee = marqueeHandler;
-//	}
+
+	// /**
+	// * Sets the marquee handler.
+	// */
+	// public void setMarquee(BasicMarqueeHandler marqueeHandler) {
+	// marquee = marqueeHandler;
+	// }
 
 	public class TBEMouseHandler extends MouseAdapter implements
 			MouseMotionListener, Serializable
@@ -53,7 +54,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 		protected Object handler;
 
 		protected transient Cursor previousCursor = null;
-		
+
 		protected MoveCommand mc;
 		protected Point2D mouseDown;
 
@@ -62,9 +63,9 @@ public class TBEBasicGraphUI extends BasicGraphUI
 		 */
 		public void mousePressed(MouseEvent e)
 		{
-			
+
 			mc = null;
-			
+
 			handler = null;
 			if (!e.isConsumed() && graph.isEnabled())
 			{
@@ -100,8 +101,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 						{
 							handle.mousePressed(e);
 							handler = handle;
-							
-							
+
 						}
 						// Immediate Selection
 						if (!e.isConsumed() && cell != null
@@ -116,7 +116,6 @@ public class TBEBasicGraphUI extends BasicGraphUI
 							}
 							e.consume();
 							cell = null;
-							
 
 						}
 					}
@@ -130,17 +129,20 @@ public class TBEBasicGraphUI extends BasicGraphUI
 					handler = marquee;
 				}
 			}
-			if(graph.getSelectionCount() > 0){
-//				Insertet by David Meier
-				mouseDown = new Point2D.Double(e.getX(),e.getY());
+			if (graph.getSelectionCount() > 0)
+			{
+				// Inserted by David Meier
+
+				mouseDown = new Point2D.Double(e.getX(), e.getY());
 				Object[] temp = graph.getSelectionCells();
-				ItemComponent[] items = new ItemComponent[temp.length]; 
-				for(int i = 0; i < temp.length; i++){
+				ItemComponent[] items = new ItemComponent[temp.length];
+				for (int i = 0; i < temp.length; i++)
+				{
 					items[i] = (ItemComponent) temp[i];
 				}
 				mc = new MoveCommand(items);
 			}
-			
+
 		}
 
 		/**
@@ -222,22 +224,28 @@ public class TBEBasicGraphUI extends BasicGraphUI
 				{
 					if (handler == marquee && marquee != null)
 						marquee.mouseReleased(e);
-					else if (handler == handle && handle != null){
+					else if (handler == handle && handle != null)
+					{
 						handle.mouseReleased(e);
 
-						// Insertet by David Meier
-						Point2D mouseUP = new Point2D.Double(e.getX(),e.getY());
-						if( !mouseDown.equals(mouseUP)){
-							
-						Object[] temp = graph.getSelectionCells();
-						ItemComponent[] items = new ItemComponent[temp.length]; 
-						for(int i = 0; i < temp.length; i++){
-							items[i] = (ItemComponent) temp[i];
-						}
-						mc.setMoveEnd(items);
-						ArrayList<Command> actCommands = new ArrayList<Command>();
-						actCommands.add(mc);
-						TBE.getInstance().addCommands(actCommands);
+						// Inserted by David Meier
+						Point2D mouseUP = new Point2D.Double(e.getX(), e.getY());
+						if (!mouseDown.equals(mouseUP)
+								|| (e.getButton() == 3
+										&& graph.getSelectionCount() == 1 && graph
+										.getSelectionCell() instanceof ArrowItem))
+						{
+
+							Object[] temp = graph.getSelectionCells();
+							ItemComponent[] items = new ItemComponent[temp.length];
+							for (int i = 0; i < temp.length; i++)
+							{
+								items[i] = (ItemComponent) temp[i];
+							}
+							mc.setMoveEnd(items);
+							ArrayList<Command> actCommands = new ArrayList<Command>();
+							actCommands.add(mc);
+							TBE.getInstance().addCommands(actCommands);
 						}
 					}
 					if (isDescendant(cell, focus) && e.getModifiers() != 0)
@@ -308,7 +316,6 @@ public class TBEBasicGraphUI extends BasicGraphUI
 		}
 
 	}
-	
 
 	/**
 	 * Creates the listener responsible for calling the correct handlers based

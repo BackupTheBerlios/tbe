@@ -68,7 +68,7 @@ public class WorkingView extends View
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new TBECellViewFactory());
-		this.board = new Board(model, view ,sport);
+		this.board = new Board(model, view, sport);
 		createWorkingView();
 	}
 
@@ -93,18 +93,23 @@ public class WorkingView extends View
 
 		// gemeinsames Panel für Board und Legend
 		rightPanel.setLayout(new BorderLayout());
-		
+
 		// Board
 		rightPanel.add(board, BorderLayout.CENTER);
-		
+
 		class ViewMouseListener extends MouseAdapter
 		{
 			public void mousePressed(MouseEvent e)
 			{
-
-				Point p = new Point(e.getX(), e.getY());
-				WorkingView.this.getTool().mouseDown(p.x, p.y, e);
-
+				if (e.getButton() == 3 && !(currentTool instanceof CursorTool))
+				{
+					setTool(cursorTool, cursorButton);
+				}
+				else
+				{
+					Point p = new Point(e.getX(), e.getY());
+					WorkingView.this.getTool().mouseDown(p.x, p.y, e);
+				}
 			}
 
 			public void mouseReleased(MouseEvent e)
@@ -113,7 +118,8 @@ public class WorkingView extends View
 						&& WorkingView.this.board.getSelectionCell() instanceof ArrowItem)
 				{
 					WorkingView.this.activatePoints(true);
-				} else
+				}
+				else
 				{
 					WorkingView.this.activatePoints(false);
 				}
@@ -125,9 +131,9 @@ public class WorkingView extends View
 		installAddRemovePointButtons();
 		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
 		currentButton.setText("Cursor");// TODO only for Debugging
-		
+
 		toolbar.addSeparator();
-		
+
 		for (ShapeTool s : ToolFactory.getShapeTools(sport))
 		{
 			this.installToolInToolBar(toolbar, s);
@@ -139,7 +145,7 @@ public class WorkingView extends View
 		}
 		this.installToolInToolBar(toolbar, new BezierSolidArrowTool(null));
 		listeners[0] = board.getMouseListeners()[0];
-		
+
 		listeners[1] = new ViewMouseListener();
 		board.addMouseListener(listeners[1]);
 
@@ -148,7 +154,6 @@ public class WorkingView extends View
 		legendPanel = new JPanel();
 		legendPanel.add(new JLabel("Legend"));
 		rightPanel.add(legendPanel, BorderLayout.SOUTH);
-		
 
 		this.add(rightPanel, BorderLayout.CENTER);
 		this.activatePoints(false);
@@ -192,23 +197,25 @@ public class WorkingView extends View
 
 	public void addRemovePoint(boolean b)
 	{
-		if (board.getSelectionCount() == 1)
+		if (board.getSelectionCount() == 1
+				&& board.getSelectionCell() instanceof ArrowItem)
 		{
-			if (board.getSelectionCell() instanceof ArrowItem)
+			ArrowItem a = (ArrowItem) board.getSelectionCell();
+			if (b)
 			{
-				ArrowItem a = (ArrowItem) board.getSelectionCell();
-				if (b)
-				{
-					a.addPoint();
-				} else
-				{
-					a.removePoint();
-				}
-				WorkingView.this.refresh();
-				board.setSelectionCell(a);
-				setTool(cursorTool, cursorButton);
+				a.addPoint();
 			}
+			else
+			{
+				a.removePoint();
+			}
+			WorkingView.this.refresh();
+			board.setSelectionCell(a);
+			setTool(cursorTool, cursorButton);
+			board.addItem(a);
 		}
+		
+
 	}
 
 	public Board getBoard()
@@ -222,7 +229,7 @@ public class WorkingView extends View
 
 	public void clear()
 	{
-		
+
 		ItemComponent[] items = board.getItems();
 		DeleteCommand del = new DeleteCommand(items);
 		ArrayList<Command> actCommands = new ArrayList<Command>();
@@ -241,31 +248,34 @@ public class WorkingView extends View
 
 	public void cut()
 	{
-		
+
 		ItemComponent[] items = board.getSelectedItems();
 		CutCommand cut = new CutCommand(items);
 		ArrayList<Command> actCommands = new ArrayList<Command>();
 		actCommands.add(cut);
 		tbe.addCommands(actCommands);
-		ComponentSelection contents = new ComponentSelection(this.cloneItems(items));
+		ComponentSelection contents = new ComponentSelection(this
+				.cloneItems(items));
 		tbe.getClipboard().setContents(contents, cut);
 		board.removeItem(items);
 	}
-	
-	public void copy(){
+
+	public void copy()
+	{
 		ItemComponent[] items = board.getSelectedItems();
 		CutCommand cut = new CutCommand(items);
 		ArrayList<Command> actCommands = new ArrayList<Command>();
 		actCommands.add(cut);
 		tbe.addCommands(actCommands);
-		ComponentSelection contents = new ComponentSelection(this.cloneItems(items));
+		ComponentSelection contents = new ComponentSelection(this
+				.cloneItems(items));
 		tbe.getClipboard().setContents(contents, cut);
-		
+
 	}
 
 	public void paste()
 	{
-		
+
 		ItemComponent[] items = board.getSelectedItems();
 		PasteCommand del = new PasteCommand(items);
 		ArrayList<Command> actCommands = new ArrayList<Command>();
@@ -296,7 +306,9 @@ public class WorkingView extends View
 
 		}
 	}
-	public ItemComponent[] cloneItems(Object[] cArray){
+
+	public ItemComponent[] cloneItems(Object[] cArray)
+	{
 		ItemComponent[] rArray = new ItemComponent[cArray.length];
 		for (int i = 0; i < cArray.length; i++)
 		{
@@ -304,7 +316,11 @@ public class WorkingView extends View
 		}
 		return rArray;
 	}
-	
+
+	public void selectAllItems()
+	{
+		board.setSelectionCells(board.getItems());
+	}
 
 	public void undo()
 	{
@@ -332,7 +348,7 @@ public class WorkingView extends View
 
 	public void delete()
 	{
-		
+
 		ItemComponent[] items = board.getSelectedItems();
 		DeleteCommand del = new DeleteCommand(items);
 		ArrayList<Command> actCommands = new ArrayList<Command>();
@@ -371,7 +387,8 @@ public class WorkingView extends View
 		{
 			button.setIcon(tool.getShapeType().getIcon());
 			button.setToolTipText(tool.getShapeType().getDescription());
-		} else
+		}
+		else
 		{
 			button.setText("Tool"); // For Debugging
 		}
@@ -386,13 +403,17 @@ public class WorkingView extends View
 		});
 		button.setContentAreaFilled(false);
 		button.setBorderPainted(false);
-		button.addMouseListener(new MouseAdapter () {
-		  public void mouseEntered(MouseEvent e) {
-		    ((JButton) e.getSource ()).setBorderPainted(true);
-		  }
-		  public void mouseExited(MouseEvent e) {
-		    ((JButton) e.getSource ()).setBorderPainted(false);
-		  }
+		button.addMouseListener(new MouseAdapter()
+		{
+			public void mouseEntered(MouseEvent e)
+			{
+				((JButton) e.getSource()).setBorderPainted(true);
+			}
+
+			public void mouseExited(MouseEvent e)
+			{
+				((JButton) e.getSource()).setBorderPainted(false);
+			}
 		});
 
 	}
@@ -406,7 +427,8 @@ public class WorkingView extends View
 			board.removeMouseListener(listeners[0]);
 
 			// IF CURSORTOOL
-		} else if (tool instanceof CursorTool
+		}
+		else if (tool instanceof CursorTool
 				&& !(this.currentTool instanceof CursorTool))
 		{
 
@@ -428,25 +450,29 @@ public class WorkingView extends View
 			this.currentTool = tool;
 
 		}
-		if(tool instanceof CursorTool){
+		if (tool instanceof CursorTool || tool instanceof ArrowTool)
+		{
 			board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		}
-		else{
-			//Cursor c = getToolkit().createCustomCursor( 
-			//	  (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(), 
-			//	  new Point(10,10), "Cursor" );
-			
-			Cursor c = getToolkit().createCustomCursor( 
-				  CursorImage.getMergedImage((Image)((ImageIcon)tool.getShapeType().getIcon()).getImage()), 
-				  new Point(10,10), "Cursor" );
-			
-				board.setCursor( c );
+		else
+		{
+			// Cursor c = getToolkit().createCustomCursor(
+			// (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(),
+			// new Point(10,10), "Cursor" );
+
+			Cursor c = getToolkit().createCustomCursor(
+					CursorImage.getMergedImage((Image) ((ImageIcon) tool
+							.getShapeType().getIcon()).getImage()),
+					new Point(10, 10), "Cursor");
+
+			board.setCursor(c);
 		}
 	}
-	
-	public void closeOrNew(){
-		//TODO Save???
-		
+
+	public void closeOrNew()
+	{
+		// TODO Save???
+
 		tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
 	}
 
@@ -458,12 +484,12 @@ public class WorkingView extends View
 	/**
 	 * Braucht es das noch? aus meiner Sicht nicht. by Dave
 	 */
-//	public void refreshX()
-//	{
-//		// TODO: Tools refreshen für ChangeLang!
-//		((SideBar)this.sideBar).refresh();
-//		board.repaint();
-//
-//		tbe.getMenu().refreshInvokerVisibility();
-//	}
+	// public void refreshX()
+	// {
+	// // TODO: Tools refreshen für ChangeLang!
+	// ((SideBar)this.sideBar).refresh();
+	// board.repaint();
+	//
+	// tbe.getMenu().refreshInvokerVisibility();
+	// }
 }

@@ -24,6 +24,7 @@ edit5=Rückgängig
 edit6=Wiederherstellen
 edit7=Punkt hinzufügen
 edit8=Punkt entfernen
+edit9=Alles auswählen
 
 # Menuitems BoardMenu
 board1=Spielfeld wechseln

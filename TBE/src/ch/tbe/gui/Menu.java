@@ -329,7 +329,7 @@ public class Menu extends JMenuBar
 		}
 		editAddPoint.addActionListener(new editAddPointListener());
 		editAddPoint.setAccelerator(KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
+				java.awt.event.KeyEvent.VK_I, java.awt.Event.CTRL_MASK));
 
 		editRemovePoint = new JMenuItem(menuLabels.getString("edit8"));
 		class editRemovePointListener implements ActionListener
@@ -346,6 +346,21 @@ public class Menu extends JMenuBar
 		editRemovePoint.setAccelerator(KeyStroke.getKeyStroke(
 				java.awt.event.KeyEvent.VK_R, java.awt.Event.CTRL_MASK));
 		activatePoints(false);
+		
+		JMenuItem editSelectAll = new JMenuItem(menuLabels.getString("edit9"));
+		class editSelectAllListener implements ActionListener
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (tbe.getView() instanceof WorkingView)
+				{
+					((WorkingView) tbe.getView()).selectAllItems();
+				}
+			}
+		}
+		editSelectAll.addActionListener(new editSelectAllListener());
+		editSelectAll.setAccelerator(KeyStroke.getKeyStroke(
+				java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 
 		editUndo.setIcon(new ImageIcon(TBE.class
 				.getResource("../pics/undo.png")));
@@ -356,6 +371,7 @@ public class Menu extends JMenuBar
 		editmenu.add(editCut);
 		editmenu.add(editCopy);
 		editmenu.add(editInsert);
+		editmenu.add(editSelectAll);
 		editmenu.add(editUndo);
 		editmenu.add(editRedo);
 		editmenu.add(editAddPoint);
