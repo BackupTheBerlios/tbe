@@ -11,8 +11,8 @@ public class Curved
 {
 
 	private Point2D[] p;
-	private final int SPACE = 4;
-	private final int HEIGHT = 8;
+	private final int SPACE = 2;
+	private final int HEIGHT = 4;
 
 	public Curved(Point2D start, Point2D end)
 	{

@@ -303,8 +303,17 @@ public final class XMLHandler
 
 					if (qName.equals("field"))
 					{
+						URL imgURL = TBE.class.getResource("../config/sport/"
+								+ actSport.getName() + "/"
+								+ atts.getValue("picture"));
+						Icon actIcon = null;
+						try{
+						actIcon = new ImageIcon(imgURL);}
+						catch(Exception e){
+							
+						}
 						fields.add(new Field(atts.getValue("name"), atts
-								.getValue("picture")));
+								.getValue("description"), actIcon));
 					}
 				}
 			}

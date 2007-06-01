@@ -71,6 +71,8 @@ public class WorkingView extends View
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new TBECellViewFactory());
 		this.board = new Board(model, view, sport);
+		this.board.setBackgroundImage((ImageIcon) sport.getFields().get(0).getIcon());
+		this.board.setSize(100, 100);
 		createWorkingView();
 	}
 
@@ -167,7 +169,7 @@ public class WorkingView extends View
 		toolbar.addSeparator();
 		installAddRemovePointButtons();
 		cursorButton = currentButton = (JButton) toolbar.getComponent(0);
-		currentButton.setText("Cursor");// TODO only for Debugging
+		
 
 		toolbar.addSeparator();
 		this.installToolInToolBar(toolbar, ToolFactory.getTextBoxTool());

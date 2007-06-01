@@ -1,17 +1,33 @@
 package ch.tbe;
 
+import javax.swing.Icon;
+
 public class Field {
  
 	private String name;
-	private String path;
+	private String description;
+	private Icon icon;
 
-	public Field(String name, String path){
+	public String getDescription()
+	{
+		return description;
+	}
+
+	public Icon getIcon()
+	{
+		return icon;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public Field(String name, String description, Icon icon){
 		this.name = name;
-		this.path = path;
+		this.description = description;
+		this.icon = icon;
 	}
-	
-	public String getPath(){
-		return this.path;
-	}
+
 }
  

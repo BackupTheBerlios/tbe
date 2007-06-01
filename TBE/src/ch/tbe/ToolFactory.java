@@ -1,18 +1,28 @@
 package ch.tbe;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 
 import ch.tbe.framework.ArrowTool;
 import ch.tbe.gui.TBE;
+import ch.tbe.gui.WelcomeView;
 
 public final class ToolFactory {
 	
 	private ToolFactory(){};
 	
 	public static CursorTool getCursorTool(){
-		return new CursorTool(null); //TODO Icon ???
+		URL imgURL = TBE.class.getResource("../pics/cursoricon.gif");
+		ImageIcon icon = new ImageIcon(imgURL);
+		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
+		return new CursorTool(new ShapeType(rb.getString("cursor"),rb.getString("cursor"),icon));
 	}
 	
 	public static ArrayList<ShapeTool> getShapeTools(Sport sport){
@@ -43,7 +53,29 @@ public final class ToolFactory {
 		return arrowTools;
 	}
 	public static TextBoxTool getTextBoxTool(){
-		return new TextBoxTool(null); //TODO Icon???
+		URL imgURL = TBE.class.getResource("../pics/text.gif");
+		ImageIcon icon = new ImageIcon(imgURL);
+		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
+		return new TextBoxTool(new ShapeType(rb.getString("textbox"),rb.getString("textbox"),icon));
+	}
+	
+	private static ResourceBundle getResourceBundle(String lang)
+	{
+		InputStream welcomeViewStream;
+		ResourceBundle labels = null;
+		try
+		{
+			welcomeViewStream = WelcomeView.class.getResourceAsStream("../config/lang/"
+					+ lang + "/toolFactory.txt");
+			labels = new PropertyResourceBundle(welcomeViewStream);
+		} catch (FileNotFoundException fnne)
+		{
+			System.out.println("LanguageFile for WelcomeView not found !");
+		} catch (IOException ioe)
+		{
+			System.out.println("Error with ResourceBundle WelcomeView!");
+		}
+		return labels;
 	}
 }
  
