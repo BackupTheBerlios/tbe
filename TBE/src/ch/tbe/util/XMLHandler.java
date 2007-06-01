@@ -8,7 +8,6 @@ import ch.tbe.framework.*;
 import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.*;
 
-
 import java.awt.Frame;
 import java.awt.geom.Point2D;
 import java.io.*;
@@ -80,9 +79,9 @@ public final class XMLHandler
 				if (qName.equals("server"))
 				{
 					servers.add(new FTPServer(atts.getValue("name").toString(),
-							atts.getValue("host").toString(), 
-							atts.getValue("username").toString(), 
-							atts.getValue("password").toString()));
+							atts.getValue("host").toString(), atts.getValue(
+									"username").toString(), atts.getValue(
+									"password").toString()));
 				}
 
 				if (qName.equals("recentlyOpened"))
@@ -107,16 +106,19 @@ public final class XMLHandler
 		class SaxHandler extends DefaultHandler
 		{
 			GraphModel model = new DefaultGraphModel();
-			GraphLayoutCache view = new GraphLayoutCache(model, new TBECellViewFactory());
+			GraphLayoutCache view = new GraphLayoutCache(model,
+					new TBECellViewFactory());
 			String actArrowType;
 			List<Point2D> actPoints = new ArrayList<Point2D>();
-			
-			public void loadFile(String path){
+
+			public void loadFile(String path)
+			{
 				DefaultHandler handler = new SaxHandler();
-				
+
 				try
 				{
-					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+					SAXParser saxParser = SAXParserFactory.newInstance()
+							.newSAXParser();
 					saxParser.parse(new File(path), handler);
 				}
 				catch (Throwable t)
@@ -125,38 +127,56 @@ public final class XMLHandler
 				}
 			}
 
-			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
-				if (qName.equals("sport")){
+			public void startElement(String name, String localName,
+					String qName, Attributes atts) throws SAXException
+			{
+				if (qName.equals("sport"))
+				{
 					Sport sport = null;
-					for (Sport s: TBE.getInstance().getSports()){
-						if (s.getName().equals(atts.getValue("name"))){
+					for (Sport s : TBE.getInstance().getSports())
+					{
+						if (s.getName().equals(atts.getValue("name")))
+						{
 							sport = s;
 						}
 					}
-					
-					//TODO: check sport-version
-					
-					if (sport != null){
-						board = new Board(model, view ,sport);
+
+					// TODO: check sport-version
+
+					if (sport != null)
+					{
+						board = new Board(model, view, sport);
 					}
 				}
-				if (board != null){
-					if (qName.equals("attribute")){
-						board.addAttribute(atts.getValue("title"), atts.getValue("text"));
+				if (board != null)
+				{
+					if (qName.equals("attribute"))
+					{
+						board.addAttribute(atts.getValue("title"), atts
+								.getValue("text"));
 					}
 
-					if (qName.equals("shape")){
-						Point2D point = new Point2D.Double(Double.valueOf(atts.getValue("xCoordinate")).doubleValue(), Double.valueOf(atts.getValue("yCoordinate")));
-						ShapeItem item = ItemFactory.getShapeItem(board.getSport(), atts.getValue("type"), point);
-						if (item != null){
+					if (qName.equals("shape"))
+					{
+						Point2D point = new Point2D.Double(Double.valueOf(
+								atts.getValue("xCoordinate")).doubleValue(),
+								Double.valueOf(atts.getValue("yCoordinate")));
+						ShapeItem item = ItemFactory.getShapeItem(board
+								.getSport(), atts.getValue("type"), point);
+						if (item != null)
+						{
 							board.addItem(item);
 						}
 					}
-					
-					if (qName.equals("arrow")){
-						if (actArrowType != null){
-							ArrowItem item = ItemFactory.getArrowItem(board.getSport(), actArrowType, actPoints);
-							if (item != null){
+
+					if (qName.equals("arrow"))
+					{
+						if (actArrowType != null)
+						{
+							ArrowItem item = ItemFactory.getArrowItem(board
+									.getSport(), actArrowType, actPoints);
+							if (item != null)
+							{
 								board.addItem(item);
 							}
 							actArrowType = null;
@@ -164,17 +184,24 @@ public final class XMLHandler
 						}
 						actArrowType = atts.getValue("type");
 					}
-					
-					if (qName.equals("point")){
-						actPoints.add(new Point2D.Double(Double.valueOf(atts.getValue("xCoordinate")).doubleValue(), Double.valueOf(atts.getValue("yCoordinate"))));
+
+					if (qName.equals("point"))
+					{
+						actPoints.add(new Point2D.Double(Double.valueOf(
+								atts.getValue("xCoordinate")).doubleValue(),
+								Double.valueOf(atts.getValue("yCoordinate"))));
 					}
 				}
 			}
-			
-			public void endDocument() throws SAXException{
-				if (actArrowType != null){
-					ArrowItem item = ItemFactory.getArrowItem(board.getSport(), actArrowType, actPoints);
-					if (item != null){
+
+			public void endDocument() throws SAXException
+			{
+				if (actArrowType != null)
+				{
+					ArrowItem item = ItemFactory.getArrowItem(board.getSport(),
+							actArrowType, actPoints);
+					if (item != null)
+					{
 						board.addItem(item);
 					}
 					actArrowType = null;
@@ -183,16 +210,16 @@ public final class XMLHandler
 				setBoard(board);
 			}
 		}
-		
+
 		SaxHandler xml = new SaxHandler();
 		xml.loadFile(path);
-		
+
 		Board actBoard = board;
 		actBoard.setPath(path);
 		board = null;
-		
+
 		return actBoard;
-		
+
 	}
 
 	public static ArrayList<Sport> getSports()
@@ -264,8 +291,14 @@ public final class XMLHandler
 
 					if (qName.equals("arrow"))
 					{
-						arrows.add(new ShapeType(atts.getValue("type"), atts
-								.getValue("description")));
+						URL imgURL = TBE.class.getResource("../config/sport/"
+								+ atts.getValue("picture"));
+						if (imgURL != null)
+						{
+							Icon actIcon = new ImageIcon(imgURL);
+							arrows.add(new ShapeType(atts.getValue("name"),
+									atts.getValue("description"), actIcon));
+						}
 					}
 
 					if (qName.equals("field"))
@@ -293,24 +326,27 @@ public final class XMLHandler
 	{
 		sports.add(sport);
 	}
-	
-	private static void setBoard(Board myBoard){
+
+	private static void setBoard(Board myBoard)
+	{
 		board = myBoard;
 	}
 
-	public static void saveSettings(String prename, String lastname, String email, String language)
+	public static void saveSettings(String prename, String lastname,
+			String email, String language)
 	{
 
 	}
-	
-	public void saveFTPServers(ArrayList<FTPServer> servers){
 
-		
+	public void saveFTPServers(ArrayList<FTPServer> servers)
+	{
+
 	}
 
 	public static void createXML(Board board)
 	{
-		if (board.getPath().equals("")){
+		if (board.getPath().equals(""))
+		{
 			JFileChooser chooser = new JFileChooser();
 
 			chooser.setFileFilter(new FileFilter()
@@ -330,77 +366,98 @@ public final class XMLHandler
 
 			File filename = chooser.getSelectedFile();
 			board.setPath(filename.getPath());
-			
-			// TODO: Dateiendung immer .TBE
-		}		
 
-		if (!board.getPath().equals("")){
-			try {
-	            Element eTbe = new Element("TBE");
-	            Element eSport = new Element("sport");
-	            Element eCreator = new Element("creator");
-	            Element eHistory = new Element("history");
-	            Element eModifier = new Element("modifier");
-	            Element eDescription = new Element("description");
-	            Element eItemComponents = new Element("itemComponents");
-	            
-	            eTbe.setAttribute("version", TBE.getInstance().getVersion());
-	            eTbe.addContent(eSport);
-	            eTbe.addContent(eCreator);
-	            eTbe.addContent(eModifier);
-	            eTbe.addContent(eHistory);
-	            eTbe.addContent(eDescription);
-	            eTbe.addContent(eItemComponents);
-	            
-	            eSport.setAttribute("name", board.getSport().getName());
-	            eSport.setAttribute("version", board.getSport().getVersion());
-	            
-	            eCreator.setAttribute("name", TBE.getInstance().getUserName());
-	            eCreator.setAttribute("prename", TBE.getInstance().getUserPrename());
-	            eCreator.setAttribute("email", TBE.getInstance().getUserEmail());
-	            
-	            for (Attribute attribute:board.getDescription().getAttributes()){
-	            	Element eAttribute = new Element("attribute");
-	            	eAttribute.setAttribute("title", attribute.getTitle());
-	            	eAttribute.setAttribute("text", attribute.getText());
-	            	eDescription.addContent(eAttribute);
-	            }
-	            
-	            for (ItemComponent item: board.getItems()){
-	            	Element eItemComponent;
-	            	
-	            	if (item instanceof ArrowItem){
-	            		eItemComponent = new Element("arrow");
-	            		eItemComponent.setAttribute("type", item.getType());
-	            		for (Point2D point: ((ArrowItem)item).getPoints()){
-	            			Element ePoint = new Element("point");
-	            			ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
-	            			ePoint.setAttribute("yCoordinate", String.valueOf(point.getY()));
-	            			eItemComponent.addContent(ePoint);
-	            		}
-	            	}else{
-	            		eItemComponent = new Element("shape");
-	            		eItemComponent.setAttribute("type", item.getType());
-	            		
-	            		eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterX()));
-	            		eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem)item).getAttributes()).getCenterY()));
-	            	}
-	            	
-	            	eItemComponents.addContent(eItemComponent);
-	            }
-	            
-	            
-	            Document document = new Document(eTbe);
-	            
-	            XMLOutputter out = new XMLOutputter();
-	            java.io.FileWriter writer = new java.io.FileWriter(board.getPath());
-	            out.output(document, writer);
-	            writer.flush();
-	            writer.close();
-	            
-	        } catch (Exception ex) {
-	            ex.printStackTrace();
-	        }
+			// TODO: Dateiendung immer .TBE
+		}
+
+		if (!board.getPath().equals(""))
+		{
+			try
+			{
+				Element eTbe = new Element("TBE");
+				Element eSport = new Element("sport");
+				Element eCreator = new Element("creator");
+				Element eHistory = new Element("history");
+				Element eModifier = new Element("modifier");
+				Element eDescription = new Element("description");
+				Element eItemComponents = new Element("itemComponents");
+
+				eTbe.setAttribute("version", TBE.getInstance().getVersion());
+				eTbe.addContent(eSport);
+				eTbe.addContent(eCreator);
+				eTbe.addContent(eModifier);
+				eTbe.addContent(eHistory);
+				eTbe.addContent(eDescription);
+				eTbe.addContent(eItemComponents);
+
+				eSport.setAttribute("name", board.getSport().getName());
+				eSport.setAttribute("version", board.getSport().getVersion());
+
+				eCreator.setAttribute("name", TBE.getInstance().getUserName());
+				eCreator.setAttribute("prename", TBE.getInstance()
+						.getUserPrename());
+				eCreator
+						.setAttribute("email", TBE.getInstance().getUserEmail());
+
+				for (Attribute attribute : board.getDescription()
+						.getAttributes())
+				{
+					Element eAttribute = new Element("attribute");
+					eAttribute.setAttribute("title", attribute.getTitle());
+					eAttribute.setAttribute("text", attribute.getText());
+					eDescription.addContent(eAttribute);
+				}
+
+				for (ItemComponent item : board.getItems())
+				{
+					Element eItemComponent;
+
+					if (item instanceof ArrowItem)
+					{
+						eItemComponent = new Element("arrow");
+						eItemComponent.setAttribute("type", item.getType());
+						for (Point2D point : ((ArrowItem) item).getPoints())
+						{
+							Element ePoint = new Element("point");
+							ePoint.setAttribute("xCoordinate", String
+									.valueOf(point.getX()));
+							ePoint.setAttribute("yCoordinate", String
+									.valueOf(point.getY()));
+							eItemComponent.addContent(ePoint);
+						}
+					}
+					else
+					{
+						eItemComponent = new Element("shape");
+						eItemComponent.setAttribute("type", item.getType());
+
+						eItemComponent.setAttribute("xCoordinate", String
+								.valueOf(TBEGraphConstants.getBounds(
+										((ShapeItem) item).getAttributes())
+										.getCenterX()));
+						eItemComponent.setAttribute("yCoordinate", String
+								.valueOf(TBEGraphConstants.getBounds(
+										((ShapeItem) item).getAttributes())
+										.getCenterY()));
+					}
+
+					eItemComponents.addContent(eItemComponent);
+				}
+
+				Document document = new Document(eTbe);
+
+				XMLOutputter out = new XMLOutputter();
+				java.io.FileWriter writer = new java.io.FileWriter(board
+						.getPath());
+				out.output(document, writer);
+				writer.flush();
+				writer.close();
+
+			}
+			catch (Exception ex)
+			{
+				ex.printStackTrace();
+			}
 		}
 	}
 }

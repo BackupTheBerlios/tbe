@@ -6,6 +6,7 @@ import ch.tbe.CursorTool;
 import ch.tbe.Board;
 import ch.tbe.CutCommand;
 import ch.tbe.DeleteCommand;
+import ch.tbe.MoveCommand;
 import ch.tbe.PasteCommand;
 import ch.tbe.ShapeTool;
 import ch.tbe.ToolFactory;
@@ -143,7 +144,7 @@ public class WorkingView extends View
 		{
 			this.installToolInToolBar(toolbar, a);
 		}
-		this.installToolInToolBar(toolbar, new BezierSolidArrowTool(null));
+		//this.installToolInToolBar(toolbar, new BezierSolidArrowTool(null));
 		listeners[0] = board.getMouseListeners()[0];
 
 		listeners[1] = new ViewMouseListener();
@@ -200,6 +201,7 @@ public class WorkingView extends View
 		if (board.getSelectionCount() == 1
 				&& board.getSelectionCell() instanceof ArrowItem)
 		{
+			MoveCommand mc = new MoveCommand(board.getSelectedItems());
 			ArrowItem a = (ArrowItem) board.getSelectionCell();
 			if (b)
 			{
@@ -213,6 +215,10 @@ public class WorkingView extends View
 			board.setSelectionCell(a);
 			setTool(cursorTool, cursorButton);
 			board.addItem(a);
+			mc.setMoveEnd(board.getSelectedItems());
+			ArrayList<Command> actCommands = new ArrayList<Command>();
+			actCommands.add(mc);
+			tbe.addCommands(actCommands);
 		}
 		
 

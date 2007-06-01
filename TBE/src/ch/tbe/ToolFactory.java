@@ -26,13 +26,7 @@ public final class ToolFactory {
 		ArrayList<ArrowTool> arrowTools = new ArrayList<ArrowTool>();
 		
 		for(ShapeType type : sport.getArrowTypes()){
-			
-			try{
-				type.setIcon(new ImageIcon(TBE.class.getResource("../config/"+type.getName()+".gif")));
-			}catch(Exception ex){
-				type.setIcon(new ImageIcon(TBE.class.getResource("../config/line.png")));
-			}
-			
+						
 			if(type.getName().equals("BezierCurvedArrowTool")) arrowTools.add(new BezierCurvedArrowTool(type));
 			if(type.getName().equals("BezierDashedArrowTool")) arrowTools.add(new BezierDashedArrowTool(type));
 			if(type.getName().equals("BezierDoubleArrowTool")) arrowTools.add(new BezierDoubleArrowTool(type));
