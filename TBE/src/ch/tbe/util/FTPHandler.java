@@ -2,18 +2,12 @@ package ch.tbe.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import ch.tbe.FTPServer;
-import ch.tbe.gui.TBE;
 
 import com.enterprisedt.net.ftp.FTPClient;
 import com.enterprisedt.net.ftp.FTPException;
-import com.enterprisedt.net.ftp.FTPFile;
-import com.enterprisedt.net.ftp.FTPFileFactory;
-import com.enterprisedt.net.ftp.UnixFileParser;
 
 public final class FTPHandler 
 {
@@ -21,10 +15,7 @@ public final class FTPHandler
 	private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";
 	private final static String PUBLICHOST = "tbe.netstyle.ch";
 	
-	private FTPHandler()
-	{
-		
-	}
+	private static FTPClient client = null;
 	
 	public static ArrayList<String> getAllSports()
 	{
@@ -32,11 +23,13 @@ public final class FTPHandler
 		
 		ArrayList<String> sports = new ArrayList<String>();
 		
-		ArrayList<FTPFile> sportDir = getDir(server, REMOTESPORTPATH);
+		connect(server);
+		ArrayList<String> sportDir = getDir(REMOTESPORTPATH);
+		disconnect();
 		
 		for(int i = 0; i < sportDir.size(); i++)
 		{
-			String sport = sportDir.get(i).getPath().substring(6);
+			String sport = sportDir.get(i).substring(REMOTESPORTPATH.length() + 1);
 			sports.add(sport);
 		}
 		return sports;
@@ -45,17 +38,14 @@ public final class FTPHandler
 	public static void installSport(ArrayList<String> sports)
 	{
 		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
+		connect(server);
+		
 		for(int i = 0; i < sports.size(); i++)
 		{
 			String remoteSport = (REMOTESPORTPATH + "/" + sports.get(i));
 			System.out.println(remoteSport);
 			
-			ArrayList<FTPFile> remoteFiles = getDir(server, remoteSport);
-			ArrayList<String> remotePaths = new ArrayList<String>();
-			for(FTPFile f : remoteFiles)
-			{
-				remotePaths.add(f.getPath());
-			}
+			ArrayList<String> remotePaths = getDir(remoteSport);
 			ArrayList<String> localPaths = new ArrayList<String>(); 
 			for(String s : remotePaths)
 			{
@@ -65,6 +55,7 @@ public final class FTPHandler
 			
 			download(server, localPaths, remotePaths);
 		}
+		disconnect();
 	}
 	
 	public static void deleteSport(ArrayList<String> sports)
@@ -72,12 +63,13 @@ public final class FTPHandler
 		// TODO
 	}
 	
-	public static void disconnect(FTPClient client)
+	public static void disconnect()
 	{
 		try
 		{
 			System.out.println("quit");
 			client.quit();
+			System.out.println(client);
 		}
 		catch (IOException e)
 		{
@@ -93,9 +85,9 @@ public final class FTPHandler
 		}
 	}
 	
-	public static FTPClient connect(FTPServer server)
+	public static void connect(FTPServer server)
 	{
-		FTPClient client = new FTPClient();
+		client = new FTPClient();
 		
 		try
 		{
@@ -115,21 +107,15 @@ public final class FTPHandler
 			System.out.println("client is already connected to the server");
 			e.printStackTrace();
 		}
-		return client;
 	}
 	
-	public static ArrayList<FTPFile> getDir(FTPServer server, String dir)
+	public static ArrayList<String> getDir(String dir)
 	{
-		FTPClient client = connect(server);
-		
-		FTPFile[] ftpFiles = new FTPFile[]{};
+		String[] s = new String[]{};
 		
 		try
 		{
-			FTPFileFactory ff = new FTPFileFactory(new UnixFileParser());
-			System.out.println("Dir: " + dir);
-			ftpFiles = client.dirDetails(dir);
-			System.out.println(ftpFiles[0].toString());
+			s = client.dir(dir);
 		}
 		catch (IOException e)
 		{
@@ -143,27 +129,20 @@ public final class FTPHandler
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		catch (ParseException e)
+		ArrayList<String> content = new ArrayList<String>();
+		for(int i = 0; i < s.length; i++)
 		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		finally
-		{
-			disconnect(client);
-		}
-		ArrayList<FTPFile> content = new ArrayList<FTPFile>();
-		for(int i = 0; i < ftpFiles.length; i++)
-		{
-			content.add(ftpFiles[i]);
+			content.add(s[i]);
 		}
 		return content;
 	}
 	
 	public static void upload(FTPServer server, String localPath, String remotePath)
 	{
-		FTPClient client = connect(server);
-		
+		if(client == null)
+		{
+			connect(server);
+		}
 		try
 		{
 			client.put(localPath, remotePath);
@@ -182,13 +161,16 @@ public final class FTPHandler
 		}
 		finally
 		{
-			disconnect(client);
+			disconnect();
 		}
 	}
 	
 	public static void download(FTPServer server, String localPath, String remotePath)
 	{
-		FTPClient client = connect(server);
+		if(client == null)
+		{
+			connect(server);
+		};
 		
 		try
 		{
@@ -218,13 +200,16 @@ public final class FTPHandler
 		}
 		finally
 		{
-			disconnect(client);
+			disconnect();
 		}
 	}
 	
 	public static void upload(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths)
 	{
-		FTPClient client = connect(server);
+		if(client == null)
+		{
+			connect(server);
+		}
 		
 		try
 		{
@@ -247,13 +232,16 @@ public final class FTPHandler
 		}
 		finally
 		{
-			disconnect(client);
+			disconnect();
 		}
 	}
 	
 	public static void download(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths)
 	{
-		FTPClient client = connect(server);
+		if(client == null)
+		{
+			connect(server);
+		}
 		
 		try
 		{
@@ -293,7 +281,7 @@ public final class FTPHandler
 		}
 		finally
 		{
-			disconnect(client);
+			disconnect();
 		}
 	}
 	

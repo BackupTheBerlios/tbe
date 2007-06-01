@@ -2,8 +2,6 @@ package ch.tbe.schrott;
 
 import java.util.ArrayList;
 
-import com.enterprisedt.net.ftp.FTPFile;
-
 import ch.tbe.FTPServer;
 import ch.tbe.util.FTPHandler;
 
@@ -24,13 +22,13 @@ public class FTPHandlerTester
 		
 		// FTPHandler.connect(server);
 		
-		
-		ArrayList<FTPFile> files = FTPHandler.getDir(server, "src/ch/tbe/config/sport");
-		for(FTPFile f : files)
+		/*
+		String[] s = FTPHandler.getDir(server, "test");
+		for(int i = 0; i < s.length; i++)
 		{
-			System.out.println(f.toString());
+			System.out.println(s[i]);
 		}
-		
+		/*
 		
 		// FTPHandler.upload(server, "src/ch/tbe/config/sport/double.png", "sport/double.png");
 		

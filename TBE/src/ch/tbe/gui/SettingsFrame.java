@@ -188,7 +188,6 @@ public class SettingsFrame
 		JPanel northPanel = new JPanel();
 		northPanel.setBackground(Color.WHITE);
 
-		// TODO: Alle FTP-Server auslesen
 		Vector<String> allFTP = new Vector<String>();
 		allFTP.add(settingsLabels.getString("chooseServer"));
 
@@ -213,9 +212,9 @@ public class SettingsFrame
 				for (FTPServer s : servers)
 				{
 					if (s.getName().equals(ftpBox.getSelectedItem()))
-						;
 					{
 						currentFTP = s;
+						System.out.println(currentFTP.getName());
 					}
 				}
 				refresh();

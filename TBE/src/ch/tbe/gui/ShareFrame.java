@@ -2,6 +2,8 @@ package ch.tbe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -9,11 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -23,10 +27,16 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 import ch.tbe.FTPServer;
 import ch.tbe.util.FTPHandler;
+import ch.tbe.util.FileTreeModel;
 
 public class ShareFrame
 {
@@ -36,11 +46,13 @@ public class ShareFrame
 	private JComboBox ftpBox;
 	private JFrame frame;
 	private FTPServer currentFTP = null;
-	
+	private boolean connected = false;
+	private JScrollPane eastpanel;
+
 	/*
 	 * Convention: Directories have no points in the name! ...
 	 */
-	
+
 	public ShareFrame()
 	{
 		frame = new JFrame();
@@ -78,18 +90,13 @@ public class ShareFrame
 			public void actionPerformed(ActionEvent arg0)
 			{
 				ArrayList<FTPServer> servers = tbe.getServers();
-				System.out.println(ftpBox.getSelectedItem());
 				for (FTPServer s : servers)
 				{
-					System.out.println(s.getName().equals(ftpBox.getSelectedItem()));
-					if(s.getName().equals(ftpBox.getSelectedItem()));
+					if (s.getName().equals(ftpBox.getSelectedItem()))
 					{
-						System.out.println("Server set as: " + s.getName());
 						currentFTP = s;
 					}
 				}
-				System.out.println(currentFTP.getName());
-				// TODO: refresh();
 			}
 		}
 		ftpBox.addActionListener(new ftpBoxListener());
@@ -102,48 +109,44 @@ public class ShareFrame
 			public void mouseReleased(MouseEvent arg0)
 			{
 				FTPHandler.connect(currentFTP);
+				// TODO: eastpanel.add(createFTPTree());
+				refresh();
 			}
 
 		}
 		connectButton.addMouseListener(new connectListener());
-
 		northPanel.add(connectButton);
 
 		panel.add(northPanel, BorderLayout.NORTH);
 
+		JScrollPane westPanel = new JScrollPane();
+		westPanel.setPreferredSize(new Dimension(500, 500));
+		
+		// TODO: BoardPath auslesen
+		// String boardPath = ((WorkingView)tbe.getView()).getBoard().getPath();
+		// String path = boardPath.substring(0, boardPath.indexOf("/")+1);
+		
+		String path = "C:/";
+		
+		/* http://www.unix.org.ua/orelly/java-ent/jfc/ch03_19.htm */
+		File root;
+	    root = new File(path);
+
+	    // Create a TreeModel object to represent our tree of files
+	    FileTreeModel model = new FileTreeModel(root);
+
+	    // Create a JTree and tell it to display our model
+	    JTree tree = new JTree();
+	    tree.setModel(model);
+
+	    // The JTree can get big, so allow it to scroll
+	    westPanel = new JScrollPane(tree);
+	    
+		panel.add(westPanel, BorderLayout.WEST);
+
 		return panel;
 	}
-
-	public void connect(FTPServer server)
-	{
-
-	}
-
-	public void selectLocalFile(String path)
-	{
-
-	}
-
-	public void selectGlobalFile(String path)
-	{
-
-	}
-
-	public void upload()
-	{
-
-	}
-
-	public void download()
-	{
-
-	}
-
-	public void load(String path)
-	{
-
-	}
-
+	
 	private ResourceBundle getResourceBundle(String lang)
 	{
 		InputStream shareStream;
@@ -164,5 +167,19 @@ public class ShareFrame
 			System.out.println("Error with ResourceBundle shareFrame!");
 		}
 		return labels;
+	}
+
+	public void refresh()
+	{
+		shareLabels = getResourceBundle(tbe.getLang());
+		Component[] comps = frame.getComponents();
+		for (int i = 0; i < comps.length; i++)
+		{
+			frame.remove(comps[i]);
+		}
+		frame.repaint();
+		frame.add(createPanel());
+		frame.setVisible(false);
+		frame.setVisible(true);
 	}
 }
