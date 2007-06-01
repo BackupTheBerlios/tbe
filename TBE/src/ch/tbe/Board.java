@@ -9,14 +9,13 @@ import ch.tbe.jgraph.TBEBasicGraphUI;
 
 public class Board extends JGraph
 {
-	
 
 	private String path = "";
 	private Field field;
 	private Description description;
 	private Sport sport;
 	private TBE tbe = TBE.getInstance();
-	
+
 	public Board(GraphModel model, GraphLayoutCache view, Sport sport)
 	{
 		super(model, view);
@@ -29,40 +28,46 @@ public class Board extends JGraph
 	public ItemComponent[] getItems()
 	{
 
-		Object[] objects = this.getGraphLayoutCache().getCells(true, true, true, true);
+		Object[] objects = this.getGraphLayoutCache().getCells(true, true,
+				true, true);
 		ItemComponent[] comps = new ItemComponent[objects.length];
-		for(int i = 0; i < objects.length; i++){
+		for (int i = 0; i < objects.length; i++)
+		{
 			comps[i] = (ItemComponent) objects[i];
 		}
 		return comps;
 
 	}
-	
+
 	public ItemComponent[] getSelectedItems()
 	{
 		Object[] objects = this.getSelectionCells();
 		ItemComponent[] comps = new ItemComponent[objects.length];
-		for(int i = 0; i < objects.length; i++){
+		for (int i = 0; i < objects.length; i++)
+		{
 			comps[i] = (ItemComponent) objects[i];
 		}
 		return comps;
 	}
-	
+
 	public void addItem(ItemComponent[] i)
 	{
 		this.getGraphLayoutCache().insert(i);
 		this.refresh();
 	}
-	
+
 	public void addItem(ItemComponent item)
 	{
 		this.getGraphLayoutCache().insert(item);
 		this.refresh();
 	}
-	
+
 	public void removeItem(ItemComponent[] i)
 	{
-
+		for (ItemComponent ic : i)
+		{
+			this.removeSelectionCell(ic);
+		}
 		this.getGraphLayoutCache().removeCells(i);
 		this.refresh();
 	}
@@ -71,7 +76,7 @@ public class Board extends JGraph
 	{
 		this.path = path;
 	}
-	
+
 	public String getPath()
 	{
 		return this.path;
@@ -96,12 +101,14 @@ public class Board extends JGraph
 	{
 		return this.description;
 	}
-	
+
 	public Sport getSport()
 	{
 		return this.sport;
 	}
-	public void refresh(){
+
+	public void refresh()
+	{
 		this.repaint();
 		tbe.getMenu().refreshInvokerVisibility();
 	}

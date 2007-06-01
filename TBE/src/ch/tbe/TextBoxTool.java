@@ -24,6 +24,7 @@ public class TextBoxTool extends Tool
 	{
 		ItemComponent[] items = new ItemComponent[] { new TextBoxItem(
 				new Rectangle2D.Double(x, y, WIDTH, HEIGHT)) };
+		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}
 
