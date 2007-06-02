@@ -23,6 +23,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
 import ch.tbe.Sport;
@@ -98,7 +99,10 @@ public class WelcomeView extends View
 		topPanel.setBackground(Color.WHITE);
 		
 		// WelcomeText
-		JLabel titleLabel = new JLabel(welcomeViewLabels.getString("welcome")+' '+tbe.getUserName()+' '+tbe.getUserPrename());
+		JTextArea titleLabel = new JTextArea(welcomeViewLabels.getString("welcome")+' '+tbe.getUserName()+' '+tbe.getUserPrename());
+		titleLabel.setEditable(false);
+		titleLabel.setLineWrap(true);
+		titleLabel.setPreferredSize(new Dimension(300, 75));
 		titleLabel.setFont(new Font("Sans Serif", Font.BOLD, 18));
 		topPanel.add(titleLabel);
 		
