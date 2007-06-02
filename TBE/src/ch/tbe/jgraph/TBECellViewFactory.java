@@ -3,6 +3,7 @@ package ch.tbe.jgraph;
 
 import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.Edge;
+import org.jgraph.graph.VertexView;
 
 
 public class TBECellViewFactory extends DefaultCellViewFactory {
@@ -27,6 +28,13 @@ public class TBECellViewFactory extends DefaultCellViewFactory {
 	 */
 	protected TBEEdgeView createEdgeView(Edge cell) {
 		return new TBEEdgeView(cell);
+	}
+	
+	/**
+	 * Constructs a VertexView view for the specified object.
+	 */
+	protected VertexView createVertexView(Object cell) {
+		return new TBEVertexView(cell);
 	}
 
 

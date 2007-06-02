@@ -23,7 +23,7 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 				.getIcon().getIconHeight()));
 		TBEGraphConstants.setIcon(this.getAttributes(), shapeType.getIcon());
 		TBEGraphConstants.setEditable(this.getAttributes(), false);
-		TBEGraphConstants.setSizeable(this.getAttributes(), false);
+		
 	}
 	
 	public String getType(){
