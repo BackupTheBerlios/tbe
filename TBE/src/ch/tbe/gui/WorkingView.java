@@ -33,8 +33,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -58,14 +64,14 @@ public class WorkingView extends View
 	private Tool currentTool;
 	private JButton currentButton;
 	private JButton cursorButton;
-	JButton add;
-	JButton rem;
+	private JButton add, rem;
 	private JToolBar toolbar = new JToolBar();
 	private JToolBar sideBar;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private JPanel legendPanel;
 	private MouseListener[] listeners = new MouseListener[2];
 	private JPanel rightPanel = new JPanel();
+	private ResourceBundle workingViewLabels;
 
 	public WorkingView(Sport sport)
 	{
@@ -87,6 +93,7 @@ public class WorkingView extends View
 
 	private void createWorkingView()
 	{
+		workingViewLabels = getResourceBundle(tbe.getLang());
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
 
@@ -188,10 +195,14 @@ public class WorkingView extends View
 
 	private void installAddRemovePointButtons()
 	{
-		add = new JButton("+"); // TODO Item
-		rem = new JButton("-");// TODO Item
-		add.setToolTipText("Add Point"); // TODO Language
-		rem.setToolTipText("Remove Point"); // TODO Language
+		URL imgURL = WorkingView.class.getResource("../pics/plus.gif");
+		ImageIcon plus = new ImageIcon(imgURL);
+		imgURL = WorkingView.class.getResource("../pics/minus.gif");
+		ImageIcon minus = new ImageIcon(imgURL);
+		add = new JButton(plus);
+		rem = new JButton(minus);
+		add.setToolTipText(workingViewLabels.getString("plus"));
+		rem.setToolTipText(workingViewLabels.getString("minus"));
 		add.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -499,8 +510,29 @@ public class WorkingView extends View
 		{
 			toolbar.setVisible(true);
 		}
+		
+		
+		
 	}
-
+	
+	private ResourceBundle getResourceBundle(String lang)
+	{
+		InputStream workingViewStream;
+		ResourceBundle labels = null;
+		try
+		{
+			workingViewStream = WorkingView.class.getResourceAsStream("../config/lang/"
+					+ lang + "/workingView.txt");
+			labels = new PropertyResourceBundle(workingViewStream);
+		} catch (FileNotFoundException fnne)
+		{
+			System.out.println("LanguageFile for WorkingView not found !");
+		} catch (IOException ioe)
+		{
+			System.out.println("Error with ResourceBundle WorkingView!");
+		}
+		return labels;
+	}
 	/**
 	 * Braucht es das noch? aus meiner Sicht nicht. by Dave
 	 */

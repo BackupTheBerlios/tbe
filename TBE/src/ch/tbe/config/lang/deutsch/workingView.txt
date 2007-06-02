@@ -1,0 +1,3 @@
+# Buttons
+plus=Punkt hinzufügen (Strg-I)
+minus=Punkt entfernen (Strg-R)
