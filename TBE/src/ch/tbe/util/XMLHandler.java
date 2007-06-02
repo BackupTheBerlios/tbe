@@ -285,10 +285,14 @@ public final class XMLHandler
 					{
 						URL imgURL = TBE.class.getResource("../config/sport/"
 								+ actSport.getName() + "/"
-								+ atts.getValue("picture"));
+								+ atts.getValue("icon"));
 						Icon actIcon = new ImageIcon(imgURL);
+						imgURL = TBE.class.getResource("../config/sport/"
+								+ actSport.getName() + "/"
+								+ atts.getValue("picture"));
+						Icon actPicture = new ImageIcon(imgURL);
 						shapes.add(new ShapeType(atts.getValue("name"), atts
-								.getValue("description"), actIcon));
+								.getValue("description"), actIcon, actPicture));
 					}
 
 					if (qName.equals("arrow"))

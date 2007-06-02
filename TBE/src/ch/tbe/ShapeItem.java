@@ -21,7 +21,7 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 		TBEGraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p
 				.getX(), p.getY(), shapeType.getIcon().getIconWidth(), shapeType
 				.getIcon().getIconHeight()));
-		TBEGraphConstants.setIcon(this.getAttributes(), shapeType.getIcon());
+		TBEGraphConstants.setIcon(this.getAttributes(), shapeType.getPicture());
 		TBEGraphConstants.setEditable(this.getAttributes(), false);
 		
 	}
