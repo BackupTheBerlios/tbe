@@ -191,6 +191,8 @@ public class TBEGraphConstants {
 	
 	/** Represents a double bezier line style */
 	public static final int STYLE_DOUBLEBEZIER = 16;
+	
+	public final static String ROTATION = "rotation";
 
 	/**
 	 * The default routing that deals with loops. This is returned by
@@ -1150,6 +1152,18 @@ public class TBEGraphConstants {
 		if (intObj != null)
 			return intObj.intValue();
 		return ARROW_NONE;
+	}
+	
+	public static final int getRotation(Map map) {
+		Integer intObj = (Integer) map.get(ROTATION);
+		if (intObj != null)
+			return intObj.intValue();
+		else return 0;
+		
+	}
+	
+	public static final void setRotation(Map map, int degree) {
+		map.put(ROTATION, new Integer(degree));
 	}
 
 	/**

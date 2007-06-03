@@ -17,6 +17,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
@@ -33,6 +34,9 @@ import org.jgraph.graph.CellViewRenderer;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.VertexRenderer;
 import org.jgraph.graph.VertexView;
+
+import ch.tbe.gui.TBE;
+import ch.tbe.gui.WorkingView;
 
 /**
  * This renderer displays entries that implement the CellView interface and
@@ -180,9 +184,10 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer , Imag
 	 */
 	public void paint(Graphics g) {
 		try {
+			Graphics2D g2d = (Graphics2D) g;
 			if (gradientColor != null && !preview && isOpaque()) {
 				setOpaque(false);
-				Graphics2D g2d = (Graphics2D) g;
+				
 				g2d.setPaint(new GradientPaint(0, 0, getBackground(),
 						getWidth(), getHeight(), gradientColor, true));
 				g2d.fillRect(0, 0, getWidth(), getHeight());
@@ -194,11 +199,18 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer , Imag
 			
 			// Inserted by David Meier
 			if(map != null){
-				Graphics2D g2d = (Graphics2D) g;
+				
 				Rectangle2D r = GraphConstants.getBounds(map);
 				Image i = TBEGraphConstants.getIcon(map);
 				if(i != null){
-			    g2d.drawImage(i, 0, 0 ,(int)r.getWidth(), (int)r.getHeight(), this);}
+					
+			    	AffineTransform aft = new AffineTransform(); 
+					aft.rotate ( Math.toRadians(TBEGraphConstants.getRotation(map)), r.getCenterX(), r.getCenterY()); 
+					g2d.setTransform(aft);
+					g2d.drawImage(i, (int)r.getX(),(int) r.getY() ,(int)r.getWidth(), (int)r.getHeight(), this);}
+					
+				
+				
 			}
 		} catch (IllegalArgumentException e) {
 			// JDK Bug: Zero length string passed to TextLayout constructor

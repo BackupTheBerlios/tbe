@@ -36,5 +36,8 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 		s.shapeType = this.shapeType;
 		return s;
 	}
+	public void setRotation(int degree){
+		TBEGraphConstants.setRotation(this.getAttributes(), degree);
+	}
 
 }
