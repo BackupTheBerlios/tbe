@@ -29,6 +29,9 @@ public class Menu extends JMenuBar
 	private JMenuItem editUndo;
 	private JMenuItem editAddPoint;
 	private JMenuItem editRemovePoint;
+	private JMenuItem viewToolbar;
+	private JMenuItem viewSidebar;
+	private JMenuItem viewLegend;
 
 	public Menu(String lang)
 	{
@@ -401,7 +404,7 @@ public class Menu extends JMenuBar
 	{
 		JMenu viewMenu = new JMenu(menuLabels.getString("title5"));
 
-		JMenuItem viewToolbar = new JMenuItem(menuLabels.getString("view1"));
+		viewToolbar = new JMenuItem(menuLabels.getString("view1"));
 		class viewToolbarListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
@@ -416,7 +419,7 @@ public class Menu extends JMenuBar
 		}
 		viewToolbar.addActionListener(new viewToolbarListener());
 
-		JMenuItem viewSidebar = new JMenuItem(menuLabels.getString("view2"));
+		viewSidebar = new JMenuItem(menuLabels.getString("view2"));
 		class viewSidebarListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
@@ -431,7 +434,7 @@ public class Menu extends JMenuBar
 		}
 		viewSidebar.addActionListener(new viewSidebarListener());
 		
-		JMenuItem viewLegend = new JMenuItem(menuLabels.getString("view3"));
+		viewLegend = new JMenuItem(menuLabels.getString("view3"));
 		class viewLegendListener implements ActionListener
 		{
 			public void actionPerformed(ActionEvent e)
@@ -445,7 +448,7 @@ public class Menu extends JMenuBar
 			}
 		}
 		viewLegend.addActionListener(new viewLegendListener());
-
+		
 		viewMenu.add(viewToolbar);
 		viewMenu.add(viewSidebar);
 		viewMenu.add(viewLegend);
@@ -513,8 +516,7 @@ public class Menu extends JMenuBar
 
 		JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
 
-		tbeAbout.setIcon(new ImageIcon(TBE.class
-				.getResource("../pics/about.png")));
+		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
 
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
@@ -561,5 +563,29 @@ public class Menu extends JMenuBar
 		menuLabels = getResourceBundle(tbe.getLang());
 
 		this.createMenu();
+	}
+	
+	public void setVisibleToolbar(boolean b){
+		if (!b){
+			viewToolbar.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+		}else{
+			viewToolbar.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+		}
+	}
+	
+	public void setVisibleSidebar(boolean b){
+		if (!b){
+			viewSidebar.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+		}else{
+			viewSidebar.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+		}
+	}
+	
+	public void setVisibleLegend(boolean b){
+		if (!b){
+			viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+		}else{
+			viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+		}
 	}
 }

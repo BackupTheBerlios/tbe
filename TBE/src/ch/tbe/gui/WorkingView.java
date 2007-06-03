@@ -157,6 +157,10 @@ public class WorkingView extends View
 
 		this.add(rightPanel, BorderLayout.CENTER);
 		this.activatePoints(false);
+		
+		tbe.getMenu().setVisibleToolbar(!this.toolbar.isVisible());
+		tbe.getMenu().setVisibleLegend(!this.legendPanel.isVisible());
+		tbe.getMenu().setVisibleSidebar(!this.sideBar.isVisible());
 
 	}
 
@@ -478,41 +482,20 @@ public class WorkingView extends View
 
 	public void hideSidebar()
 	{
-		if (this.sideBar.isVisible())
-		{
-			sideBar.setVisible(false);
-		}
-		else
-		{
-			sideBar.setVisible(true);
-		}
+		sideBar.setVisible(!this.sideBar.isVisible());
+		tbe.getMenu().setVisibleSidebar(!this.sideBar.isVisible());
 	}
 
 	public void hideLegend()
 	{
-		if (this.legendPanel.isVisible())
-		{
-			legendPanel.setVisible(false);
-		}
-		else
-		{
-			legendPanel.setVisible(true);
-		}
+		legendPanel.setVisible(!this.legendPanel.isVisible());
+		tbe.getMenu().setVisibleLegend(!this.legendPanel.isVisible());
 	}
 
 	public void hideToolbar()
 	{
-		if (this.toolbar.isVisible())
-		{
-			toolbar.setVisible(false);
-		}
-		else
-		{
-			toolbar.setVisible(true);
-		}
-		
-		
-		
+		toolbar.setVisible(!this.toolbar.isVisible());
+		tbe.getMenu().setVisibleToolbar(!this.toolbar.isVisible());
 	}
 	
 	private ResourceBundle getResourceBundle(String lang)
