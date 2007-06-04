@@ -138,9 +138,11 @@ public class WelcomeView extends View
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				tbe.setView(new WorkingView(new Sport("Unihockey")));
-				// TODO: file öffnen 
-				//tbe.setView(new WorkingView(XMLHandler.openXML(path)));
+				if (path.equals("more")){
+					tbe.load();
+				}else{
+					tbe.setView(new WorkingView(XMLHandler.openXML(path)));
+				}
 			}
 			@Override
 			public void mouseExited(MouseEvent arg0)

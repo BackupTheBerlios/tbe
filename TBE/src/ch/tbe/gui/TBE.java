@@ -145,8 +145,7 @@ public class TBE
 		{
 			public boolean accept(File f)
 			{
-				return f.getName().toLowerCase().endsWith(".tbe")
-						|| f.isDirectory();
+				return f.getName().toLowerCase().endsWith(".tbe")|| f.isDirectory();
 			}
 
 			public String getDescription()

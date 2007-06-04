@@ -118,8 +118,7 @@ public final class XMLHandler
 
 				try
 				{
-					SAXParser saxParser = SAXParserFactory.newInstance()
-							.newSAXParser();
+					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 					saxParser.parse(new File(path), handler);
 				}
 				catch (Throwable t)
@@ -218,6 +217,7 @@ public final class XMLHandler
 		xml.loadFile(path);
 
 		Board actBoard = board;
+		System.out.println(path);
 		actBoard.setPath(path);
 		board = null;
 
