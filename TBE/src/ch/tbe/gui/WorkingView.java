@@ -24,6 +24,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.ScrollPane;
@@ -376,6 +377,8 @@ public class WorkingView extends View
 	{
 		final JButton button;
 		button = new JButton();
+		
+		button.setMargin(new Insets(0,0,0,0));
 
 		if (tool.getShapeType() != null)
 		{

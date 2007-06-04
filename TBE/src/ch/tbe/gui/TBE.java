@@ -114,14 +114,14 @@ public class TBE
 		if (view instanceof WorkingView){
 			//TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht möglich ist.
 			((WorkingView)view).getBoard().setPath("");
-			XMLHandler.createXML(((WorkingView)view).getBoard());
+			XMLHandler.saveBoard(((WorkingView)view).getBoard());
 		}
 	}
 
 	public void save()
 	{
 		if (view instanceof WorkingView){
-			XMLHandler.createXML(((WorkingView)view).getBoard());
+			XMLHandler.saveBoard(((WorkingView)view).getBoard());
 		}
 	}
 

@@ -21,6 +21,7 @@ import javax.xml.parsers.*;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
@@ -358,7 +359,7 @@ public final class XMLHandler
 
 	}
 
-	public static void createXML(Board board)
+	public static void saveBoard(Board board)
 	{
 		if (board.getPath().equals(""))
 		{
@@ -368,8 +369,7 @@ public final class XMLHandler
 			{
 				public boolean accept(File f)
 				{
-					return f.getName().toLowerCase().endsWith(".tbe")
-							|| f.isDirectory();
+					return f.getName().toLowerCase().endsWith(".tbe") || f.isDirectory();
 				}
 
 				public String getDescription()
@@ -457,10 +457,7 @@ public final class XMLHandler
 										((ShapeItem) item).getAttributes())
 										.getCenterX() - widthDiff));
 						
-						eItemComponent.setAttribute("yCoordinate", String
-								.valueOf(TBEGraphConstants.getBounds(
-										((ShapeItem) item).getAttributes())
-										.getCenterY() - heightDiff));
+						eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterY() - heightDiff));
 					}
 
 					eItemComponents.addContent(eItemComponent);
@@ -468,9 +465,10 @@ public final class XMLHandler
 
 				Document document = new Document(eTbe);
 
-				XMLOutputter out = new XMLOutputter();
-				java.io.FileWriter writer = new java.io.FileWriter(board
-						.getPath());
+				Format format = Format.getPrettyFormat();
+				format.setEncoding("iso-8859-1");
+				XMLOutputter out = new XMLOutputter(format);
+				java.io.FileWriter writer = new java.io.FileWriter(board.getPath());
 				out.output(document, writer);
 				writer.flush();
 				writer.close();
