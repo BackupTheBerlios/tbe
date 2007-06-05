@@ -10,9 +10,12 @@ import java.awt.geom.Rectangle2D;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import org.jgraph.event.GraphSelectionEvent;
+import org.jgraph.event.GraphSelectionListener;
 import org.jgraph.graph.BasicMarqueeHandler;
 import org.jgraph.graph.CellView;
 import org.jgraph.plaf.basic.BasicGraphUI;
+import org.jgraph.plaf.basic.BasicGraphUI.GraphSelectionHandler;
 
 import ch.tbe.Invoker;
 import ch.tbe.MoveCommand;
@@ -37,6 +40,51 @@ public class TBEBasicGraphUI extends BasicGraphUI
 		super();
 	}
 
+	/**
+	 * Listens for changes in the selection model and updates the display
+	 * accordingly.
+	 */
+	public class GraphSelectionHandler implements GraphSelectionListener,
+			Serializable {
+		/**
+		 * Messaged when the selection changes in the graph we're displaying
+		 * for. Stops editing, updates handles and displays the changed cells.
+		 */
+		public void valueChanged(GraphSelectionEvent event) {
+			// cancelEditing(graph);
+			updateHandle();
+			Object[] cells = event.getCells();
+			if (cells != null && cells.length <= MAXCLIPCELLS) {
+				Rectangle2D r = graph.toScreen(graph.getCellBounds(cells));
+
+				// Includes dirty region of focused cell
+				if (focus != null) {
+					if (r != null)
+						Rectangle2D.union(r, focus.getBounds(), r);
+					else
+						r = focus.getBounds();
+				}
+
+				// And last focused cell
+				if (lastFocus != null) {
+					if (r != null)
+						Rectangle2D.union(r, lastFocus.getBounds(), r);
+					else
+						r = lastFocus.getBounds();
+				}
+				if (r != null) {
+					int hsize = (int) (graph.getHandleSize() * graph.getScale()) + 1;
+					updateHandle();
+					graph.repaint();//(int) r.getX() - hsize, (int) r.getY()
+						//	- hsize, (int) r.getWidth() + 2 * hsize, (int) r
+							//.getHeight()
+//							+ 2 * hsize);
+				}
+			} else
+				graph.repaint();
+		}
+	}
+	
 	// /**
 	// * Sets the marquee handler.
 	// */
@@ -143,7 +191,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 				}
 				mc = new MoveCommand(items);
 			}
-			((WorkingView) TBE.getInstance().getView()).getBoard().repaint(); // Not good for performance 
+			//((WorkingView) TBE.getInstance().getView()).getBoard().repaint(); // Not good for performance 
 
 		}
 
@@ -271,7 +319,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 				handler = null;
 				cell = null;
 			}
-			((WorkingView) TBE.getInstance().getView()).getBoard().repaint();// Not good for performance 
+			//((WorkingView) TBE.getInstance().getView()).getBoard().repaint();// Not good for performance 
 		}
 
 		/**
@@ -327,6 +375,14 @@ public class TBEBasicGraphUI extends BasicGraphUI
 	protected MouseListener createMouseListener()
 	{
 		return new TBEMouseHandler();
+	}
+	
+	/**
+	 * Creates the listener that updates the display based on selection change
+	 * methods.
+	 */
+	protected GraphSelectionListener createGraphSelectionListener() {
+		return new GraphSelectionHandler();
 	}
 
 } // End of class BasicGraphUI
