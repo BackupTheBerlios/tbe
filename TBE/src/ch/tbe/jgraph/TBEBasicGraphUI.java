@@ -191,7 +191,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 				}
 				mc = new MoveCommand(items);
 			}
-			//((WorkingView) TBE.getInstance().getView()).getBoard().repaint(); // Not good for performance 
+			
 
 		}
 
@@ -319,7 +319,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 				handler = null;
 				cell = null;
 			}
-			//((WorkingView) TBE.getInstance().getView()).getBoard().repaint();// Not good for performance 
+			
 		}
 
 		/**
