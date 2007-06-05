@@ -10,6 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -163,11 +164,12 @@ public class WelcomeView extends View
 		pathPanel.setBackground(Color.WHITE);
 		for(String s : paths)
 		{
+			File file = new File(s);
 			JPanel onePath = new JPanel();
 			onePath.setBackground(Color.WHITE);
 			onePath.setLayout(new GridLayout(1, 2, 0, 5));
-			JLabel pathLabel = new JLabel(s);
-			pathLabel.addMouseListener(new PathListener(s));
+			JLabel pathLabel = new JLabel(file.getName());
+			pathLabel.addMouseListener(new PathListener(file.getPath()));
 			onePath.add(createIcon("../pics/logo_little.jpg"));
 			onePath.add(pathLabel);
 			pathPanel.add(onePath);
