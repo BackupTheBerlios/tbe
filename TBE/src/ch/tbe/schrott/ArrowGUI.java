@@ -3,8 +3,8 @@ import java.awt.geom.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
 import javax.swing.*;
-import ch.tbe.util.*;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultCellViewFactory;
@@ -14,8 +14,6 @@ import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphConstants;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
-
-import ch.tbe.jgraph.*;
 
 public class ArrowGUI extends JFrame
 {
@@ -42,7 +40,7 @@ public class ArrowGUI extends JFrame
 		// Zelle 2: klassischer Pfeil
 		DefaultEdge edge1 = new DefaultEdge();
 		cells[2] = edge1;
-		List myPoints1 = new Vector();
+		List<Point2D> myPoints1 = new Vector<Point2D>();
 		myPoints1.add(new Point2D.Double(10, 10));
 		myPoints1.add(new Point2D.Double(10, 100));
 		GraphConstants.setPoints(edge1.getAttributes(), myPoints1);
@@ -56,7 +54,7 @@ public class ArrowGUI extends JFrame
 		myPoints.add(new Point2D.Double(100, 100));		
 		int style = GraphConstants.STYLE_BEZIER;
 		GraphConstants.setLineStyle(edge2.getAttributes(), style);
-		List myPoints2 = new Vector();
+		List<Point2D> myPoints2 = new Vector<Point2D>();
 		myPoints2.add(new Point2D.Double(30, 20));
 		myPoints2.add(new Point2D.Double(50, 70));
 		myPoints2.add(new Point2D.Double(100, 40));
@@ -66,7 +64,7 @@ public class ArrowGUI extends JFrame
 		// Zelle 4 : dashed Line
 		DefaultEdge edge3 = new DefaultEdge();
 		cells[4] = edge3;
-		List myPoints3 = new Vector();
+		List<Point2D> myPoints3 = new Vector<Point2D>();
 		myPoints3.add(new Point2D.Double(10, 150));
 		myPoints3.add(new Point2D.Double(100, 100));
 		GraphConstants.setPoints(edge3.getAttributes(), myPoints3);

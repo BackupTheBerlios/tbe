@@ -156,7 +156,8 @@ public class TBE
 		chooser.showOpenDialog(new Frame());
 
 		File filename = chooser.getSelectedFile();
-		this.setView(new WorkingView(XMLHandler.openXML(filename.getPath())));
+		Board board = XMLHandler.openXML(filename.getPath());
+		this.setView(new WorkingView(board));
 	}
 
 	public void share()

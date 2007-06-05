@@ -2,14 +2,8 @@ package ch.tbe;
 
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-
-import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.Tool;
-
-
-
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 
