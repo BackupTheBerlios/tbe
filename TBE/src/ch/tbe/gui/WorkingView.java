@@ -36,6 +36,8 @@ public class WorkingView extends View
 	private JPanel rightPanel = new JPanel();
 	private ResourceBundle workingViewLabels;
 	private JSlider rotateSlider;
+	private JTextField sliderValue = new JTextField();
+	private boolean showRotate = false;
 
 	public WorkingView(Sport sport)
 	{
@@ -96,30 +98,6 @@ public class WorkingView extends View
 
 			}
 
-			public void mouseReleased(MouseEvent e)
-			{
-				if (WorkingView.this.board.getSelectionCount() == 1)
-				{
-
-					if (WorkingView.this.board.getSelectionCell() instanceof ArrowItem)
-					{
-						WorkingView.this.activatePoints(true);
-					}
-					else
-					{
-						WorkingView.this.activatePoints(false);
-					}
-					if (WorkingView.this.board.getSelectionCell() instanceof ShapeItem)
-					{
-						WorkingView.this.activateRotation(true);
-					}
-					else
-					{
-						WorkingView.this.activateRotation(false);
-					}
-				}
-
-			}
 		}
 		initDefaultTools();
 
@@ -183,9 +161,18 @@ public class WorkingView extends View
 	public void activateRotation(boolean b)
 	{
 		// TODO: tbe.getMenu().activatePoints(b);
-		rotatePanel.setVisible(b);
+		if (showRotate && b)
+		{
+			rotatePanel.setVisible(b);
+			rotateSlider.setValue(((ShapeItem) board.getSelectedItems()[0])
+					.getRotation());
+
+		}
+		else
+		{
+			rotatePanel.setVisible(false);
+		}
 		rotate.setEnabled(b);
-		board.repaint();
 	}
 
 	private void installAddRemovePointButtons()
@@ -227,14 +214,57 @@ public class WorkingView extends View
 		// ImageIcon plus = new ImageIcon(imgURL);
 
 		rotate = new JButton("Rotate");
+		rotate.setEnabled(false);
 		rotatePanel = new JToolBar();
-
+		rotatePanel.setLayout(new BorderLayout(0, 1));
 		rotateSlider = new JSlider();
 		rotateSlider.setMaximum(359);
 		rotateSlider.setMinimum(0);
 		rotateSlider.setMaximumSize(new Dimension(100, 100));
 		rotateSlider.setOrientation(1);
-		rotatePanel.add(rotateSlider);
+		Box box = Box.createVerticalBox();
+
+		sliderValue.setPreferredSize(new Dimension(30, 20));
+
+		rotateSlider.setAlignmentY(Component.TOP_ALIGNMENT);
+		box.add(sliderValue);
+		box.add(rotateSlider);
+		sliderValue.setAlignmentY(Component.TOP_ALIGNMENT);
+		rotatePanel.add(box, BorderLayout.NORTH);
+
+		sliderValue.addFocusListener(new FocusListener()
+		{
+
+			private int oldValue = 0;
+
+			public void focusGained(FocusEvent arg0)
+			{
+				oldValue = Integer.parseInt(sliderValue.getText());
+
+			}
+
+			public void focusLost(FocusEvent arg0)
+			{
+				int newValue = 0;
+				try
+				{
+					newValue = Integer.parseInt(sliderValue.getText());
+				}
+				catch (Exception ex)
+				{
+					sliderValue.setText(Integer.toString(oldValue));
+				}
+				if (newValue >= 0 && newValue <= 359)
+				{
+					rotateSlider.setValue(newValue);
+				}
+				else
+				{
+					sliderValue.setText(Integer.toString(oldValue));
+				}
+			}
+
+		});
 
 		rotateSlider.addChangeListener(new ChangeListener()
 		{
@@ -245,9 +275,12 @@ public class WorkingView extends View
 				if (board.getSelectionCount() == 1
 						&& board.getSelectionCells()[0] instanceof ShapeItem)
 				{
-					((ShapeItem) board.getSelectionCells()[0])
-							.setRotation(rotateSlider.getValue());
-					board.repaint();
+					sliderValue.setText(Integer.toString(rotateSlider
+							.getValue()));
+					ShapeItem s = (ShapeItem) board.getSelectionCells()[0];
+					board.removeItem(new ItemComponent[] { s });
+					s.setRotation(rotateSlider.getValue());
+					board.addItem(s);
 
 				}
 
@@ -255,7 +288,7 @@ public class WorkingView extends View
 
 		});
 
-		// rotate.setToolTipText(workingViewLabels.getString("rotate"));
+		rotate.setToolTipText(workingViewLabels.getString("rotate"));
 
 		rotate.addActionListener(new ActionListener()
 		{
@@ -270,7 +303,7 @@ public class WorkingView extends View
 
 				}
 				rotatePanel.setVisible(!rotatePanel.isVisible());
-
+				showRotate = !showRotate;
 			}
 		});
 
@@ -570,5 +603,5 @@ public class WorkingView extends View
 		}
 		return labels;
 	}
-	
+
 }

@@ -19,6 +19,7 @@ import org.jgraph.plaf.basic.BasicGraphUI.GraphSelectionHandler;
 
 import ch.tbe.Invoker;
 import ch.tbe.MoveCommand;
+import ch.tbe.ShapeItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
@@ -221,6 +222,8 @@ public class TBEBasicGraphUI extends BasicGraphUI
 		// Event may be null when called to cancel the current operation.
 		public void mouseReleased(MouseEvent e)
 		{
+			WorkingView view = (WorkingView) TBE.getInstance().getView();
+			
 			try
 			{
 				if (e != null && !e.isConsumed() && graph != null
@@ -234,6 +237,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 
 						// Inserted by David Meier
 						Point2D mouseUP = new Point2D.Double(e.getX(), e.getY());
+						try{
 						if (!mouseDown.equals(mouseUP)
 								|| (e.getButton() == 3
 										&& graph.getSelectionCount() == 1 && graph
@@ -252,6 +256,9 @@ public class TBEBasicGraphUI extends BasicGraphUI
 							TBE.getInstance().addCommands(actCommands);
 						}
 					}
+					catch(NullPointerException ex){
+						// DO NOTHING
+					}}
 					if (isDescendant(cell, focus) && e.getModifiers() != 0)
 					{
 						// Do not switch to parent if Special Selection
@@ -272,6 +279,24 @@ public class TBEBasicGraphUI extends BasicGraphUI
 			{
 				handler = null;
 				cell = null;
+			}
+			if (graph.getSelectionCount() == 1
+					&& graph.getSelectionCell() instanceof ArrowItem)
+			{
+				view.activatePoints(true);
+			}
+			else
+			{
+				view.activatePoints(false);
+			}
+			if (graph.getSelectionCount() == 1
+					&& graph.getSelectionCell() instanceof ShapeItem)
+			{
+				view.activateRotation(true);
+			}
+			else
+			{
+				view.activateRotation(false);
 			}
 
 		}
