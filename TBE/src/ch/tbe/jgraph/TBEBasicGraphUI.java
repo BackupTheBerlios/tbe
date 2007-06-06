@@ -222,8 +222,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 		// Event may be null when called to cancel the current operation.
 		public void mouseReleased(MouseEvent e)
 		{
-			WorkingView view = (WorkingView) TBE.getInstance().getView();
-			
+						
 			try
 			{
 				if (e != null && !e.isConsumed() && graph != null
@@ -280,24 +279,7 @@ public class TBEBasicGraphUI extends BasicGraphUI
 				handler = null;
 				cell = null;
 			}
-			if (graph.getSelectionCount() == 1
-					&& graph.getSelectionCell() instanceof ArrowItem)
-			{
-				view.activatePoints(true);
-			}
-			else
-			{
-				view.activatePoints(false);
-			}
-			if (graph.getSelectionCount() == 1
-					&& graph.getSelectionCell() instanceof ShapeItem)
-			{
-				view.activateRotation(true);
-			}
-			else
-			{
-				view.activateRotation(false);
-			}
+			((WorkingView) TBE.getInstance().getView()).checkDefaultButtonVisibility();
 
 		}
 

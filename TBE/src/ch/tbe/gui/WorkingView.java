@@ -97,6 +97,10 @@ public class WorkingView extends View
 				}
 
 			}
+			public void mouseReleased(MouseEvent e){
+
+				checkDefaultButtonVisibility();
+			}
 
 		}
 		initDefaultTools();
@@ -158,6 +162,27 @@ public class WorkingView extends View
 		add.setEnabled(b);
 	}
 
+	public void checkDefaultButtonVisibility(){
+		if (board.getSelectionCount() == 1
+				&& board.getSelectionCell() instanceof ArrowItem)
+		{
+			this.activatePoints(true);
+		}
+		else
+		{
+			this.activatePoints(false);
+		}
+		if (board.getSelectionCount() == 1
+				&& board.getSelectionCell() instanceof ShapeItem)
+		{
+			this.activateRotation(true);
+		}
+		else
+		{
+			this.activateRotation(false);
+		}
+	}
+	
 	public void activateRotation(boolean b)
 	{
 		// TODO: tbe.getMenu().activatePoints(b);
@@ -512,7 +537,6 @@ public class WorkingView extends View
 		{
 
 			board.addMouseListener(listeners[0]);
-
 		}
 		if (tool == null)
 			throw new IllegalArgumentException("Tool must not be null.");
