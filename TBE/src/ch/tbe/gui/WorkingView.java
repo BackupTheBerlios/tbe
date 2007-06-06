@@ -1,59 +1,23 @@
 package ch.tbe.gui;
 
-import ch.tbe.Attribute;
-import ch.tbe.BezierSolidArrowTool;
-import ch.tbe.CursorTool;
-import ch.tbe.Board;
-import ch.tbe.CutCommand;
-import ch.tbe.DeleteCommand;
-import ch.tbe.MoveCommand;
-import ch.tbe.PasteCommand;
-import ch.tbe.ShapeTool;
-import ch.tbe.TextBoxTool;
-import ch.tbe.ToolFactory;
-import ch.tbe.framework.ArrowItem;
-import ch.tbe.framework.ArrowTool;
-import ch.tbe.framework.Command;
-import ch.tbe.framework.Tool;
-import ch.tbe.framework.ItemComponent;
-import ch.tbe.framework.View;
-import ch.tbe.jgraph.TBECellViewFactory;
-import ch.tbe.util.ComponentSelection;
-import ch.tbe.Field;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.Point;
-import java.awt.RenderingHints;
-import java.awt.ScrollPane;
+import ch.tbe.*;
+import ch.tbe.framework.*;
+import ch.tbe.jgraph.*;
+import ch.tbe.util.*;
+import java.awt.*;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JToolBar;
-
-import org.jgraph.graph.DefaultGraphCell;
-import org.jgraph.graph.DefaultGraphModel;
-import org.jgraph.graph.GraphLayoutCache;
-import org.jgraph.graph.GraphModel;
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import org.jgraph.graph.*;
 import ch.tbe.Sport;
 
 public class WorkingView extends View
@@ -63,16 +27,15 @@ public class WorkingView extends View
 	private Sport sport;
 	private Tool cursorTool;
 	private Tool currentTool;
-	private JButton currentButton;
-	private JButton cursorButton;
-	private JButton add, rem;
+	private JButton currentButton, cursorButton, add, rem, rotate;
 	private JToolBar toolbar = new JToolBar();
-	private JToolBar sideBar;
+	private JToolBar sideBar, rotatePanel;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private JPanel legendPanel;
 	private MouseListener[] listeners = new MouseListener[2];
 	private JPanel rightPanel = new JPanel();
 	private ResourceBundle workingViewLabels;
+	private JSlider rotateSlider;
 
 	public WorkingView(Sport sport)
 	{
@@ -126,21 +89,34 @@ public class WorkingView extends View
 					Point p = new Point(e.getX(), e.getY());
 					WorkingView.this.getTool().mouseDown(p.x, p.y, e);
 				}
-				if (currentTool instanceof ArrowTool){
+				if (currentTool instanceof ArrowTool)
+				{
 					setTool(cursorTool, cursorButton);
 				}
+
 			}
 
 			public void mouseReleased(MouseEvent e)
 			{
-				if (WorkingView.this.board.getSelectionCount() == 1
-						&& WorkingView.this.board.getSelectionCell() instanceof ArrowItem)
+				if (WorkingView.this.board.getSelectionCount() == 1)
 				{
-					WorkingView.this.activatePoints(true);
-				}
-				else
-				{
-					WorkingView.this.activatePoints(false);
+
+					if (WorkingView.this.board.getSelectionCell() instanceof ArrowItem)
+					{
+						WorkingView.this.activatePoints(true);
+					}
+					else
+					{
+						WorkingView.this.activatePoints(false);
+					}
+					if (WorkingView.this.board.getSelectionCell() instanceof ShapeItem)
+					{
+						WorkingView.this.activateRotation(true);
+					}
+					else
+					{
+						WorkingView.this.activateRotation(false);
+					}
 				}
 
 			}
@@ -161,7 +137,7 @@ public class WorkingView extends View
 
 		this.add(rightPanel, BorderLayout.CENTER);
 		this.activatePoints(false);
-		
+
 		tbe.getMenu().setVisibleToolbar(!this.toolbar.isVisible());
 		tbe.getMenu().setVisibleLegend(!this.legendPanel.isVisible());
 		tbe.getMenu().setVisibleSidebar(!this.sideBar.isVisible());
@@ -192,6 +168,9 @@ public class WorkingView extends View
 		toolbar.addSeparator();
 		this.installToolInToolBar(toolbar, ToolFactory.getTextBoxTool());
 		toolbar.addSeparator();
+
+		this.installRotateButton();
+		toolbar.addSeparator();
 	}
 
 	public void activatePoints(boolean b)
@@ -199,6 +178,14 @@ public class WorkingView extends View
 		tbe.getMenu().activatePoints(b);
 		rem.setEnabled(b);
 		add.setEnabled(b);
+	}
+
+	public void activateRotation(boolean b)
+	{
+		// TODO: tbe.getMenu().activatePoints(b);
+		rotatePanel.setVisible(b);
+		rotate.setEnabled(b);
+		board.repaint();
 	}
 
 	private void installAddRemovePointButtons()
@@ -232,6 +219,67 @@ public class WorkingView extends View
 		rem.setBorderPainted(false);
 		toolbar.add(add);
 		toolbar.add(rem);
+	}
+
+	private void installRotateButton()
+	{
+		// URL imgURL = WorkingView.class.getResource("../pics/rotate.gif");
+		// ImageIcon plus = new ImageIcon(imgURL);
+
+		rotate = new JButton("Rotate");
+		rotatePanel = new JToolBar();
+
+		rotateSlider = new JSlider();
+		rotateSlider.setMaximum(359);
+		rotateSlider.setMinimum(0);
+		rotateSlider.setMaximumSize(new Dimension(100, 100));
+		rotateSlider.setOrientation(1);
+		rotatePanel.add(rotateSlider);
+
+		rotateSlider.addChangeListener(new ChangeListener()
+		{
+
+			public void stateChanged(ChangeEvent arg0)
+			{
+
+				if (board.getSelectionCount() == 1
+						&& board.getSelectionCells()[0] instanceof ShapeItem)
+				{
+					((ShapeItem) board.getSelectionCells()[0])
+							.setRotation(rotateSlider.getValue());
+					board.repaint();
+
+				}
+
+			}
+
+		});
+
+		// rotate.setToolTipText(workingViewLabels.getString("rotate"));
+
+		rotate.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				if (board.getSelectionCount() == 1
+						&& board.getSelectedItems()[0] instanceof ShapeItem)
+				{
+					rotateSlider
+							.setValue(((ShapeItem) board.getSelectedItems()[0])
+									.getRotation());
+
+				}
+				rotatePanel.setVisible(!rotatePanel.isVisible());
+
+			}
+		});
+
+		rotate.setContentAreaFilled(false);
+		rotate.setBorderPainted(false);
+		toolbar.add(rotate);
+		rotatePanel.setVisible(false);
+		this.add(rotatePanel, BorderLayout.EAST);
+
 	}
 
 	public void addRemovePoint(boolean b)
@@ -377,8 +425,8 @@ public class WorkingView extends View
 	{
 		final JButton button;
 		button = new JButton();
-		
-		button.setMargin(new Insets(0,0,0,0));
+
+		button.setMargin(new Insets(0, 0, 0, 0));
 
 		if (tool.getShapeType() != null)
 		{
@@ -455,9 +503,6 @@ public class WorkingView extends View
 		}
 		else
 		{
-			// Cursor c = getToolkit().createCustomCursor(
-			// (Image) ((ImageIcon)tool.getShapeType().getIcon()).getImage(),
-			// new Point(10,10), "Cursor" );
 
 			Cursor c = getToolkit()
 					.createCustomCursor(
@@ -503,34 +548,27 @@ public class WorkingView extends View
 		toolbar.setVisible(!this.toolbar.isVisible());
 		tbe.getMenu().setVisibleToolbar(!this.toolbar.isVisible());
 	}
-	
+
 	private ResourceBundle getResourceBundle(String lang)
 	{
 		InputStream workingViewStream;
 		ResourceBundle labels = null;
 		try
 		{
-			workingViewStream = WorkingView.class.getResourceAsStream("../config/lang/"
-					+ lang + "/workingView.txt");
+			workingViewStream = WorkingView.class
+					.getResourceAsStream("../config/lang/" + lang
+							+ "/workingView.txt");
 			labels = new PropertyResourceBundle(workingViewStream);
-		} catch (FileNotFoundException fnne)
+		}
+		catch (FileNotFoundException fnne)
 		{
 			System.out.println("LanguageFile for WorkingView not found !");
-		} catch (IOException ioe)
+		}
+		catch (IOException ioe)
 		{
 			System.out.println("Error with ResourceBundle WorkingView!");
 		}
 		return labels;
 	}
-	/**
-	 * Braucht es das noch? aus meiner Sicht nicht. by Dave
-	 */
-	// public void refreshX()
-	// {
-	// // TODO: Tools refreshen für ChangeLang!
-	// ((SideBar)this.sideBar).refresh();
-	// board.repaint();
-	//
-	// tbe.getMenu().refreshInvokerVisibility();
-	// }
+	
 }
