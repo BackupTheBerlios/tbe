@@ -16,6 +16,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -200,16 +201,17 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer , Imag
 			// Inserted by David Meier
 			if(map != null){
 				
+				g2d.setRenderingHint(   RenderingHints.KEY_ANTIALIASING,
+						RenderingHints.VALUE_ANTIALIAS_ON );
 				Rectangle2D r = GraphConstants.getBounds(map);
 				Image i = TBEGraphConstants.getIcon(map);
 				if(i != null){
 					
-			    	AffineTransform aft = new AffineTransform(); 
-					aft.rotate ( Math.toRadians(TBEGraphConstants.getRotation(map)), r.getCenterX(), r.getCenterY()); 
-					//g2d.setTransform(aft);
-					//g2d.drawImage(i, (int)r.getX(),(int) r.getY() ,(int)r.getWidth(), (int)r.getHeight(), this);}
-					g2d.drawImage(i, 0,0 ,(int)r.getWidth(), (int)r.getHeight(), this);}
-					
+					g2d.translate(getWidth() / 2, getHeight() / 2);
+					g2d.rotate(Math.toRadians(TBEGraphConstants.getRotation(map)));
+					g2d.translate(-getWidth() / 2, -getHeight() / 2);
+			    	g2d.drawImage(i, 0,0 ,(int)r.getWidth(), (int)r.getHeight(), this);}
+				    
 				
 				
 			}
