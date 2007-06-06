@@ -206,8 +206,9 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer , Imag
 					
 			    	AffineTransform aft = new AffineTransform(); 
 					aft.rotate ( Math.toRadians(TBEGraphConstants.getRotation(map)), r.getCenterX(), r.getCenterY()); 
-					g2d.setTransform(aft);
-					g2d.drawImage(i, (int)r.getX(),(int) r.getY() ,(int)r.getWidth(), (int)r.getHeight(), this);}
+					//g2d.setTransform(aft);
+					//g2d.drawImage(i, (int)r.getX(),(int) r.getY() ,(int)r.getWidth(), (int)r.getHeight(), this);}
+					g2d.drawImage(i, 0,0 ,(int)r.getWidth(), (int)r.getHeight(), this);}
 					
 				
 				
