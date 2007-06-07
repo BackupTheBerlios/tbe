@@ -3,28 +3,28 @@ package ch.tbe;
 import javax.swing.Icon;
 
 
-public class ShapeType
+public class ItemType
 {
 	private String description;
 	private Icon icon;
 	private Icon picture;
 	private String name;
 	
-	public ShapeType(String name, String description, Icon icon, Icon picture){
+	public ItemType(String name, String description, Icon icon, Icon picture){
 		this.name = name;
 		this.icon = icon;
 		this.description = description;
 		this.picture = picture;
 	}
 	
-	public ShapeType(String name, String description, Icon icon){
+	public ItemType(String name, String description, Icon icon){
 		this.name = name;
 		this.icon = icon;
 		this.description = description;
 		this.picture = icon;
 	}
 	
-	public ShapeType(String name, String description){
+	public ItemType(String name, String description){
 		this.name = name;
 		this.description = description;
 	}

@@ -6,7 +6,7 @@ import ch.tbe.framework.ArrowTool;
 
 public class BezierCurvedArrowTool extends ArrowTool{
 
-	public BezierCurvedArrowTool(ShapeType shapeType)
+	public BezierCurvedArrowTool(ItemType shapeType)
 	{
 		super(shapeType);
 		// TODO Auto-generated constructor stub

@@ -18,7 +18,7 @@ import ch.tbe.BezierSolidArrowItem;
 import ch.tbe.PolyCurvedArrowItem;
 import ch.tbe.PolyCurvedBlockItem;
 import ch.tbe.ShapeItem;
-import ch.tbe.ShapeType;
+import ch.tbe.ItemType;
 import ch.tbe.TextBoxItem;
 import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.*;
@@ -42,14 +42,14 @@ public class Line extends JFrame
 		myPoints.add(new Point2D.Double(20, 250));
 		myPoints.add(new Point2D.Double(300, 150));
 
-		cells[0] = new PolyCurvedBlockItem(myPoints);
+	
 		DefaultGraphCell[] cells2 = new DefaultGraphCell[1];
 		cells2[0] = new TextBoxItem(new Rectangle2D.Double(50,50,120,120));;
 		cells[1] = new TextBoxItem(new Rectangle2D.Double(100,100,120,120));
 		
 		URL imgURL = TBE.class.getResource("../pics/logo.jpg");
 		Icon logoIcon = new ImageIcon(imgURL);
-		ShapeType icon = new ShapeType("test","test",logoIcon);
+		ItemType icon = new ItemType("test","test",logoIcon);
 		cells[2] = new ShapeItem(icon, new Point2D.Double(200,200));
 		
 		graph.getGraphLayoutCache().insert(cells);

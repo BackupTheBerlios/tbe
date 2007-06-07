@@ -7,8 +7,8 @@ import javax.swing.ImageIcon;
 public class Sport 
 {
 	private ArrayList<Field> fields;
-	private ArrayList<ShapeType> arrows;
-	private ArrayList<ShapeType> shapes;
+	private ArrayList<ItemType> arrows;
+	private ArrayList<ItemType> shapes;
 	private String name;
 	private String version;
 	private String lcVersion;
@@ -44,18 +44,18 @@ public class Sport
 	{
 		this.fields = fields;
 	}
-	public void setArrowTypes(ArrayList<ShapeType> arrows){
+	public void setArrowTypes(ArrayList<ItemType> arrows){
 		this.arrows = arrows;
 	}
 	
-	public void setShapeTypes(ArrayList<ShapeType> shapes){
+	public void setShapeTypes(ArrayList<ItemType> shapes){
 		this.shapes = shapes;
 	}
 	
-	public ArrayList<ShapeType> getShapeTypes(){
+	public ArrayList<ItemType> getShapeTypes(){
 		return this.shapes;
 	}
-	public ArrayList<ShapeType> getArrowTypes(){
+	public ArrayList<ItemType> getArrowTypes(){
 		return this.arrows;
 	}
 	public String getLcVersion()

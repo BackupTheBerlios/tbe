@@ -19,12 +19,12 @@ public final class ToolFactory {
 		URL imgURL = ToolFactory.class.getResource("pics/cursoricon.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
 		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
-		return new CursorTool(new ShapeType(rb.getString("cursor"),rb.getString("cursor"),icon));
+		return new CursorTool(new ItemType(rb.getString("cursor"),rb.getString("cursor"),icon));
 	}
 	
 	public static ArrayList<ShapeTool> getShapeTools(Sport sport){
 		ArrayList<ShapeTool> shapeTools = new ArrayList<ShapeTool>();
-		for(ShapeType types : sport.getShapeTypes()){
+		for(ItemType types : sport.getShapeTypes()){
 			shapeTools.add(new ShapeTool(types));
 		}
 		return shapeTools;
@@ -32,7 +32,7 @@ public final class ToolFactory {
 	public static ArrayList<ArrowTool> getArrowTools(Sport sport){
 		ArrayList<ArrowTool> arrowTools = new ArrayList<ArrowTool>();
 		
-		for(ShapeType type : sport.getArrowTypes()){
+		for(ItemType type : sport.getArrowTypes()){
 						
 			if(type.getName().equals("BezierCurvedArrowTool")) arrowTools.add(new BezierCurvedArrowTool(type));
 			if(type.getName().equals("BezierDashedArrowTool")) arrowTools.add(new BezierDashedArrowTool(type));
@@ -53,7 +53,7 @@ public final class ToolFactory {
 		URL imgURL = ToolFactory.class.getResource("pics/text.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
 		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
-		return new TextBoxTool(new ShapeType(rb.getString("textbox"),rb.getString("textbox"),icon));
+		return new TextBoxTool(new ItemType(rb.getString("textbox"),rb.getString("textbox"),icon));
 	}
 	
 	private static ResourceBundle getResourceBundle(String lang)

@@ -12,7 +12,7 @@ import ch.tbe.gui.WorkingView;
 
 public class PolyCurvedBlockTool extends ArrowTool {
  
-	public PolyCurvedBlockTool(ShapeType shapeType)
+	public PolyCurvedBlockTool(ItemType shapeType)
 	{
 		super(shapeType);
 		// TODO Auto-generated constructor stub
@@ -25,7 +25,7 @@ public class PolyCurvedBlockTool extends ArrowTool {
 		points.add(new Point2D.Double(x,y));		
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y));
 		
-		ItemComponent[] items = new ItemComponent[] {new PolyCurvedBlockItem(points)};
+		ItemComponent[] items = new ItemComponent[] {new PolyCurvedBlockItem(points, itemType)};
 		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}

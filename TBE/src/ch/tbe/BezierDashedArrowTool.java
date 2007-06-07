@@ -14,7 +14,7 @@ import ch.tbe.gui.WorkingView;
 public class BezierDashedArrowTool extends ArrowTool
 {
 
-	public BezierDashedArrowTool(ShapeType shapeType)
+	public BezierDashedArrowTool(ItemType shapeType)
 	{
 		super(shapeType);
 		// TODO Auto-generated constructor stub
@@ -28,7 +28,7 @@ public class BezierDashedArrowTool extends ArrowTool
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y+DEFAULTLENGTH));
 		points.add(new Point2D.Double(x+2*DEFAULTLENGTH,y));
 		
-		ItemComponent[] items = new ItemComponent[]{new BezierDashedArrowItem(points)};
+		ItemComponent[] items = new ItemComponent[]{new BezierDashedArrowItem(points, itemType)};
 		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}

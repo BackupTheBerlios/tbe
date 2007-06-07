@@ -7,7 +7,7 @@ import ch.tbe.framework.Tool;
 public class CursorTool extends Tool
 {
 
-	public CursorTool(ShapeType shapeType)
+	public CursorTool(ItemType shapeType)
 	{
 		super(shapeType);
 		

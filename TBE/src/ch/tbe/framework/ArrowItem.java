@@ -3,18 +3,22 @@ package ch.tbe.framework;
 import java.awt.geom.Point2D;
 import java.util.List;
 
+import javax.swing.Icon;
+
 import org.jgraph.graph.DefaultEdge;
 
 import ch.tbe.Invoker;
+import ch.tbe.ItemType;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 {
+	private ItemType itemType;
 	protected final int DEFAULTLENGTH = 20;
 
-	protected ArrowItem()
+	protected ArrowItem(ItemType itemType)
 	{
-		
+		this.itemType = itemType;
 		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_CLASSIC);
 		TBEGraphConstants.setEndFill(this.getAttributes(), true);
 		
@@ -46,5 +50,13 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 			TBEGraphConstants.getPoints(this.getAttributes()).remove(lastP);
 
 		}
+	}
+	
+	public Icon getIcon(){
+		return itemType.getIcon();
+	}
+	public ItemType getItemType()
+	{
+		return itemType;
 	}
 }

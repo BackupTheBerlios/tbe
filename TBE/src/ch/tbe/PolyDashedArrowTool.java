@@ -12,7 +12,7 @@ import ch.tbe.gui.WorkingView;
 
 public class PolyDashedArrowTool extends ArrowTool {
  
-	public PolyDashedArrowTool(ShapeType shapeType)
+	public PolyDashedArrowTool(ItemType shapeType)
 	{
 		super(shapeType);
 		// TODO Auto-generated constructor stub
@@ -25,7 +25,7 @@ public class PolyDashedArrowTool extends ArrowTool {
 		points.add(new Point2D.Double(x,y));		
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y));
 		
-		ItemComponent[] items = new ItemComponent[] { new PolyDashedArrowItem(points)};
+		ItemComponent[] items = new ItemComponent[] { new PolyDashedArrowItem(points, itemType)};
 		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}

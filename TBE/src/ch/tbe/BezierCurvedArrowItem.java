@@ -7,8 +7,8 @@ import ch.tbe.framework.ArrowItem;
 
 public class BezierCurvedArrowItem extends ArrowItem{
  
-	public BezierCurvedArrowItem(List<Point2D> points){
-		//		 TODO Auto-generated method stub
+	public BezierCurvedArrowItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 	}
 
 	public String getType()

@@ -10,8 +10,8 @@ public class PolyDashedArrowItem extends ArrowItem
 
 	private final float[] DASH = new float[] { 6, 6 };
 
-	public PolyDashedArrowItem(List<Point2D> points)
-	{
+	public PolyDashedArrowItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 
 		TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
 		setPoints(points);

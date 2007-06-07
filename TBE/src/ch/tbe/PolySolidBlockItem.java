@@ -9,8 +9,8 @@ import ch.tbe.jgraph.TBEGraphConstants;
 public class PolySolidBlockItem extends ArrowItem
 {
 
-	public PolySolidBlockItem(List<Point2D> points)
-	{
+	public PolySolidBlockItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 
 		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_BLOCK);
 		TBEGraphConstants.setEndFill(this.getAttributes(), false);

@@ -10,8 +10,8 @@ public class PolyDashedBlockItem extends ArrowItem
 
 	private final float[] DASH = new float[] { 6, 6 };
 
-	public PolyDashedBlockItem(List<Point2D> points)
-	{
+	public PolyDashedBlockItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 
 		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_BLOCK);
 		TBEGraphConstants.setEndFill(this.getAttributes(), false);

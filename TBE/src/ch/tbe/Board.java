@@ -115,5 +115,6 @@ public class Board extends JGraph
 	{
 		this.repaint();
 		tbe.getMenu().refreshInvokerVisibility();
+		TBE.getInstance().getView().refresh();
 	}
 }

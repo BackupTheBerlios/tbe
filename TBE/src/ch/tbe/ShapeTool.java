@@ -9,14 +9,14 @@ import ch.tbe.gui.WorkingView;
 
  public class ShapeTool extends Tool {
 	
-	public ShapeTool(ShapeType shapeType){
+	public ShapeTool(ItemType shapeType){
 		super(shapeType);
 		
 	}
  
 	public void mouseDown(int x, int y, MouseEvent e)
 	{
-		ItemComponent[] items = new ItemComponent[] {new ShapeItem(shapeType ,new Point2D.Double(x,y))}; 
+		ItemComponent[] items = new ItemComponent[] {new ShapeItem(itemType ,new Point2D.Double(x,y))}; 
 		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}

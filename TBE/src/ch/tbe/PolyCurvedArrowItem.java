@@ -8,9 +8,8 @@ import ch.tbe.jgraph.TBEGraphConstants;
 public class PolyCurvedArrowItem extends ArrowItem
 {
 
-	public PolyCurvedArrowItem(List<Point2D> points)
-	
-	{
+	public PolyCurvedArrowItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 
 		TBEGraphConstants.setLineStyle(this.getAttributes(),
 				TBEGraphConstants.STYLE_CURVED);

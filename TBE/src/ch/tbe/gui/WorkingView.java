@@ -31,7 +31,7 @@ public class WorkingView extends View
 	private JToolBar toolbar = new JToolBar();
 	private JToolBar sideBar, rotatePanel;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
-	private JPanel legendPanel;
+	private LegendBar legendBar;
 	private MouseListener[] listeners = new MouseListener[2];
 	private JPanel rightPanel = new JPanel();
 	private ResourceBundle workingViewLabels;
@@ -113,15 +113,14 @@ public class WorkingView extends View
 
 		// Legend
 		// TODO
-		legendPanel = new JPanel();
-		legendPanel.add(new JLabel("Legend"));
-		rightPanel.add(legendPanel, BorderLayout.SOUTH);
+		legendBar = new LegendBar(board, sport);
+		rightPanel.add(legendBar, BorderLayout.SOUTH);
 
 		this.add(rightPanel, BorderLayout.CENTER);
 		this.activatePoints(false);
 
 		tbe.getMenu().setVisibleToolbar(!this.toolbar.isVisible());
-		tbe.getMenu().setVisibleLegend(!this.legendPanel.isVisible());
+		tbe.getMenu().setVisibleLegend(!this.legendBar.isVisible());
 		tbe.getMenu().setVisibleSidebar(!this.sideBar.isVisible());
 
 	}
@@ -596,8 +595,8 @@ public class WorkingView extends View
 
 	public void hideLegend()
 	{
-		legendPanel.setVisible(!this.legendPanel.isVisible());
-		tbe.getMenu().setVisibleLegend(!this.legendPanel.isVisible());
+		legendBar.setVisible(!this.legendBar.isVisible());
+		tbe.getMenu().setVisibleLegend(!this.legendBar.isVisible());
 	}
 
 	public void hideToolbar()
@@ -626,6 +625,13 @@ public class WorkingView extends View
 			System.out.println("Error with ResourceBundle WorkingView!");
 		}
 		return labels;
+	}
+
+	@Override
+	public void refresh()
+	{
+		legendBar.refresh();
+		
 	}
 
 }

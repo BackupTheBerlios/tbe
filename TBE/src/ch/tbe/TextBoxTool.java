@@ -11,7 +11,7 @@ import ch.tbe.gui.WorkingView;
 public class TextBoxTool extends Tool
 {
 
-	public TextBoxTool(ShapeType shapeType)
+	public TextBoxTool(ItemType shapeType)
 	{
 		super(shapeType);
 		// TODO Auto-generated constructor stub

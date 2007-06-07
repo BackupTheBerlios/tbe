@@ -9,8 +9,8 @@ import ch.tbe.jgraph.TBEGraphConstants;
 public class PolyDoubleArrowItem extends ArrowItem
 {
 
-	public PolyDoubleArrowItem(List<Point2D> points)
-	{
+	public PolyDoubleArrowItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 
 		TBEGraphConstants.setLineStyle(this.getAttributes(),
 				TBEGraphConstants.STYLE_DOUBLELINE);

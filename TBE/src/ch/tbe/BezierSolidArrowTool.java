@@ -12,7 +12,7 @@ import ch.tbe.gui.WorkingView;
 
 public class BezierSolidArrowTool extends ArrowTool {
 	
-	public BezierSolidArrowTool(ShapeType shapeType)
+	public BezierSolidArrowTool(ItemType shapeType)
 	{
 		super(shapeType);
 		// TODO Auto-generated constructor stub
@@ -26,7 +26,7 @@ public class BezierSolidArrowTool extends ArrowTool {
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y+DEFAULTLENGTH));
 		points.add(new Point2D.Double(x+2*DEFAULTLENGTH,y));
 		
-		ItemComponent[] items = new ItemComponent[] {new BezierSolidArrowItem(points)};
+		ItemComponent[] items = new ItemComponent[] {new BezierSolidArrowItem(points, itemType)};
 		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}

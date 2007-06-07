@@ -6,7 +6,8 @@ import ch.tbe.framework.ArrowItem;
 
 public class PolySolidArrowItem extends ArrowItem
 {
-	public PolySolidArrowItem(List<Point2D> points){
+	public PolySolidArrowItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 		setPoints(points);
 	}
 

@@ -12,9 +12,9 @@ import ch.tbe.gui.WorkingView;
 
 public class BezierDoubleArrowTool extends ArrowTool{
  
-	public BezierDoubleArrowTool(ShapeType shapeType)
+	public BezierDoubleArrowTool(ItemType itemType)
 	{
-		super(shapeType);
+		super(itemType);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -26,7 +26,7 @@ public class BezierDoubleArrowTool extends ArrowTool{
 		points.add(new Point2D.Double(x+DEFAULTLENGTH,y+DEFAULTLENGTH));
 		points.add(new Point2D.Double(x+2*DEFAULTLENGTH,y));
 		
-		ItemComponent[] items = new ItemComponent[] {new BezierDoubleArrowItem(points)};
+		ItemComponent[] items = new ItemComponent[] {new BezierDoubleArrowItem(points, itemType)};
 		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}

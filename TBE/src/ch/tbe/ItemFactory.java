@@ -11,19 +11,19 @@ public final class ItemFactory
 	public static ArrowItem getArrowItem(Sport sport, String itemName, List<Point2D> points){
 		ArrowItem item = null;
 		
-		for (ShapeType shapeType: sport.getArrowTypes()){
-			if (shapeType.getName().equals(itemName)){
-				if(shapeType.getName().equals("BezierCurvedArrowTool"))item = new BezierCurvedArrowItem(points);
-				if(shapeType.getName().equals("BezierDashedArrowTool")) item = new BezierDashedArrowItem(points);
-				if(shapeType.getName().equals("BezierDoubleArrowTool")) item = new BezierDoubleArrowItem(points);
-				if(shapeType.getName().equals("BezierSolidArrowTool")) item = new BezierSolidArrowItem(points);
-				if(shapeType.getName().equals("PolyCurvedArrowTool")) item = new PolyCurvedArrowItem(points);
-				if(shapeType.getName().equals("PolyCurvedBlockTool")) item = new PolyCurvedBlockItem(points);
-				if(shapeType.getName().equals("PolyDashedArrowTool")) item = new PolyDashedArrowItem(points);
-				if(shapeType.getName().equals("PolyDashedBlockTool")) item = new PolyDashedBlockItem(points);
-				if(shapeType.getName().equals("PolyDoubleArrowTool")) item = new PolyDoubleArrowItem(points);
-				if(shapeType.getName().equals("PolySolidArrowTool")) item = new PolySolidArrowItem(points);
-				if(shapeType.getName().equals("PolySolidBlockTool")) item = new PolySolidBlockItem(points);
+		for (ItemType itemType : sport.getArrowTypes()){
+			if (itemType.getName().equals(itemName)){
+				if(itemType.getName().equals("BezierCurvedArrowTool"))item = new BezierCurvedArrowItem(points, itemType);
+				if(itemType.getName().equals("BezierDashedArrowTool")) item = new BezierDashedArrowItem(points, itemType);
+				if(itemType.getName().equals("BezierDoubleArrowTool")) item = new BezierDoubleArrowItem(points, itemType);
+				if(itemType.getName().equals("BezierSolidArrowTool")) item = new BezierSolidArrowItem(points, itemType);
+				if(itemType.getName().equals("PolyCurvedArrowTool")) item = new PolyCurvedArrowItem(points, itemType);
+				if(itemType.getName().equals("PolyCurvedBlockTool")) item = new PolyCurvedBlockItem(points, itemType);
+				if(itemType.getName().equals("PolyDashedArrowTool")) item = new PolyDashedArrowItem(points, itemType);
+				if(itemType.getName().equals("PolyDashedBlockTool")) item = new PolyDashedBlockItem(points, itemType);
+				if(itemType.getName().equals("PolyDoubleArrowTool")) item = new PolyDoubleArrowItem(points, itemType);
+				if(itemType.getName().equals("PolySolidArrowTool")) item = new PolySolidArrowItem(points, itemType);
+				if(itemType.getName().equals("PolySolidBlockTool")) item = new PolySolidBlockItem(points, itemType);
 			}
 		}
 		return item;
@@ -33,7 +33,7 @@ public final class ItemFactory
 	
 		ShapeItem item = null;
 		
-		for (ShapeType shapeType: sport.getShapeTypes()){
+		for (ItemType shapeType: sport.getShapeTypes()){
 			if (shapeType.getName().equals(itemName)){
 				item = new ShapeItem(shapeType, point);
 			}

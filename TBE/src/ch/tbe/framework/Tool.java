@@ -6,17 +6,17 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import ch.tbe.CreateCommand;
-import ch.tbe.ShapeType;
+import ch.tbe.ItemType;
 import ch.tbe.gui.TBE;
 
 
 public abstract class Tool {
 	
-	protected ShapeType shapeType;
+	protected ItemType itemType;
 	
-	public Tool(ShapeType shapeType)
+	public Tool(ItemType shapeType)
 	{
-		this.shapeType = shapeType;
+		this.itemType = shapeType;
 	}
 	
 	/**
@@ -80,8 +80,8 @@ public abstract class Tool {
 	 */
 	public abstract void mouseOver(int x, int y, MouseEvent e);
 	
-	public ShapeType getShapeType(){
-		return this.shapeType;
+	public ItemType getShapeType(){
+		return this.itemType;
 	}
 	
 	public void createCommand(ItemComponent[] items){

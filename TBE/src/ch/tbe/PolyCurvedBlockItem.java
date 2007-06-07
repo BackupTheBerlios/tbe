@@ -8,9 +8,8 @@ import ch.tbe.jgraph.TBEGraphConstants;
 public class PolyCurvedBlockItem extends ArrowItem
 {
 
-	public PolyCurvedBlockItem(List<Point2D> points)
-	
-	{
+	public PolyCurvedBlockItem(List<Point2D> points, ItemType itemType){
+		super(itemType);
 
 		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_BLOCK);
 		TBEGraphConstants.setEndFill(this.getAttributes(), false);

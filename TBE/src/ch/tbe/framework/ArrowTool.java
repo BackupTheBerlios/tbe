@@ -3,13 +3,13 @@ package ch.tbe.framework;
 import java.awt.event.MouseEvent;
 
 import javax.swing.Icon;
-import ch.tbe.ShapeType;
+import ch.tbe.ItemType;
 
 public abstract class ArrowTool extends Tool
 {
-	public ArrowTool(ShapeType shapeType)
+	public ArrowTool(ItemType itemType)
 	{
-		super(shapeType);
+		super(itemType);
 		// TODO Auto-generated constructor stub
 	}
 

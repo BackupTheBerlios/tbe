@@ -271,8 +271,8 @@ public final class XMLHandler
 	{
 		class SaxHandler extends DefaultHandler
 		{
-			private ArrayList<ShapeType> shapes = new ArrayList<ShapeType>();
-			private ArrayList<ShapeType> arrows = new ArrayList<ShapeType>();
+			private ArrayList<ItemType> shapes = new ArrayList<ItemType>();
+			private ArrayList<ItemType> arrows = new ArrayList<ItemType>();
 			private ArrayList<Field> fields = new ArrayList<Field>();
 			private Sport actSport;
 
@@ -311,7 +311,7 @@ public final class XMLHandler
 						Icon actIcon = new ImageIcon(imgURL);
 						imgURL = TBE.class.getResource("../config/sport/"+ actSport.getName() + "/" + atts.getValue("picture"));
 						Icon actPicture = new ImageIcon(imgURL);
-						shapes.add(new ShapeType(atts.getValue("name"), atts.getValue("description"), actIcon, actPicture));
+						shapes.add(new ItemType(atts.getValue("name"), atts.getValue("description"), actIcon, actPicture));
 					}
 
 					if (qName.equals("arrow"))
@@ -320,7 +320,7 @@ public final class XMLHandler
 						if (imgURL != null)
 						{
 							Icon actIcon = new ImageIcon(imgURL);
-							arrows.add(new ShapeType(atts.getValue("name"),atts.getValue("description"), actIcon));
+							arrows.add(new ItemType(atts.getValue("name"),atts.getValue("description"), actIcon));
 						}
 					}
 
