@@ -2,11 +2,7 @@ package ch.tbe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -17,7 +13,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -26,15 +21,16 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import ch.tbe.FTPServer;
+import ch.tbe.util.FTPFileTreeModel;
 import ch.tbe.util.FTPHandler;
 import ch.tbe.util.FileTreeModel;
 
@@ -43,22 +39,29 @@ public class ShareFrame
 	private TBE tbe = TBE.getInstance();
 	private ResourceBundle shareLabels;
 
-	private JComboBox ftpBox;
+	private JPanel contentPanel;
+	private JComboBox ftpBox, driveBox;
 	private JFrame frame;
 	private FTPServer currentFTP = null;
 	private boolean connected = false;
-	private JScrollPane eastpanel;
+	private File[] roots = File.listRoots();
+	private File currentRoot = roots[0];
+	private JTree ftpTree, localTree;
+	private ArrayList<String> localPaths = new ArrayList<String>();
+	private ArrayList<String> remotePaths = new ArrayList<String>();
 
 	/*
 	 * Convention: Directories have no points in the name! ...
 	 */
-
 	public ShareFrame()
 	{
 		frame = new JFrame();
 		shareLabels = getResourceBundle(tbe.getLang());
 
-		frame.add(createPanel());
+		contentPanel = createPanel();
+		frame.add(contentPanel);
+
+		// TODO: Disconnect bei Windows close
 
 		frame.setSize(800, 500);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
@@ -70,14 +73,88 @@ public class ShareFrame
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
 
-		JPanel northPanel = new JPanel();
-		northPanel.setBackground(Color.WHITE);
+		// TODO: TEST UNIX / Mac OS !!!
+		JPanel westPanel = new JPanel(new BorderLayout());
+		westPanel.setPreferredSize(new Dimension(300, 500));
 
+		Vector<String> allRoots = new Vector<String>();
+		allRoots.add(shareLabels.getString("chooseDrive"));
+
+		for (int i = 0; i < roots.length; i++)
+		{
+			allRoots.add(roots[i].toString());
+		}
+		driveBox = new JComboBox(allRoots);
+		driveBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+				Color.BLACK));
+		class DriveListener implements ActionListener
+		{
+			public void actionPerformed(ActionEvent arg0)
+			{
+				currentRoot = roots[driveBox.getSelectedIndex() - 1];
+				System.out.println("currentRoot: " + currentRoot.toString());
+				refresh();
+			}
+		}
+		driveBox.addActionListener(new DriveListener());
+		westPanel.add(driveBox, BorderLayout.NORTH);
+		westPanel.setBackground(Color.WHITE);
+		
+		// Create a TreeModel object to represent our tree of files
+		FileTreeModel model = new FileTreeModel(currentRoot);
+		
+		class LocalTreeListener implements TreeSelectionListener
+		{
+			public void valueChanged(TreeSelectionEvent tse)
+			{
+				// Get all nodes whose selection status has changed
+				TreePath[] paths = tse.getPaths();
+				
+				// Iterate through all affected nodes
+				for (int i = 0; i < paths.length; i++)
+				{
+					if (tse.isAddedPath(i))
+					{
+						// This node has been selected
+						String path = paths[i].toString();
+						path = path.replaceAll("\\\\", "/");
+						localPaths.add(path.substring(
+								path.lastIndexOf(",") + 2, path.length() - 1));
+					}
+					else
+					{
+						// This node has been deselected
+						String path = paths[i].toString();
+						path = path.replaceAll("\\\\", "/");
+						localPaths.remove(path.substring(
+								path.lastIndexOf(",") + 2, path.length() - 1));
+					}
+				}
+			}
+		}
+		
+		// Create a JTree and tell it to display our model
+		localTree = new JTree();
+		localTree.setModel(model);
+		localTree.addTreeSelectionListener(new LocalTreeListener());
+		
+		// The JTree can get big, so allow it to scroll
+		JScrollPane scrollPane = new JScrollPane(localTree);
+		scrollPane.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20,
+				Color.WHITE));
+		westPanel.add(scrollPane, BorderLayout.CENTER);
+		
+		panel.add(westPanel, BorderLayout.WEST);
+		
+		JPanel eastPanel = new JPanel(new BorderLayout());
+		eastPanel.setPreferredSize(new Dimension(350, 500));
+		eastPanel.setBackground(Color.WHITE);
+		
 		Vector<String> allFTP = new Vector<String>();
 		allFTP.add(shareLabels.getString("chooseServer"));
-
+		
 		ArrayList<FTPServer> servers = tbe.getServers();
-
+		
 		for (FTPServer s : servers)
 		{
 			allFTP.add(s.getName());
@@ -100,8 +177,11 @@ public class ShareFrame
 			}
 		}
 		ftpBox.addActionListener(new ftpBoxListener());
-		northPanel.add(ftpBox);
-
+		
+		JPanel connectPanel = new JPanel();
+		connectPanel.setBackground(Color.WHITE);
+		connectPanel.add(ftpBox);
+		
 		JButton connectButton = new JButton(shareLabels.getString("connect"));
 		class connectListener extends MouseAdapter
 		{
@@ -109,41 +189,141 @@ public class ShareFrame
 			public void mouseReleased(MouseEvent arg0)
 			{
 				FTPHandler.connect(currentFTP);
-				// TODO: eastpanel.add(createFTPTree());
+				connected = true;
 				refresh();
 			}
-
 		}
 		connectButton.addMouseListener(new connectListener());
-		northPanel.add(connectButton);
-
-		panel.add(northPanel, BorderLayout.NORTH);
-
-		JScrollPane westPanel = new JScrollPane();
-		westPanel.setPreferredSize(new Dimension(500, 500));
 		
-		// TODO: BoardPath auslesen
-		// String boardPath = ((WorkingView)tbe.getView()).getBoard().getPath();
-		// String path = boardPath.substring(0, boardPath.indexOf("/")+1);
+		connectPanel.add(connectButton);
 		
-		String path = "C:/";
+		eastPanel.add(connectPanel, BorderLayout.NORTH);
 		
-		/* http://www.unix.org.ua/orelly/java-ent/jfc/ch03_19.htm */
-		File root;
-	    root = new File(path);
+		class RemoteTreeListener implements TreeSelectionListener
+		{
+			public void valueChanged(TreeSelectionEvent tse)
+			{
+				// Get all nodes whose selection status has changed
+				TreePath[] paths = tse.getPaths();
+				
+				// Iterate through all affected nodes
+				for (int i = 0; i < paths.length; i++)
+				{
+					if (tse.isAddedPath(i))
+					{
+						// This node has been selected
+						String path = paths[i].toString();
+						path = path.replaceAll("\\\\", "/");
+						remotePaths.add(path.substring(
+								path.lastIndexOf(",") + 2, path.length() - 1));
+					}
+					else
+					{
+						// This node has been deselected
+						String path = paths[i].toString();
+						path = path.replaceAll("\\\\", "/");
+						remotePaths.remove(path.substring(
+								path.lastIndexOf(",") + 2, path.length() - 1));
+					}
+				}
+			}
+		}
+		
+		if (connected)
+		{
+			String ftpPath = "boards";
+			
+			File ftpRoot;
+			ftpRoot = new File(ftpPath);
+			
+			// Create a TreeModel object to represent our tree of files
+			FTPFileTreeModel ftpModel = new FTPFileTreeModel(ftpRoot);
 
-	    // Create a TreeModel object to represent our tree of files
-	    FileTreeModel model = new FileTreeModel(root);
-
-	    // Create a JTree and tell it to display our model
-	    JTree tree = new JTree();
-	    tree.setModel(model);
-
-	    // The JTree can get big, so allow it to scroll
-	    westPanel = new JScrollPane(tree);
-	    
-		panel.add(westPanel, BorderLayout.WEST);
-
+			// Create a JTree and tell it to display our model
+			ftpTree = new JTree();
+			ftpTree.setModel(ftpModel);
+			ftpTree.addTreeSelectionListener(new RemoteTreeListener());
+			
+			// The JTree can get big, so allow it to scroll
+			JScrollPane ftpScrollPane = new JScrollPane(ftpTree);
+			ftpScrollPane.setPreferredSize(new Dimension(350, 500));
+			ftpScrollPane.setBorder(BorderFactory.createMatteBorder(20, 20, 20,
+					20, Color.WHITE));
+			
+			eastPanel.add(ftpScrollPane, BorderLayout.CENTER);
+		}
+		
+		panel.add(eastPanel, BorderLayout.EAST);
+		
+		// Up- & Download-Buttons
+		JPanel centerPanel = new JPanel();
+		centerPanel.setBackground(Color.WHITE);
+		centerPanel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0,
+				Color.WHITE));
+		
+		if (connected)
+		{
+			// uploadButton
+			JButton uploadButton = new JButton(shareLabels.getString("upload"));
+			class UploadListener extends MouseAdapter
+			{
+				@Override
+				public void mouseReleased(MouseEvent arg0)
+				{
+					if(localPaths.size() == 0)
+					{
+						JOptionPane.showMessageDialog(null, shareLabels.getString("noLocals"));
+					}
+					// genau 1 Pfad auf Server gewählt, muss ein Ordner sein!!
+					if(remotePaths.size() != 1 || remotePaths.get(0).contains("."))
+					{
+						JOptionPane.showMessageDialog(null, shareLabels.getString("oneRemote"));
+					}
+					// RemotePaths zusammensetzen
+					ArrayList<String> newPaths = new ArrayList<String>();
+					for(int i = 0; i < localPaths.size(); i++)
+					{
+						String path = localPaths.get(i);
+						newPaths.add(remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
+					}
+					FTPHandler.upload(currentFTP, localPaths, newPaths);
+				}
+			}
+			uploadButton.addMouseListener(new UploadListener());
+			// downloadButton
+			JButton downloadButton = new JButton(shareLabels
+					.getString("download"));
+			class DownloadListener extends MouseAdapter
+			{
+				@Override
+				public void mouseReleased(MouseEvent arg0)
+				{
+					if(remotePaths.size() == 0)
+					{
+						JOptionPane.showMessageDialog(null, shareLabels.getString("noRemotes"));
+					}
+					// genau 1 Pfad auf Local gewählt, muss ein Ordner sein!!
+					if(localPaths.size() != 1 || localPaths.get(0).contains("."))
+					{
+						JOptionPane.showMessageDialog(null, shareLabels.getString("oneLocal"));
+					}
+					// RemotePaths zusammensetzen
+					ArrayList<String> newPaths = new ArrayList<String>();
+					for(int i = 0; i < remotePaths.size(); i++)
+					{
+						String path = remotePaths.get(i);
+						newPaths.add(localPaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
+					}
+					FTPHandler.download(currentFTP, localPaths, newPaths);
+				}
+			}
+			downloadButton.addMouseListener(new DownloadListener());
+			
+			centerPanel.add(uploadButton);
+			centerPanel.add(downloadButton);
+		}
+		panel.add(centerPanel, BorderLayout.CENTER);
+		
 		return panel;
 	}
 	
@@ -169,16 +349,15 @@ public class ShareFrame
 		return labels;
 	}
 
+	
 	public void refresh()
 	{
+		System.out.println("Refresh ShareFrame");
 		shareLabels = getResourceBundle(tbe.getLang());
-		Component[] comps = frame.getComponents();
-		for (int i = 0; i < comps.length; i++)
-		{
-			frame.remove(comps[i]);
-		}
+		frame.remove(contentPanel);
 		frame.repaint();
-		frame.add(createPanel());
+		contentPanel = createPanel();
+		frame.add(contentPanel);
 		frame.setVisible(false);
 		frame.setVisible(true);
 	}

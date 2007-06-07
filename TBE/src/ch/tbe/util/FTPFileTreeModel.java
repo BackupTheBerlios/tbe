@@ -1,6 +1,7 @@
 package ch.tbe.util;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
@@ -12,12 +13,12 @@ import javax.swing.tree.TreePath;
  * The methods in this class allow the JTree component to traverse the file
  * system tree and display the files and directories.
  */
-public class FileTreeModel implements TreeModel
+public class FTPFileTreeModel implements TreeModel
 {
 	// We specify the root directory when we create the model.
 	protected File root;
 
-	public FileTreeModel(File root)
+	public FTPFileTreeModel(File root)
 	{
 		this.root = root;
 	}
@@ -31,16 +32,29 @@ public class FileTreeModel implements TreeModel
 	// Tell JTree whether an object in the tree is a leaf
 	public boolean isLeaf(Object node)
 	{
-		return ((File) node).isFile();
+		String nodePath = ((File) node).getPath();
+		nodePath.replace("\\", "/");
+		String nodeName = nodePath.substring(nodePath.lastIndexOf("/")+1, nodePath.length());
+		
+		if(nodeName.contains(".") && !node.equals(root))
+			return true;
+		else
+			return false;
 	}
 
 	// Tell JTree how many children a node has
 	public int getChildCount(Object parent)
 	{
-		String[] children = ((File) parent).list();
+		ArrayList<String> childrenPaths = FTPHandler.getDir(((File) parent).getPath().replace("\\", "/"));
+		ArrayList<String> children = new ArrayList<String>();
+		for(String s : childrenPaths)
+		{
+			s.replace("\\", "/");
+			children.add(s.substring(s.lastIndexOf("/")+1, s.length()));
+		}
 		if (children == null)
 			return 0;
-		return children.length;
+		return children.size();
 	}
 
 	// Fetch any numbered child of a node for the JTree.
@@ -48,23 +62,35 @@ public class FileTreeModel implements TreeModel
 	// JTree displays these by calling the File.toString() method.
 	public Object getChild(Object parent, int index)
 	{
-		String[] children = ((File) parent).list();
-		if ((children == null) || (index >= children.length))
+		ArrayList<String> childrenPaths = FTPHandler.getDir(((File) parent).getPath().replace("\\", "/"));
+		ArrayList<String> children = new ArrayList<String>();
+		for(String s : childrenPaths)
+		{
+			s.replace("\\", "/");
+			children.add(s.substring(s.lastIndexOf("/")+1, s.length()));
+		}
+		if ((children == null) || (index >= children.size()))
 			return null;
-		return new File((File) parent, children[index]);
+		return new File((File) parent, children.get(index));
 	}
 
 	// Figure out a child's position in its parent node.
 	public int getIndexOfChild(Object parent, Object child)
 	{
-		String[] children = ((File) parent).list();
-
+		ArrayList<String> childrenPaths = FTPHandler.getDir(((File) parent).getPath().replace("\\", "/"));
+		ArrayList<String> children = new ArrayList<String>();
+		for(String s : childrenPaths)
+		{
+			s.replace("\\", "/");
+			children.add(s.substring(s.lastIndexOf("/")+1, s.length()));
+		}
+		
 		if (children == null)
 			return -1;
 		String childname = ((File) child).getName();
-		for (int i = 0; i < children.length; i++)
+		for (int i = 0; i < children.size(); i++)
 		{
-			if (childname.equals(children[i]))
+			if (childname.equals(children.get(i)))
 				return i;
 		}
 		return -1;

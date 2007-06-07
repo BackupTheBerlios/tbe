@@ -18,6 +18,29 @@ public class FTPHandlerTester
 		 */
 		
 		FTPServer server = new FTPServer("Public", "tbe.netstyle.ch", "tbe_admin", "4quabwej");
+		FTPHandler.connect(server);
+		/*
+		ArrayList<String> pathesL = new ArrayList<String>();
+		ArrayList<String> pathesR = new ArrayList<String>();
+		
+		pathesL.add("D:/webkey.txt");
+		pathesR.add("boards/webkey.txt");
+		
+		FTPHandler.upload(server, pathesL, pathesR);
+		*/
+		/*
+		ArrayList<String> dir_fs = FTPHandler.getDir("boards\floorball");
+		for(String s : dir_fs)
+		{
+			System.out.println(s);
+		}
+		
+		ArrayList<String> dir_bs = FTPHandler.getDir("boards/floorball");
+		for(String s : dir_bs)
+		{
+			System.out.println(s);
+		}
+		*/
 		//FTPServer server = new FTPServer("Public", "tbe.netstyle.ch", "tbe_public", "carmad4");
 		
 		// FTPHandler.connect(server);

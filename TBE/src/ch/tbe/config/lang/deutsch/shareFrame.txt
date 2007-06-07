@@ -6,9 +6,16 @@ remote = Dateien auf dem gewählten FTP-Server
 cancel = Abbrechen
 open = Öffnen
 connect = Verbinden
+upload = Hinaufladen
+download = Herunterladen
 
 # Demands
 chooseServer = Server auswählen
+chooseDrive = Laufwerk auswählen
 
 # Error
 noServer = Es wurde kein Server ausgewählt
+noLocals = Sie haben keine lokalen Dateien ausgewählt
+oneRemote = Wählen Sie genau einen Ordner auf dem Server aus
+noRemotes = Sie haben keine Dateien auf dem Server ausgewählt
+oneLocal = Wählen Sie genau einen lokalen Ordner aus

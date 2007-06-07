@@ -87,8 +87,9 @@ public final class FTPHandler
 	
 	public static void connect(FTPServer server)
 	{
+		if(client != null)
+			disconnect();
 		client = new FTPClient();
-		
 		try
 		{
 			client.setRemoteHost(server.getHost());
@@ -111,6 +112,8 @@ public final class FTPHandler
 	
 	public static ArrayList<String> getDir(String dir)
 	{
+		System.out.println("getDir called with: " + dir);
+		
 		String[] s = new String[]{};
 		
 		try
@@ -133,6 +136,11 @@ public final class FTPHandler
 		for(int i = 0; i < s.length; i++)
 		{
 			content.add(s[i]);
+		}
+		System.out.println("getDir returns ArrayList content: ");
+		for(String cont : content)
+		{
+			System.out.println("*** " + cont);
 		}
 		return content;
 	}
@@ -170,8 +178,7 @@ public final class FTPHandler
 		if(client == null)
 		{
 			connect(server);
-		};
-		
+		}
 		try
 		{
 			String dir = localPath.substring(0, localPath.lastIndexOf("/"));
@@ -210,7 +217,6 @@ public final class FTPHandler
 		{
 			connect(server);
 		}
-		
 		try
 		{
 			for(int i = 0; i < localPaths.size(); i++)
@@ -242,14 +248,13 @@ public final class FTPHandler
 		{
 			connect(server);
 		}
-		
 		try
 		{
 			for(int i = 0; i < localPaths.size(); i++)
 			{
 				File localFile = new File(localPaths.get(i));
 				boolean mkdir;
-				// Nur
+				// cvs ignorieren
 				if(!remotePaths.get(i).contains("cvs"))
 				{
 					String dir = localPaths.get(i).substring(0, localPaths.get(i).lastIndexOf("/"));
@@ -284,5 +289,5 @@ public final class FTPHandler
 			disconnect();
 		}
 	}
-	
+	// TODO: Helper-Methode isLeaf() statt überprüfung wegen dem Punkt im Ordnernamen!
 }
