@@ -2,12 +2,8 @@ package ch.tbe.framework;
 
 import java.awt.geom.Point2D;
 import java.util.List;
-
 import javax.swing.Icon;
-
 import org.jgraph.graph.DefaultEdge;
-
-import ch.tbe.Invoker;
 import ch.tbe.ItemType;
 import ch.tbe.jgraph.TBEGraphConstants;
 
