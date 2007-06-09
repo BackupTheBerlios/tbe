@@ -91,7 +91,7 @@ public class WorkingView extends View
 					Point p = new Point(e.getX(), e.getY());
 					WorkingView.this.getTool().mouseDown(p.x, p.y, e);
 				}
-				if (currentTool instanceof ArrowTool)
+				if (currentTool instanceof ArrowTool || currentTool instanceof TextBoxTool)
 				{
 					setTool(cursorTool, cursorButton);
 				}

@@ -1,5 +1,7 @@
 package ch.tbe;
 
+import java.awt.Color;
+
 import org.jgraph.JGraph;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
@@ -23,6 +25,7 @@ public class Board extends JGraph
 		this.sport = sport;
 		this.field = sport.getFields().get(0);
 		this.description = new Description();
+		this.setBackground(Color.GRAY);
 	}
 
 	public ItemComponent[] getItems()
