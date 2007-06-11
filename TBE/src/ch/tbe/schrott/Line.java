@@ -13,14 +13,14 @@ import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 
-import ch.tbe.BezierDoubleArrowItem;
-import ch.tbe.BezierSolidArrowItem;
-import ch.tbe.PolyCurvedArrowItem;
-import ch.tbe.PolyCurvedBlockItem;
-import ch.tbe.ShapeItem;
 import ch.tbe.ItemType;
-import ch.tbe.TextBoxItem;
 import ch.tbe.gui.TBE;
+import ch.tbe.item.BezierDoubleArrowItem;
+import ch.tbe.item.BezierSolidArrowItem;
+import ch.tbe.item.PolyCurvedArrowItem;
+import ch.tbe.item.PolyCurvedBlockItem;
+import ch.tbe.item.ShapeItem;
+import ch.tbe.item.TextBoxItem;
 import ch.tbe.jgraph.*;
 
 

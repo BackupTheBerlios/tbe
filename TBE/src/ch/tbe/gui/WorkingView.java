@@ -1,8 +1,16 @@
 package ch.tbe.gui;
 
 import ch.tbe.*;
+import ch.tbe.command.CutCommand;
+import ch.tbe.command.DeleteCommand;
+import ch.tbe.command.MoveCommand;
+import ch.tbe.command.PasteCommand;
 import ch.tbe.framework.*;
+import ch.tbe.item.ShapeItem;
 import ch.tbe.jgraph.*;
+import ch.tbe.tool.CursorTool;
+import ch.tbe.tool.ShapeTool;
+import ch.tbe.tool.TextBoxTool;
 import ch.tbe.util.*;
 import java.awt.*;
 import java.awt.datatransfer.UnsupportedFlavorException;

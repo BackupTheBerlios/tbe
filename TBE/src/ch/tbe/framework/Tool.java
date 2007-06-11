@@ -5,8 +5,8 @@ package ch.tbe.framework;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import ch.tbe.CreateCommand;
 import ch.tbe.ItemType;
+import ch.tbe.command.CreateCommand;
 import ch.tbe.gui.TBE;
 
 

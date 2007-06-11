@@ -3,6 +3,18 @@ package ch.tbe;
 import java.awt.geom.Point2D;
 import java.util.List;
 import ch.tbe.framework.*;
+import ch.tbe.item.BezierCurvedArrowItem;
+import ch.tbe.item.BezierDashedArrowItem;
+import ch.tbe.item.BezierDoubleArrowItem;
+import ch.tbe.item.BezierSolidArrowItem;
+import ch.tbe.item.PolyCurvedArrowItem;
+import ch.tbe.item.PolyCurvedBlockItem;
+import ch.tbe.item.PolyDashedArrowItem;
+import ch.tbe.item.PolyDashedBlockItem;
+import ch.tbe.item.PolyDoubleArrowItem;
+import ch.tbe.item.PolySolidArrowItem;
+import ch.tbe.item.PolySolidBlockItem;
+import ch.tbe.item.ShapeItem;
 
 public final class ItemFactory
 {
