@@ -3,6 +3,7 @@ package ch.tbe;
 import java.awt.Color;
 
 import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
 import ch.tbe.framework.ItemComponent;
@@ -119,5 +120,15 @@ public class Board extends JGraph
 		this.repaint();
 		tbe.getMenu().refreshInvokerVisibility();
 		TBE.getInstance().getView().refresh();
+	}
+
+	public ItemComponent[] cloneItems(Object[] cArray)
+	{
+		ItemComponent[] rArray = new ItemComponent[cArray.length];
+		for (int i = 0; i < cArray.length; i++)
+		{
+			rArray[i] = (ItemComponent) ((DefaultGraphCell) cArray[i]).clone();
+		}
+		return rArray;
 	}
 }

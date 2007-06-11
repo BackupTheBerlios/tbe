@@ -23,7 +23,7 @@ public class MoveCommand extends Command
 	{
 		super(items);
 		this.view = (WorkingView) TBE.getInstance().getView();
-		this.startItems = view.cloneItems(items);
+		this.startItems = view.getBoard().cloneItems(items);
 	}
 
 	public void undo()
@@ -80,6 +80,6 @@ public class MoveCommand extends Command
 
 	public void setMoveEnd(ItemComponent[] endItems)
 	{
-		this.endItems = view.cloneItems(endItems);
+		this.endItems = view.getBoard().cloneItems(endItems);
 	}
 }

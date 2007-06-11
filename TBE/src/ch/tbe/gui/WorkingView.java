@@ -401,7 +401,7 @@ public class WorkingView extends View
 		ArrayList<Command> actCommands = new ArrayList<Command>();
 		actCommands.add(cut);
 		tbe.addCommands(actCommands);
-		ComponentSelection contents = new ComponentSelection(this
+		ComponentSelection contents = new ComponentSelection(this.getBoard()
 				.cloneItems(items));
 		tbe.getClipboard().setContents(contents, cut);
 		board.removeItem(items);
@@ -414,7 +414,7 @@ public class WorkingView extends View
 		ArrayList<Command> actCommands = new ArrayList<Command>();
 		actCommands.add(cut);
 		tbe.addCommands(actCommands);
-		ComponentSelection contents = new ComponentSelection(this
+		ComponentSelection contents = new ComponentSelection(this.getBoard()
 				.cloneItems(items));
 		tbe.getClipboard().setContents(contents, cut);
 
@@ -449,19 +449,9 @@ public class WorkingView extends View
 				e1.printStackTrace();
 			}
 
-			board.addItem(this.cloneItems(tempItems));
+			board.addItem(this.getBoard().cloneItems(tempItems));
 
 		}
-	}
-
-	public ItemComponent[] cloneItems(Object[] cArray)
-	{
-		ItemComponent[] rArray = new ItemComponent[cArray.length];
-		for (int i = 0; i < cArray.length; i++)
-		{
-			rArray[i] = (ItemComponent) ((DefaultGraphCell) cArray[i]).clone();
-		}
-		return rArray;
 	}
 
 	public void selectAllItems()

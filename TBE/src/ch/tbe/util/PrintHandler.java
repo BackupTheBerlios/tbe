@@ -22,14 +22,20 @@ import javax.swing.JFrame;
 import javax.swing.RepaintManager;
 import javax.swing.filechooser.FileFilter;
 
+import org.jgraph.graph.DefaultGraphModel;
+import org.jgraph.graph.GraphLayoutCache;
+import org.jgraph.graph.GraphModel;
+
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import ch.tbe.Board;
+import ch.tbe.jgraph.TBECellViewFactory;
 
 public final class PrintHandler implements Printable
 {
 	private Component componentToBePrinted;
+	private static JFrame f;
 
 	public static void printBoard(Board b)
 	{
@@ -49,10 +55,12 @@ public final class PrintHandler implements Printable
 			try
 			{
 				printJob.print();
-			} catch (PrinterException pe)
+			}
+			catch (PrinterException pe)
 			{
 				System.out.println("Error printing: " + pe);
 			}
+			//f.dispose();
 	}
 
 	public int print(Graphics g, PageFormat pageFormat, int pageIndex)
@@ -60,7 +68,8 @@ public final class PrintHandler implements Printable
 		if (pageIndex > 0)
 		{
 			return (NO_SUCH_PAGE);
-		} else
+		}
+		else
 		{
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.translate(pageFormat.getImageableX(), pageFormat
@@ -86,7 +95,7 @@ public final class PrintHandler implements Printable
 
 	public static void export(Board b)
 	{
-		
+		Component comp = createLayout(b);
 		JFileChooser chooser = new JFileChooser();
 
 		chooser.setFileFilter(new FileFilter()
@@ -102,10 +111,13 @@ public final class PrintHandler implements Printable
 				return "JPEG (*.jpg)";
 			}
 		});
+
 		chooser.showSaveDialog(new Frame());
 
-		Component comp = createLayout(b);
 		File filename = chooser.getSelectedFile();
+		if (!filename.getPath().toLowerCase().endsWith(".jpg")){
+			filename = new File(filename.getPath() + ".jpg");
+		}
 		Dimension size = comp.getSize();
 		BufferedImage myImage = new BufferedImage(size.width, size.height,
 				BufferedImage.TYPE_INT_RGB);
@@ -117,20 +129,34 @@ public final class PrintHandler implements Printable
 			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
 			encoder.encode(myImage);
 			out.close();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
 		}
+		catch (Exception e)
+		{
+			// TODO exeption handling
+		}
+		f.dispose();
 	}
-	
-	private static Component createLayout(Board board){
-		JFrame f = new JFrame();
+
+	private static Component createLayout(Board board)
+	{
+		f = new JFrame("Vorschau");// TODO language
 		f.setLayout(new BorderLayout());
-		f.add(board, BorderLayout.CENTER);
+		GraphModel model = new DefaultGraphModel();
+		GraphLayoutCache view = new GraphLayoutCache(model,
+				new TBECellViewFactory());
+		Board temp = new Board(model, view, board.getSport());
+		temp.getGraphLayoutCache().insert(
+				board.cloneItems(board.getGraphLayoutCache().getCells(true,
+						true, true, true)));
+		temp.setBackground(board.getBackground());
+		temp.setBackgroundImage(board.getBackgroundImage());
+		temp.clearSelection();
+
+		f.add(temp);
 		f.pack();
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);
-		
-		
+
 		return f;
 	}
 }
