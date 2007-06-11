@@ -15,14 +15,14 @@ public class CursorImage {
     		int scaledH = (int)(hi.getHeight(null) * factor);
     		int scaledW = (int)(hi.getWidth(null) * factor);
     		
-    		hi = hi.getScaledInstance(scaledW , scaledH, Image.SCALE_SMOOTH);
+    		hi = hi.getScaledInstance(scaledW , scaledH, Image.SCALE_DEFAULT);
     	}
     	
     	Image lo = new ImageIcon("src/ch/tbe/pics/cursor.png").getImage();
     	
     	int w = Math.max(hi.getHeight(null), lo.getWidth(null));
         int h = Math.max(hi.getHeight(null), lo.getHeight(null));
-        int type = BufferedImage.TYPE_INT_ARGB;
+        int type = BufferedImage.TYPE_INT_RGB;
         BufferedImage image = new BufferedImage(w, h, type);
         Graphics2D g2 = image.createGraphics();
         int x = (w - lo.getWidth(null))/2;
