@@ -210,7 +210,8 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer , Imag
 					g2d.translate(getWidth() / 2, getHeight() / 2);
 					g2d.rotate(Math.toRadians(TBEGraphConstants.getRotation(map)));
 					g2d.translate(-getWidth() / 2, -getHeight() / 2);
-			    	g2d.drawImage(i, 0,0 ,(int)r.getWidth(), (int)r.getHeight(), this);}
+
+			    	g2d.drawImage(i, (int) (getWidth()/2-r.getWidth()/2),(int) (getHeight()/2-r.getHeight()/2) ,(int)r.getWidth(), (int)r.getHeight(), this);}
 				    
 				
 				

@@ -115,7 +115,7 @@ public final class PrintHandler implements Printable
 		chooser.showSaveDialog(new Frame());
 
 		File filename = chooser.getSelectedFile();
-		if (!filename.getPath().toLowerCase().endsWith(".jpg")){
+		if (filename != null && !filename.getPath().toLowerCase().endsWith(".jpg")){
 			filename = new File(filename.getPath() + ".jpg");
 		}
 		Dimension size = comp.getSize();
