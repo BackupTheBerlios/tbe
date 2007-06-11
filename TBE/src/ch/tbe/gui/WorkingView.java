@@ -566,17 +566,13 @@ public class WorkingView extends View
 		}
 		else
 		{
-
-			Cursor c = getToolkit()
-					.createCustomCursor(
-							CursorImage
-									.getMergedImage((Image) ((ImageIcon) tool
-											.getShapeType().getIcon())
-											.getImage()),
-							new Point(16 - tool.getShapeType().getIcon()
-									.getIconWidth() / 2,
-									16 - tool.getShapeType().getIcon()
-											.getIconHeight() / 2), "Cursor");
+			// TODO: Grosse Bilder verkleinern...
+			int x = 16 - tool.getShapeType().getPicture().getIconWidth() / 2;
+			int y = 16 - tool.getShapeType().getPicture().getIconHeight() / 2;
+			
+			if (x < 0) x =0;
+			if (y < 0) y =0;
+			Cursor c = getToolkit().createCustomCursor(CursorImage.getMergedImage((Image)((ImageIcon) tool.getShapeType().getPicture()).getImage()), new Point(x,y), "Cursor");
 
 			board.setCursor(c);
 		}
