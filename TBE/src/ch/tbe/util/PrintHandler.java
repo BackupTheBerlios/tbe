@@ -30,11 +30,10 @@ import ch.tbe.Board;
 public final class PrintHandler implements Printable
 {
 	private Component componentToBePrinted;
-	private static Board board;
 
 	public static void printBoard(Board b)
 	{
-		new PrintHandler(PrintHandler.createLayout()).print();
+		new PrintHandler(PrintHandler.createLayout(b)).print();
 	}
 
 	public PrintHandler(Component componentToBePrinted)
@@ -85,8 +84,9 @@ public final class PrintHandler implements Printable
 		currentManager.setDoubleBufferingEnabled(true);
 	}
 
-	public static void export(Component myComponent)
+	public static void export(Board b)
 	{
+		
 		JFileChooser chooser = new JFileChooser();
 
 		chooser.setFileFilter(new FileFilter()
@@ -104,12 +104,13 @@ public final class PrintHandler implements Printable
 		});
 		chooser.showSaveDialog(new Frame());
 
+		Component comp = createLayout(b);
 		File filename = chooser.getSelectedFile();
-		Dimension size = myComponent.getSize();
+		Dimension size = comp.getSize();
 		BufferedImage myImage = new BufferedImage(size.width, size.height,
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2 = myImage.createGraphics();
-		myComponent.paint(g2);
+		comp.paint(g2);
 		try
 		{
 			OutputStream out = new FileOutputStream(filename);
@@ -122,11 +123,12 @@ public final class PrintHandler implements Printable
 		}
 	}
 	
-	private static Component createLayout(){
+	private static Component createLayout(Board board){
 		JFrame f = new JFrame();
 		f.setLayout(new BorderLayout());
 		f.add(board, BorderLayout.CENTER);
-		
+		f.pack();
+		f.setVisible(true);
 		
 		
 		return f;
