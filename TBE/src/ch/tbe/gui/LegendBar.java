@@ -39,16 +39,6 @@ public class LegendBar extends JToolBar
 			{
 				if(item != null)
 				{
-					actType = item.getType();
-					if(item instanceof ShapeItem)
-					{
-						actIcon = ((ShapeItem)item).getIcon();
-						JPanel iPanel = new JPanel();
-						iPanel.add(new JLabel(actIcon));
-						iPanel.add(new JLabel(actType));
-						shapePanel.add(iPanel);
-					}
-					
 					if(item instanceof ArrowItem)
 					{
 						actType = ((ArrowItem)item).getItemType().getDescription();
@@ -57,6 +47,16 @@ public class LegendBar extends JToolBar
 						iPanel.add(new JLabel(actIcon));
 						iPanel.add(new JLabel(actType));
 						arrowPanel.add(iPanel);
+					}
+					
+					actType = item.getType();
+					if(item instanceof ShapeItem)
+					{
+						actIcon = ((ShapeItem)item).getIcon();
+						JPanel iPanel = new JPanel();
+						iPanel.add(new JLabel(actIcon));
+						iPanel.add(new JLabel(actType));
+						shapePanel.add(iPanel);
 					}
 					
 					for(int i=0; i<items.length; i++)
