@@ -75,6 +75,7 @@ public class WorkingView extends View
 
 		// Board
 		this.board.setBackgroundImage((ImageIcon) sport.getFields().get(0).getIcon());
+		
 		rightPanel.add(new JScrollPane(board), BorderLayout.CENTER);
 		class ViewMouseListener extends MouseAdapter
 		{

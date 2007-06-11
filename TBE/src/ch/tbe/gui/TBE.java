@@ -1,5 +1,6 @@
 package ch.tbe.gui;
 
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
@@ -38,7 +39,7 @@ public class TBE
 
 	private TBE()
 	{
-		
+
 	}
 
 	public static TBE getInstance()
@@ -62,8 +63,12 @@ public class TBE
 
 		frame = new JFrame("TBE - Tactic Board Editor");
 		splashScreen.setProgress(10);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		frame.setSize(toolkit.getScreenSize());
+		frame
+				.setMinimumSize(new Dimension((int) toolkit.getScreenSize()
+						.getWidth() / 2, (int) toolkit.getScreenSize()
+						.getHeight() / 2));
 		splashScreen.setProgress(20);
 		menu = new Menu(lang);
 		frame.setJMenuBar(menu);
@@ -111,17 +116,20 @@ public class TBE
 
 	public void saveAs()
 	{
-		if (view instanceof WorkingView){
-			//TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht möglich ist.
-			((WorkingView)view).getBoard().setPath("");
-			XMLHandler.saveBoard(((WorkingView)view).getBoard());
+		if (view instanceof WorkingView)
+		{
+			// TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht
+			// möglich ist.
+			((WorkingView) view).getBoard().setPath("");
+			XMLHandler.saveBoard(((WorkingView) view).getBoard());
 		}
 	}
 
 	public void save()
 	{
-		if (view instanceof WorkingView){
-			XMLHandler.saveBoard(((WorkingView)view).getBoard());
+		if (view instanceof WorkingView)
+		{
+			XMLHandler.saveBoard(((WorkingView) view).getBoard());
 		}
 	}
 
@@ -145,7 +153,8 @@ public class TBE
 		{
 			public boolean accept(File f)
 			{
-				return f.getName().toLowerCase().endsWith(".tbe")|| f.isDirectory();
+				return f.getName().toLowerCase().endsWith(".tbe")
+						|| f.isDirectory();
 			}
 
 			public String getDescription()
@@ -177,12 +186,12 @@ public class TBE
 	public void openSettings()
 	{
 	}
-	
+
 	public ArrayList<FTPServer> getServers()
 	{
 		return this.servers;
 	}
-	
+
 	public void addFTPServer(String name, String host, String username,
 			String password)
 	{
@@ -251,7 +260,7 @@ public class TBE
 	{
 		return this.UserEmail;
 	}
-	
+
 	public Menu getMenu()
 	{
 		return this.menu;
@@ -283,8 +292,9 @@ public class TBE
 	{
 		return clipboard;
 	}
-	
-	public String getVersion(){
+
+	public String getVersion()
+	{
 		return "1.0";
 	}
 }
