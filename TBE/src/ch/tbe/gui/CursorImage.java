@@ -7,6 +7,17 @@ import javax.swing.*;
 public class CursorImage {
  
     public static BufferedImage getMergedImage(Image hi) {
+    	
+    	if (hi.getHeight(null) > 32 || hi.getWidth(null) > 32){
+    		
+    		double factor = 32d / Math.max(hi.getWidth(null), hi.getHeight(null));
+  
+    		int scaledH = (int)(hi.getHeight(null) * factor);
+    		int scaledW = (int)(hi.getWidth(null) * factor);
+    		
+    		hi = hi.getScaledInstance(scaledW , scaledH, Image.SCALE_SMOOTH);
+    	}
+    	
     	Image lo = new ImageIcon("src/ch/tbe/pics/cursor.png").getImage();
     	
     	int w = Math.max(hi.getHeight(null), lo.getWidth(null));
