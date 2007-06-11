@@ -1,11 +1,6 @@
 package ch.tbe.util;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
@@ -148,10 +143,8 @@ public final class PrintHandler implements Printable
 		temp.getGraphLayoutCache().insert(
 				board.cloneItems(board.getGraphLayoutCache().getCells(true,
 						true, true, true)));
-		temp.setBackground(board.getBackground());
 		temp.setBackgroundImage(board.getBackgroundImage());
 		temp.clearSelection();
-
 		f.add(temp);
 		f.pack();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
