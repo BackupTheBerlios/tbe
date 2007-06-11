@@ -17,6 +17,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 import ch.tbe.Invoker;
 import ch.tbe.framework.View;
+import ch.tbe.util.PrintHandler;
 
 public class Menu extends JMenuBar
 {
@@ -142,7 +143,13 @@ public class Menu extends JMenuBar
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				// TODO
+				View v = tbe.getView();
+				if (v instanceof WorkingView)
+				{
+					PrintHandler.export(((WorkingView) v).getBoard());
+				}
+
+				
 			}
 		}
 		fileExport.addMouseListener(new fileExportListener());
@@ -153,7 +160,11 @@ public class Menu extends JMenuBar
 			@Override
 			public void mouseReleased(MouseEvent arg0)
 			{
-				// TODO
+				View v = tbe.getView();
+				if (v instanceof WorkingView)
+				{
+					PrintHandler.printBoard(((WorkingView) v).getBoard());
+				}
 			}
 		}
 		filePrint.addMouseListener(new filePrintListener());

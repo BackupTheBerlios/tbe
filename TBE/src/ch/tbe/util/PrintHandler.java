@@ -1,5 +1,6 @@
 package ch.tbe.util;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -15,7 +16,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.RepaintManager;
 import javax.swing.filechooser.FileFilter;
 
@@ -27,10 +30,11 @@ import ch.tbe.Board;
 public final class PrintHandler implements Printable
 {
 	private Component componentToBePrinted;
+	private static Board board;
 
-	public static void printBoard(Component c)
+	public static void printBoard(Board b)
 	{
-		new PrintHandler(c).print();
+		new PrintHandler(PrintHandler.createLayout()).print();
 	}
 
 	public PrintHandler(Component componentToBePrinted)
@@ -116,5 +120,15 @@ public final class PrintHandler implements Printable
 		{
 			e.printStackTrace();
 		}
+	}
+	
+	private static Component createLayout(){
+		JFrame f = new JFrame();
+		f.setLayout(new BorderLayout());
+		f.add(board, BorderLayout.CENTER);
+		
+		
+		
+		return f;
 	}
 }
