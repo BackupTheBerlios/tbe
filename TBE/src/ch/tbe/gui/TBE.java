@@ -1,6 +1,7 @@
 package ch.tbe.gui;
 
 import java.awt.Frame;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.io.File;
 import java.util.ArrayList;
@@ -27,8 +28,6 @@ public class TBE
 	private String UserName;
 	private String UserPrename;
 	private String UserEmail;
-	private final int HEIGHT = 800;
-	private final int WIDTH = 1000;
 	private Invoker invoker = Invoker.getInstance();
 	private JFrame frame;
 	private ArrayList<String> paths = new ArrayList<String>();
@@ -63,7 +62,8 @@ public class TBE
 
 		frame = new JFrame("TBE - Tactic Board Editor");
 		splashScreen.setProgress(10);
-		frame.setSize(this.WIDTH, this.HEIGHT);
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		frame.setSize(toolkit.getScreenSize());
 		splashScreen.setProgress(20);
 		menu = new Menu(lang);
 		frame.setJMenuBar(menu);
