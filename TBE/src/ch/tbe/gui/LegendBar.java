@@ -6,9 +6,7 @@ import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-
 import ch.tbe.Board;
-import ch.tbe.Sport;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.item.ShapeItem;
@@ -17,7 +15,7 @@ public class LegendBar extends JToolBar
 {
 	private Board board;
 	
-	public LegendBar(Board board, Sport sport)
+	public LegendBar(Board board)
 	{
 		this.board = board;
 		this.setLayout(new BorderLayout());

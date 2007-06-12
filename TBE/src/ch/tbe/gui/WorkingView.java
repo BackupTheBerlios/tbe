@@ -120,7 +120,7 @@ public class WorkingView extends View
 
 		// Legend
 		// TODO
-		legendBar = new LegendBar(board, sport);
+		legendBar = new LegendBar(board);
 		rightPanel.add(legendBar, BorderLayout.SOUTH);
 
 		this.add(rightPanel, BorderLayout.CENTER);
