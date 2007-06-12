@@ -1,4 +1,4 @@
-package ch.tbe.gui;
+package ch.tbe;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -6,16 +6,18 @@ import javax.swing.*;
  
 public class CursorImage {
  
-    public static BufferedImage getMergedImage(Image hi) {
+    public static BufferedImage getMergedImage(Image icon) {
+    	Image hi = icon;
     	
-    	if (hi.getHeight(null) > 32 || hi.getWidth(null) > 32){
+    	if (icon.getHeight(null) > 32 || icon.getWidth(null) > 32){
     		
-    		double factor = 32d / Math.max(hi.getWidth(null), hi.getHeight(null));
+    		double factor = 32d / Math.max(icon.getWidth(null), icon.getHeight(null));
   
-    		int scaledH = (int)(hi.getHeight(null) * factor);
-    		int scaledW = (int)(hi.getWidth(null) * factor);
+    		int scaledH = (int)(icon.getHeight(null) * factor);
+    		int scaledW = (int)(icon.getWidth(null) * factor);
     		
-    		hi = hi.getScaledInstance(scaledW , scaledH, Image.SCALE_DEFAULT);
+    		hi = icon.getScaledInstance(scaledW , scaledH, Image.SCALE_REPLICATE);
+    		System.out.println("image scaled: "+ scaledW + ' ' + scaledH);
     	}
     	
     	Image lo = new ImageIcon("src/ch/tbe/pics/cursor.png").getImage();
@@ -27,7 +29,7 @@ public class CursorImage {
         Graphics2D g2 = image.createGraphics();
         int x = (w - lo.getWidth(null))/2;
         int y = (h - lo.getHeight(null))/2;
-        g2.drawImage(lo, x, y, null);
+        //g2.drawImage(lo, x, y, null);
         x = (w - hi.getWidth(null))/2;
         y = (h - hi.getHeight(null))/2;
         g2.drawImage(hi, x, y, null);
