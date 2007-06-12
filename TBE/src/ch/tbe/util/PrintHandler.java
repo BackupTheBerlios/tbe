@@ -1,20 +1,7 @@
 package ch.tbe.util;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
-import java.io.File;
-
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-
-import javax.swing.JComponent;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.RepaintManager;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
 import org.jgraph.graph.DefaultGraphModel;
@@ -27,7 +14,13 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import ch.tbe.Board;
 import ch.tbe.jgraph.TBECellViewFactory;
 
-public final class PrintHandler implements Printable
+import java.awt.image.BufferedImage;
+import java.awt.print.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+
+public class PrintHandler implements Printable
 {
 	private Component componentToBePrinted;
 	private static JFrame f;
@@ -35,6 +28,11 @@ public final class PrintHandler implements Printable
 	public static void printBoard(Board b)
 	{
 		new PrintHandler(PrintHandler.createLayout(b)).print();
+	}
+
+	public static void printComponent(Component c)
+	{
+		new PrintHandler(c).print();
 	}
 
 	public PrintHandler(Component componentToBePrinted)
@@ -55,25 +53,38 @@ public final class PrintHandler implements Printable
 			{
 				System.out.println("Error printing: " + pe);
 			}
-			//f.dispose();
+			f.dispose();
 	}
 
-	public int print(Graphics g, PageFormat pageFormat, int pageIndex)
+	public int print(Graphics g, PageFormat pf, int pageIndex)
 	{
-		if (pageIndex > 0)
+		int response = NO_SUCH_PAGE;
+		Graphics2D g2 = (Graphics2D) g;
+
+		disableDoubleBuffering(componentToBePrinted);
+		Dimension d = componentToBePrinted.getSize();
+		double panelWidth = d.width; // width in pixels
+		double panelHeight = d.height; // height in pixels
+		double pageHeight = pf.getImageableHeight(); // height of printer
+		// page
+		double pageWidth = pf.getImageableWidth(); // width of printer page
+		double scale = pageWidth / panelWidth;
+		int totalNumPages = (int) Math.ceil(scale * panelHeight / pageHeight); // make
+
+		if (pageIndex >= totalNumPages)
 		{
-			return (NO_SUCH_PAGE);
+			response = NO_SUCH_PAGE;
 		}
 		else
 		{
-			Graphics2D g2d = (Graphics2D) g;
-			g2d.translate(pageFormat.getImageableX(), pageFormat
-					.getImageableY());
-			disableDoubleBuffering(componentToBePrinted);
-			componentToBePrinted.paint(g2d);
+			g2.translate(pf.getImageableX(), pf.getImageableY());
+			g2.translate(0f, -pageIndex * pageHeight);
+			g2.scale(scale, scale);
+			componentToBePrinted.paint(g2);
 			enableDoubleBuffering(componentToBePrinted);
-			return (PAGE_EXISTS);
+			response = Printable.PAGE_EXISTS;
 		}
+		return response;
 	}
 
 	public static void disableDoubleBuffering(Component c)
@@ -110,7 +121,9 @@ public final class PrintHandler implements Printable
 		chooser.showSaveDialog(new Frame());
 
 		File filename = chooser.getSelectedFile();
-		if (filename != null && !filename.getPath().toLowerCase().endsWith(".jpg")){
+		if (filename != null
+				&& !filename.getPath().toLowerCase().endsWith(".jpg"))
+		{
 			filename = new File(filename.getPath() + ".jpg");
 		}
 		Dimension size = comp.getSize();
@@ -152,4 +165,5 @@ public final class PrintHandler implements Printable
 
 		return f;
 	}
+
 }
