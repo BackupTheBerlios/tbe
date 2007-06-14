@@ -1,6 +1,10 @@
 package ch.tbe;
 
+import java.awt.Cursor;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Component;
+import java.awt.Toolkit;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -13,7 +17,8 @@ public class ItemType
 	private Icon picture;
 	private String name;
 	private int maxSideLength;
-	private Image cursor;
+	private Cursor cursor;
+	private Image cursorImage;
 	
 	public ItemType(String name, String description, Icon icon, Icon picture, int maxSideLength){
 		this.name = name;
@@ -21,7 +26,30 @@ public class ItemType
 		this.description = description;
 		this.picture = picture;
 		this.maxSideLength = maxSideLength;
-		this.cursor = CursorImage.getMergedImage(((ImageIcon)picture).getImage(), maxSideLength);
+		if (maxSideLength > 32){
+			this.maxSideLength = 32;
+		}
+		this.cursorImage = CursorImage.getMergedImage(((ImageIcon)picture).getImage(), maxSideLength);
+		
+		int x = 0;
+		int y = 0;
+		int scaledH = picture.getIconHeight();
+		int scaledW = picture.getIconWidth();
+		
+		if (scaledH > maxSideLength || scaledW > maxSideLength){
+    		double factor = (double)maxSideLength / Math.max(scaledW, scaledH);
+    		scaledH = (int)(scaledH * factor);
+    		scaledW = (int)(scaledW * factor);
+    	}
+		
+		x = 15 - scaledW / 2;
+		y = 15 - scaledH / 2;
+
+		if (x < 0) x = 0;
+		if (y < 0) y = 0;
+
+		cursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImage, new Point(x,y), "Cursor");
+		this.maxSideLength = maxSideLength;
 	}
 	
 	public ItemType(String name, String description, Icon icon){
@@ -75,7 +103,7 @@ public class ItemType
 		return this.maxSideLength;
 	}
 	
-	public Image getCursor(){
+	public Cursor getCursor(){
 		return this.cursor;
 	}
 

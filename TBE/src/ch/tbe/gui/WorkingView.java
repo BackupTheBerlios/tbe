@@ -555,34 +555,7 @@ public class WorkingView extends View
 		}
 		else
 		{
-			int x = 0;
-			int y = 0;
-			int MAX = tool.getShapeType().getMaxSideWidth();
-			
-			if (MAX < 32) MAX = 32;
-
-			// TODO: Grosse Bilder verkleinern...
-			if (tool.getShapeType().getPicture().getIconWidth() > MAX){
-				x = (31 - MAX) / 2;
-			}else{
-				x = 16 - tool.getShapeType().getPicture().getIconWidth() / 2;	
-			}
-			
-			if (tool.getShapeType().getPicture().getIconWidth() > MAX){
-				y = (31 - MAX) / 2;
-			}else{
-				y = 16 - tool.getShapeType().getPicture().getIconHeight() / 2;	
-			} 
-
-			// TODO: Remove System.out.println
-			System.out.println(x);
-			System.out.println(y);
-			
-			if (x < 0) x =0;
-			if (y < 0) y =0;
-			Cursor c = getToolkit().createCustomCursor(tool.getShapeType().getCursor(), new Point(x,y), "Cursor");
-
-			board.setCursor(c);
+			board.setCursor(tool.getShapeType().getCursor());
 		}
 	}
 
