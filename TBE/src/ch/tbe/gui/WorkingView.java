@@ -595,18 +595,16 @@ public class WorkingView extends View
 		ResourceBundle labels = null;
 		try
 		{
-			workingViewStream = WorkingView.class
-					.getResourceAsStream("../config/lang/" + lang
-							+ "/workingView.txt");
+			workingViewStream = WorkingView.class.getResourceAsStream("../config/lang/" + lang+ "/workingView.txt");
 			labels = new PropertyResourceBundle(workingViewStream);
 		}
 		catch (FileNotFoundException fnne)
 		{
-			System.out.println("LanguageFile for WorkingView not found !");
+			System.err.println("LanguageFile for WorkingView not found !");
 		}
 		catch (IOException ioe)
 		{
-			System.out.println("Error with ResourceBundle WorkingView!");
+			System.err.println("Error with ResourceBundle WorkingView!");
 		}
 		return labels;
 	}

@@ -27,6 +27,7 @@ public class Board extends JGraph
 		this.field = sport.getFields().get(0);
 		this.description = new Description();
 		this.setBackground(Color.GRAY);
+		TBE.getInstance().getMenu().setFields(this.sport.getFields());
 	}
 
 	public ItemComponent[] getItems()

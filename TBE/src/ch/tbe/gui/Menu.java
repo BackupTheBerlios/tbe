@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
@@ -15,14 +16,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
+
+import ch.tbe.Field;
 import ch.tbe.Invoker;
 import ch.tbe.framework.View;
 import ch.tbe.util.PrintHandler;
+import ch.tbe.gui.WorkingView;
 
 public class Menu extends JMenuBar
 {
 	private ResourceBundle menuLabels;
-
 	private Invoker invoker = Invoker.getInstance();
 	private TBE tbe = TBE.getInstance();
 
@@ -33,6 +36,7 @@ public class Menu extends JMenuBar
 	private JMenuItem viewToolbar;
 	private JMenuItem viewSidebar;
 	private JMenuItem viewLegend;
+	private JMenu boardmenu;
 
 	public Menu(String lang)
 	{
@@ -199,18 +203,12 @@ public class Menu extends JMenuBar
 		}
 		fileQuit.addMouseListener(new fileQuitListener());
 
-		fileNew
-				.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
-		fileOpen.setIcon(new ImageIcon(TBE.class
-				.getResource("../pics/open.png")));
-		fileShare.setIcon(new ImageIcon(TBE.class
-				.getResource("../pics/share.png")));
-		fileExport.setIcon(new ImageIcon(TBE.class
-				.getResource("../pics/export.png")));
-		fileSave.setIcon(new ImageIcon(TBE.class
-				.getResource("../pics/save.png")));
-		filePrint.setIcon(new ImageIcon(TBE.class
-				.getResource("../pics/print.png")));
+		fileNew.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
+		fileOpen.setIcon(new ImageIcon(TBE.class.getResource("../pics/open.png")));
+		fileShare.setIcon(new ImageIcon(TBE.class.getResource("../pics/share.png")));
+		fileExport.setIcon(new ImageIcon(TBE.class.getResource("../pics/export.png")));
+		fileSave.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
+		filePrint.setIcon(new ImageIcon(TBE.class.getResource("../pics/print.png")));
 
 		filemenu.add(fileNew);
 		filemenu.add(fileOpen);
@@ -257,8 +255,7 @@ public class Menu extends JMenuBar
 				}
 			}
 		}
-		editCut.setAccelerator(KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_X, java.awt.Event.CTRL_MASK));
+		editCut.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.Event.CTRL_MASK));
 		editCut.addActionListener(new editCutListener());
 
 		JMenuItem editCopy = new JMenuItem(menuLabels.getString("edit3"));
@@ -386,7 +383,7 @@ public class Menu extends JMenuBar
 
 	private JMenu createBoardMenu()
 	{
-		JMenu boardmenu = new JMenu(menuLabels.getString("title3"));
+		boardmenu = new JMenu(menuLabels.getString("title3"));
 
 		JMenuItem boardClear = new JMenuItem(menuLabels.getString("board2"));
 		class boardClearListener implements ActionListener
@@ -401,11 +398,14 @@ public class Menu extends JMenuBar
 				}
 			}
 		}
-		boardClear.setAccelerator(KeyStroke.getKeyStroke(
-				java.awt.event.KeyEvent.VK_DELETE, java.awt.Event.CTRL_MASK));
+		boardClear.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_DELETE, java.awt.Event.CTRL_MASK));
 		boardClear.addActionListener(new boardClearListener());
 
-		boardmenu.add(createFieldMenu());
+		if (TBE.getInstance().getView() instanceof WorkingView){
+		    boardmenu.add(createFieldMenu(((WorkingView) TBE.getInstance().getView()).getBoard().getSport().getFields()));
+		}else{
+		    boardmenu.add(createFieldMenu(new ArrayList<Field>()));
+		}
 		boardmenu.add(boardClear);
 
 		return boardmenu;
@@ -467,46 +467,28 @@ public class Menu extends JMenuBar
 		return viewMenu;
 	}
 
-	private JMenu createFieldMenu()
+	private JMenu createFieldMenu(ArrayList<Field> fields)
 	{
+	    	System.out.println("Create Fieldmenu: "+ fields.size());
 		JMenu boardChangeField = new JMenu(menuLabels.getString("board1"));
-		// TODO: Verfügbare Fields der Sportart dynamisch auslesen
-		JMenuItem field1 = new JMenuItem("Leeres Spielfeld");
-		class field1Listener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
+		
+		for (Field field: fields){
+		    JMenuItem fieldMenu = new JMenuItem(field.getName());
+		    class fieldListener extends MouseAdapter
 			{
-				// TODO
+				Field field;
+				public fieldListener(Field field){
+				    this.field = field;
+				}
+				@Override
+				public void mouseReleased(MouseEvent arg0)
+				{
+				    ((WorkingView) TBE.getInstance().getView()).getBoard().setField(this.field);
+				}
 			}
+		    fieldMenu.addMouseListener(new fieldListener(field));
+		    boardChangeField.add(fieldMenu);
 		}
-		field1.addMouseListener(new field1Listener());
-
-		JMenuItem field2 = new JMenuItem("Halbes Feld");
-		class field2Listener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				// TODO
-			}
-		}
-		field2.addMouseListener(new field2Listener());
-
-		JMenuItem field3 = new JMenuItem("Torraum");
-		class field3Listener extends MouseAdapter
-		{
-			@Override
-			public void mouseReleased(MouseEvent arg0)
-			{
-				// TODO
-			}
-		}
-		field3.addMouseListener(new field3Listener());
-
-		boardChangeField.add(field2);
-		boardChangeField.add(field1);
-		boardChangeField.add(field3);
 		return boardChangeField;
 	}
 
@@ -598,5 +580,10 @@ public class Menu extends JMenuBar
 		}else{
 			viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
 		}
+	}
+	
+	public void setFields(ArrayList<Field> fields){
+	    boardmenu = new JMenu(menuLabels.getString("title3"));
+	    boardmenu.add(createFieldMenu(fields));
 	}
 }

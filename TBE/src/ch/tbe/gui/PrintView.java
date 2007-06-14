@@ -35,7 +35,7 @@ public class PrintView extends View
 
 		this.board = board;
 		this.setBackground(Color.white);
-		this.setLayout(new BorderLayout(10,0));
+		this.setLayout(new BorderLayout(20,20));
 		this.createView();
 	}
 
@@ -79,7 +79,8 @@ public class PrintView extends View
 
 		// center-panel
 		JPanel center = new JPanel();
-		center.setLayout(new BorderLayout(10,0));
+		center.setBackground(Color.WHITE);
+		center.setLayout(new BorderLayout(20,20));
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new TBECellViewFactory());
