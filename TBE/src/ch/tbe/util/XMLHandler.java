@@ -249,7 +249,6 @@ public final class XMLHandler
 		xml.loadFile(path);
 
 		Board actBoard = board;
-		System.out.println(path);
 		actBoard.setPath(path);
 		board = null;
 
