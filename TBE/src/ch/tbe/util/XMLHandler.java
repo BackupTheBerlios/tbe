@@ -10,6 +10,7 @@ import ch.tbe.jgraph.*;
 
 import java.awt.Frame;
 import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.*;
 import java.net.URL;
 
@@ -88,7 +89,7 @@ public final class XMLHandler
 				if (qName.equals("trainer"))
 				{
 					// set user-settings
-					tbe.setUser(atts.getValue("prename").toString(), atts.getValue("name").toString(), atts.getValue("name").toString());
+					tbe.setUser(atts.getValue("prename").toString(), atts.getValue("name").toString(), atts.getValue("email").toString());
 				}
 				if (qName.equals("defaultLanguage"))
 				{
@@ -189,6 +190,8 @@ public final class XMLHandler
 						ShapeItem item = ItemFactory.getShapeItem(board.getSport(), atts.getValue("type"), point);
 						if (item != null)
 						{
+							item.setRotation(Integer.valueOf(atts.getValue("rotation")));
+							TBEGraphConstants.setBounds(item.getAttributes(), new Rectangle2D.Double(point.getX(), point.getY(), Double.valueOf(atts.getValue("width")),Double.valueOf(atts.getValue("height"))));
 							board.addItem(item);
 						}
 					}
@@ -283,7 +286,7 @@ public final class XMLHandler
 				try
 				{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					String filePath = "src/ch/tbe/config/sport/" + sport+ "/sport.config";
+					String filePath = "src/ch/tbe/config/sport/" + sport+ "/sport.config";  //FIXME: Pfad muss anders definiert werden
 					saxParser.parse(new File(filePath), handler);
 				}
 				catch (Throwable t)
@@ -396,9 +399,13 @@ public final class XMLHandler
 			chooser.showSaveDialog(new Frame());
 
 			File filename = chooser.getSelectedFile();
+			
+			if (filename != null && !filename.getPath().toLowerCase().endsWith(".tbe"))
+			{
+				filename = new File(filename.getPath() + ".tbe");
+			}
+			
 			board.setPath(filename.getPath());
-
-			// TODO: Dateiendung immer .TBE
 		}
 
 		if (!board.getPath().equals(""))
@@ -470,6 +477,9 @@ public final class XMLHandler
 						
 						eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterX() - widthDiff));
 						eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterY() - heightDiff));
+						eItemComponent.setAttribute("height",  String.valueOf(board.getCellBounds(item).getHeight()));
+						eItemComponent.setAttribute("width",  String.valueOf(board.getCellBounds(item).getWidth()));
+						eItemComponent.setAttribute("rotation", String.valueOf(((ShapeItem)item).getRotation()));
 					}
 
 					eItemComponents.addContent(eItemComponent);

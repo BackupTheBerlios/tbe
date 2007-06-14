@@ -100,7 +100,7 @@ public class WelcomeView extends View
 		topPanel.setBackground(Color.WHITE);
 		
 		// WelcomeText
-		JTextArea titleLabel = new JTextArea(welcomeViewLabels.getString("welcome")+' '+tbe.getUserName()+' '+tbe.getUserPrename());
+		JTextArea titleLabel = new JTextArea(welcomeViewLabels.getString("welcome")+"\n"+tbe.getUserPrename()+' '+tbe.getUserName());
 		titleLabel.setEditable(false);
 		titleLabel.setLineWrap(true);
 		titleLabel.setPreferredSize(new Dimension(300, 75));

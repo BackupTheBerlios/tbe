@@ -1,15 +1,16 @@
 package ch.tbe.gui;
 
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import ch.tbe.Board;
-import ch.tbe.ShapeItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ItemComponent;
+import ch.tbe.item.ShapeItem;
 
 public class LegendBar extends JToolBar
 {
@@ -26,6 +27,7 @@ public class LegendBar extends JToolBar
 	{
 		JPanel shapePanel = new JPanel();
 		JPanel arrowPanel = new JPanel();
+		JPanel legendPanel = new JPanel(new GridLayout(0,4));
 		String actType;
 		Icon actIcon;
 		this.removeAll();
@@ -44,7 +46,8 @@ public class LegendBar extends JToolBar
 						JPanel iPanel = new JPanel();
 						iPanel.add(new JLabel(actIcon));
 						iPanel.add(new JLabel(actType));
-						arrowPanel.add(iPanel);
+						//arrowPanel.add(iPanel);
+						legendPanel.add(iPanel);
 					}
 					
 					actType = item.getType();
@@ -54,7 +57,8 @@ public class LegendBar extends JToolBar
 						JPanel iPanel = new JPanel();
 						iPanel.add(new JLabel(actIcon));
 						iPanel.add(new JLabel(actType));
-						shapePanel.add(iPanel);
+						//shapePanel.add(iPanel);
+						legendPanel.add(iPanel);
 					}
 					
 					for(int i=0; i<items.length; i++)
@@ -71,10 +75,11 @@ public class LegendBar extends JToolBar
 			}
 		}
 		
-		JPanel bigPanel = new JPanel(new BorderLayout());
-		bigPanel.add(shapePanel, BorderLayout.NORTH);
-		bigPanel.add(arrowPanel, BorderLayout.SOUTH);
-		this.add(bigPanel, BorderLayout.SOUTH);
+		//JPanel bigPanel = new JPanel(new BorderLayout());
+		//bigPanel.add(shapePanel, BorderLayout.NORTH);
+		//bigPanel.add(arrowPanel, BorderLayout.SOUTH);
+		//this.add(bigPanel, BorderLayout.SOUTH);
+		this.add(legendPanel);
 
 		
 	}

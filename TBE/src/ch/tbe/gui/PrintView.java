@@ -22,44 +22,40 @@ public class PrintView extends View
 	private final Board board;
 	private TBE tbe = TBE.getInstance();
 
-	public PrintView(Board board){
-		
+	public PrintView(Board board)
+	{
+
 		this.board = board;
 		this.setBackground(Color.white);
 		this.setLayout(new BorderLayout());
 		this.createView();
 	}
-	
-	
-	
-	
-	
+
 	private void createView()
 	{
-		//header
+		// header
 		Box header = Box.createVerticalBox();
 		JLabel title = new JLabel(board.getSport().getName());
 		title.setAlignmentY(Component.LEFT_ALIGNMENT);
-		  title.setAlignmentX(Component.LEFT_ALIGNMENT);
+		title.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		JLabel autor = new JLabel(tbe.getUserPrename()+" "+tbe.getUserName()+" "+tbe.getUserEmail());
+		JLabel autor = new JLabel(tbe.getUserPrename() + " "
+				+ tbe.getUserName() + " " + tbe.getUserEmail());
 		autor.setAlignmentY(Component.LEFT_ALIGNMENT);
-		  autor.setAlignmentX(Component.LEFT_ALIGNMENT);
+		autor.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		JLabel path = new JLabel(board.getPath());
 		path.setAlignmentY(Component.LEFT_ALIGNMENT);
-		  path.setAlignmentX(Component.LEFT_ALIGNMENT);
+		path.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		Font f = new Font(title.getFont().getFontName() ,Font.BOLD,30);
+		Font f = new Font(title.getFont().getFontName(), Font.BOLD, 30);
 		title.setFont(f);
 		header.add(title);
 		header.add(autor);
 		header.add(path);
 		this.add(header, BorderLayout.NORTH);
-		
-		//center-panel
-		
-		
+
+		// center-panel
 		JPanel center = new JPanel();
 		center.setLayout(new BorderLayout());
 		GraphModel model = new DefaultGraphModel();
@@ -74,25 +70,20 @@ public class PrintView extends View
 		temp.clearSelection();
 		LegendBar lb = new LegendBar(temp);
 		lb.setBackground(Color.WHITE);
+		
+		//board.get
 
-		
 		center.add(temp, BorderLayout.CENTER);
-		center.add(lb,BorderLayout.SOUTH);
-		
+		center.add(lb, BorderLayout.SOUTH);
+
 		this.add(center, BorderLayout.CENTER);
 	}
-
-
-
-
 
 	@Override
 	public void refresh()
 	{
 		// Nothing
-		
+
 	}
-
-
 
 }
