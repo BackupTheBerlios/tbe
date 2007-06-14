@@ -14,7 +14,8 @@ public final class FTPHandler
 	private final static String REMOTESPORTPATH = "sport";
 	private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";
 	private final static String PUBLICHOST = "tbe.netstyle.ch";
-	private static ArrayList<String> paths = new ArrayList<String>();
+	private static ArrayList<String> remotePaths = new ArrayList<String>();
+	private static ArrayList<String> localPaths = new ArrayList<String>();
 	
 	private static FTPClient client = null;
 	
@@ -46,11 +47,11 @@ public final class FTPHandler
 		for(int i = 0; i < sports.size(); i++)
 		{
 			String remoteSport = (REMOTESPORTPATH + "/" + sports.get(i));
-			System.out.println(remoteSport);
+			System.out.println("To install: " + remoteSport);
 			
-			getRemoteSport(remoteSport);
+			getRemoteSubDirs(remoteSport);
 			ArrayList<String> localPaths = new ArrayList<String>(); 
-			for(String s : paths)
+			for(String s : remotePaths)
 			{
 				String path = LOCALSPORTPATH + "/" + s.substring(REMOTESPORTPATH.length() + 1);
 				localPaths.add(path);
@@ -58,37 +59,83 @@ public final class FTPHandler
 				System.out.println("local: " + path);
 			}
 			
-			download(server, localPaths, paths);
+			download(server, localPaths, remotePaths);
 		}
-		disconnect();
 	}
-	private static void getRemoteSport(String sport)
+	private static void getRemoteSubDirs (String dir)
 	{
-		ArrayList<String> dir = getDir(sport);
+		ArrayList<String> dirs = getDir(dir);
 		
-		for(String s : dir)
+		for(String s : dirs)
 		{
 			System.out.println(s);
 			
 			// TODO: cvs kicken...
 			if(s.contains("."))
 			{
-				paths.add(s);
-				System.out.println("Added s: " + s);
+				remotePaths.add(s);
 			}
 			else if(s.contains("cvs"))
 			{}
 			else
 			{
-				getRemoteSport(s);
+				getRemoteSubDirs(s);
 			}
 		}
 	}
 	
+	private static void getLocalSubDirs (String dir)
+	{
+		System.out.println("getLocalSubDirs called with: " + dir);
+		
+		ArrayList<String> dirs = new ArrayList<String>();
+		String[] subDir = new File(dir).list();
+		
+		for(int i = 0; i < subDir.length; i++)
+		{
+			dirs.add(subDir[i]);
+		}
+		
+		for(String s : dirs)
+		{
+			File check = new File(s);
+			
+			// TODO: cvs kicken...
+			if(s.contains("."))
+			{
+				localPaths.add(dir + "/" + s);
+			}
+			else if(s.contains("cvs"))
+			{}
+			else
+			{
+				getLocalSubDirs(dir + "/" + s);
+			}
+		}
+	}
 	
 	public static void deleteSport(ArrayList<String> sports)
 	{
-		// TODO
+		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
+		connect(server);
+		
+		for(int i = 0; i < sports.size(); i++)
+		{
+			String sportToDelete = LOCALSPORTPATH + "/" + sports.get(i);
+			System.out.println("To delete: " + sportToDelete);
+			getLocalSubDirs(sportToDelete);
+			
+			for(String s : localPaths)
+			{
+				// Files löschen
+				File del = new File(s);
+				boolean bool = del.delete();
+				
+				// Ordner löschen
+				bool = new File(s.substring(0, s.lastIndexOf("/"))).delete();
+			}
+			
+		}
 	}
 	
 	public static void disconnect()
@@ -166,6 +213,7 @@ public final class FTPHandler
 		return content;
 	}
 	
+	
 	public static void upload(FTPServer server, String localPath, String remotePath)
 	{
 		if(client == null)
@@ -223,6 +271,7 @@ public final class FTPHandler
 			e.printStackTrace();
 		}
 	}
+	
 	
 	public static void upload(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths)
 	{

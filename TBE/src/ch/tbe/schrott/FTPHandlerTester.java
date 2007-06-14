@@ -1,5 +1,6 @@
 package ch.tbe.schrott;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import ch.tbe.FTPServer;
@@ -18,7 +19,21 @@ public class FTPHandlerTester
 		 */
 		
 		FTPServer server = new FTPServer("Public", "tbe.netstyle.ch", "tbe_admin", "4quabwej");
-		FTPHandler.connect(server);
+		//FTPHandler.connect(server);
+		
+		String[] test = new File("src/ch/tbe/config/sport").list();
+		System.out.println(test.length);
+		for(int i = 0; i < test.length; i++)
+		{
+			System.out.println(test[i]);
+		}
+		
+		boolean bool = new File("src/ch/tbe/config/sport/double.gif").delete();
+		System.out.println(bool);
+		
+		bool = new File("src/ch/tbe/config/sport/soccer").delete();
+		System.out.println(bool);
+		
 		/*
 		ArrayList<String> pathesL = new ArrayList<String>();
 		ArrayList<String> pathesR = new ArrayList<String>();
@@ -56,6 +71,7 @@ public class FTPHandlerTester
 		// FTPHandler.upload(server, "src/ch/tbe/config/sport/double.png", "sport/double.png");
 		*/
 		
+		/*
 		FTPHandler.download(server, "C:/romy/index.html", "boards/index.html");
 		// inkl. Ordner erstellen!
 		FTPHandler.download(server, "C:/romy/test/index.html", "boards/index.html");
@@ -69,6 +85,7 @@ public class FTPHandlerTester
 		remotePaths.add("test/tbe/webkey.txt");
 		remotePaths.add("test/tbe/BFH-Zugriffsdaten.pdf");
 		
+		 */
 		// FTPHandler.upload(server, localPaths, remotePaths);
 		// FTPHandler.upload(server, remotePaths, localPaths);
 		/*
