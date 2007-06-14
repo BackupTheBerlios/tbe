@@ -37,10 +37,7 @@ public class TBE
 	private Clipboard clipboard = new Clipboard("TBE ClipBoard");
 	private View view;
 
-	private TBE()
-	{
-
-	}
+	private TBE(){}
 
 	public static TBE getInstance()
 	{
