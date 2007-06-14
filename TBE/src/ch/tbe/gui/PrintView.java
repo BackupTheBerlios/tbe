@@ -2,6 +2,12 @@ package ch.tbe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
+
+import javax.swing.Box;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
@@ -14,10 +20,13 @@ import ch.tbe.jgraph.TBECellViewFactory;
 public class PrintView extends View
 {
 	private final Board board;
+	private TBE tbe = TBE.getInstance();
 
 	public PrintView(Board board){
 		
 		this.board = board;
+		this.setBackground(Color.white);
+		this.setLayout(new BorderLayout());
 		this.createView();
 	}
 	
@@ -27,8 +36,32 @@ public class PrintView extends View
 	
 	private void createView()
 	{
+		//header
+		Box header = Box.createVerticalBox();
+		JLabel title = new JLabel(board.getSport().getName());
+		title.setAlignmentY(Component.LEFT_ALIGNMENT);
+		  title.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		this.setLayout(new BorderLayout());
+		JLabel autor = new JLabel(tbe.getUserPrename()+" "+tbe.getUserName()+" "+tbe.getUserEmail());
+		autor.setAlignmentY(Component.LEFT_ALIGNMENT);
+		  autor.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		JLabel path = new JLabel(board.getPath());
+		path.setAlignmentY(Component.LEFT_ALIGNMENT);
+		  path.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+		Font f = new Font(title.getFont().getFontName() ,Font.BOLD,30);
+		title.setFont(f);
+		header.add(title);
+		header.add(autor);
+		header.add(path);
+		this.add(header, BorderLayout.NORTH);
+		
+		//center-panel
+		
+		
+		JPanel center = new JPanel();
+		center.setLayout(new BorderLayout());
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new TBECellViewFactory());
@@ -42,9 +75,11 @@ public class PrintView extends View
 		LegendBar lb = new LegendBar(temp);
 		lb.setBackground(Color.WHITE);
 
-		this.add(temp, BorderLayout.CENTER);
-		this.add(lb,BorderLayout.SOUTH);
 		
+		center.add(temp, BorderLayout.CENTER);
+		center.add(lb,BorderLayout.SOUTH);
+		
+		this.add(center, BorderLayout.CENTER);
 	}
 
 
@@ -54,7 +89,7 @@ public class PrintView extends View
 	@Override
 	public void refresh()
 	{
-		// TODO Auto-generated method stub
+		// Nothing
 		
 	}
 
