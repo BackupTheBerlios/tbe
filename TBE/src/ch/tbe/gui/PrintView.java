@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,35 +36,36 @@ public class PrintView extends View
 
 		this.board = board;
 		this.setBackground(Color.white);
-		this.setLayout(new BorderLayout(20,20));
+		this.setLayout(new BorderLayout(20, 20));
 		this.createView();
 	}
 
 	private void createView()
 	{
-		// header
+		// headerPanel
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBackground(Color.white);
 		headerPanel.setLayout(new BorderLayout());
 
+		// Box with Title, Name, Prename and email
 		Box header = Box.createVerticalBox();
 		JLabel title = new JLabel(board.getSport().getName());
-		title.setAlignmentY(Component.LEFT_ALIGNMENT);
-		title.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		JLabel autor = new JLabel(tbe.getUserPrename() + " "
-				+ tbe.getUserName() + " (" + tbe.getUserEmail() + ")");
-		autor.setAlignmentY(Component.LEFT_ALIGNMENT);
-		autor.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-		JLabel path = new JLabel(board.getPath());
-		path.setAlignmentY(Component.LEFT_ALIGNMENT);
-		path.setAlignmentX(Component.LEFT_ALIGNMENT);
-
 		Font f = new Font(title.getFont().getFontName(), Font.BOLD, 40);
 		title.setFont(f);
+		title.setAlignmentY(Component.TOP_ALIGNMENT);
+		title.setAlignmentX(Component.LEFT_ALIGNMENT);
+		JLabel autor = new JLabel(tbe.getUserPrename() + " "
+				+ tbe.getUserName() + " (" + tbe.getUserEmail() + ")");
+		autor.setAlignmentY(Component.TOP_ALIGNMENT);
+		autor.setAlignmentX(Component.LEFT_ALIGNMENT);
+		JLabel path = new JLabel(board.getPath());
+		path.setAlignmentY(Component.TOP_ALIGNMENT);
+		path.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		URL imgURL = PrintView.class.getResource("../pics/logo.jpg"); //TODO smaller Icon
+		// Logo Icon
+		URL imgURL = PrintView.class.getResource("../pics/logo.jpg"); // TODO
+																		// smaller
+																		// Icon
 		ImageIcon logoIcon = new ImageIcon(imgURL);
 		JLabel logo = new JLabel(logoIcon);
 		logo.setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -76,11 +78,14 @@ public class PrintView extends View
 		headerPanel.add(logo, BorderLayout.EAST);
 
 		this.add(headerPanel, BorderLayout.NORTH);
+		// END headerPanel
 
 		// center-panel
 		JPanel center = new JPanel();
 		center.setBackground(Color.WHITE);
-		center.setLayout(new BorderLayout(20,20));
+		center.setLayout(new BorderLayout(20, 20));
+
+		// Create a clone of the Board
 		GraphModel model = new DefaultGraphModel();
 		GraphLayoutCache view = new GraphLayoutCache(model,
 				new TBECellViewFactory());
@@ -89,11 +94,16 @@ public class PrintView extends View
 				board.cloneItems(board.getGraphLayoutCache().getCells(true,
 						true, true, true)));
 		temp.setBackgroundImage(board.getBackgroundImage());
-		temp.setBackground(Color.WHITE);
+		temp.setBackground(Color.WHITE);		
+		for (MouseListener ml : temp.getMouseListeners()){
+			temp.removeMouseListener(ml);
+		}
 		temp.clearSelection();
-		JPanel lb = new LegendBar(temp).getLegend();
-		lb.setBackground(Color.WHITE);
 
+		// Add Legende
+		JPanel lb = new LegendBar(temp).getLegend();
+
+		// Add Attributes
 		ArrayList<Box> attrib = new ArrayList<Box>();
 		List<Attribute> attributes = board.getDescription().getAttributes();
 		for (Attribute a : attributes)
@@ -114,9 +124,6 @@ public class PrintView extends View
 			attrib.add(tempB);
 		}
 
-		center.add(temp, BorderLayout.NORTH);
-		center.add(lb, BorderLayout.CENTER);
-
 		JPanel attribPanel = new JPanel();
 		attribPanel.setBackground(Color.white);
 
@@ -125,7 +132,11 @@ public class PrintView extends View
 			attribPanel.add(b);
 		}
 		attribPanel.setLayout(new GridLayout(0, 4, 10, 20));
+
+		center.add(temp, BorderLayout.NORTH);
+		center.add(lb, BorderLayout.CENTER);
 		center.add(attribPanel, BorderLayout.SOUTH);
+
 		this.add(center, BorderLayout.CENTER);
 	}
 
