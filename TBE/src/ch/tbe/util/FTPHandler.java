@@ -14,6 +14,7 @@ public final class FTPHandler
 	private final static String REMOTESPORTPATH = "sport";
 	private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";
 	private final static String PUBLICHOST = "tbe.netstyle.ch";
+	private static ArrayList<String> paths = new ArrayList<String>();
 	
 	private static FTPClient client = null;
 	
@@ -25,7 +26,6 @@ public final class FTPHandler
 		
 		connect(server);
 		ArrayList<String> sportDir = getDir(REMOTESPORTPATH);
-		disconnect();
 		
 		for(int i = 0; i < sportDir.size(); i++)
 		{
@@ -48,9 +48,9 @@ public final class FTPHandler
 			String remoteSport = (REMOTESPORTPATH + "/" + sports.get(i));
 			System.out.println(remoteSport);
 			
-			ArrayList<String> remotePaths = getDir(remoteSport);
+			getRemoteSport(remoteSport);
 			ArrayList<String> localPaths = new ArrayList<String>(); 
-			for(String s : remotePaths)
+			for(String s : paths)
 			{
 				String path = LOCALSPORTPATH + "/" + s.substring(REMOTESPORTPATH.length() + 1);
 				localPaths.add(path);
@@ -58,10 +58,33 @@ public final class FTPHandler
 				System.out.println("local: " + path);
 			}
 			
-			//download(server, localPaths, remotePaths);
+			download(server, localPaths, paths);
 		}
 		disconnect();
 	}
+	private static void getRemoteSport(String sport)
+	{
+		ArrayList<String> dir = getDir(sport);
+		
+		for(String s : dir)
+		{
+			System.out.println(s);
+			
+			// TODO: cvs kicken...
+			if(s.contains("."))
+			{
+				paths.add(s);
+				System.out.println("Added s: " + s);
+			}
+			else if(s.contains("cvs"))
+			{}
+			else
+			{
+				getRemoteSport(s);
+			}
+		}
+	}
+	
 	
 	public static void deleteSport(ArrayList<String> sports)
 	{
@@ -74,7 +97,7 @@ public final class FTPHandler
 		{
 			System.out.println("quit");
 			client.quit();
-			System.out.println(client);
+			client = null;
 		}
 		catch (IOException e)
 		{

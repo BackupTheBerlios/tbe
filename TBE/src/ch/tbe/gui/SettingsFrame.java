@@ -413,13 +413,6 @@ public class SettingsFrame
 			listPanel.setBackground(Color.WHITE);
 
 			ArrayList<String> sports = FTPHandler.getAllSports();
-			// only for testing PanelSize!
-			sports.add("Eishockey");
-			sports.add("Basketball");
-			sports.add("Volleyball");
-			sports.add("Baseball");
-			sports.add("Rugby");
-			// END
 
 			class checkBoxListener extends MouseAdapter
 			{
