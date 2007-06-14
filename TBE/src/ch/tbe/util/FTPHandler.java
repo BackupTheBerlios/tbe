@@ -112,7 +112,7 @@ public final class FTPHandler
 	
 	public static ArrayList<String> getDir(String dir)
 	{
-		System.out.println("getDir called with: " + dir);
+		//System.out.println("getDir called with: " + dir);
 		
 		String[] s = new String[]{};
 		
@@ -137,11 +137,13 @@ public final class FTPHandler
 		{
 			content.add(s[i]);
 		}
+		/*
 		System.out.println("getDir returns ArrayList content: ");
 		for(String cont : content)
 		{
 			System.out.println("*** " + cont);
 		}
+		*/
 		return content;
 	}
 	
@@ -166,10 +168,6 @@ public final class FTPHandler
 			System.out.println("FTPex upload");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally
-		{
-			disconnect();
 		}
 	}
 	
@@ -219,9 +217,35 @@ public final class FTPHandler
 		}
 		try
 		{
+			for(String s : localPaths)
+			{
+				System.out.println("Local: " + s);
+			}
+			for(String s : remotePaths)
+			{
+				System.out.println("Local: " + s);
+			}
+			System.out.println("#####UPLOAD########");
+			System.out.println("Number of files to put:" + localPaths.size());
+			for(String s : localPaths)
+			{
+				System.out.println(s);
+			}
+			System.out.println("#############");
+			int countFolders = 0;
 			for(int i = 0; i < localPaths.size(); i++)
 			{
-				client.put(localPaths.get(i), remotePaths.get(i));
+				if(localPaths.get(i).contains("."))
+				{
+					System.out.print("to put: " + localPaths.get(i));
+					System.out.println("there: " + remotePaths.get(i-countFolders));
+					client.put(localPaths.get(i), remotePaths.get(i-countFolders));
+				}
+				else
+				{
+					countFolders ++;
+				}
+				System.out.println("Counter: " + countFolders);
 			}
 		}
 		catch (IOException e)
@@ -235,10 +259,6 @@ public final class FTPHandler
 			System.out.println("FTPex MOREupload");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally
-		{
-			disconnect();
 		}
 	}
 	

@@ -270,23 +270,21 @@ public class ShareFrame
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
+					// TODO: Check ob Public oder nicht; bei nicht Public methode
+					// aufrufen
 					if(localPaths.size() == 0)
 					{
 						JOptionPane.showMessageDialog(null, shareLabels.getString("noLocals"));
 					}
 					// genau 1 Pfad auf Server gewählt, muss ein Ordner sein!!
-					if(remotePaths.size() != 1 || remotePaths.get(0).contains("."))
+					else if(remotePaths.size() != 1 || remotePaths.get(0).contains("."))
 					{
 						JOptionPane.showMessageDialog(null, shareLabels.getString("oneRemote"));
 					}
-					// RemotePaths zusammensetzen
-					ArrayList<String> newPaths = new ArrayList<String>();
-					for(int i = 0; i < localPaths.size(); i++)
+					else
 					{
-						String path = localPaths.get(i);
-						newPaths.add(remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
+						doUpload(localPaths);
 					}
-					FTPHandler.upload(currentFTP, localPaths, newPaths);
 				}
 			}
 			uploadButton.addMouseListener(new UploadListener());
@@ -325,6 +323,46 @@ public class ShareFrame
 		panel.add(centerPanel, BorderLayout.CENTER);
 		
 		return panel;
+	}
+	
+	private void doUpload(ArrayList<String> locals)
+	{
+		ArrayList<String> local = locals;
+		System.out.println("************************");
+		System.out.println("Do Upload Called with: ");
+		for(String s : local)
+		{
+			System.out.println(s);
+		}
+		System.out.println("************************");
+		// RemotePaths zusammensetzen
+		ArrayList<String> newPaths = new ArrayList<String>();
+		for(int i = 0; i < local.size(); i++)
+		{
+			String path = local.get(i);
+			
+			if(path.contains("."))  // is File, add to NewPaths
+			{
+				System.out.println("Added: " + (remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length())));
+				newPaths.add(remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
+			}
+			else    // is a Folder, redo the whole thing with subpaths...
+			{
+				ArrayList<String> subPaths = new ArrayList<String>();
+				File myPath = new File(path);
+				String[] subFolder = myPath.list();
+				for(int j = 0; j < subFolder.length; j++)
+				{
+					String s = subFolder[j].toString();
+					s = s.replaceAll("\\\\", "/");
+					// System.out.println("Will be added to subPaths: " + path + "/" + s);
+					subPaths.add(path + "/" + s);
+				}
+				doUpload(subPaths);
+			}
+		}
+		if(newPaths.size() != 0)
+			FTPHandler.upload(currentFTP, local, newPaths);
 	}
 	
 	private ResourceBundle getResourceBundle(String lang)
