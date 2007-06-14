@@ -166,6 +166,8 @@ public class TBE
 
 		File filename = chooser.getSelectedFile();
 		Board board = XMLHandler.openXML(filename.getPath());
+		
+		this.addRecently(filename.getPath());
 		this.setView(new WorkingView(board));
 	}
 
@@ -296,5 +298,17 @@ public class TBE
 	public String getVersion()
 	{
 		return "1.0";
+	}
+	
+	public void addRecently(String path){
+		if (!paths.contains(path)){
+			paths.remove(path);
+			
+			if (paths.size() > 4){
+				paths.remove(0);
+			}
+			paths.add(path);
+			XMLHandler.saveTBESettings();
+		}
 	}
 }

@@ -162,8 +162,9 @@ public class WelcomeView extends View
 		JPanel pathPanel = new JPanel();
 		pathPanel.setLayout(new GridLayout(7,1));
 		pathPanel.setBackground(Color.WHITE);
-		for(String s : paths)
+		for(int i = paths.size()-1; i >= 0; i--)
 		{
+			String s = paths.get(i);
 			File file = new File(s);
 			JPanel onePath = new JPanel();
 			onePath.setBackground(Color.WHITE);

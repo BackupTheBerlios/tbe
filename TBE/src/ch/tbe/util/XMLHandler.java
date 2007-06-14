@@ -396,6 +396,7 @@ public final class XMLHandler
 			}
 			
 			board.setPath(filename.getPath());
+			TBE.getInstance().addRecently(filename.getPath());
 		}
 
 		if (!board.getPath().equals(""))

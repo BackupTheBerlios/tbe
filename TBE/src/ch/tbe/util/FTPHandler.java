@@ -29,8 +29,11 @@ public final class FTPHandler
 		
 		for(int i = 0; i < sportDir.size(); i++)
 		{
-			String sport = sportDir.get(i).substring(REMOTESPORTPATH.length() + 1);
-			sports.add(sport);
+			if(!sportDir.get(i).contains("."))
+			{
+				String sport = sportDir.get(i).substring(REMOTESPORTPATH.length() + 1);
+				sports.add(sport);
+			}
 		}
 		return sports;
 	}
@@ -51,9 +54,11 @@ public final class FTPHandler
 			{
 				String path = LOCALSPORTPATH + "/" + s.substring(REMOTESPORTPATH.length() + 1);
 				localPaths.add(path);
+				System.out.println("remote: " + s);
+				System.out.println("local: " + path);
 			}
 			
-			download(server, localPaths, remotePaths);
+			//download(server, localPaths, remotePaths);
 		}
 		disconnect();
 	}
@@ -112,8 +117,6 @@ public final class FTPHandler
 	
 	public static ArrayList<String> getDir(String dir)
 	{
-		//System.out.println("getDir called with: " + dir);
-		
 		String[] s = new String[]{};
 		
 		try
@@ -137,13 +140,6 @@ public final class FTPHandler
 		{
 			content.add(s[i]);
 		}
-		/*
-		System.out.println("getDir returns ArrayList content: ");
-		for(String cont : content)
-		{
-			System.out.println("*** " + cont);
-		}
-		*/
 		return content;
 	}
 	
