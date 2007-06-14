@@ -18,6 +18,7 @@ import java.net.URL;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.xml.parsers.*;
 
@@ -147,9 +148,14 @@ public final class XMLHandler
 
 				try
 				{
-					// TODO: Check if file exists
-					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse(new File(path), handler);
+					File file = new File(path);
+					if (file.exists()){
+						SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+						saxParser.parse(file, handler);
+					}else{
+						System.err.println("File not Found Exception");
+						JOptionPane.showMessageDialog(TBE.getInstance().getView(), "File not Found! ("+file.getPath()+")");
+					}
 				}
 				catch (Throwable t)
 				{
@@ -249,11 +255,13 @@ public final class XMLHandler
 		xml.loadFile(path);
 
 		Board actBoard = board;
-		actBoard.setPath(path);
-		board = null;
-
+		
+		if (board != null){
+			actBoard.setPath(path);
+			board = null;
+		}
+		
 		return actBoard;
-
 	}
 
 	public static ArrayList<Sport> getSports()

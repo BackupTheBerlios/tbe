@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
 
+import ch.tbe.Board;
 import ch.tbe.Sport;
 import ch.tbe.framework.View;
 import ch.tbe.util.XMLHandler;
@@ -142,7 +143,10 @@ public class WelcomeView extends View
 				if (path.equals("more")){
 					tbe.load();
 				}else{
-					tbe.setView(new WorkingView(XMLHandler.openXML(path)));
+					Board board = XMLHandler.openXML(path);
+					if (board != null){
+						tbe.setView(new WorkingView(board));
+					}
 				}
 			}
 			@Override
