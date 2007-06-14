@@ -28,6 +28,7 @@ public class FTPHandlerTester
 		
 		FTPHandler.upload(server, pathesL, pathesR);
 		*/
+		
 		/*
 		ArrayList<String> dir_fs = FTPHandler.getDir("boards\floorball");
 		for(String s : dir_fs)
@@ -51,14 +52,14 @@ public class FTPHandlerTester
 		{
 			System.out.println(s[i]);
 		}
-		/*
 		
 		// FTPHandler.upload(server, "src/ch/tbe/config/sport/double.png", "sport/double.png");
+		*/
 		
-		// FTPHandler.download(server, "src/ch/tbe/config/sport/test.txt", "sport/test.txt");
+		FTPHandler.download(server, "C:/romy/index.html", "boards/index.html");
 		// inkl. Ordner erstellen!
-		// FTPHandler.download(server, "src/ch/tbe/config/sport/test/test.txt", "sport/test.txt");
-		// FTPHandler.download(server, "src/ch/tbe/config/sport/test/test.txt", "sport/test.txt");
+		FTPHandler.download(server, "C:/romy/test/index.html", "boards/index.html");
+		FTPHandler.download(server, "C:/romy/test/test/index.html", "boards/index.html");
 		
 		ArrayList<String> localPaths = new ArrayList<String>();
 		localPaths.add("D:/webkey.txt");
@@ -70,12 +71,14 @@ public class FTPHandlerTester
 		
 		// FTPHandler.upload(server, localPaths, remotePaths);
 		// FTPHandler.upload(server, remotePaths, localPaths);
-		
+		/*
 		ArrayList<String> sports = FTPHandler.getAllSports();
 		for(String s : sports)
 		{
 			System.out.println(s);
 		}
+		*/
+		
 		/*
 		ArrayList<String> NEWsports = new ArrayList<String>();
 		sports.add("football");

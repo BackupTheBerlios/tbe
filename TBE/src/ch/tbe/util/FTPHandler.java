@@ -203,10 +203,6 @@ public final class FTPHandler
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally
-		{
-			disconnect();
-		}
 	}
 	
 	public static void upload(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths)
@@ -217,6 +213,7 @@ public final class FTPHandler
 		}
 		try
 		{
+			/*
 			for(String s : localPaths)
 			{
 				System.out.println("Local: " + s);
@@ -232,6 +229,7 @@ public final class FTPHandler
 				System.out.println(s);
 			}
 			System.out.println("#############");
+			*/
 			int countFolders = 0;
 			for(int i = 0; i < localPaths.size(); i++)
 			{
@@ -270,20 +268,20 @@ public final class FTPHandler
 		}
 		try
 		{
-			for(int i = 0; i < localPaths.size(); i++)
+			for(int j = 0; j < localPaths.size(); j++)
 			{
-				File localFile = new File(localPaths.get(i));
+				File localFile = new File(localPaths.get(j));
 				boolean mkdir;
 				// cvs ignorieren
-				if(!remotePaths.get(i).contains("cvs"))
+				if(!remotePaths.get(j).contains("cvs"))
 				{
-					String dir = localPaths.get(i).substring(0, localPaths.get(i).lastIndexOf("/"));
+					String dir = localPaths.get(j).substring(0, localPaths.get(j).lastIndexOf("/"));
 					localFile = new File(dir);
 					mkdir = localFile.mkdirs();
 					
 					if(localFile.isDirectory() || mkdir == true)
 					{
-						client.get(localPaths.get(i), remotePaths.get(i));
+						client.get(localPaths.get(j), remotePaths.get(j));
 					}
 					else
 					{
@@ -303,10 +301,6 @@ public final class FTPHandler
 			System.out.println("FTPex MOREdownload");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		finally
-		{
-			disconnect();
 		}
 	}
 	// TODO: Helper-Methode isLeaf() statt überprüfung wegen dem Punkt im Ordnernamen!

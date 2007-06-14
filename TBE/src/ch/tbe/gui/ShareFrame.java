@@ -283,7 +283,7 @@ public class ShareFrame
 					}
 					else
 					{
-						doUpload(localPaths);
+						doPublicUpload(localPaths);
 					}
 				}
 			}
@@ -301,18 +301,14 @@ public class ShareFrame
 						JOptionPane.showMessageDialog(null, shareLabels.getString("noRemotes"));
 					}
 					// genau 1 Pfad auf Local gewählt, muss ein Ordner sein!!
-					if(localPaths.size() != 1 || localPaths.get(0).contains("."))
+					else if(localPaths.size() != 1 || localPaths.get(0).contains("."))
 					{
 						JOptionPane.showMessageDialog(null, shareLabels.getString("oneLocal"));
 					}
-					// RemotePaths zusammensetzen
-					ArrayList<String> newPaths = new ArrayList<String>();
-					for(int i = 0; i < remotePaths.size(); i++)
+					else
 					{
-						String path = remotePaths.get(i);
-						newPaths.add(localPaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
+						doDownload(remotePaths, remotePaths.get(0));
 					}
-					FTPHandler.download(currentFTP, localPaths, newPaths);
 				}
 			}
 			downloadButton.addMouseListener(new DownloadListener());
@@ -325,16 +321,45 @@ public class ShareFrame
 		return panel;
 	}
 	
-	private void doUpload(ArrayList<String> locals)
+	private void doDownload(ArrayList<String> remotes, String folder)
+	{
+		ArrayList<String> remote = remotes;
+		
+		// RemotePaths zusammensetzen
+		ArrayList<String> newPaths = new ArrayList<String>();
+		ArrayList<String> newRemote = new ArrayList<String>();
+		for(int i = 0; i < remote.size(); i++)
+		{
+			String path = remote.get(i);
+			
+			if(path.contains("."))  // is File, add to NewPaths
+			{
+				newPaths.add(localPaths.get(0) + "/" + folder + path.substring(path.lastIndexOf("/"), path.length()));
+				newRemote.add(path);
+			}
+			else    // is a Folder, redo the whole thing with subpaths...
+			{
+				ArrayList<String> subPaths = new ArrayList<String>();
+				ArrayList<String> subFolder = FTPHandler.getDir(path);
+				for(int j = 0; j < subFolder.size(); j++)
+				{
+					String s = subFolder.get(j).toString();
+					s = s.replaceAll("\\\\", "/");
+					subPaths.add(s);
+				}
+				doDownload(subPaths, path);
+			}
+		}
+		if(newPaths.size() != 0)
+		{
+			FTPHandler.download(currentFTP, newPaths, newRemote);
+		}
+	}
+	
+	private void doPublicUpload(ArrayList<String> locals)
 	{
 		ArrayList<String> local = locals;
-		System.out.println("************************");
-		System.out.println("Do Upload Called with: ");
-		for(String s : local)
-		{
-			System.out.println(s);
-		}
-		System.out.println("************************");
+		
 		// RemotePaths zusammensetzen
 		ArrayList<String> newPaths = new ArrayList<String>();
 		for(int i = 0; i < local.size(); i++)
@@ -343,7 +368,6 @@ public class ShareFrame
 			
 			if(path.contains("."))  // is File, add to NewPaths
 			{
-				System.out.println("Added: " + (remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length())));
 				newPaths.add(remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
 			}
 			else    // is a Folder, redo the whole thing with subpaths...
@@ -355,10 +379,9 @@ public class ShareFrame
 				{
 					String s = subFolder[j].toString();
 					s = s.replaceAll("\\\\", "/");
-					// System.out.println("Will be added to subPaths: " + path + "/" + s);
 					subPaths.add(path + "/" + s);
 				}
-				doUpload(subPaths);
+				doPublicUpload(subPaths);
 			}
 		}
 		if(newPaths.size() != 0)
