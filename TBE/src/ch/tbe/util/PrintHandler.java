@@ -143,19 +143,20 @@ public class PrintHandler implements Printable
 		{
 			// TODO exeption handling
 		}
-		f.dispose();
+		//f.dispose();
 	}
 
 	private static Component createLayout(Board board)
 	{
 		f = new JFrame("Vorschau");// TODO language
 		f.setBackground(Color.WHITE);
-		f.add(new PrintView(board));
+		JPanel p = new PrintView(board);
+		f.add(new JScrollPane(p));
 		f.pack();
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		f.setVisible(true);
 
-		return f;
+		return p;
 	}
 
 }

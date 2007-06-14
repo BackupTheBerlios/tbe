@@ -1,7 +1,7 @@
 package ch.tbe.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.Icon;
@@ -13,6 +13,7 @@ import ch.tbe.ShapeItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ItemComponent;
 
+@SuppressWarnings("serial")
 public class LegendBar extends JToolBar
 {
 	private Board board;
@@ -27,8 +28,13 @@ public class LegendBar extends JToolBar
 	
 	private void showLegend()
 	{
-		JPanel legendPanel = new JPanel(new GridLayout(0,4));
-		legendPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		this.add(getLegend());
+	}
+	
+	public JPanel getLegend(){
+		JPanel legendPanel = new JPanel(new BorderLayout());
+		JPanel shapeGridPanel = new JPanel(new GridLayout(0,4));
+		JPanel arrowGridPanel = new JPanel(new GridLayout(0,4));
 		String actType;
 		Icon actIcon;
 		this.removeAll();
@@ -39,48 +45,52 @@ public class LegendBar extends JToolBar
 			for(ItemComponent item : items)
 			{
 				if(item != null)
+				{				
+					actType = item.getType();
+					if(item instanceof ShapeItem)
+					{
+						actIcon = ((ShapeItem)item).getIcon();
+						JPanel sPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+						sPanel.add(new JLabel(actIcon));
+						sPanel.add(new JLabel(actType));
+						shapeGridPanel.add(sPanel);
+					}
+					
+					for(int i=0; i<items.length; i++)
+						if (items[i] != null)
+							if (items[i].getType() == actType)
+								items[i] = null;
+				}//IF
+			}//FOR
+			
+			items = board.getItems();
+			for(ItemComponent item : items)
+			{
+				if(item != null)
 				{
 					if(item instanceof ArrowItem)
 					{
 						actType = ((ArrowItem)item).getItemType().getDescription();
 						actIcon = ((ArrowItem)item).getIcon();
-						JPanel iPanel = new JPanel();
-						iPanel.add(new JLabel(actIcon));
-						iPanel.add(new JLabel(actType));
-						legendPanel.add(iPanel);
+						JPanel aPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+						aPanel.add(new JLabel(actIcon));
+						aPanel.add(new JLabel(actType));
+						arrowGridPanel.add(aPanel);
 					}
 					
 					actType = item.getType();
-					if(item instanceof ShapeItem)
-					{
-						actIcon = ((ShapeItem)item).getIcon();
-						JPanel iPanel = new JPanel();
-						iPanel.add(new JLabel(actIcon));
-						iPanel.add(new JLabel(actType));
-						legendPanel.add(iPanel);
-					}
-					
 					for(int i=0; i<items.length; i++)
-					{
 						if (items[i] != null)
-						{
 							if (items[i].getType() == actType)
-							{
 								items[i] = null;
-							}
-						}
-					}
-				}
-			}
+				}//IF
+			}//FOR
 		}
 		
-		//JPanel bigPanel = new JPanel(new BorderLayout());
-		//bigPanel.add(shapePanel, BorderLayout.NORTH);
-		//bigPanel.add(arrowPanel, BorderLayout.SOUTH);
-		//this.add(bigPanel, BorderLayout.SOUTH);
-		this.add(legendPanel);
+		legendPanel.add(shapeGridPanel, BorderLayout.NORTH);
+		legendPanel.add(arrowGridPanel, BorderLayout.SOUTH);
 
-		
+		return legendPanel;
 	}
 	
 	public void refresh()
