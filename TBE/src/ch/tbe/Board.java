@@ -15,13 +15,9 @@ import ch.tbe.jgraph.TBEBasicGraphUI;
 public class Board extends JGraph {
 
     private String path = "";
-
     private Field field;
-
     private Description description;
-
     private Sport sport;
-
     private TBE tbe = TBE.getInstance();
 
     public Board(GraphModel model, GraphLayoutCache view, Sport sport) {
