@@ -90,6 +90,7 @@ public class TBE
 		frame.add(view);
 		frame.setVisible(false);
 		frame.setVisible(true);
+		menu.refresh();
 	}
 
 	public View getView()
