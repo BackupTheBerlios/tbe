@@ -55,7 +55,7 @@ public class PrintHandler implements Printable
 			{
 				System.out.println("Error printing: " + pe);
 			}
-			f.dispose();
+		f.dispose();
 	}
 
 	public int print(Graphics g, PageFormat pf, int pageIndex)
@@ -123,7 +123,8 @@ public class PrintHandler implements Printable
 		chooser.showSaveDialog(new Frame());
 
 		File filename = chooser.getSelectedFile();
-		if (filename != null && !filename.getPath().toLowerCase().endsWith(".jpg"))
+		if (filename != null
+				&& !filename.getPath().toLowerCase().endsWith(".jpg"))
 		{
 			filename = new File(filename.getPath() + ".jpg");
 		}
@@ -143,7 +144,7 @@ public class PrintHandler implements Printable
 		{
 			// TODO exeption handling
 		}
-		//f.dispose();
+		// f.dispose();
 	}
 
 	private static Component createLayout(Board board)

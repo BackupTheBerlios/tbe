@@ -1,13 +1,17 @@
 package ch.tbe.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
+import javax.swing.border.Border;
+
 import ch.tbe.Board;
 import ch.tbe.ShapeItem;
 import ch.tbe.framework.ArrowItem;
@@ -23,22 +27,33 @@ public class LegendBar extends JToolBar
 		this.board = board;
 		this.setLayout(new BorderLayout());
 		this.setFloatable(false);
+		this.setBackground(Color.white);
+		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		showLegend();
 	}
 	
 	private void showLegend()
 	{
+		
 		this.add(getLegend());
 	}
 	
 	public JPanel getLegend(){
 		JPanel legendPanel = new JPanel(new BorderLayout());
-		JPanel shapeGridPanel = new JPanel(new GridLayout(0,4));
-		JPanel arrowGridPanel = new JPanel(new GridLayout(0,4));
+		GridLayout gridLayout = new GridLayout(0,4);
+		JPanel shapeGridPanel = new JPanel(gridLayout);
+		shapeGridPanel.setBackground(Color.white);
+		JPanel arrowGridPanel = new JPanel(gridLayout);
+		arrowGridPanel.setBackground(Color.white);
 		String actType;
 		Icon actIcon;
 		this.removeAll();
-		this.add(new JLabel("Legende:"), BorderLayout.NORTH);
+		
+		JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		header.setBackground(Color.white);
+		header.add(new JLabel("Legende:"));
+		this.add(header, BorderLayout.NORTH);
+		
 		ItemComponent[] items = board.getItems();
 		if(items.length != 0)
 		{
@@ -53,6 +68,7 @@ public class LegendBar extends JToolBar
 						JPanel sPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 						sPanel.add(new JLabel(actIcon));
 						sPanel.add(new JLabel(actType));
+						sPanel.setBackground(Color.white);
 						shapeGridPanel.add(sPanel);
 					}
 					
@@ -75,6 +91,7 @@ public class LegendBar extends JToolBar
 						JPanel aPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 						aPanel.add(new JLabel(actIcon));
 						aPanel.add(new JLabel(actType));
+						aPanel.setBackground(Color.white);
 						arrowGridPanel.add(aPanel);
 					}
 					
