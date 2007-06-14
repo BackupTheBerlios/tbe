@@ -158,9 +158,7 @@ public class SettingsFrame
 				tbe.setUser(prenameField.getText(), lastnameField.getText(),
 						mailField.getText());
 				tbe.setLang((String) langBox.getSelectedItem());
-				XMLHandler.saveSettings(prenameField.getText(), lastnameField
-						.getText(), mailField.getText(), (String) langBox
-						.getSelectedItem());
+				XMLHandler.saveTBESettings();
 				tbe.changeLang();
 				refresh();
 			}
@@ -339,17 +337,15 @@ public class SettingsFrame
 						// neuer Server hinzufügen
 						if (currentFTP.getName().equals(""))
 						{
-							tbe.addFTPServer(ftpNameField.getText(),
-									ftpHostField.getText(), ftpUserField
-											.getText(), pw);
+							tbe.addFTPServer(ftpNameField.getText(), ftpHostField.getText(), ftpUserField.getText(), pw);
+							
 						}
 						else
 						{
-							tbe.editFTPServer(ftpNameField.getText(),
-									ftpHostField.getText(), ftpUserField
-											.getText(), pw);
+							tbe.editFTPServer(ftpNameField.getText(), ftpHostField.getText(), ftpUserField.getText(), pw);
 						}
 						currentFTP = null;
+						XMLHandler.saveTBESettings();
 						refresh();
 						tabs.setSelectedIndex(1);
 					}

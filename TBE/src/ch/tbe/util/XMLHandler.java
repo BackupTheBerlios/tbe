@@ -5,6 +5,7 @@ import java.util.List;
 
 import ch.tbe.*;
 import ch.tbe.framework.*;
+import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.*;
 
@@ -72,7 +73,7 @@ public final class XMLHandler
 				{
 					//Start reading File
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse(new File("src/ch/tbe/config/tbe.config"),handler); // FIXME: Pfad muss anders definiert werden.
+					saxParser.parse(new File(XMLHandler.class.getResource("../config/tbe.config").getPath()),handler);
 				}
 				catch (Throwable t)
 				{
@@ -170,7 +171,7 @@ public final class XMLHandler
 						}
 					}
 
-					// TODO: check sport-version
+					// TODO Phase 2: check sport-version
 
 					if (sport != null)
 					{
@@ -286,7 +287,7 @@ public final class XMLHandler
 				try
 				{
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					String filePath = "src/ch/tbe/config/sport/" + sport+ "/sport.config";  //FIXME: Pfad muss anders definiert werden
+					String filePath = XMLHandler.class.getResource("../config/sport/" + sport+ "/sport.config").getPath();
 					saxParser.parse(new File(filePath), handler);
 				}
 				catch (Throwable t)
@@ -366,16 +367,6 @@ public final class XMLHandler
 	private static void setBoard(Board myBoard)
 	{
 		board = myBoard;
-	}
-
-	public static void saveSettings(String prename, String lastname, String email, String language)
-	{
-		// TODO: saveSettings
-	}
-
-	public void saveFTPServers(ArrayList<FTPServer> servers)
-	{
-		// TODO: save Servers
 	}
 
 	public static void saveBoard(Board board)
@@ -473,8 +464,6 @@ public final class XMLHandler
 						double widthDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getWidth() / 2;
 						double heightDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getHeight() / 2;
 						
-						// TODO: Speichern der Grösse, und des Drehwinkels
-						
 						eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterX() - widthDiff));
 						eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterY() - heightDiff));
 						eItemComponent.setAttribute("height",  String.valueOf(board.getCellBounds(item).getHeight()));
@@ -500,6 +489,63 @@ public final class XMLHandler
 			{
 				ex.printStackTrace();
 			}
+		}
+	}
+	
+	public static void saveTBESettings(){
+		TBE tbe = TBE.getInstance();
+		try
+		{
+			Element eTbe = new Element("TBE");
+			Element eTrainer = new Element("trainer");
+			Element eDefaultLanguage = new Element("defaultLanguage");
+			Element eServers = new Element("servers");
+			Element eServer = new Element("server");
+			Element eRecently = new Element("recently");
+			Element eRecentlyOpened = new Element("recentlyOpened");
+			
+			
+			eTbe.setAttribute("version", tbe.getVersion());
+			eTbe.addContent(eTrainer);
+			eTbe.addContent(eDefaultLanguage);
+			eTbe.addContent(eServers);
+			eTbe.addContent(eRecently);
+			
+			eTrainer.setAttribute("name", tbe.getUserName());
+			eTrainer.setAttribute("prename", tbe.getUserPrename());
+			eTrainer.setAttribute("email", tbe.getUserEmail());
+
+			eDefaultLanguage.setAttribute("name", tbe.getLang());
+			
+			for (FTPServer server: tbe.getServers()){
+				eServer = new Element("server");
+				eServer.setAttribute("name", server.getName());
+				eServer.setAttribute("host",server.getHost());
+				eServer.setAttribute("username",server.getUsername());
+				eServer.setAttribute("password",server.getPassword());
+				
+				eServers.addContent(eServer);
+			}
+			
+			for (String path: tbe.getRecently()){
+				eRecentlyOpened = new Element("recentlyOpened");
+				eRecentlyOpened.setAttribute("path", path);
+				eRecently.addContent(eRecentlyOpened);
+			}
+			
+			Document document = new Document(eTbe);
+
+			Format format = Format.getPrettyFormat();
+			format.setEncoding("iso-8859-1");
+			XMLOutputter out = new XMLOutputter(format);
+			java.io.FileWriter writer = new java.io.FileWriter(XMLHandler.class.getResource("../config/tbe.config").getPath());
+			out.output(document, writer);
+			writer.flush();
+			writer.close();	
+		}
+		catch (Exception ex)
+		{
+			ex.printStackTrace();
 		}
 	}
 }
