@@ -4,11 +4,11 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 import ch.tbe.ItemType;
+import ch.tbe.ShapeItem;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.Tool;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
-import ch.tbe.item.ShapeItem;
 
  public class ShapeTool extends Tool {
 	

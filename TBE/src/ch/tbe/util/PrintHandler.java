@@ -13,6 +13,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import ch.tbe.Board;
 import ch.tbe.gui.LegendBar;
+import ch.tbe.gui.PrintView;
 import ch.tbe.jgraph.TBECellViewFactory;
 
 import java.awt.image.BufferedImage;
@@ -149,23 +150,8 @@ public class PrintHandler implements Printable
 	private static Component createLayout(Board board)
 	{
 		f = new JFrame("Vorschau");// TODO language
-		f.setLayout(new BorderLayout());
 		f.setBackground(Color.WHITE);
-		GraphModel model = new DefaultGraphModel();
-		GraphLayoutCache view = new GraphLayoutCache(model,
-				new TBECellViewFactory());
-		Board temp = new Board(model, view, board.getSport());
-		temp.getGraphLayoutCache().insert(
-				board.cloneItems(board.getGraphLayoutCache().getCells(true,
-						true, true, true)));
-		temp.setBackgroundImage(board.getBackgroundImage());
-		temp.setBackground(Color.WHITE);
-		temp.clearSelection();
-		LegendBar lb = new LegendBar(temp);
-		lb.setBackground(Color.WHITE);
-
-		f.add(temp, BorderLayout.CENTER);
-		f.add(lb,BorderLayout.SOUTH);
+		f.add(new PrintView(board));
 		f.pack();
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		f.setVisible(true);

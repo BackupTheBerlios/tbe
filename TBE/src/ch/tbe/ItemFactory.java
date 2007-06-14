@@ -14,7 +14,6 @@ import ch.tbe.item.PolyDashedBlockItem;
 import ch.tbe.item.PolyDoubleArrowItem;
 import ch.tbe.item.PolySolidArrowItem;
 import ch.tbe.item.PolySolidBlockItem;
-import ch.tbe.item.ShapeItem;
 
 public final class ItemFactory
 {

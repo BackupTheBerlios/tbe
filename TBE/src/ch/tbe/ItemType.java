@@ -1,6 +1,9 @@
 package ch.tbe;
 
+import java.awt.Image;
+
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 
 public class ItemType
@@ -9,12 +12,16 @@ public class ItemType
 	private Icon icon;
 	private Icon picture;
 	private String name;
+	private int maxSideLength;
+	private Image cursor;
 	
-	public ItemType(String name, String description, Icon icon, Icon picture){
+	public ItemType(String name, String description, Icon icon, Icon picture, int maxSideLength){
 		this.name = name;
 		this.icon = icon;
 		this.description = description;
 		this.picture = picture;
+		this.maxSideLength = maxSideLength;
+		this.cursor = CursorImage.getMergedImage(((ImageIcon)picture).getImage(), maxSideLength);
 	}
 	
 	public ItemType(String name, String description, Icon icon){
@@ -62,6 +69,14 @@ public class ItemType
 	public Icon getPicture()
 	{
 		return picture;
+	}
+	
+	public int getMaxSideWidth(){
+		return this.maxSideLength;
+	}
+	
+	public Image getCursor(){
+		return this.cursor;
 	}
 
 	public void setPicture(Icon picture)

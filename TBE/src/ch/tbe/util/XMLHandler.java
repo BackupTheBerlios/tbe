@@ -6,7 +6,6 @@ import java.util.List;
 import ch.tbe.*;
 import ch.tbe.framework.*;
 import ch.tbe.gui.TBE;
-import ch.tbe.item.ShapeItem;
 import ch.tbe.jgraph.*;
 
 import java.awt.Frame;
@@ -312,7 +311,7 @@ public final class XMLHandler
 						Icon actIcon = new ImageIcon(imgURL);
 						imgURL = TBE.class.getResource("../config/sport/"+ actSport.getName() + "/" + atts.getValue("picture"));
 						Icon actPicture = new ImageIcon(imgURL);
-						shapes.add(new ItemType(atts.getValue("name"), atts.getValue("description"), actIcon, actPicture));
+						shapes.add(new ItemType(atts.getValue("name"), atts.getValue("description"), actIcon, actPicture, Integer.parseInt(atts.getValue("maxSideWidth"))));
 					}
 
 					if (qName.equals("arrow"))

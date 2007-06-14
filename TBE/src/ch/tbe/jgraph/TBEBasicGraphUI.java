@@ -18,13 +18,13 @@ import org.jgraph.plaf.basic.BasicGraphUI;
 import org.jgraph.plaf.basic.BasicGraphUI.GraphSelectionHandler;
 
 import ch.tbe.Invoker;
+import ch.tbe.ShapeItem;
 import ch.tbe.command.MoveCommand;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
-import ch.tbe.item.ShapeItem;
 
 /**
  * The basic L&F for a graph data structure.

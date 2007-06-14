@@ -6,7 +6,7 @@ import javax.swing.*;
  
 public class CursorImage {
  
-    public static BufferedImage getMergedImage(Image icon, final int MAX) {
+    public static BufferedImage getMergedImage(Image icon, int MAX) {
 
     	int scaledH = icon.getHeight(null);
     	int scaledW = icon.getWidth(null);

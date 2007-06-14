@@ -6,7 +6,6 @@ import ch.tbe.command.DeleteCommand;
 import ch.tbe.command.MoveCommand;
 import ch.tbe.command.PasteCommand;
 import ch.tbe.framework.*;
-import ch.tbe.item.ShapeItem;
 import ch.tbe.jgraph.*;
 import ch.tbe.tool.CursorTool;
 import ch.tbe.tool.ShapeTool;
@@ -556,8 +555,12 @@ public class WorkingView extends View
 		}
 		else
 		{
-			int MAX = 25;
-			int x, y;
+			int x = 0;
+			int y = 0;
+			int MAX = tool.getShapeType().getMaxSideWidth();
+			
+			if (MAX < 32) MAX = 32;
+
 			// TODO: Grosse Bilder verkleinern...
 			if (tool.getShapeType().getPicture().getIconWidth() > MAX){
 				x = (31 - MAX) / 2;
@@ -570,13 +573,14 @@ public class WorkingView extends View
 			}else{
 				y = 16 - tool.getShapeType().getPicture().getIconHeight() / 2;	
 			} 
-			
+
+			// TODO: Remove System.out.println
 			System.out.println(x);
 			System.out.println(y);
 			
 			if (x < 0) x =0;
 			if (y < 0) y =0;
-			Cursor c = getToolkit().createCustomCursor(CursorImage.getMergedImage((Image)((ImageIcon) tool.getShapeType().getPicture()).getImage(), MAX), new Point(x,y), "Cursor");
+			Cursor c = getToolkit().createCustomCursor(tool.getShapeType().getCursor(), new Point(x,y), "Cursor");
 
 			board.setCursor(c);
 		}

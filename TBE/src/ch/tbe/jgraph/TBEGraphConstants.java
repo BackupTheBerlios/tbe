@@ -768,9 +768,14 @@ public class TBEGraphConstants {
 	public static final void setIcon(Map map, Icon value) {
 	
 		Image i = ((ImageIcon) value).getImage();
-		i.getScaledInstance(value.getIconWidth(), value.getIconHeight(), Image.SCALE_SMOOTH);
+		//i.getScaledInstance(value.getIconWidth(), value.getIconHeight(), Image.SCALE_SMOOTH);
 		Rectangle2D r = getBounds(map);
-		setBounds(map, new Rectangle2D.Double(r.getX(),r.getY(),value.getIconWidth()*r.getHeight()/value.getIconHeight(),r.getHeight()));
+		
+		double factor = (double)(r.getHeight()/Math.max(value.getIconWidth(), value.getIconHeight()));
+		double height = value.getIconHeight()*factor;
+		double width = value.getIconWidth()*factor;
+		
+		setBounds(map, new Rectangle2D.Double(r.getX(),r.getY(),width, height));
 		map.put(ICON, i);
 	}
 
