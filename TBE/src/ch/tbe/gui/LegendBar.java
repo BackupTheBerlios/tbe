@@ -1,6 +1,7 @@
 package ch.tbe.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.GridLayout;
 
 import javax.swing.Icon;
@@ -20,14 +21,14 @@ public class LegendBar extends JToolBar
 	{
 		this.board = board;
 		this.setLayout(new BorderLayout());
+		this.setFloatable(false);
 		showLegend();
 	}
 	
 	private void showLegend()
 	{
-		JPanel shapePanel = new JPanel();
-		JPanel arrowPanel = new JPanel();
 		JPanel legendPanel = new JPanel(new GridLayout(0,4));
+		legendPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		String actType;
 		Icon actIcon;
 		this.removeAll();
@@ -46,7 +47,6 @@ public class LegendBar extends JToolBar
 						JPanel iPanel = new JPanel();
 						iPanel.add(new JLabel(actIcon));
 						iPanel.add(new JLabel(actType));
-						//arrowPanel.add(iPanel);
 						legendPanel.add(iPanel);
 					}
 					
@@ -57,7 +57,6 @@ public class LegendBar extends JToolBar
 						JPanel iPanel = new JPanel();
 						iPanel.add(new JLabel(actIcon));
 						iPanel.add(new JLabel(actType));
-						//shapePanel.add(iPanel);
 						legendPanel.add(iPanel);
 					}
 					
