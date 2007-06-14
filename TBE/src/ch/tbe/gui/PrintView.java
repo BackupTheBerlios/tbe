@@ -45,14 +45,14 @@ public class PrintView extends View
 		JPanel headerPanel = new JPanel();
 		headerPanel.setBackground(Color.white);
 		headerPanel.setLayout(new BorderLayout());
-
+		
 		Box header = Box.createVerticalBox();
 		JLabel title = new JLabel(board.getSport().getName());
 		title.setAlignmentY(Component.LEFT_ALIGNMENT);
 		title.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		JLabel autor = new JLabel(tbe.getUserPrename() + " "
-				+ tbe.getUserName() + " (" + tbe.getUserEmail() + ")");
+				+ tbe.getUserName() + " (" + tbe.getUserEmail()+")");
 		autor.setAlignmentY(Component.LEFT_ALIGNMENT);
 		autor.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -66,7 +66,7 @@ public class PrintView extends View
 		URL imgURL = PrintView.class.getResource("../pics/logo.jpg");
 		ImageIcon logoIcon = new ImageIcon(imgURL);
 		JLabel logo = new JLabel(logoIcon);
-		logo.setBounds(0, 0, logo.getHeight() / 2, logo.getWidth() / 2);
+		logo.setBounds(0, 0, logo.getHeight()/2, logo.getWidth()/2);
 		logo.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
 		header.add(title);
@@ -75,7 +75,7 @@ public class PrintView extends View
 		header.add(logo);
 		headerPanel.add(header, BorderLayout.WEST);
 		headerPanel.add(logo, BorderLayout.EAST);
-
+		
 		this.add(headerPanel, BorderLayout.NORTH);
 
 		// center-panel
@@ -124,7 +124,7 @@ public class PrintView extends View
 		{
 			attribPanel.add(b);
 		}
-		attribPanel.setLayout(new GridLayout(0, 4, 10, 20));
+		attribPanel.setLayout(new GridLayout(0, 4,10,20));
 		center.add(attribPanel, BorderLayout.SOUTH);
 		this.add(center, BorderLayout.CENTER);
 	}
