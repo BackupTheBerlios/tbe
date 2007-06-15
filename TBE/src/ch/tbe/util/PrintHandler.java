@@ -12,8 +12,10 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import ch.tbe.Board;
+import ch.tbe.ToolFactory;
 import ch.tbe.gui.LegendBar;
 import ch.tbe.gui.PrintView;
+import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.jgraph.TBECellViewFactory;
 
@@ -22,8 +24,13 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.*;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 
 public class PrintHandler implements Printable {
     private Component componentToBePrinted;
@@ -148,8 +155,23 @@ public class PrintHandler implements Printable {
     }
 
     private static Component createLayout(boolean visible) {
+	
+	InputStream printHandlerStream;
+	ResourceBundle rb = null;
+	try
+	{
+	    printHandlerStream = PrintHandler.class.getResourceAsStream("../config/lang/"
+				+ TBE.getInstance().getLang() + "/printHandler.txt");
+		rb = new PropertyResourceBundle(printHandlerStream);
+	} catch (FileNotFoundException fnne)
+	{
+		System.out.println("LanguageFile for PrintHandler not found !");
+	} catch (IOException ioe)
+	{
+		System.out.println("Error with ResourceBundle PrintHandler!");
+	}
 
-	f = new JFrame("Vorschau");// TODO language
+	f = new JFrame(rb.getString("title"));
 	f.setLayout(new BorderLayout());
 	f.setBackground(Color.WHITE);
 	JPanel p = new PrintView(b);
@@ -166,7 +188,7 @@ public class PrintHandler implements Printable {
 		    f.dispose();
 		}
 	    }
-	    JButton print = new JButton("Drucken");// TODO language
+	    JButton print = new JButton(rb.getString("print"));
 
 	    print.addActionListener(new printListener());
 
@@ -176,7 +198,7 @@ public class PrintHandler implements Printable {
 		    f.dispose();
 		}
 	    }
-	    JButton export = new JButton("Exportieren");// TODO language
+	    JButton export = new JButton(rb.getString("export"));
 	    export.addActionListener(new exportListener());
 
 	    class cancelListener implements ActionListener {
@@ -184,7 +206,7 @@ public class PrintHandler implements Printable {
 		    f.dispose();
 		}
 	    }
-	    JButton cancel = new JButton("Abbrechen");// TODO language
+	    JButton cancel = new JButton(rb.getString("cancel"));
 	    cancel.addActionListener(new cancelListener());
 	    buttons.add(print);
 	    buttons.add(export);
