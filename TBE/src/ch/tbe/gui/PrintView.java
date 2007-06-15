@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,9 @@ public class PrintView extends View
 		temp.setBackground(Color.WHITE);		
 		for (MouseListener ml : temp.getMouseListeners()){
 			temp.removeMouseListener(ml);
+		}
+		for (MouseMotionListener ml : temp.getMouseMotionListeners()){
+			temp.removeMouseMotionListener(ml);
 		}
 		temp.clearSelection();
 
