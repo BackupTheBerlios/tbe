@@ -14,13 +14,24 @@ public class FTPHandlerTester
 		 * PUBLIC - Server
 		 * 	domain: tbe.netstyle.ch
 		 *	users: 
-		 *  tbe_admin     pass: 4quabwej
+		 *  	tbe_admin     pass: 4quabwej
 		 *	tbe_public      pass: carmad4
 		 */
+	    
+	    	// TODO: TEST CAPS-SERVER ! (Custom!)
+	    	
+	    	FTPServer server = new FTPServer("Berncapitals", "ftp.berncapitals.ch", "berncapitals", "caps2002");
+	    	FTPHandler.connect(server);
+	    	
+	    	ArrayList<String> capsDir = FTPHandler.getDir("include");
+	    	for(String s : capsDir)
+	    	{
+	    	    System.out.println(s);
+	    	}
 		
-		FTPServer server = new FTPServer("Public", "tbe.netstyle.ch", "tbe_admin", "4quabwej");
+		// FTPServer server = new FTPServer("Public", "tbe.netstyle.ch", "tbe_admin", "4quabwej");
 		//FTPHandler.connect(server);
-		
+	    	/*
 		String[] test = new File("src/ch/tbe/config/sport").list();
 		System.out.println(test.length);
 		for(int i = 0; i < test.length; i++)
@@ -33,7 +44,8 @@ public class FTPHandlerTester
 		
 		bool = new File("src/ch/tbe/config/sport/soccer").delete();
 		System.out.println(bool);
-		
+		 */
+	    	
 		/*
 		ArrayList<String> pathesL = new ArrayList<String>();
 		ArrayList<String> pathesR = new ArrayList<String>();

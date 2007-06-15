@@ -51,7 +51,7 @@ public class ShareFrame
 	private ArrayList<String> remotePaths = new ArrayList<String>();
 
 	/*
-	 * Convention: Directories have no points in the name! ...
+	 * Convention: Directories have no points in the name and files do have a point! ...
 	 */
 	public ShareFrame()
 	{
@@ -231,7 +231,7 @@ public class ShareFrame
 		
 		if (connected)
 		{
-			String ftpPath = "boards";
+			String ftpPath = "/";
 			
 			File ftpRoot;
 			ftpRoot = new File(ftpPath);
@@ -270,20 +270,21 @@ public class ShareFrame
 				@Override
 				public void mouseReleased(MouseEvent arg0)
 				{
-					// TODO: Check ob Public oder nicht; bei nicht Public methode
-					// aufrufen
 					if(localPaths.size() == 0)
 					{
 						JOptionPane.showMessageDialog(null, shareLabels.getString("noLocals"));
 					}
-					// genau 1 Pfad auf Server gewählt, muss ein Ordner sein!!
+					// genau 1 Pfad auf Server gewählt && muss ein Ordner sein!!
 					else if(remotePaths.size() != 1 || remotePaths.get(0).contains("."))
 					{
 						JOptionPane.showMessageDialog(null, shareLabels.getString("oneRemote"));
 					}
 					else
 					{
+					    if(currentFTP.getName().equals("Public"))
 						doPublicUpload(localPaths);
+					    else
+						doCustomUpload(localPaths);
 					}
 				}
 			}
@@ -345,6 +346,7 @@ public class ShareFrame
 				{
 					String s = subFolder.get(j).toString();
 					s = s.replaceAll("\\\\", "/");
+					System.out.println("Added to Subpaths: " + s);
 					subPaths.add(s);
 				}
 				doDownload(subPaths, path);
@@ -382,6 +384,39 @@ public class ShareFrame
 					subPaths.add(path + "/" + s);
 				}
 				doPublicUpload(subPaths);
+			}
+		}
+		if(newPaths.size() != 0)
+			FTPHandler.upload(currentFTP, local, newPaths);
+	}
+	
+
+	private void doCustomUpload(ArrayList<String> locals)
+	{
+		ArrayList<String> local = locals;
+		
+		// RemotePaths zusammensetzen
+		ArrayList<String> newPaths = new ArrayList<String>();
+		for(int i = 0; i < local.size(); i++)
+		{
+			String path = local.get(i);
+			
+			if(path.contains("."))  // is File, add to NewPaths
+			{
+				newPaths.add(remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
+			}
+			else    // is a Folder, redo the whole thing with subpaths...
+			{
+				ArrayList<String> subPaths = new ArrayList<String>();
+				File myPath = new File(path);
+				String[] subFolder = myPath.list();
+				for(int j = 0; j < subFolder.length; j++)
+				{
+					String s = subFolder[j].toString();
+					s = s.replaceAll("\\\\", "/");
+					subPaths.add(path + "/" + s);
+				}
+				doCustomUpload(subPaths);
 			}
 		}
 		if(newPaths.size() != 0)
