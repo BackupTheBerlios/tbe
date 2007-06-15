@@ -27,15 +27,25 @@ import ch.tbe.gui.WorkingView;
 
 public class Menu extends JMenuBar {
     private ResourceBundle menuLabels;
+
     private Invoker invoker = Invoker.getInstance();
+
     private TBE tbe = TBE.getInstance();
+
     private JMenuItem editRedo;
+
     private JMenuItem editUndo;
+
     private JMenuItem editAddPoint;
+
     private JMenuItem editRemovePoint;
+
     private JMenuItem viewToolbar;
+
     private JMenuItem viewSidebar;
+
     private JMenuItem viewLegend;
+
     private JMenu fieldMenu;
 
     public Menu(String lang) {
@@ -94,13 +104,15 @@ public class Menu extends JMenuBar {
 	fileOpen.addMouseListener(new fileOpenListener());
 
 	JMenuItem fileSave = new JMenuItem(menuLabels.getString("file3"));
-	class fileSaveListener extends MouseAdapter {
+	class fileSaveListener implements ActionListener {
 	    @Override
-	    public void mouseReleased(MouseEvent arg0) {
+	    public void actionPerformed(ActionEvent arg0) {
 		tbe.save();
 	    }
 	}
-	fileSave.addMouseListener(new fileSaveListener());
+	fileSave.addActionListener(new fileSaveListener());
+	fileSave.setAccelerator(KeyStroke.getKeyStroke(
+		java.awt.event.KeyEvent.VK_S, java.awt.Event.CTRL_MASK));
 
 	JMenuItem fileSaveAs = new JMenuItem(menuLabels.getString("file4"));
 	class fileSaveAsListener extends MouseAdapter {
@@ -121,29 +133,46 @@ public class Menu extends JMenuBar {
 	fileShare.addMouseListener(new fileShareListener());
 
 	JMenuItem fileExport = new JMenuItem(menuLabels.getString("file6"));
-	class fileExportListener extends MouseAdapter {
+	class fileExportListener implements ActionListener {
 	    @Override
-	    public void mouseReleased(MouseEvent arg0) {
+	    public void actionPerformed(ActionEvent arg0) {
 		View v = tbe.getView();
 		if (v instanceof WorkingView) {
-		    PrintHandler.export(((WorkingView) v).getBoard());
+		    PrintHandler.exportBoard(((WorkingView) v).getBoard());
 		}
 
 	    }
 	}
-	fileExport.addMouseListener(new fileExportListener());
+	fileExport.addActionListener(new fileExportListener());
+	fileExport.setAccelerator(KeyStroke.getKeyStroke(
+		java.awt.event.KeyEvent.VK_E, java.awt.Event.CTRL_MASK));
 
-	JMenuItem filePrint = new JMenuItem(menuLabels.getString("file7"));
-	class filePrintListener extends MouseAdapter {
+	JMenuItem filePreview = new JMenuItem(menuLabels.getString("file10"));
+	class filePreviewListener extends MouseAdapter {
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
+		View v = tbe.getView();
+		if (v instanceof WorkingView) {
+		    PrintHandler.showPreview(((WorkingView) v).getBoard());
+		}
+
+	    }
+	}
+	filePreview.addMouseListener(new filePreviewListener());
+
+	JMenuItem filePrint = new JMenuItem(menuLabels.getString("file7"));
+	class filePrintListener implements ActionListener {
+	    @Override
+	    public void actionPerformed(ActionEvent arg0) {
 		View v = tbe.getView();
 		if (v instanceof WorkingView) {
 		    PrintHandler.printBoard(((WorkingView) v).getBoard());
 		}
 	    }
 	}
-	filePrint.addMouseListener(new filePrintListener());
+	filePrint.addActionListener(new filePrintListener());
+	filePrint.setAccelerator(KeyStroke.getKeyStroke(
+		java.awt.event.KeyEvent.VK_P, java.awt.Event.CTRL_MASK));
 
 	JMenuItem fileClose = new JMenuItem(menuLabels.getString("file8"));
 	class fileCloseListener implements ActionListener {
@@ -190,6 +219,7 @@ public class Menu extends JMenuBar {
 	filemenu.add(fileShare);
 	filemenu.add(fileExport);
 	filemenu.add(filePrint);
+	filemenu.add(filePreview);
 	filemenu.add(fileClose);
 	filemenu.add(fileQuit);
 
@@ -328,6 +358,7 @@ public class Menu extends JMenuBar {
 	this.refreshInvokerVisibility();
 	return editmenu;
     }
+
     private JMenu createBoardMenu() {
 	JMenu boardmenu = new JMenu(menuLabels.getString("title3"));
 
@@ -350,13 +381,14 @@ public class Menu extends JMenuBar {
 	    // TODO: boardmenu.add(createFieldMenu(new ArrayList<Field>()))
 	    fieldMenu = createFieldMenu(new ArrayList<Field>());
 	    // fieldMenu =
-                // createFieldMenu(TBE.getInstance().getSports().get(0).getFields());
+	    // createFieldMenu(TBE.getInstance().getSports().get(0).getFields());
 	}
 	boardmenu.add(fieldMenu);
 	boardmenu.add(boardClear);
 
 	return boardmenu;
     }
+
     private JMenu createViewMenu() {
 	JMenu viewMenu = new JMenu(menuLabels.getString("title5"));
 
@@ -400,6 +432,7 @@ public class Menu extends JMenuBar {
 
 	return viewMenu;
     }
+
     private JMenu createFieldMenu(ArrayList<Field> fields) {
 	System.out.println("Create Fieldmenu: " + fields.size());
 	JMenu boardChangeField = new JMenu(menuLabels.getString("board1"));
@@ -427,6 +460,7 @@ public class Menu extends JMenuBar {
 
 	return boardChangeField;
     }
+
     private JMenu createTBEMenu() {
 	JMenu tbemenu = new JMenu(menuLabels.getString("title4"));
 
@@ -449,6 +483,7 @@ public class Menu extends JMenuBar {
 
 	return tbemenu;
     }
+
     public void refreshInvokerVisibility() {
 	if (this.invoker.canRedo()) {
 	    editRedo.setEnabled(true);
@@ -462,10 +497,12 @@ public class Menu extends JMenuBar {
 	    editUndo.setEnabled(false);
 	}
     }
+
     public void activatePoints(boolean b) {
 	editAddPoint.setEnabled(b);
 	editRemovePoint.setEnabled(b);
     }
+
     public void refresh() {
 	Component[] components = this.getComponents();
 	for (int i = 0; i < components.length; i++) {
@@ -477,6 +514,7 @@ public class Menu extends JMenuBar {
 
 	this.createMenu();
     }
+
     public void setVisibleToolbar(boolean b) {
 	if (!b) {
 	    viewToolbar.setIcon(new ImageIcon(TBE.class
@@ -486,18 +524,24 @@ public class Menu extends JMenuBar {
 		    .getResource("../pics/notVisible.png")));
 	}
     }
+
     public void setVisibleSidebar(boolean b) {
 	if (!b) {
-	    viewSidebar.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+	    viewSidebar.setIcon(new ImageIcon(TBE.class
+		    .getResource("../pics/visible.png")));
 	} else {
-	    viewSidebar.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+	    viewSidebar.setIcon(new ImageIcon(TBE.class
+		    .getResource("../pics/notVisible.png")));
 	}
     }
+
     public void setVisibleLegend(boolean b) {
 	if (!b) {
-	    viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+	    viewLegend.setIcon(new ImageIcon(TBE.class
+		    .getResource("../pics/visible.png")));
 	} else {
-	    viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+	    viewLegend.setIcon(new ImageIcon(TBE.class
+		    .getResource("../pics/notVisible.png")));
 	}
     }
 }

@@ -10,6 +10,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -102,6 +103,7 @@ public class PrintView extends View
 
 		// Add Legende
 		JPanel lb = new LegendBar(temp).getLegend();
+		lb.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// Add Attributes
 		ArrayList<Box> attrib = new ArrayList<Box>();
@@ -120,6 +122,7 @@ public class PrintView extends View
 			aText.setAlignmentY(Component.LEFT_ALIGNMENT);
 			aText.setAlignmentX(Component.LEFT_ALIGNMENT);
 			tempB.add(aTitle);
+			tempB.add(Box.createVerticalStrut(10));
 			tempB.add(aText);
 			attrib.add(tempB);
 		}

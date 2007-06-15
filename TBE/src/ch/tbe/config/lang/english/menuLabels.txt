@@ -15,6 +15,7 @@ file6=Export
 file7=Print
 file8=Close
 file9=Quit TBE
+file10=Print Preview
 
 # Menuitems EditMenu
 edit1=Delete
