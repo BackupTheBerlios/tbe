@@ -163,8 +163,7 @@ public final class XMLHandler
 				}
 			}
 
-			public void startElement(String name, String localName,
-					String qName, Attributes atts) throws SAXException
+			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException
 			{
 				if (qName.equals("sport"))
 				{
@@ -188,7 +187,7 @@ public final class XMLHandler
 				{
 					if (qName.equals("attribute"))
 					{
-						board.addAttribute(atts.getValue("title"), atts.getValue("text"));
+						board.addAttribute(atts.getValue("text"), atts.getValue("title"));
 					}
 
 					if (qName.equals("shape"))
@@ -303,8 +302,7 @@ public final class XMLHandler
 				}
 			}
 
-			public void startElement(String name, String localName,
-					String qName, Attributes atts) throws SAXException
+			public void startElement(String name, String localName,	String qName, Attributes atts) throws SAXException
 			{
 				if (qName.equals("sport"))
 				{
