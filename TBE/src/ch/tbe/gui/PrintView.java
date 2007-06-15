@@ -56,11 +56,11 @@ public class PrintView extends View
 		title.setFont(f);
 		title.setAlignmentY(Component.TOP_ALIGNMENT);
 		title.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel autor = new JLabel(tbe.getUserPrename() + " "
+		JLabel autor = new JLabel(" "+tbe.getUserPrename() + " "
 				+ tbe.getUserName() + " (" + tbe.getUserEmail() + ")");
 		autor.setAlignmentY(Component.TOP_ALIGNMENT);
 		autor.setAlignmentX(Component.LEFT_ALIGNMENT);
-		JLabel path = new JLabel(board.getPath());
+		JLabel path = new JLabel(" "+board.getPath());
 		path.setAlignmentY(Component.TOP_ALIGNMENT);
 		path.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -107,7 +107,6 @@ public class PrintView extends View
 
 		// Add Legende
 		JPanel lb = new LegendBar(temp).getLegend();
-		lb.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		// Add Attributes
 		ArrayList<Box> attrib = new ArrayList<Box>();
