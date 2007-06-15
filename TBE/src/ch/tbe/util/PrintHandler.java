@@ -1,6 +1,7 @@
 package ch.tbe.util;
 
 import java.awt.*;
+
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import com.sun.image.codec.jpeg.JPEGCodec;
@@ -164,7 +165,6 @@ public class PrintHandler implements Printable {
 	f.setBackground(Color.WHITE);
 	p = new PrintView(b);
 	f.add(new JScrollPane(p), BorderLayout.CENTER);
-	f.pack();
 	f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	f.setResizable(false);
 	if (visible) {
@@ -199,7 +199,12 @@ public class PrintHandler implements Printable {
 	    buttons.add(print);
 	    buttons.add(export);
 	    buttons.add(cancel);
-	    f.add(buttons, BorderLayout.SOUTH);
+	    f.add(buttons, BorderLayout.NORTH);
+
+	    Toolkit toolkit = Toolkit.getDefaultToolkit();
+	    f.setSize(new Dimension((int) f.getPreferredSize().getWidth(),
+		    (int) toolkit.getScreenSize().getHeight() - 50));
+
 	    f.setVisible(visible);
 
 	}
