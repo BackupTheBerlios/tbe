@@ -3,22 +3,11 @@ package ch.tbe.util;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
-
-import org.jgraph.graph.DefaultGraphModel;
-import org.jgraph.graph.GraphLayoutCache;
-import org.jgraph.graph.GraphModel;
-
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-
 import ch.tbe.Board;
-import ch.tbe.ToolFactory;
-import ch.tbe.gui.LegendBar;
 import ch.tbe.gui.PrintView;
 import ch.tbe.gui.TBE;
-import ch.tbe.gui.WorkingView;
-import ch.tbe.jgraph.TBECellViewFactory;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -37,13 +26,15 @@ public class PrintHandler implements Printable {
 
     private static JFrame f;
 
+    private static JPanel p;
+
     private static Board b;
 
     public static void printBoard(Board b) {
 	PrintHandler.b = b;
 
 	new PrintHandler(PrintHandler.createLayout(false)).print();
-	
+
     }
 
     public static void printComponent(Component c) {
@@ -114,7 +105,6 @@ public class PrintHandler implements Printable {
 
 	Component comp = createLayout(false);
 	export(comp);
-	
 
     }
 
@@ -155,26 +145,24 @@ public class PrintHandler implements Printable {
     }
 
     private static Component createLayout(boolean visible) {
-	
+
 	InputStream printHandlerStream;
 	ResourceBundle rb = null;
-	try
-	{
-	    printHandlerStream = PrintHandler.class.getResourceAsStream("../config/lang/"
-				+ TBE.getInstance().getLang() + "/printHandler.txt");
-		rb = new PropertyResourceBundle(printHandlerStream);
-	} catch (FileNotFoundException fnne)
-	{
-		System.out.println("LanguageFile for PrintHandler not found !");
-	} catch (IOException ioe)
-	{
-		System.out.println("Error with ResourceBundle PrintHandler!");
+	try {
+	    printHandlerStream = PrintHandler.class
+		    .getResourceAsStream("../config/lang/"
+			    + TBE.getInstance().getLang() + "/printHandler.txt");
+	    rb = new PropertyResourceBundle(printHandlerStream);
+	} catch (FileNotFoundException fnne) {
+	    System.out.println("LanguageFile for PrintHandler not found !");
+	} catch (IOException ioe) {
+	    System.out.println("Error with ResourceBundle PrintHandler!");
 	}
 
 	f = new JFrame(rb.getString("title"));
 	f.setLayout(new BorderLayout());
 	f.setBackground(Color.WHITE);
-	JPanel p = new PrintView(b);
+	p = new PrintView(b);
 	f.add(new JScrollPane(p), BorderLayout.CENTER);
 	f.pack();
 	f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -184,7 +172,7 @@ public class PrintHandler implements Printable {
 	    JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 	    class printListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-		    new PrintHandler(f).print();
+		    new PrintHandler(p).print();
 		    f.dispose();
 		}
 	    }
@@ -194,7 +182,7 @@ public class PrintHandler implements Printable {
 
 	    class exportListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-		    export(f);
+		    export(p);
 		    f.dispose();
 		}
 	    }
