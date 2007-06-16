@@ -36,6 +36,7 @@ public class SideBar extends JToolBar {
     private DefaultTreeModel treeModel;
 
     private AttributeTreeNode root;
+    private final int TREESTRINGLENGTH = 30;
 
     public SideBar(Board board) {
 	this.board = board;
@@ -78,19 +79,19 @@ public class SideBar extends JToolBar {
 
 	root = new AttributeTreeNode();
 	for (Attribute a : board.getDescription().getAttributes()) {
-	    int stringLength = 20;
+
 	    String title = a.getTitle();
 
-	    if (title.length() > stringLength) {
-		title = title.substring(0, stringLength) + "...";
+	    if (title.length() > TREESTRINGLENGTH) {
+		title = title.substring(0, TREESTRINGLENGTH) + "...";
 
 	    }
 	    child = new AttributeTreeNode(title, a);
 
 	    root.add(child);
 	    String text = a.getText();
-	    if (text.length() > stringLength - 3) {
-		text = text.substring(0, stringLength - 3) + "...";
+	    if (text.length() > TREESTRINGLENGTH - 3) {
+		text = text.substring(0, TREESTRINGLENGTH - 3) + "...";
 	    }
 	    subchild = new AttributeTreeNode(text, a);
 	    child.add(subchild);
@@ -114,8 +115,9 @@ public class SideBar extends JToolBar {
 			    titleInputArea.setText(currentAttribute.getTitle());
 			    textInputArea.setText(currentAttribute.getText());
 			} else {
-			    
-			    AttributeTreeNode current = (AttributeTreeNode) path.getLastPathComponent();
+
+			    AttributeTreeNode current = (AttributeTreeNode) path
+				    .getLastPathComponent();
 			    Attribute myAttr = current.getA();
 			    Object[] options = {
 				    sideBarLabels.getString("yes"),
@@ -129,10 +131,10 @@ public class SideBar extends JToolBar {
 				    options, options[1]);
 			    if (answer == 0) {
 				board.removeAttribute(myAttr);
-				if (current.isLeaf()){
-				    root.remove((AttributeTreeNode) current.getParent());
-				}
-				else{
+				if (current.isLeaf()) {
+				    root.remove((AttributeTreeNode) current
+					    .getParent());
+				} else {
 				    root.remove(current);
 				}
 				currentAttribute = null;
@@ -140,8 +142,7 @@ public class SideBar extends JToolBar {
 
 			    }
 			}
-		    }
-		    else{
+		    } else {
 			tree.clearSelection();
 			currentAttribute = null;
 			titleInputArea.setText("");
@@ -156,8 +157,10 @@ public class SideBar extends JToolBar {
     private Box createInputPanel() {
 
 	Box inputPanel = Box.createVerticalBox();
-	inputPanel.add(new JLabel(sideBarLabels.getString("title")));
 
+	JLabel title = new JLabel(sideBarLabels.getString("title"));
+	inputPanel.add(title);
+	
 	class TitleInputListener extends MouseAdapter {
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
@@ -204,7 +207,7 @@ public class SideBar extends JToolBar {
 		titleInputArea.setText("");
 		textInputArea.setText("");
 		tree.clearSelection();
-		
+
 	    }
 	}
 	cancelButton.addActionListener(new cancelButtonListener());
@@ -251,19 +254,19 @@ public class SideBar extends JToolBar {
 		    Attribute a = new Attribute(textInputArea.getText(),
 			    titleInputArea.getText());
 		    board.getDescription().getAttributes().add(a);
-		    int stringLength = 20;
+
 		    String title = a.getTitle();
 
-		    if (title.length() > stringLength) {
-			title = title.substring(0, stringLength) + "...";
+		    if (title.length() > TREESTRINGLENGTH) {
+			title = title.substring(0, TREESTRINGLENGTH) + "...";
 
 		    }
 		    AttributeTreeNode child = new AttributeTreeNode(title, a);
 
 		    root.add(child);
 		    String text = a.getText();
-		    if (text.length() > stringLength - 3) {
-			text = text.substring(0, stringLength - 3) + "...";
+		    if (text.length() > TREESTRINGLENGTH - 3) {
+			text = text.substring(0, TREESTRINGLENGTH - 3) + "...";
 		    }
 		    AttributeTreeNode subchild = new AttributeTreeNode(text, a);
 		    child.add(subchild);
@@ -272,7 +275,7 @@ public class SideBar extends JToolBar {
 		    treeModel.nodeStructureChanged(root);
 
 		}
-		
+
 	    }
 	}
 	saveButton.addActionListener(new saveButtonListener());
