@@ -215,6 +215,7 @@ public class WorkingView extends View {
 	rotate = new JButton("Rotate");
 	rotate.setEnabled(false);
 	rotatePanel = new JToolBar();
+	rotatePanel.setOrientation(1);
 	rotatePanel.setLayout(new BorderLayout(0, 1));
 	rotateSlider = new JSlider();
 	rotateSlider.setMaximum(359);
