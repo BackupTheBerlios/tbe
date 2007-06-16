@@ -1,8 +1,7 @@
 package ch.tbe.gui;
 
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -142,6 +141,12 @@ public class SideBar extends JToolBar {
 			    }
 			}
 		    }
+		    else{
+			tree.clearSelection();
+			currentAttribute = null;
+			titleInputArea.setText("");
+			textInputArea.setText("");
+		    }
 		}
 	    }
 	}
@@ -192,21 +197,21 @@ public class SideBar extends JToolBar {
     private JPanel createButtonPanel() {
 	JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
 	JButton cancelButton = new JButton(sideBarLabels.getString("cancel"));
-	class cancelButtonListener extends MouseAdapter {
-	    @Override
-	    public void mouseReleased(MouseEvent arg0) {
+	class cancelButtonListener implements ActionListener {
+
+	    public void actionPerformed(ActionEvent arg0) {
 		currentAttribute = null;
 		titleInputArea.setText("");
 		textInputArea.setText("");
-
+		tree.clearSelection();
+		
 	    }
 	}
-	cancelButton.addMouseListener(new cancelButtonListener());
+	cancelButton.addActionListener(new cancelButtonListener());
 	JButton saveButton = new JButton(sideBarLabels.getString("save"));
-	class saveButtonListener extends MouseAdapter {
-	    @Override
-	    public void mouseReleased(MouseEvent arg0) {
+	class saveButtonListener implements ActionListener {
 
+	    public void actionPerformed(ActionEvent arg0) {
 		if (titleInputArea.getText().equals("")
 			|| titleInputArea.getText().equals(
 				sideBarLabels.getString("titleInput"))) {
@@ -267,10 +272,10 @@ public class SideBar extends JToolBar {
 		    treeModel.nodeStructureChanged(root);
 
 		}
-
+		
 	    }
 	}
-	saveButton.addMouseListener(new saveButtonListener());
+	saveButton.addActionListener(new saveButtonListener());
 
 	buttonPanel.add(cancelButton);
 	buttonPanel.add(saveButton);
