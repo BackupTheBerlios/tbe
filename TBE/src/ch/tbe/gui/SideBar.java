@@ -36,7 +36,7 @@ public class SideBar extends JToolBar {
     private DefaultTreeModel treeModel;
 
     private AttributeTreeNode root;
-    private final int TREESTRINGLENGTH = 30;
+    private final int TREESTRINGLENGTH = 15;
 
     public SideBar(Board board) {
 	this.board = board;
@@ -47,7 +47,6 @@ public class SideBar extends JToolBar {
     }
 
     private void createPanel() {
-	// this.add(new JLabel(sideBarLabels.getString("attr")));
 
 	sidePanel = new JPanel();
 
@@ -80,20 +79,9 @@ public class SideBar extends JToolBar {
 	root = new AttributeTreeNode();
 	for (Attribute a : board.getDescription().getAttributes()) {
 
-	    String title = a.getTitle();
-
-	    if (title.length() > TREESTRINGLENGTH) {
-		title = title.substring(0, TREESTRINGLENGTH) + "...";
-
-	    }
-	    child = new AttributeTreeNode(title, a);
-
+	    child = new AttributeTreeNode(makeSubstring(a.getTitle()), a);
 	    root.add(child);
-	    String text = a.getText();
-	    if (text.length() > TREESTRINGLENGTH - 3) {
-		text = text.substring(0, TREESTRINGLENGTH - 3) + "...";
-	    }
-	    subchild = new AttributeTreeNode(text, a);
+	    subchild = new AttributeTreeNode(makeSubstring(a.getText()), a);
 	    child.add(subchild);
 
 	}
@@ -152,6 +140,14 @@ public class SideBar extends JToolBar {
 	    }
 	}
 	tree.addMouseListener(new TreeListener());
+    }
+
+    private String makeSubstring(String s) {
+	if (s.length() > TREESTRINGLENGTH) {
+	s = s.substring(0, TREESTRINGLENGTH) + "...";
+
+	}
+	return s;
     }
 
     private Box createInputPanel() {
@@ -240,13 +236,13 @@ public class SideBar extends JToolBar {
 		    AttributeTreeNode node = (AttributeTreeNode) tree
 			    .getSelectionPath().getLastPathComponent();
 		    if (node.isLeaf()) {
-			node.setUserObject(currentAttribute.getText());
+			node.setUserObject(makeSubstring(currentAttribute.getText()));
 			((AttributeTreeNode) node.getParent())
-				.setUserObject(currentAttribute.getTitle());
+				.setUserObject(makeSubstring(currentAttribute.getTitle()));
 		    } else {
-			node.setUserObject(currentAttribute.getTitle());
+			node.setUserObject(makeSubstring(currentAttribute.getTitle()));
 			((AttributeTreeNode) node.getFirstChild())
-				.setUserObject(currentAttribute.getText());
+				.setUserObject(makeSubstring(currentAttribute.getText()));
 		    }
 		    treeModel.nodeStructureChanged(root);
 		    currentAttribute = null;
@@ -255,21 +251,8 @@ public class SideBar extends JToolBar {
 		    Attribute a = new Attribute(textInputArea.getText(),
 			    titleInputArea.getText());
 		    board.getDescription().getAttributes().add(a);
-
-		    String title = a.getTitle();
-
-		    if (title.length() > TREESTRINGLENGTH) {
-			title = title.substring(0, TREESTRINGLENGTH) + "...";
-
-		    }
-		    AttributeTreeNode child = new AttributeTreeNode(title, a);
-
-		    root.add(child);
-		    String text = a.getText();
-		    if (text.length() > TREESTRINGLENGTH - 3) {
-			text = text.substring(0, TREESTRINGLENGTH - 3) + "...";
-		    }
-		    AttributeTreeNode subchild = new AttributeTreeNode(text, a);
+		    AttributeTreeNode child = new AttributeTreeNode(makeSubstring(a.getTitle()), a);
+		    AttributeTreeNode subchild = new AttributeTreeNode(makeSubstring(a.getText()), a);
 		    child.add(subchild);
 		    titleInputArea.setText("");
 		    textInputArea.setText("");
