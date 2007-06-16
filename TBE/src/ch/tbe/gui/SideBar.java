@@ -40,7 +40,7 @@ public class SideBar extends JToolBar {
 
     public SideBar(Board board) {
 	this.board = board;
-	sideBarLabels = this.getResourceBundle(tbe.getLang());
+	this.sideBarLabels = this.getResourceBundle(tbe.getLang());
 	this.setOrientation(1);
 	this.setFloatable(false);
 	this.createPanel();
@@ -56,7 +56,7 @@ public class SideBar extends JToolBar {
 	// List of all Attributes
 	JPanel northPanel = new JPanel(new BorderLayout());
 
-	JLabel attribLabel = new JLabel("Attribute");// TODO language
+	JLabel attribLabel = new JLabel(sideBarLabels.getString("attr"));
 	northPanel.add(attribLabel, BorderLayout.NORTH);
 	sidePanel.add(northPanel, BorderLayout.NORTH);
 
@@ -193,12 +193,13 @@ public class SideBar extends JToolBar {
 	textInputArea.addMouseListener(new TextInputListener());
 
 	inputPanel.add(new JScrollPane(textInputArea));
+	inputPanel.add(Box.createVerticalStrut(10));
 
 	return inputPanel;
     }
 
     private JPanel createButtonPanel() {
-	JPanel buttonPanel = new JPanel(new GridLayout(1, 2));
+	JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
 	JButton cancelButton = new JButton(sideBarLabels.getString("cancel"));
 	class cancelButtonListener implements ActionListener {
 
@@ -282,7 +283,7 @@ public class SideBar extends JToolBar {
 
 	buttonPanel.add(cancelButton);
 	buttonPanel.add(saveButton);
-
+	buttonPanel.add(Box.createVerticalStrut(30));
 	return buttonPanel;
     }
 

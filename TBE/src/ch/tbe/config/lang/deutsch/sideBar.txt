@@ -2,7 +2,6 @@
 attr = Eigenschaften
 
 # Add / Change Attribute
-new = Neues Attribut
 title = Titel
 text = Text
 
