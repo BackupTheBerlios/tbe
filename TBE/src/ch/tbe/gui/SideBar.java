@@ -36,6 +36,7 @@ public class SideBar extends JToolBar {
     private DefaultTreeModel treeModel;
 
     private AttributeTreeNode root;
+
     private final int TREESTRINGLENGTH = 15;
 
     public SideBar(Board board) {
@@ -104,31 +105,7 @@ public class SideBar extends JToolBar {
 			    textInputArea.setText(currentAttribute.getText());
 			} else {
 
-			    AttributeTreeNode current = (AttributeTreeNode) path
-				    .getLastPathComponent();
-			    Attribute myAttr = current.getA();
-			    Object[] options = {
-				    sideBarLabels.getString("yes"),
-				    sideBarLabels.getString("no") };
-			    String question = sideBarLabels
-				    .getString("removeAttr")
-				    + "\n\"" + myAttr.getTitle() + "\"";
-			    int answer = JOptionPane.showOptionDialog(null,
-				    question, "", JOptionPane.YES_NO_OPTION,
-				    JOptionPane.QUESTION_MESSAGE, null,
-				    options, options[1]);
-			    if (answer == 0) {
-				board.removeAttribute(myAttr);
-				if (current.isLeaf()) {
-				    root.remove((AttributeTreeNode) current
-					    .getParent());
-				} else {
-				    root.remove(current);
-				}
-				currentAttribute = null;
-				treeModel.nodeStructureChanged(root);
-
-			    }
+			    deleteAttribute(path);
 			}
 		    } else {
 			tree.clearSelection();
@@ -138,13 +115,34 @@ public class SideBar extends JToolBar {
 		    }
 		}
 	    }
+
 	}
 	tree.addMouseListener(new TreeListener());
+	tree.addKeyListener(new KeyListener() {
+
+	    public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+		    deleteAttribute(tree.getSelectionPath());
+		}
+
+	    }
+
+	    public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	    }
+
+	    public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+
+	    }
+
+	});
     }
 
     private String makeSubstring(String s) {
 	if (s.length() > TREESTRINGLENGTH) {
-	s = s.substring(0, TREESTRINGLENGTH) + "...";
+	    s = s.substring(0, TREESTRINGLENGTH) + "...";
 
 	}
 	return s;
@@ -156,7 +154,7 @@ public class SideBar extends JToolBar {
 
 	JLabel title = new JLabel(sideBarLabels.getString("title"));
 	inputPanel.add(title);
-	
+
 	class TitleInputListener extends MouseAdapter {
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
@@ -236,13 +234,17 @@ public class SideBar extends JToolBar {
 		    AttributeTreeNode node = (AttributeTreeNode) tree
 			    .getSelectionPath().getLastPathComponent();
 		    if (node.isLeaf()) {
-			node.setUserObject(makeSubstring(currentAttribute.getText()));
+			node.setUserObject(makeSubstring(currentAttribute
+				.getText()));
 			((AttributeTreeNode) node.getParent())
-				.setUserObject(makeSubstring(currentAttribute.getTitle()));
+				.setUserObject(makeSubstring(currentAttribute
+					.getTitle()));
 		    } else {
-			node.setUserObject(makeSubstring(currentAttribute.getTitle()));
+			node.setUserObject(makeSubstring(currentAttribute
+				.getTitle()));
 			((AttributeTreeNode) node.getFirstChild())
-				.setUserObject(makeSubstring(currentAttribute.getText()));
+				.setUserObject(makeSubstring(currentAttribute
+					.getText()));
 		    }
 		    treeModel.nodeStructureChanged(root);
 		    currentAttribute = null;
@@ -251,8 +253,10 @@ public class SideBar extends JToolBar {
 		    Attribute a = new Attribute(textInputArea.getText(),
 			    titleInputArea.getText());
 		    board.getDescription().getAttributes().add(a);
-		    AttributeTreeNode child = new AttributeTreeNode(makeSubstring(titleInputArea.getText()), a);
-		    AttributeTreeNode subchild = new AttributeTreeNode(makeSubstring(textInputArea.getText()), a);
+		    AttributeTreeNode child = new AttributeTreeNode(
+			    makeSubstring(titleInputArea.getText()), a);
+		    AttributeTreeNode subchild = new AttributeTreeNode(
+			    makeSubstring(textInputArea.getText()), a);
 		    child.add(subchild);
 		    root.add(child);
 		    titleInputArea.setText("");
@@ -269,6 +273,32 @@ public class SideBar extends JToolBar {
 	buttonPanel.add(saveButton);
 	buttonPanel.add(Box.createVerticalStrut(30));
 	return buttonPanel;
+    }
+
+    private void deleteAttribute(TreePath path) {
+	if (path == null)
+	    return;
+	AttributeTreeNode current = (AttributeTreeNode) path
+		.getLastPathComponent();
+	Attribute myAttr = current.getA();
+	Object[] options = { sideBarLabels.getString("yes"),
+		sideBarLabels.getString("no") };
+	String question = sideBarLabels.getString("removeAttr") + "\n\""
+		+ myAttr.getTitle() + "\"";
+	int answer = JOptionPane.showOptionDialog(null, question, "",
+		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+		options, options[1]);
+	if (answer == 0) {
+	    board.removeAttribute(myAttr);
+	    if (current.isLeaf()) {
+		root.remove((AttributeTreeNode) current.getParent());
+	    } else {
+		root.remove(current);
+	    }
+	    currentAttribute = null;
+	    treeModel.nodeStructureChanged(root);
+
+	}
     }
 
     private ResourceBundle getResourceBundle(String lang) {
