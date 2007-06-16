@@ -251,9 +251,10 @@ public class SideBar extends JToolBar {
 		    Attribute a = new Attribute(textInputArea.getText(),
 			    titleInputArea.getText());
 		    board.getDescription().getAttributes().add(a);
-		    AttributeTreeNode child = new AttributeTreeNode(makeSubstring(a.getTitle()), a);
-		    AttributeTreeNode subchild = new AttributeTreeNode(makeSubstring(a.getText()), a);
+		    AttributeTreeNode child = new AttributeTreeNode(makeSubstring(titleInputArea.getText()), a);
+		    AttributeTreeNode subchild = new AttributeTreeNode(makeSubstring(textInputArea.getText()), a);
 		    child.add(subchild);
+		    root.add(child);
 		    titleInputArea.setText("");
 		    textInputArea.setText("");
 		    treeModel.nodeStructureChanged(root);
