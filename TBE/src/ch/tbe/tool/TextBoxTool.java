@@ -16,7 +16,7 @@ public class TextBoxTool extends Tool
 	public TextBoxTool(ItemType shapeType)
 	{
 		super(shapeType);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	private final int HEIGHT = 20;
@@ -33,14 +33,14 @@ public class TextBoxTool extends Tool
 	@Override
 	public void activate()
 	{
-		// TODO Auto-generated method stub
+	
 
 	}
 
 	@Override
 	public void deactivate()
 	{
-		// TODO Auto-generated method stub
+	
 
 	}
 
@@ -48,21 +48,21 @@ public class TextBoxTool extends Tool
 	@Override
 	public void mouseDrag(int x, int y, MouseEvent e)
 	{
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public void mouseOver(int x, int y, MouseEvent e)
 	{
-		// TODO Auto-generated method stub
+	
 
 	}
 
 	@Override
 	public void mouseUp(int x, int y, MouseEvent e)
 	{
-		// TODO Auto-generated method stub
+		
 
 	}
 

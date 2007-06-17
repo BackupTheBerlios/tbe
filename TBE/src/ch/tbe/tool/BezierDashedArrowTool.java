@@ -19,7 +19,7 @@ public class BezierDashedArrowTool extends ArrowTool
 	public BezierDashedArrowTool(ItemType shapeType)
 	{
 		super(shapeType);
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public void mouseDown(int x, int y, MouseEvent e)

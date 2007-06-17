@@ -17,7 +17,7 @@ public class BezierDoubleArrowTool extends ArrowTool{
 	public BezierDoubleArrowTool(ItemType itemType)
 	{
 		super(itemType);
-		// TODO Auto-generated constructor stub
+	
 	}
 
 	public void mouseDown(int x, int y, MouseEvent e)

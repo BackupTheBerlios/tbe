@@ -49,7 +49,7 @@ public class PrintView extends View {
 
 	// Box with Title, Name, Prename and email
 	Box header = Box.createVerticalBox();
-	JLabel title = new JLabel(board.getSport().getName());
+	JLabel title = new JLabel(board.getSport().getName());  // TODO: JLabel title = new JLabel(board.getDescription().getDescription());
 	Font f = new Font(title.getFont().getFontName(), Font.BOLD, 40);
 	title.setFont(f);
 	title.setAlignmentY(Component.TOP_ALIGNMENT);
@@ -63,7 +63,7 @@ public class PrintView extends View {
 	path.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 	// Logo Icon
-	URL imgURL = PrintView.class.getResource("../pics/logo.jpg"); // TODO
+	URL imgURL = PrintView.class.getResource("../pics/logo.jpg"); // TODO smaller Logo
 	// smaller
 	// Icon
 	ImageIcon logoIcon = new ImageIcon(imgURL);

@@ -17,7 +17,7 @@ public class PolyDashedArrowTool extends ArrowTool {
 	public PolyDashedArrowTool(ItemType shapeType)
 	{
 		super(shapeType);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void mouseDown(int x, int y, MouseEvent e)

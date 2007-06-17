@@ -168,7 +168,7 @@ public class WorkingView extends View {
     }
 
     public void activateRotation(boolean b) {
-	// TODO: tbe.getMenu().activatePoints(b);
+
 	if (showRotate && b) {
 	    rotatePanel.setVisible(b);
 	    rotateSlider.setValue(((ShapeItem) board.getSelectedItems()[0])
@@ -465,8 +465,6 @@ public class WorkingView extends View {
 		this.currentButton.setEnabled(true);
 	    }
 	    this.currentButton = button;
-	    // TODO button.setDisabledIcon(arg0);
-
 	    this.currentTool = tool;
 
 	}

@@ -17,7 +17,7 @@ public class PolyCurvedArrowTool extends ArrowTool {
 	public PolyCurvedArrowTool(ItemType shapeType)
 	{
 		super(shapeType);
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public void mouseDown(int x, int y, MouseEvent e)

@@ -615,7 +615,7 @@ public class TBEGraphConstants {
 			} else if (cm != null) // else is assumed by clients!
 				view = cm.getMapping(key, false);
 			if (view != null)
-				attributes.put(key, view.getAllAttributes().clone()); // FIXME:
+				attributes.put(key, view.getAllAttributes().clone()); 
 			// clone
 			// required?
 		}
@@ -630,7 +630,7 @@ public class TBEGraphConstants {
 		for (int i = 0; i < elements.length; i++) {
 			AttributeMap attr = model.getAttributes(elements[i]);
 			if (attr != null && attr.size() > 0)
-				attributes.put(elements[i], attr.clone()); // FIXME:
+				attributes.put(elements[i], attr.clone()); 
 		}
 		return attributes;
 	}
@@ -670,18 +670,18 @@ public class TBEGraphConstants {
 	 */
 	public static Map merge(Map change, Map target) {
 		if (change != null && target != null) {
-			change = new Hashtable(change);// FIXME:
+			change = new Hashtable(change);
 			Iterator it = target.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry entry = (Map.Entry) it.next();
 				Map map = (Map) entry.getValue();
 				Map additional = (Map) change.remove(entry.getKey());
 				if (additional != null)
-					map.putAll(additional);// FIXME:
+					map.putAll(additional);
 			}
 
 			// Adds remaining attributes
-			target.putAll(change);// FIXME:
+			target.putAll(change);
 		}
 		return target;
 	}
@@ -696,7 +696,7 @@ public class TBEGraphConstants {
 	 *            The value to set the font attribute to.
 	 */
 	public static void setFont(Map map, Font font) {
-		map.put(FONT, font);// FIXME:
+		map.put(FONT, font);
 	}
 
 	/**
@@ -716,7 +716,7 @@ public class TBEGraphConstants {
 	 * attributes to be removed
 	 */
 	public static final void setRemoveAttributes(Map map, Object[] value) {
-		map.put(REMOVEATTRIBUTES, value);// FIXME:
+		map.put(REMOVEATTRIBUTES, value);
 	}
 
 	/**
@@ -731,7 +731,7 @@ public class TBEGraphConstants {
 	 * value.
 	 */
 	public static final void setMoveableAxis(Map map, int axis) {
-		map.put(MOVEABLEAXIS, new Integer(axis));// FIXME:
+		map.put(MOVEABLEAXIS, new Integer(axis));
 	}
 
 	/**
