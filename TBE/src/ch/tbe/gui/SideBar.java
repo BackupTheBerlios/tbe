@@ -20,31 +20,27 @@ public class SideBar extends JToolBar {
     private TBE tbe = TBE.getInstance();
 
     private ResourceBundle sideBarLabels;
-
     private Board board;
-
     private Attribute currentAttribute;
-
     private JTextField titleInputArea;
-
     private JTextArea textInputArea;
-
     private JPanel sidePanel;
-
     private JTree tree;
-
     private DefaultTreeModel treeModel;
-
     private AttributeTreeNode root;
 
-    private final int TREESTRINGLENGTH = 15;
+    private final int TREESTRINGLENGTH = 30;
 
     public SideBar(Board board) {
 	this.board = board;
 	this.sideBarLabels = this.getResourceBundle(tbe.getLang());
 	this.setOrientation(1);
-	this.setFloatable(false);
 	this.createPanel();
+	Dimension d = new Dimension(250,this.getHeight());
+	this.setSize(d);
+	this.setMaximumSize(d);
+	this.setMinimumSize(d);
+	this.setPreferredSize(d);
     }
 
     private void createPanel() {
@@ -127,21 +123,15 @@ public class SideBar extends JToolBar {
 
 	    }
 
-	    public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+	    public void keyReleased(KeyEvent e) {}
 
-	    }
-
-	    public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-
-	    }
+	    public void keyTyped(KeyEvent e) { }
 
 	});
     }
 
     private String makeSubstring(String s) {
-	if (s.length() > TREESTRINGLENGTH) {
+	if (s.length() > TREESTRINGLENGTH+3) {
 	    s = s.substring(0, TREESTRINGLENGTH) + "...";
 
 	}
