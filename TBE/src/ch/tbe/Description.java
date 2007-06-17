@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Description {
  	private List<Attribute> attributes = new ArrayList<Attribute>();
- 	private String description;
+ 	private String description; //TODO save in xml
 	 
 	public String getDescription() {
 	    return description;

@@ -89,7 +89,7 @@ public class SideBar extends JToolBar {
 
 	class TreeListener extends MouseAdapter {
 	    @Override
-	    public void mouseClicked(MouseEvent e) {
+	    public void mousePressed(MouseEvent e) {
 		if (e.getClickCount() == 1) {
 
 		    TreePath path = tree.getPathForLocation(e.getX(), e.getY());

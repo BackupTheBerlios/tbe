@@ -158,6 +158,7 @@ public class PrintView extends View {
 		attribPanel1.add(attribText.get(i));
 		i++;
 	    }
+	    i--;
 	    internPanel.add(attribPanel1);
 	    internPanel.add(Box.createVerticalStrut(20));
 	}
@@ -167,6 +168,7 @@ public class PrintView extends View {
 	center.add(attributesPanel, BorderLayout.SOUTH);
 
 	this.add(center, BorderLayout.CENTER);
+	
     }
 
     @Override
