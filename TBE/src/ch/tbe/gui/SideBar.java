@@ -296,6 +296,8 @@ public class SideBar extends JToolBar {
 		root.remove(current);
 	    }
 	    currentAttribute = null;
+	    titleInputArea.setText("");
+	    textInputArea.setText("");
 	    treeModel.nodeStructureChanged(root);
 
 	}
