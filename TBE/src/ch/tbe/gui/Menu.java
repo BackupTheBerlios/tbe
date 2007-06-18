@@ -135,8 +135,6 @@ public class Menu extends JMenuBar {
 	    }
 	}
 	fileExport.addActionListener(new fileExportListener());
-	fileExport.setAccelerator(KeyStroke.getKeyStroke(
-		java.awt.event.KeyEvent.VK_E, java.awt.Event.CTRL_MASK));
 
 	JMenuItem filePreview = new JMenuItem(menuLabels.getString("file10"));
 	class filePreviewListener extends MouseAdapter {
