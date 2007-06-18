@@ -29,23 +29,14 @@ public class Menu extends JMenuBar {
     private ResourceBundle menuLabels;
 
     private Invoker invoker = Invoker.getInstance();
-
     private TBE tbe = TBE.getInstance();
-
     private JMenuItem editRedo;
-
     private JMenuItem editUndo;
-
     private JMenuItem editAddPoint;
-
     private JMenuItem editRemovePoint;
-
     private JMenuItem viewToolbar;
-
     private JMenuItem viewSidebar;
-
     private JMenuItem viewLegend;
-
     private JMenu fieldMenu;
 
     public Menu(String lang) {
@@ -55,6 +46,7 @@ public class Menu extends JMenuBar {
 
     private void createMenu() {
 	this.add(createFileMenu());
+
 	this.add(createEditMenu());
 	this.add(createBoardMenu());
 	this.add(createViewMenu());
@@ -78,7 +70,7 @@ public class Menu extends JMenuBar {
 
     private JMenu createFileMenu() {
 	JMenu filemenu = new JMenu(menuLabels.getString("title1"));
-
+	
 	JMenuItem fileNew = new JMenuItem(menuLabels.getString("file1"));
 	class fileNewListener implements ActionListener {
 	    public void actionPerformed(ActionEvent arg0) {
@@ -197,19 +189,22 @@ public class Menu extends JMenuBar {
 	}
 	fileQuit.addMouseListener(new fileQuitListener());
 
-	fileNew
-		.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
-	fileOpen.setIcon(new ImageIcon(TBE.class
-		.getResource("../pics/open.png")));
-	fileShare.setIcon(new ImageIcon(TBE.class
-		.getResource("../pics/share.png")));
-	fileExport.setIcon(new ImageIcon(TBE.class
-		.getResource("../pics/export.png")));
-	fileSave.setIcon(new ImageIcon(TBE.class
-		.getResource("../pics/save.png")));
-	filePrint.setIcon(new ImageIcon(TBE.class
-		.getResource("../pics/print.png")));
+	fileNew.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
+	fileOpen.setIcon(new ImageIcon(TBE.class.getResource("../pics/open.png")));
+	fileShare.setIcon(new ImageIcon(TBE.class.getResource("../pics/share.png")));
+	fileExport.setIcon(new ImageIcon(TBE.class.getResource("../pics/export.png")));
+	fileSave.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
+	filePrint.setIcon(new ImageIcon(TBE.class.getResource("../pics/print.png")));
 
+	if (TBE.getInstance().getView() instanceof WorkingView){}else{
+	    fileSave.setEnabled(false);
+	    fileSaveAs.setEnabled(false);
+	    fileShare.setEnabled(false);
+	    fileExport.setEnabled(false);
+	    filePrint.setEnabled(false);
+	    filePreview.setEnabled(false);
+	}
+	
 	filemenu.add(fileNew);
 	filemenu.add(fileOpen);
 	filemenu.add(fileSave);
@@ -226,6 +221,12 @@ public class Menu extends JMenuBar {
 
     private JMenu createEditMenu() {
 	JMenu editmenu = new JMenu(menuLabels.getString("title2"));
+	
+	if (TBE.getInstance().getView() instanceof WorkingView){
+	    editmenu.setEnabled(true);
+	}else{
+	    editmenu.setEnabled(false);
+	}
 
 	JMenuItem editDelete = new JMenuItem(menuLabels.getString("edit1"));
 	class editDeleteListener implements ActionListener {
@@ -359,6 +360,12 @@ public class Menu extends JMenuBar {
 
     private JMenu createBoardMenu() {
 	JMenu boardmenu = new JMenu(menuLabels.getString("title3"));
+	
+	if (TBE.getInstance().getView() instanceof WorkingView){
+	    boardmenu.setEnabled(true);
+	}else{
+	    boardmenu.setEnabled(false);
+	}
 
 	JMenuItem boardClear = new JMenuItem(menuLabels.getString("board2"));
 	class boardClearListener implements ActionListener {
@@ -390,6 +397,12 @@ public class Menu extends JMenuBar {
     private JMenu createViewMenu() {
 	JMenu viewMenu = new JMenu(menuLabels.getString("title5"));
 
+	if (TBE.getInstance().getView() instanceof WorkingView){
+	    viewMenu.setEnabled(true);
+	}else{
+	    viewMenu.setEnabled(false);
+	}
+	
 	viewToolbar = new JMenuItem(menuLabels.getString("view1"));
 	class viewToolbarListener implements ActionListener {
 	    public void actionPerformed(ActionEvent e) {
@@ -424,6 +437,10 @@ public class Menu extends JMenuBar {
 	}
 	viewLegend.addActionListener(new viewLegendListener());
 
+	this.setVisibleLegend(false);
+	this.setVisibleSidebar(false);
+	this.setVisibleToolbar(false);
+	
 	viewMenu.add(viewToolbar);
 	viewMenu.add(viewSidebar);
 	viewMenu.add(viewLegend);
@@ -509,7 +526,6 @@ public class Menu extends JMenuBar {
 	this.repaint();
 
 	menuLabels = getResourceBundle(tbe.getLang());
-
 	this.createMenu();
     }
 
@@ -535,8 +551,7 @@ public class Menu extends JMenuBar {
 
     public void setVisibleLegend(boolean b) {
 	if (!b) {
-	    viewLegend.setIcon(new ImageIcon(TBE.class
-		    .getResource("../pics/visible.png")));
+	    viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
 	} else {
 	    viewLegend.setIcon(new ImageIcon(TBE.class
 		    .getResource("../pics/notVisible.png")));

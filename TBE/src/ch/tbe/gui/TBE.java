@@ -84,13 +84,16 @@ public class TBE {
     }
 
     public void setView(View newView) {
-	if (view != null)
+	if (view != null){
 	    frame.remove(this.view);
+	    
+	    this.view = newView;
+	    menu.refresh();
+	}
 	this.view = newView;
 	frame.add(view);
 	frame.setVisible(false);
 	frame.setVisible(true);
-	menu.refresh();
     }
 
     public View getView() {
