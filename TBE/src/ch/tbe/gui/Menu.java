@@ -105,7 +105,7 @@ public class Menu extends JMenuBar {
 
 	JMenuItem fileSave = new JMenuItem(menuLabels.getString("file3"));
 	class fileSaveListener implements ActionListener {
-	    @Override
+	    
 	    public void actionPerformed(ActionEvent arg0) {
 		tbe.save();
 	    }
@@ -134,7 +134,6 @@ public class Menu extends JMenuBar {
 
 	JMenuItem fileExport = new JMenuItem(menuLabels.getString("file6"));
 	class fileExportListener implements ActionListener {
-	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 		View v = tbe.getView();
 		if (v instanceof WorkingView) {
@@ -162,7 +161,6 @@ public class Menu extends JMenuBar {
 
 	JMenuItem filePrint = new JMenuItem(menuLabels.getString("file7"));
 	class filePrintListener implements ActionListener {
-	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 		View v = tbe.getView();
 		if (v instanceof WorkingView) {

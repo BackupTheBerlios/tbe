@@ -33,7 +33,7 @@ public class FileTreeModel implements TreeModel
 	{
 		return ((File) node).isFile();
 	}
-
+	
 	// Tell JTree how many children a node has
 	public int getChildCount(Object parent)
 	{
@@ -42,10 +42,10 @@ public class FileTreeModel implements TreeModel
 			return 0;
 		return children.length;
 	}
-
+	
 	// Fetch any numbered child of a node for the JTree.
-	// Our model returns File objects for all nodes in the tree. The
-	// JTree displays these by calling the File.toString() method.
+	// Our model returns MyFileTest objects for all nodes in the tree. The
+	// JTree displays these by calling the MyFileTest.toString() method.
 	public Object getChild(Object parent, int index)
 	{
 		String[] children = ((File) parent).list();
@@ -53,7 +53,7 @@ public class FileTreeModel implements TreeModel
 			return null;
 		return new File((File) parent, children[index]);
 	}
-
+	
 	// Figure out a child's position in its parent node.
 	public int getIndexOfChild(Object parent, Object child)
 	{

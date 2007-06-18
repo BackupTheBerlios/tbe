@@ -49,7 +49,7 @@ public class ShareFrame
 	private JTree ftpTree, localTree;
 	private ArrayList<String> localPaths = new ArrayList<String>();
 	private ArrayList<String> remotePaths = new ArrayList<String>();
-
+	
 	/*
 	 * Convention: Directories have no points in the name and files do have a point! ...
 	 */
@@ -390,7 +390,6 @@ public class ShareFrame
 			FTPHandler.upload(currentFTP, local, newPaths);
 	}
 	
-
 	private void doCustomUpload(ArrayList<String> locals)
 	{
 		ArrayList<String> local = locals;
@@ -403,7 +402,8 @@ public class ShareFrame
 			
 			if(path.contains("."))  // is File, add to NewPaths
 			{
-				newPaths.add(remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
+			    // hole Dateiname des lokalen Files und füge ihn zum remoteOrdner hinzu
+			    newPaths.add(remotePaths.get(0) + path.substring(path.lastIndexOf("/"), path.length()));
 			}
 			else    // is a Folder, redo the whole thing with subpaths...
 			{
@@ -420,7 +420,15 @@ public class ShareFrame
 			}
 		}
 		if(newPaths.size() != 0)
-			FTPHandler.upload(currentFTP, local, newPaths);
+		{
+		    for(int i = 0; i < local.size(); i++)
+		    {
+			System.out.println("From: " + local.get(i));
+			System.out.println("To: " + newPaths.get(i));
+		    }
+		    // FTPHandler.upload(currentFTP, local, newPaths);
+		}
+			
 	}
 	
 	private ResourceBundle getResourceBundle(String lang)
