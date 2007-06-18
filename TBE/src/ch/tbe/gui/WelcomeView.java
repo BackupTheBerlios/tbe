@@ -123,7 +123,7 @@ public class WelcomeView extends View
 		centerPanel.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, Color.WHITE));
 		
 		// recentlyUsedFiles
-		JPanel recentlyPanel = new JPanel();
+		JPanel recentlyPanel = new JPanel();//TODO: doesn't work for long file-names
 		recentlyPanel.setLayout(new BorderLayout());
 		TitledBorder recentlyTitle = BorderFactory.createTitledBorder(welcomeViewLabels.getString("open"));
 		recentlyPanel.setBorder(recentlyTitle);

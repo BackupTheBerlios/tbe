@@ -20,14 +20,24 @@ public class SideBar extends JToolBar {
     private TBE tbe = TBE.getInstance();
 
     private ResourceBundle sideBarLabels;
+
     private Board board;
+
     private Attribute currentAttribute;
+
     private JTextField titleInputArea;
+
     private JTextArea textInputArea;
+
     private JPanel sidePanel;
+
     private JTree tree;
+
     private DefaultTreeModel treeModel;
+
     private AttributeTreeNode root;
+
+    private JTextField description;
 
     private final int TREESTRINGLENGTH = 30;
 
@@ -36,7 +46,7 @@ public class SideBar extends JToolBar {
 	this.sideBarLabels = this.getResourceBundle(tbe.getLang());
 	this.setOrientation(1);
 	this.createPanel();
-	Dimension d = new Dimension(250,this.getHeight());
+	Dimension d = new Dimension(250, this.getHeight());
 	this.setSize(d);
 	this.setMaximumSize(d);
 	this.setMinimumSize(d);
@@ -50,11 +60,39 @@ public class SideBar extends JToolBar {
 	sidePanel.setLayout(new BorderLayout());
 
 	// List of all Attributes
-	JPanel northPanel = new JPanel(new BorderLayout());
 
+	JPanel nPanel = new JPanel(new GridLayout(0, 1));
+	JLabel descriptionLabel = new JLabel(sideBarLabels
+		.getString("description"));
+	nPanel.add(descriptionLabel);
+	description = new JTextField();
+	description.addFocusListener(new FocusListener() {
+
+	    public void focusGained(FocusEvent arg0) {
+
+	    }
+
+	    public void focusLost(FocusEvent arg0) {
+		String s = description.getText();
+		if (s.trim().equals("")) {
+		    board.getDescription().setDescription(
+			    board.getSport().getName());
+		    description.setText(board.getSport().getName());
+		} else {
+		    board.getDescription().setDescription(s);
+		}
+
+	    }
+
+	});
+	description.setText(board.getDescription().getDescription());
+	nPanel.add(description);
+	nPanel.add(Box.createHorizontalStrut(10));
 	JLabel attribLabel = new JLabel(sideBarLabels.getString("attr"));
-	northPanel.add(attribLabel, BorderLayout.NORTH);
-	sidePanel.add(northPanel, BorderLayout.NORTH);
+
+	nPanel.add(attribLabel, BorderLayout.NORTH);
+
+	sidePanel.add(nPanel, BorderLayout.NORTH);
 
 	createTree();
 
@@ -123,27 +161,30 @@ public class SideBar extends JToolBar {
 
 	    }
 
-	    public void keyReleased(KeyEvent e) {}
+	    public void keyReleased(KeyEvent e) {
+	    }
 
-	    public void keyTyped(KeyEvent e) { }
+	    public void keyTyped(KeyEvent e) {
+	    }
 
 	});
     }
 
     private String makeSubstring(String s) {
-	if (s.length() > TREESTRINGLENGTH+3) {
+	if (s.length() > TREESTRINGLENGTH + 3) {
 	    s = s.substring(0, TREESTRINGLENGTH) + "...";
 
 	}
 	return s;
     }
 
-    private Box createInputPanel() {
+    private JPanel createInputPanel() {
 
-	Box inputPanel = Box.createVerticalBox();
+	JPanel inputPanel = new JPanel(new BorderLayout());
+	JPanel northP = new JPanel(new GridLayout(0, 1));
 
 	JLabel title = new JLabel(sideBarLabels.getString("title"));
-	inputPanel.add(title);
+	northP.add(title);
 
 	class TitleInputListener extends MouseAdapter {
 	    @Override
@@ -157,9 +198,9 @@ public class SideBar extends JToolBar {
 	titleInputArea = new JTextField();
 	titleInputArea.addMouseListener(new TitleInputListener());
 
-	inputPanel.add(titleInputArea);
+	northP.add(titleInputArea);
 
-	inputPanel.add(new JLabel(sideBarLabels.getString("text")));
+	northP.add(new JLabel(sideBarLabels.getString("text")));
 	class TextInputListener extends MouseAdapter {
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
@@ -176,8 +217,9 @@ public class SideBar extends JToolBar {
 
 	textInputArea.addMouseListener(new TextInputListener());
 
-	inputPanel.add(new JScrollPane(textInputArea));
-	inputPanel.add(Box.createVerticalStrut(10));
+	inputPanel.add(northP, BorderLayout.NORTH);
+	inputPanel.add(new JScrollPane(textInputArea), BorderLayout.CENTER);
+	inputPanel.add(Box.createVerticalStrut(10), BorderLayout.SOUTH);
 
 	return inputPanel;
     }

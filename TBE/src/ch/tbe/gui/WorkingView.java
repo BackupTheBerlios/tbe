@@ -51,6 +51,7 @@ public class WorkingView extends View {
 	GraphLayoutCache view = new GraphLayoutCache(model,
 		new TBECellViewFactory());
 	this.board = new Board(model, view, sport);
+	board.getDescription().setDescription(sport.getName());
 	createWorkingView();
 
     }

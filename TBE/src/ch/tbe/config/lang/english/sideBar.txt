@@ -1,5 +1,6 @@
 # Title Attribute
 attr = Attributes
+description = Board Title
 
 # Add / Change Attribute
 title = Title

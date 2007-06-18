@@ -2,7 +2,7 @@ package ch.tbe.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.MouseListener;
@@ -17,8 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
@@ -49,27 +47,30 @@ public class PrintView extends View {
 
 	// Box with Title, Name, Prename and email
 	Box header = Box.createVerticalBox();
-	JLabel title = new JLabel(board.getSport().getName());  // TODO: JLabel title = new JLabel(board.getDescription().getDescription());
+
+	JTextArea title = new JTextArea(board.getDescription().getDescription());
+	title.setWrapStyleWord(true);
+	title.setLineWrap(true);
 	Font f = new Font(title.getFont().getFontName(), Font.BOLD, 40);
 	title.setFont(f);
-	title.setAlignmentY(Component.TOP_ALIGNMENT);
-	title.setAlignmentX(Component.LEFT_ALIGNMENT);
-	JLabel autor = new JLabel(" " + tbe.getUserPrename() + " "
+	JTextArea autor = new JTextArea(tbe.getUserPrename() + " "
 		+ tbe.getUserName() + " (" + tbe.getUserEmail() + ")");
-	autor.setAlignmentY(Component.TOP_ALIGNMENT);
-	autor.setAlignmentX(Component.LEFT_ALIGNMENT);
-	JLabel path = new JLabel(" " + board.getPath());
-	path.setAlignmentY(Component.TOP_ALIGNMENT);
-	path.setAlignmentX(Component.LEFT_ALIGNMENT);
+	autor.setLineWrap(true);
+	JTextArea path = new JTextArea(board.getPath());
+	path.setLineWrap(true);
 
 	// Logo Icon
-	URL imgURL = PrintView.class.getResource("../pics/logo.jpg"); // TODO smaller Logo
+	URL imgURL = PrintView.class.getResource("../pics/logo.jpg"); // TODO
 	// smaller
-	// Icon
+	// Logo
 	ImageIcon logoIcon = new ImageIcon(imgURL);
 	JLabel logo = new JLabel(logoIcon);
-	logo.setAlignmentX(Component.RIGHT_ALIGNMENT);
-
+	path.setPreferredSize(new Dimension(board.getBackgroundImage()
+		.getIconWidth()
+		- (logoIcon.getIconWidth() + 30), 30)); // that's a hack to set
+                                                        // the width of the
+                                                        // header (not very nice
+                                                        // :-) )
 	header.add(title);
 	header.add(autor);
 	header.add(path);
@@ -168,7 +169,7 @@ public class PrintView extends View {
 	center.add(attributesPanel, BorderLayout.SOUTH);
 
 	this.add(center, BorderLayout.CENTER);
-	
+
     }
 
     @Override
