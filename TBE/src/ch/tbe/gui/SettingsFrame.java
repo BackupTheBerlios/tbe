@@ -16,18 +16,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
@@ -53,8 +50,7 @@ public class SettingsFrame {
     private boolean connected = false;
     private ArrayList<String> toInstall = new ArrayList<String>();
     private ArrayList<String> toDelete = new ArrayList<String>();
-    private ArrayList<String> installedSports = FileSystemHandler
-	    .getInstalledSports();
+    private ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
 
     public SettingsFrame() {
 	frame = new JFrame("TBE - Settings");
@@ -173,20 +169,18 @@ public class SettingsFrame {
 
 	formPanel.add(new JLabel(settingsLabels.getString("prename")));
 	prenameField = new JTextField(15);
-	prenameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		Color.BLACK));
+	prenameField.setBorder(new LineBorder(Color.black, 1));
+	prenameField.setMaximumSize(new Dimension(10, 20));
 	formPanel.add(prenameField);
 
 	formPanel.add(new JLabel(settingsLabels.getString("lastname")));
 	lastnameField = new JTextField(15);
-	lastnameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		Color.BLACK));
+	lastnameField.setBorder(new LineBorder(Color.black, 1));
 	formPanel.add(lastnameField);
 
 	formPanel.add(new JLabel(settingsLabels.getString("mail")));
 	mailField = new JTextField(15);
-	mailField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		Color.BLACK));
+	mailField.setBorder(new LineBorder(Color.black, 1));
 	formPanel.add(mailField);
 
 	formPanel.add(new JLabel(settingsLabels.getString("lang")));
@@ -197,8 +191,7 @@ public class SettingsFrame {
 	}
 	langBox = new JComboBox(languages);
 	langBox.setSelectedItem(tbe.getLang());
-	langBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		Color.BLACK));
+	langBox.setBorder(new LineBorder(Color.black, 1));
 	formPanel.add(langBox);
 
 	prenameField.setText(tbe.getUserPrename());
@@ -263,8 +256,7 @@ public class SettingsFrame {
 	    }
 	}
 	ftpBox = new JComboBox(allFTP);
-	ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		Color.BLACK));
+	ftpBox.setBorder(new LineBorder(Color.black, 1));
 	class ftpBoxListener implements ActionListener {
 	    public void actionPerformed(ActionEvent arg0) {
 		ArrayList<FTPServer> servers = tbe.getServers();
@@ -308,8 +300,7 @@ public class SettingsFrame {
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPname")));
 	    ftpNameField = new JTextField(15);
-	    ftpNameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		    Color.BLACK));
+	    ftpNameField.setBorder(new LineBorder(Color.black, 1));
 	    if (currentFTP.getName().equals("")) {
 		ftpNameField.setEditable(true);
 	    } else {
@@ -319,21 +310,18 @@ public class SettingsFrame {
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPhost")));
 	    ftpHostField = new JTextField(15);
-	    ftpHostField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		    Color.BLACK));
+	    ftpHostField.setBorder(new LineBorder(Color.black, 1));
 	    formPanel.add(ftpHostField);
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPuser")));
 	    ftpUserField = new JTextField(15);
-	    ftpUserField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		    Color.BLACK));
+	    ftpUserField.setBorder(new LineBorder(Color.black, 1));
 	    formPanel.add(ftpUserField);
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPpw")));
 	    ftpPwField = new JPasswordField(15);
 
-	    ftpPwField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		    Color.BLACK));
+	    ftpPwField.setBorder(new LineBorder(Color.black, 1));
 	    formPanel.add(ftpPwField);
 
 	    if (currentFTP != null) {
@@ -430,8 +418,7 @@ public class SettingsFrame {
 	if (connected == true) {
 	    JPanel formPanel = new JPanel();
 	    formPanel.setBackground(Color.WHITE);
-	    formPanel.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
-		    Color.BLACK));
+	    formPanel.setBorder(new LineBorder(Color.black, 1));
 
 	    GridBagLayout gridBagForm = new GridBagLayout();
 	    GridBagConstraints formConstraints = new GridBagConstraints();
@@ -552,9 +539,7 @@ public class SettingsFrame {
 	InputStream settingsStream;
 	ResourceBundle labels = null;
 	try {
-	    settingsStream = SettingsFrame.class
-		    .getResourceAsStream("../config/lang/" + lang
-			    + "/settingsFrame.txt");
+	    settingsStream = SettingsFrame.class.getResourceAsStream("../config/lang/" + lang + "/settingsFrame.txt");
 	    labels = new PropertyResourceBundle(settingsStream);
 	} catch (FileNotFoundException fnne) {
 	    System.err.println("LanguageFile for SettingsFrame not found !");

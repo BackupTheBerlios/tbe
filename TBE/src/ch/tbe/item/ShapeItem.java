@@ -1,4 +1,4 @@
-package ch.tbe;
+package ch.tbe.item;
 
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -8,6 +8,7 @@ import javax.swing.Icon;
 import org.jgraph.graph.AttributeMap;
 import org.jgraph.graph.DefaultGraphCell;
 
+import ch.tbe.ItemType;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.jgraph.TBEGraphConstants;
 
@@ -22,10 +23,10 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent
 		this.itemType = shapeType;
 		double maxSideWidth = this.itemType.getMaxSideWidth();
 		
-		if (maxSideWidth > Math.max(shapeType.getPicture().getIconWidth(), shapeType.getPicture().getIconHeight())){
-			maxSideWidth = Math.max(shapeType.getPicture().getIconWidth(), shapeType.getPicture().getIconHeight());
-		}
-		
+		int max = Math.max(shapeType.getPicture().getIconWidth(), shapeType.getPicture().getIconHeight());
+		if (maxSideWidth > max ){
+			maxSideWidth = max;
+		}		
 		TBEGraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p.getX(), p.getY(), maxSideWidth, maxSideWidth));
 		TBEGraphConstants.setIcon(this.getAttributes(), shapeType.getPicture());
 		TBEGraphConstants.setEditable(this.getAttributes(), false);

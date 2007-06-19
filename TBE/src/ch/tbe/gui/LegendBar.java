@@ -13,9 +13,9 @@ import javax.swing.JToolBar;
 import javax.swing.border.Border;
 
 import ch.tbe.Board;
-import ch.tbe.ShapeItem;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ItemComponent;
+import ch.tbe.item.ShapeItem;
 
 @SuppressWarnings("serial")
 public class LegendBar extends JToolBar

@@ -6,6 +6,7 @@ import ch.tbe.command.DeleteCommand;
 import ch.tbe.command.MoveCommand;
 import ch.tbe.command.PasteCommand;
 import ch.tbe.framework.*;
+import ch.tbe.item.ShapeItem;
 import ch.tbe.jgraph.*;
 import ch.tbe.tool.CursorTool;
 import ch.tbe.tool.ShapeTool;
