@@ -23,6 +23,8 @@ save = Save
 new = New
 connect = Connect
 install = Install
+undo = Undo
+apply = Apply
 
 # Demands
 chooseServer = Choose Server

@@ -23,6 +23,8 @@ save = Speichern
 new = Neu
 connect = Verbinden
 install = Installieren
+undo = Zurücksetzen
+apply = Anwenden
 
 # Demands
 chooseServer = Server auswählen

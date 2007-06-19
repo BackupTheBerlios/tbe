@@ -56,13 +56,12 @@ public class Menu extends JMenuBar {
 	ResourceBundle labels = null;
 	InputStream menuLabelStream;
 	try {
-	    menuLabelStream = Menu.class.getResourceAsStream("../config/lang/"
-		    + lang + "/menuLabels.txt");
+	    menuLabelStream = Menu.class.getResourceAsStream("../config/lang/" + lang + "/menuLabels.txt");
 	    labels = new PropertyResourceBundle(menuLabelStream);
 	} catch (FileNotFoundException fnne) {
-	    System.out.println("LanguageFile for MenuItems not found !");
+	    System.err.println("LanguageFile for MenuItems not found !");
 	} catch (IOException ioe) {
-	    System.out.println("Error with ResourceBundle MenuLabels!");
+	    System.err.println("Error with ResourceBundle MenuLabels!");
 	}
 	return labels;
     }
@@ -446,7 +445,6 @@ public class Menu extends JMenuBar {
     }
 
     private JMenu createFieldMenu(ArrayList<Field> fields) {
-	System.out.println("Create Fieldmenu: " + fields.size());
 	JMenu boardChangeField = new JMenu(menuLabels.getString("board1"));
 	JMenuItem fieldMenu;
 
@@ -487,8 +485,7 @@ public class Menu extends JMenuBar {
 
 	JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
 
-	tbeAbout.setIcon(new ImageIcon(TBE.class
-		.getResource("../pics/about.png")));
+	tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
 
 	tbemenu.add(tbeSettings);
 	tbemenu.add(tbeAbout);

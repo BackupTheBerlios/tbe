@@ -60,10 +60,7 @@ public class TBE {
 	splashScreen.setProgress(10);
 	frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 	Toolkit toolkit = Toolkit.getDefaultToolkit();
-	frame
-		.setMinimumSize(new Dimension((int) toolkit.getScreenSize()
-			.getWidth() / 2, (int) toolkit.getScreenSize()
-			.getHeight() / 2));
+	frame.setMinimumSize(new Dimension((int) toolkit.getScreenSize().getWidth() / 2, (int) toolkit.getScreenSize().getHeight() / 2));
 	splashScreen.setProgress(20);
 	menu = new Menu(lang);
 	frame.setJMenuBar(menu);
@@ -178,14 +175,11 @@ public class TBE {
 	return this.servers;
     }
 
-    public void addFTPServer(String name, String host, String username,
-	    String password) {
+    public void addFTPServer(String name, String host, String username, String password) {
 	servers.add(new FTPServer(name, host, username, password));
-	// XMLHandler die servers übergeben zum speichern
     }
 
-    public void editFTPServer(String name, String host, String username,
-	    String password) {
+    public void editFTPServer(String name, String host, String username, String password) {
 	removeFTPServer(name);
 	addFTPServer(name, host, username, password);
     }
@@ -194,10 +188,10 @@ public class TBE {
 	for (FTPServer ftp : servers) {
 	    if (ftp.getName().equals(name)) {
 		servers.remove(ftp);
+		XMLHandler.saveTBESettings();
 		break;
 	    }
 	}
-	// XMLHandler die servers übergeben zum speichern
     }
 
     public void setUser(String prename, String lastname, String email) {
