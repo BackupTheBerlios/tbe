@@ -53,7 +53,8 @@ public class SettingsFrame {
     private boolean connected = false;
     private ArrayList<String> toInstall = new ArrayList<String>();
     private ArrayList<String> toDelete = new ArrayList<String>();
-    private ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
+    private ArrayList<String> installedSports = FileSystemHandler
+	    .getInstalledSports();
 
     public SettingsFrame() {
 	frame = new JFrame("TBE - Settings");
@@ -106,19 +107,15 @@ public class SettingsFrame {
 		    String pw = new String(ftpPwField.getPassword());
 		    // neuer Server hinzufügen
 		    if (currentFTP.getName().equals("")) {
-			tbe.addFTPServer(ftpNameField.getText(), ftpHostField.getText(), ftpUserField.getText(), pw);
+			tbe.addFTPServer(ftpNameField.getText(), ftpHostField
+				.getText(), ftpUserField.getText(), pw);
 		    } else {
-			tbe.editFTPServer(ftpNameField.getText(), ftpHostField.getText(), ftpUserField.getText(), pw);
+			tbe.editFTPServer(ftpNameField.getText(), ftpHostField
+				.getText(), ftpUserField.getText(), pw);
 		    }
 		    currentFTP = null;
 		    XMLHandler.saveTBESettings();
-		    if (closeAfter) {
-			frame.dispose();
-		    } else {
-			refresh();
-			tabs.setSelectedIndex(1);
-		    }
-		}else{
+		    
 		    if (closeAfter) {
 			frame.dispose();
 		    } else {
@@ -266,7 +263,8 @@ public class SettingsFrame {
 	    }
 	}
 	ftpBox = new JComboBox(allFTP);
-	ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+	ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		Color.BLACK));
 	class ftpBoxListener implements ActionListener {
 	    public void actionPerformed(ActionEvent arg0) {
 		ArrayList<FTPServer> servers = tbe.getServers();
@@ -310,22 +308,25 @@ public class SettingsFrame {
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPname")));
 	    ftpNameField = new JTextField(15);
-	    ftpNameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
-	    if (currentFTP.getName().equals("")){
+	    ftpNameField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		    Color.BLACK));
+	    if (currentFTP.getName().equals("")) {
 		ftpNameField.setEditable(true);
-	    }else{
+	    } else {
 		ftpNameField.setEditable(false);
 	    }
 	    formPanel.add(ftpNameField);
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPhost")));
 	    ftpHostField = new JTextField(15);
-	    ftpHostField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+	    ftpHostField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		    Color.BLACK));
 	    formPanel.add(ftpHostField);
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPuser")));
 	    ftpUserField = new JTextField(15);
-	    ftpUserField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
+	    ftpUserField.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
+		    Color.BLACK));
 	    formPanel.add(ftpUserField);
 
 	    formPanel.add(new JLabel(settingsLabels.getString("FTPpw")));
@@ -368,15 +369,15 @@ public class SettingsFrame {
 	    class cancelButtonListener extends MouseAdapter {
 		@Override
 		public void mouseReleased(MouseEvent arg0) {
-		    if (currentFTP.getName().equals("")){
+		    if (currentFTP.getName().equals("")) {
 			currentFTP = null;
 			refresh();
 			tabs.setSelectedIndex(1);
-		    }else{
+		    } else {
 			ftpNameField.setText(currentFTP.getName());
-		    	ftpHostField.setText(currentFTP.getHost());
-		    	ftpUserField.setText(currentFTP.getUsername());
-		    	ftpPwField.setText(currentFTP.getPassword());
+			ftpHostField.setText(currentFTP.getHost());
+			ftpUserField.setText(currentFTP.getUsername());
+			ftpPwField.setText(currentFTP.getPassword());
 		    }
 		}
 	    }
@@ -519,44 +520,41 @@ public class SettingsFrame {
     }
 
     private boolean checkFTPForm() {
-	boolean isCorrect = false;
+	boolean returnValue = true;
 
-	if (currentFTP == null){
-	    //no FTP selected
-    	}else if (ftpNameField.getText().equals("")) {
-	    JOptionPane.showMessageDialog(null, settingsLabels.getString("FTPname"));
-	} else if (ftpHostField.getText().equals("")) {
-	    JOptionPane.showMessageDialog(null, settingsLabels.getString("FTPhost"));
-	} else if (ftpUserField.getText().equals("")) {
-	    JOptionPane.showMessageDialog(null, settingsLabels.getString("FTPuser"));
-	} else if (ftpPwField.getPassword().length == 0) {
-	    JOptionPane.showMessageDialog(null, settingsLabels.getString("FTPpw"));
-	} else {
-	    isCorrect = true;
+	if (currentFTP == null) {
+	    returnValue = false;
 	}
-	return isCorrect;
-    }
 
-    public void installSport(List sports) {
-    }
+	if (ftpNameField.getText().equals("")) {
+	    ftpNameField.setBorder(new LineBorder(Color.red, 1));
+	    returnValue = false;
+	}
 
-    public void addFTPServer(FTPServer server) {
-    }
+	if (ftpHostField.getText().equals("")) {
+	    ftpHostField.setBorder(new LineBorder(Color.red, 1));
+	    returnValue = false;
+	}
 
-    public void editFTPServer(FTPServer server) {
-    }
+	if (ftpUserField.getText().equals("")) {
+	    ftpUserField.setBorder(new LineBorder(Color.red, 1));
+	    returnValue = false;
+	}
 
-    public void removeFTPServer(FTPServer server) {
-    }
-
-    public void save() {
+	if (ftpPwField.getPassword().length == 0) {
+	    ftpPwField.setBorder(new LineBorder(Color.red, 1));
+	    returnValue = false;
+	}
+	return returnValue;
     }
 
     private ResourceBundle getResourceBundle(String lang) {
 	InputStream settingsStream;
 	ResourceBundle labels = null;
 	try {
-	    settingsStream = SettingsFrame.class.getResourceAsStream("../config/lang/" + lang + "/settingsFrame.txt");
+	    settingsStream = SettingsFrame.class
+		    .getResourceAsStream("../config/lang/" + lang
+			    + "/settingsFrame.txt");
 	    labels = new PropertyResourceBundle(settingsStream);
 	} catch (FileNotFoundException fnne) {
 	    System.err.println("LanguageFile for SettingsFrame not found !");
