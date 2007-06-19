@@ -18,7 +18,6 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
@@ -33,11 +32,8 @@ import org.jgraph.JGraph;
 import org.jgraph.graph.CellView;
 import org.jgraph.graph.CellViewRenderer;
 import org.jgraph.graph.GraphConstants;
-import org.jgraph.graph.VertexRenderer;
 import org.jgraph.graph.VertexView;
 
-import ch.tbe.gui.TBE;
-import ch.tbe.gui.WorkingView;
 
 /**
  * This renderer displays entries that implement the CellView interface and
