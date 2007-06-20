@@ -211,10 +211,9 @@ public class WorkingView extends View {
     }
 
     private void installRotateButton() {
-	// URL imgURL = WorkingView.class.getResource("../pics/rotate.gif");
-	// ImageIcon plus = new ImageIcon(imgURL);
-
-	rotate = new JButton("Rotate");
+	URL imgURL = WorkingView.class.getResource("../pics/rotate.gif");
+	ImageIcon rotateIcon = new ImageIcon(imgURL);
+	rotate = new JButton(rotateIcon);
 	rotate.setEnabled(false);
 	rotatePanel = new JToolBar();
 	rotatePanel.setOrientation(1);
