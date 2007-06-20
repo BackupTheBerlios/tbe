@@ -60,9 +60,7 @@ public class PrintView extends View {
 	path.setLineWrap(true);
 
 	// Logo Icon
-	URL imgURL = PrintView.class.getResource("../pics/logo.jpg"); // TODO
-	// smaller
-	// Logo
+	URL imgURL = PrintView.class.getResource("../pics/logo_middle.jpg");
 	ImageIcon logoIcon = new ImageIcon(imgURL);
 	JLabel logo = new JLabel(logoIcon);
 	path.setPreferredSize(new Dimension(board.getBackgroundImage()
@@ -120,11 +118,13 @@ public class PrintView extends View {
 	    aTitle.setFont(new Font(aTitle.getFont().getFontName(), Font.BOLD,
 		    aTitle.getFont().getSize()));
 	    aTitle.setLineWrap(true);
+	    aTitle.setWrapStyleWord(true);
 	    tempBox.add(aTitle);
 	    attribTitle.add(tempBox);
 	    tempBox = Box.createVerticalBox();
 	    JTextArea aText = new JTextArea(a.getText());
 	    aText.setLineWrap(true);
+	    aText.setWrapStyleWord(true);
 	    tempBox.add(aText);
 	    attribText.add(tempBox);
 	}
