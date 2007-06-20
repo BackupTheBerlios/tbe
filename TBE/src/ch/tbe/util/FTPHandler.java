@@ -11,20 +11,14 @@ import com.enterprisedt.net.ftp.FTPException;
 
 public final class FTPHandler {
     private final static String REMOTESPORTPATH = "sport";
-
     private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";
-
     private final static String PUBLICHOST = "tbe.netstyle.ch";
-
     private static ArrayList<String> remotePaths = new ArrayList<String>();
-
     private static ArrayList<String> localPaths = new ArrayList<String>();
-
     private static FTPClient client = null;
 
     public static ArrayList<String> getAllSports() {
-	FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin",
-		"4quabwej");
+	FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
 
 	ArrayList<String> sports = new ArrayList<String>();
 
@@ -33,8 +27,7 @@ public final class FTPHandler {
 
 	for (int i = 0; i < sportDir.size(); i++) {
 	    if (!sportDir.get(i).contains(".")) {
-		String sport = sportDir.get(i).substring(
-			REMOTESPORTPATH.length() + 1);
+		String sport = sportDir.get(i).substring(REMOTESPORTPATH.length() + 1);
 		sports.add(sport);
 	    }
 	}
@@ -300,5 +293,5 @@ public final class FTPHandler {
 	}
     }
     // TODO: Helper-Methode isLeaf() statt überprüfung wegen dem Punkt im
-        // Ordnernamen!
+    // Ordnernamen!
 }
