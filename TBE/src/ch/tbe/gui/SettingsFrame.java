@@ -51,7 +51,7 @@ public class SettingsFrame {
     private ArrayList<String> toInstall = new ArrayList<String>();
     private ArrayList<String> toDelete = new ArrayList<String>();
     private ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
-
+    
     public SettingsFrame() {
 	frame = new JFrame("TBE - Settings");
 	settingsLabels = getResourceBundle(tbe.getLang());

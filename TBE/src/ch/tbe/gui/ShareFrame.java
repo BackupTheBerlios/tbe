@@ -297,7 +297,11 @@ public class ShareFrame {
 			    || remotePaths.get(0).contains(".")) {
 			JOptionPane.showMessageDialog(null, shareLabels
 				.getString("oneRemote"));
-		    } else {
+		    } 
+		    else 
+		    {
+			String path = localPaths.get(0);
+			folder = path.substring(path.lastIndexOf("/"), path.length());
 			if (currentFTP.getName().equals("Public"))
 			    doPublicUpload(localPaths);
 			else
@@ -339,7 +343,7 @@ public class ShareFrame {
 
 	return panel;
     }
-
+    
     private void doDownload(ArrayList<String> remotes) 
     {
 	// neue List, sonst ConcurrentModifiedException...
@@ -372,7 +376,8 @@ public class ShareFrame {
 	    FTPHandler.download(currentFTP, newPaths, newRemote);
 	}
     }
-
+    
+    // Lädt lokale Files ohne Ordnerstruktur auf den Server
     private void doPublicUpload(ArrayList<String> locals) {
 	ArrayList<String> local = locals;
 
@@ -401,21 +406,22 @@ public class ShareFrame {
 	if (newPaths.size() != 0)
 	    FTPHandler.upload(currentFTP, local, newPaths);
     }
-
+    
+    // Lädt lokale Files inkl. OrdnerStruktur auf den Server, leere Ordner ausgenommen
     private void doCustomUpload(ArrayList<String> locals) {
 	ArrayList<String> local = locals;
 
 	// RemotePaths zusammensetzen
 	ArrayList<String> newPaths = new ArrayList<String>();
-	for (int i = 0; i < local.size(); i++) {
+	for (int i = 0; i < local.size(); i++) 
+	{
 	    String path = local.get(i);
-
+	    
 	    if (path.contains(".")) // is File, add to NewPaths
 	    {
-		// hole Dateiname des lokalen Files und füge ihn zum
-                // remoteOrdner hinzu
-		newPaths.add(remotePaths.get(0)
-			+ path.substring(path.lastIndexOf("/"), path.length()));
+		// hole Dateiname des lokalen Files und füge ihn zum remoteOrdner hinzu
+		String toAdd = remotePaths.get(0) + path.substring(path.indexOf(folder), path.length());
+		newPaths.add(toAdd);
 	    } else // is a Folder, redo the whole thing with subpaths...
 	    {
 		ArrayList<String> subPaths = new ArrayList<String>();
@@ -430,13 +436,8 @@ public class ShareFrame {
 	    }
 	}
 	if (newPaths.size() != 0) {
-	    for (int i = 0; i < local.size(); i++) {
-		System.out.println("From: " + local.get(i));
-		System.out.println("To: " + newPaths.get(i));
-	    }
-	    // FTPHandler.upload(currentFTP, local, newPaths);
+	    FTPHandler.upload(currentFTP, local, newPaths);
 	}
-
     }
 
     private ResourceBundle getResourceBundle(String lang) {

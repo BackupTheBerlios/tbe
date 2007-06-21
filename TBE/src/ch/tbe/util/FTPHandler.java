@@ -11,14 +11,20 @@ import com.enterprisedt.net.ftp.FTPException;
 
 public final class FTPHandler {
     private final static String REMOTESPORTPATH = "sport";
+
     private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";
+
     private final static String PUBLICHOST = "tbe.netstyle.ch";
+
     private static ArrayList<String> remotePaths = new ArrayList<String>();
+
     private static ArrayList<String> localPaths = new ArrayList<String>();
+
     private static FTPClient client = null;
 
     public static ArrayList<String> getAllSports() {
-	FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
+	FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin",
+		"4quabwej");
 
 	ArrayList<String> sports = new ArrayList<String>();
 
@@ -27,7 +33,8 @@ public final class FTPHandler {
 
 	for (int i = 0; i < sportDir.size(); i++) {
 	    if (!sportDir.get(i).contains(".")) {
-		String sport = sportDir.get(i).substring(REMOTESPORTPATH.length() + 1);
+		String sport = sportDir.get(i).substring(
+			REMOTESPORTPATH.length() + 1);
 		sports.add(sport);
 	    }
 	}
@@ -225,27 +232,38 @@ public final class FTPHandler {
 	    connect(server);
 	}
 	try {
-	    /*
-                 * for(String s : localPaths) { System.out.println("Local: " +
-                 * s); } for(String s : remotePaths) {
-                 * System.out.println("Local: " + s); }
-                 * System.out.println("#####UPLOAD########");
-                 * System.out.println("Number of files to put:" +
-                 * localPaths.size()); for(String s : localPaths) {
-                 * System.out.println(s); } System.out.println("#############");
-                 */
 	    int countFolders = 0;
 	    for (int i = 0; i < localPaths.size(); i++) {
 		if (localPaths.get(i).contains(".")) {
-		    System.out.print("to put: " + localPaths.get(i));
-		    System.out.println("there: "
-			    + remotePaths.get(i - countFolders));
+		    String[] dirs = remotePaths.get(i).split("/");
+		    // notwendige Ordner erstellen
+		    for (int j = 1; j < dirs.length - 1; j++) {
+			// ist ein Subfolder, der vorhanden sein muss
+			if (localPaths.get(i).contains(dirs[j])) {
+			    String path = "";
+			    for (int x = 1; x <= j; x++) {
+				path = path + "/" + dirs[x];
+			    }
+			    ArrayList<String> folderContent = FTPHandler
+				    .getDir(path);
+
+			    if (folderContent.size() == 0) {
+				client.mkdir(path);
+			    } else {
+				for (String s : folderContent) {
+				    if (!s.contains(dirs[j])) {
+					client.mkdir(path);
+				    }
+				}
+			    }
+
+			}
+		    }
 		    client.put(localPaths.get(i), remotePaths.get(i
 			    - countFolders));
 		} else {
 		    countFolders++;
 		}
-		System.out.println("Counter: " + countFolders);
 	    }
 	} catch (IOException e) {
 	    System.out.println("IO MOREupload");
