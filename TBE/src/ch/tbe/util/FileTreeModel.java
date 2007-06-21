@@ -6,6 +6,7 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
+
 /* http://www.unix.org.ua/orelly/java-ent/jfc/ch03_19.htm */
 
 /**
@@ -15,9 +16,9 @@ import javax.swing.tree.TreePath;
 public class FileTreeModel implements TreeModel
 {
 	// We specify the root directory when we create the model.
-	protected File root;
+	protected PathFile root;
 
-	public FileTreeModel(File root)
+	public FileTreeModel(PathFile root)
 	{
 		this.root = root;
 	}
@@ -31,13 +32,13 @@ public class FileTreeModel implements TreeModel
 	// Tell JTree whether an object in the tree is a leaf
 	public boolean isLeaf(Object node)
 	{
-		return ((File) node).isFile();
+		return ((PathFile) node).isFile();
 	}
 	
 	// Tell JTree how many children a node has
 	public int getChildCount(Object parent)
 	{
-		String[] children = ((File) parent).list();
+		String[] children = ((PathFile) parent).list();
 		if (children == null)
 			return 0;
 		return children.length;
@@ -48,20 +49,20 @@ public class FileTreeModel implements TreeModel
 	// JTree displays these by calling the MyFileTest.toString() method.
 	public Object getChild(Object parent, int index)
 	{
-		String[] children = ((File) parent).list();
+		String[] children = ((PathFile) parent).list();
 		if ((children == null) || (index >= children.length))
 			return null;
-		return new File((File) parent, children[index]);
+		return new PathFile((PathFile) parent, children[index]);
 	}
 	
 	// Figure out a child's position in its parent node.
 	public int getIndexOfChild(Object parent, Object child)
 	{
-		String[] children = ((File) parent).list();
+		String[] children = ((PathFile) parent).list();
 
 		if (children == null)
 			return -1;
-		String childname = ((File) child).getName();
+		String childname = ((PathFile) child).getName();
 		for (int i = 0; i < children.length; i++)
 		{
 			if (childname.equals(children[i]))
