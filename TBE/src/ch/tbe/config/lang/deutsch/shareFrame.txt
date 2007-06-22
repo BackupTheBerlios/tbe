@@ -8,6 +8,7 @@ open = Öffnen
 connect = Verbinden
 upload = Hinaufladen
 download = Herunterladen
+refresh = Aktualisieren
 
 # Demands
 chooseServer = Server auswählen

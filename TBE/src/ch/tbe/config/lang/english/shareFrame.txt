@@ -8,6 +8,7 @@ open = Open
 connect = Connect
 upload = Upload
 download = Download
+refresh = Refresh
 
 # Demands
 chooseServer = Choose Server

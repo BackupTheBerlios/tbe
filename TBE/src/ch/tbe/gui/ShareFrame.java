@@ -87,7 +87,7 @@ public class ShareFrame {
     private JPanel createPanel() {
 	JPanel panel = new JPanel(new BorderLayout());
 	panel.setBackground(Color.WHITE);
-
+	
 	// TODO: TEST UNIX / Mac OS !!!
 	JPanel westPanel = new JPanel(new BorderLayout());
 	westPanel.setPreferredSize(new Dimension(300, 500));
@@ -106,6 +106,8 @@ public class ShareFrame {
 	    {
 		File root = roots[driveBox.getSelectedIndex() - 1];
 		currentRoot = new PathFile(root, root.getName());
+		localPaths.clear();
+		remotePaths.clear();
 		refresh();
 	    }
 	}
@@ -381,7 +383,6 @@ public class ShareFrame {
 			JOptionPane.showMessageDialog(null, shareLabels
 				.getString("notTBEFile"));
 		    } else {
-			// TODO: .tbe-File öffnen
 			System.out.println("Open File: " + filePath);
 			Board board = XMLHandler.openXML(filePath);
 			tbe.addRecently(filePath);
@@ -393,7 +394,23 @@ public class ShareFrame {
 	}
 	openButton.addMouseListener(new OpenListener());
 	borderPanel.add(openButton);
-
+	
+	JButton refreshButton = new JButton(shareLabels.getString("refresh"));
+	class RefreshListener extends MouseAdapter
+	{
+	    @Override
+	    public void mouseReleased(MouseEvent arg0) {
+		if(connected)
+		{
+		    FTPHandler.disconnect();
+		    FTPHandler.connect(currentFTP);
+		}
+		refresh();
+	    }
+	}
+	refreshButton.addMouseListener(new RefreshListener());
+	borderPanel.add(refreshButton);
+	
 	panel.add(borderPanel, BorderLayout.SOUTH);
 
 	return panel;
