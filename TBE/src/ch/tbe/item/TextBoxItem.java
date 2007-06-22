@@ -21,12 +21,10 @@ public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 	}
 	
 	public String getText(){
-		  
 	    return super.getUserObject().toString();
 	}
 	
 	public void setText(String s){
-		  
 	    super.setUserObject(s);
 	}
 

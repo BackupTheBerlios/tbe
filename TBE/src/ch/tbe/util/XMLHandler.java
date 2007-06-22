@@ -454,11 +454,11 @@ public final class XMLHandler {
 			eItemComponent = new Element("textbox");
 			eItemComponent.setAttribute("text", ((TextBoxItem)item).getText());
 			
-			double widthDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getWidth() / 2;
-			double heightDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getHeight() / 2;
+			double widthDiff = TBEGraphConstants.getBounds(((TextBoxItem) item).getAttributes()).getWidth() / 2;
+			double heightDiff = TBEGraphConstants.getBounds(((TextBoxItem) item).getAttributes()).getHeight() / 2;
 
-			eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterX()- widthDiff));
-			eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterY()- heightDiff));
+			eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((TextBoxItem) item).getAttributes()).getCenterX()- widthDiff));
+			eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((TextBoxItem) item).getAttributes()).getCenterY()- heightDiff));
 			eItemComponent.setAttribute("height", String.valueOf(board.getCellBounds(item).getHeight()));
 			eItemComponent.setAttribute("width", String.valueOf(board.getCellBounds(item).getWidth()));
 			
