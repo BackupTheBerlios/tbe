@@ -21,12 +21,13 @@ public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 	}
 	
 	public String getText(){
-	    System.out.println((String) TBEGraphConstants.getValue(this.getAttributes()));
-	    return (String) TBEGraphConstants.getValue(this.getAttributes());
-	    
+		  
+	    return super.getUserObject().toString();
 	}
 	
-	public void setText(String text){
+	public void setText(String s){
+		  
+	    super.setUserObject(s);
 	}
 
 }
