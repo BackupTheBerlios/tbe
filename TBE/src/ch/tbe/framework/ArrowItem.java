@@ -55,4 +55,11 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent
 	{
 		return itemType;
 	}
+	public String getText(){
+	    return super.getUserObject().toString();
+	}
+	
+	public void setText(String s){
+	    super.setUserObject(s);
+	}
 }

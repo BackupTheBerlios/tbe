@@ -444,6 +444,10 @@ public final class XMLHandler {
 		    if (item instanceof ArrowItem) {
 			eItemComponent = new Element("arrow");
 			eItemComponent.setAttribute("type", item.getType());
+			Point2D p = TBEGraphConstants.getLabelPosition(((ArrowItem) item).getAttributes());
+			eItemComponent.setAttribute("xLabelPos", p.getX()+"");
+			eItemComponent.setAttribute("yLabelPos", p.getY()+"");
+			eItemComponent.setAttribute("position", ((ArrowItem)item).getText());
 			for (Point2D point : ((ArrowItem) item).getPoints()) {
 			    Element ePoint = new Element("point");
 			    ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
