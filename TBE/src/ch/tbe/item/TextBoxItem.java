@@ -19,6 +19,10 @@ public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 	public String getType(){
 		return "TextBox";
 	}
+	
+	public String getText(){
+	    return "";
+	}
 
 }
  
