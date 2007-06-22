@@ -89,8 +89,26 @@ public class ShareFrame {
 	panel.setBackground(Color.WHITE);
 	
 	// TODO: TEST UNIX / Mac OS !!!
-	JPanel westPanel = new JPanel(new BorderLayout());
-	westPanel.setPreferredSize(new Dimension(300, 500));
+	JPanel westPanel = createWestPanel();
+	panel.add(westPanel, BorderLayout.WEST);
+	
+	JPanel eastPanel = createEastPanel();
+	panel.add(eastPanel, BorderLayout.EAST);
+	
+	// Up- & Download-Buttons
+	JPanel centerPanel = createCenterPanel();
+	panel.add(centerPanel, BorderLayout.CENTER);
+	
+	JPanel borderPanel = createBorderPanel();
+	panel.add(borderPanel, BorderLayout.SOUTH);
+
+	return panel;
+    }
+    
+    private JPanel createWestPanel()
+    {
+	JPanel panel = new JPanel(new BorderLayout());
+	panel.setPreferredSize(new Dimension(300, 500));
 
 	Vector<String> allRoots = new Vector<String>();
 	allRoots.add(shareLabels.getString("chooseDrive"));
@@ -112,8 +130,8 @@ public class ShareFrame {
 	    }
 	}
 	driveBox.addActionListener(new DriveListener());
-	westPanel.add(driveBox, BorderLayout.NORTH);
-	westPanel.setBackground(Color.WHITE);
+	panel.add(driveBox, BorderLayout.NORTH);
+	panel.setBackground(Color.WHITE);
 
 	// Create a TreeModel object to represent our tree of files
 	FileTreeModel model = new FileTreeModel(currentRoot);
@@ -172,13 +190,15 @@ public class ShareFrame {
 	JScrollPane scrollPane = new JScrollPane(localTree);
 	scrollPane.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20,
 		Color.WHITE));
-	westPanel.add(scrollPane, BorderLayout.CENTER);
-
-	panel.add(westPanel, BorderLayout.WEST);
-
-	JPanel eastPanel = new JPanel(new BorderLayout());
-	eastPanel.setPreferredSize(new Dimension(350, 500));
-	eastPanel.setBackground(Color.WHITE);
+	panel.add(scrollPane, BorderLayout.CENTER);
+	return panel;
+    }
+    
+    private JPanel createEastPanel()
+    {
+	JPanel panel = new JPanel(new BorderLayout());
+	panel.setPreferredSize(new Dimension(350, 500));
+	panel.setBackground(Color.WHITE);
 
 	Vector<String> allFTP = new Vector<String>();
 	allFTP.add(shareLabels.getString("chooseServer"));
@@ -220,7 +240,7 @@ public class ShareFrame {
 
 	connectPanel.add(connectButton);
 
-	eastPanel.add(connectPanel, BorderLayout.NORTH);
+	panel.add(connectPanel, BorderLayout.NORTH);
 
 	class RemoteTreeListener implements TreeSelectionListener {
 	    public void valueChanged(TreeSelectionEvent tse) {
@@ -276,15 +296,16 @@ public class ShareFrame {
 	    ftpScrollPane.setBorder(BorderFactory.createMatteBorder(20, 20, 20,
 		    20, Color.WHITE));
 
-	    eastPanel.add(ftpScrollPane, BorderLayout.CENTER);
+	    panel.add(ftpScrollPane, BorderLayout.CENTER);
 	}
-
-	panel.add(eastPanel, BorderLayout.EAST);
-
-	// Up- & Download-Buttons
-	JPanel centerPanel = new JPanel();
-	centerPanel.setBackground(Color.WHITE);
-	centerPanel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0,
+	return panel;
+    }
+    
+    private JPanel createCenterPanel()
+    {
+	JPanel panel = new JPanel();
+	panel.setBackground(Color.WHITE);
+	panel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0,
 		Color.WHITE));
 
 	if (connected) {
@@ -342,14 +363,17 @@ public class ShareFrame {
 	    }
 	    downloadButton.addMouseListener(new DownloadListener());
 
-	    centerPanel.add(uploadButton);
-	    centerPanel.add(downloadButton);
+	    panel.add(uploadButton);
+	    panel.add(downloadButton);
 	}
-	panel.add(centerPanel, BorderLayout.CENTER);
-
-	JPanel borderPanel = new JPanel();
-	borderPanel.setBackground(Color.WHITE);
-
+	return panel;
+    }
+    
+    private JPanel createBorderPanel()
+    {
+	JPanel panel = new JPanel();
+	panel.setBackground(Color.WHITE);
+	
 	JButton cancelButton = new JButton(shareLabels.getString("cancel"));
 	class CancelListener extends MouseAdapter {
 	    @Override
@@ -358,7 +382,7 @@ public class ShareFrame {
 	    }
 	}
 	cancelButton.addMouseListener(new CancelListener());
-	borderPanel.add(cancelButton);
+	panel.add(cancelButton);
 
 	JButton openButton = new JButton(shareLabels.getString("open"));
 	class OpenListener extends MouseAdapter {
@@ -393,7 +417,7 @@ public class ShareFrame {
 	    }
 	}
 	openButton.addMouseListener(new OpenListener());
-	borderPanel.add(openButton);
+	panel.add(openButton);
 	
 	JButton refreshButton = new JButton(shareLabels.getString("refresh"));
 	class RefreshListener extends MouseAdapter
@@ -409,13 +433,11 @@ public class ShareFrame {
 	    }
 	}
 	refreshButton.addMouseListener(new RefreshListener());
-	borderPanel.add(refreshButton);
+	panel.add(refreshButton);
 	
-	panel.add(borderPanel, BorderLayout.SOUTH);
-
 	return panel;
     }
-
+    
     private void close() {
 	FTPHandler.disconnect();
 	frame.dispose();
