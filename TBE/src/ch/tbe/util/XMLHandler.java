@@ -8,6 +8,7 @@ import ch.tbe.framework.*;
 import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
 import ch.tbe.item.ShapeItem;
+import ch.tbe.item.TextBoxItem;
 import ch.tbe.jgraph.*;
 
 import java.awt.Frame;
@@ -59,9 +60,7 @@ public final class XMLHandler {
          */
 	class SaxHandler extends DefaultHandler {
 	    private TBE tbe = TBE.getInstance();
-
 	    private ArrayList<FTPServer> servers = new ArrayList<FTPServer>();
-
 	    private ArrayList<String> paths = new ArrayList<String>();
 
 	    /**
@@ -72,10 +71,8 @@ public final class XMLHandler {
 
 		try {
 		    // Start reading File
-		    SAXParser saxParser = SAXParserFactory.newInstance()
-			    .newSAXParser();
-		    saxParser.parse(new File(XMLHandler.class.getResource(
-			    "../config/tbe.config").getPath()), handler);
+		    SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
+		    saxParser.parse(new File(XMLHandler.class.getResource("../config/tbe.config").getPath()), handler);
 		} catch (Throwable t) {
 		    t.printStackTrace();
 		}
@@ -195,6 +192,16 @@ public final class XMLHandler {
 			ShapeItem item = ItemFactory.getShapeItem(board.getSport(), atts.getValue("type"), point);
 			if (item != null) {
 			    item.setRotation(Integer.valueOf(atts.getValue("rotation")));
+			    TBEGraphConstants.setBounds(item.getAttributes(), new Rectangle2D.Double(point.getX(), point.getY(), Double.valueOf(atts.getValue("width")), Double.valueOf(atts.getValue("height"))));
+			    board.addItem(item);
+			}
+		    }
+		    
+		    if (qName.equals("textbox")) {
+			Point2D point = new Point2D.Double(Double.valueOf(atts.getValue("xCoordinate")).doubleValue(),Double.valueOf(atts.getValue("yCoordinate")));
+			TextBoxItem item = new TextBoxItem(new Rectangle2D.Double(point.getX(), point.getY(), Double.valueOf(atts.getValue("width")).doubleValue(), Double.valueOf(atts.getValue("height")).doubleValue()));
+			if (item != null) {
+			    item.setText(atts.getValue("text"));
 			    TBEGraphConstants.setBounds(item.getAttributes(), new Rectangle2D.Double(point.getX(), point.getY(), Double.valueOf(atts.getValue("width")), Double.valueOf(atts.getValue("height"))));
 			    board.addItem(item);
 			}
@@ -439,38 +446,34 @@ public final class XMLHandler {
 			eItemComponent.setAttribute("type", item.getType());
 			for (Point2D point : ((ArrowItem) item).getPoints()) {
 			    Element ePoint = new Element("point");
-			    ePoint.setAttribute("xCoordinate", String
-				    .valueOf(point.getX()));
-			    ePoint.setAttribute("yCoordinate", String
-				    .valueOf(point.getY()));
+			    ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
+			    ePoint.setAttribute("yCoordinate", String.valueOf(point.getY()));
 			    eItemComponent.addContent(ePoint);
 			}
+		    } else if (item instanceof TextBoxItem){
+			eItemComponent = new Element("textbox");
+			eItemComponent.setAttribute("text", ((TextBoxItem)item).getText());
+			
+			double widthDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getWidth() / 2;
+			double heightDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getHeight() / 2;
+
+			eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterX()- widthDiff));
+			eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterY()- heightDiff));
+			eItemComponent.setAttribute("height", String.valueOf(board.getCellBounds(item).getHeight()));
+			eItemComponent.setAttribute("width", String.valueOf(board.getCellBounds(item).getWidth()));
+			
 		    } else {
 			eItemComponent = new Element("shape");
 			eItemComponent.setAttribute("type", item.getType());
 
-			double widthDiff = TBEGraphConstants.getBounds(
-				((ShapeItem) item).getAttributes()).getWidth() / 2;
-			double heightDiff = TBEGraphConstants.getBounds(
-				((ShapeItem) item).getAttributes()).getHeight() / 2;
+			double widthDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getWidth() / 2;
+			double heightDiff = TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getHeight() / 2;
 
-			eItemComponent.setAttribute("xCoordinate", String
-				.valueOf(TBEGraphConstants.getBounds(
-					((ShapeItem) item).getAttributes())
-					.getCenterX()
-					- widthDiff));
-			eItemComponent.setAttribute("yCoordinate", String
-				.valueOf(TBEGraphConstants.getBounds(
-					((ShapeItem) item).getAttributes())
-					.getCenterY()
-					- heightDiff));
-			eItemComponent
-				.setAttribute("height", String.valueOf(board
-					.getCellBounds(item).getHeight()));
-			eItemComponent.setAttribute("width", String
-				.valueOf(board.getCellBounds(item).getWidth()));
-			eItemComponent.setAttribute("rotation", String
-				.valueOf(((ShapeItem) item).getRotation()));
+			eItemComponent.setAttribute("xCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterX()- widthDiff));
+			eItemComponent.setAttribute("yCoordinate", String.valueOf(TBEGraphConstants.getBounds(((ShapeItem) item).getAttributes()).getCenterY()- heightDiff));
+			eItemComponent.setAttribute("height", String.valueOf(board.getCellBounds(item).getHeight()));
+			eItemComponent.setAttribute("width", String.valueOf(board.getCellBounds(item).getWidth()));
+			eItemComponent.setAttribute("rotation", String.valueOf(((ShapeItem) item).getRotation()));
 		    }
 
 		    eItemComponents.addContent(eItemComponent);

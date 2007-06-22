@@ -25,6 +25,9 @@ public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 	    return (String) TBEGraphConstants.getValue(this.getAttributes());
 	    
 	}
+	
+	public void setText(String text){
+	}
 
 }
  
