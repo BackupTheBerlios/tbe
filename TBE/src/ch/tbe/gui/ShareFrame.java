@@ -41,35 +41,23 @@ import ch.tbe.util.XMLHandler;
 
 public class ShareFrame {
     private TBE tbe = TBE.getInstance();
-
     private ResourceBundle shareLabels;
-
     private JPanel contentPanel;
-
     private JComboBox ftpBox, driveBox;
-
     private JFrame frame;
-
     private FTPServer currentFTP = null;
-
     private boolean connected = false;
-
     private File[] roots = File.listRoots();
-
     private PathFile currentRoot = new PathFile(roots[0], roots[0].getName());
-
     private JTree ftpTree, localTree;
-
     private ArrayList<String> localPaths = new ArrayList<String>();
-
     private ArrayList<String> remotePaths = new ArrayList<String>();
-
     private String folder = "";
 
     /*
-         * Convention: Directories have no points in the name and files do have
-         * a point! ...
-         */
+     * Convention: Directories have no points in the name and files do have
+     * a point! ...
+     */
     public ShareFrame() {
 	frame = new JFrame();
 	shareLabels = getResourceBundle(tbe.getLang());
