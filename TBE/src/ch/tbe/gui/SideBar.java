@@ -212,6 +212,7 @@ public class SideBar extends JToolBar {
 	}
 	textInputArea = new JTextArea(10, 20);
 	textInputArea.setWrapStyleWord(true);
+	textInputArea.setLineWrap(true);
 	textInputArea.setBorder(new CompoundBorder(new LineBorder(Color.GRAY),
 		new EmptyBorder(1, 3, 1, 1)));
 
