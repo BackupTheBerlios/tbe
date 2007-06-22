@@ -21,6 +21,8 @@ public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 	}
 	
 	public String getText(){
+	    if (super.getUserObject() == null)
+		    return null;
 	    return super.getUserObject().toString();
 	}
 	

@@ -210,11 +210,19 @@ public final class XMLHandler {
 		    if (qName.equals("arrow")) {
 			if (actArrowType != null) {
 			    ArrowItem item = ItemFactory.getArrowItem(board.getSport(), actArrowType, actPoints);
+			    item.setText(atts.getValue("text"));
+			    if(item.getText() != null){
+				Point2D p = new Point2D.Double(new Double(atts.getValue("xLabelPos")),new Double(Double.valueOf(atts.getValue("yLabelPos"))));
+				if (p != null){
+				    TBEGraphConstants.setLabelPosition(item.getAttributes(), p);
+				}
+			    }
 			    if (item != null) {
 				board.addItem(item);
 			    }
 			    actArrowType = null;
 			    actPoints.clear();
+			    
 			}
 			actArrowType = atts.getValue("type");
 		    }
@@ -444,10 +452,20 @@ public final class XMLHandler {
 		    if (item instanceof ArrowItem) {
 			eItemComponent = new Element("arrow");
 			eItemComponent.setAttribute("type", item.getType());
-			Point2D p = TBEGraphConstants.getLabelPosition(((ArrowItem) item).getAttributes());
-			eItemComponent.setAttribute("xLabelPos", p.getX()+"");
-			eItemComponent.setAttribute("yLabelPos", p.getY()+"");
-			eItemComponent.setAttribute("position", ((ArrowItem)item).getText());
+			
+			
+			if(((ArrowItem)item).getText() != null){
+			    eItemComponent.setAttribute("text", ((ArrowItem)item).getText());
+			    Point2D p = TBEGraphConstants.getLabelPosition(((ArrowItem) item).getAttributes());
+			    if(p != null){
+				eItemComponent.setAttribute("xLabelPos", p.getX()+"");
+				eItemComponent.setAttribute("yLabelPos", p.getY()+"");
+				}
+			    else{
+				eItemComponent.setAttribute("xLabelPos", "0");
+				eItemComponent.setAttribute("yLabelPos", "0");
+			    }
+			}
 			for (Point2D point : ((ArrowItem) item).getPoints()) {
 			    Element ePoint = new Element("point");
 			    ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
