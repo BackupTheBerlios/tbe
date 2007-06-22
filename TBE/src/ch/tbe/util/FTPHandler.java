@@ -119,8 +119,10 @@ public final class FTPHandler {
     public static void disconnect() {
 	try {
 	    System.out.println("quit");
-	    client.quit();
-	    client = null;
+	    if (client != null) {
+		client.quit();
+		client = null;
+	    }
 	} catch (IOException e) {
 	    System.out.println("quit IO");
 	    // TODO Auto-generated catch block

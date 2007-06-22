@@ -20,6 +20,7 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -29,7 +30,9 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
 
+import ch.tbe.Board;
 import ch.tbe.FTPServer;
+import ch.tbe.framework.View;
 import ch.tbe.util.FTPFileTreeModel;
 import ch.tbe.util.FTPHandler;
 import ch.tbe.util.FileTreeModel;
@@ -73,9 +76,9 @@ public class ShareFrame {
 
 	contentPanel = createPanel();
 	frame.add(contentPanel);
-
+	
 	// TODO: Disconnect bei Windows close
-
+	
 	frame.setSize(800, 500);
 	frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	frame.setVisible(true);
@@ -362,8 +365,15 @@ public class ShareFrame {
 		String filePath = "";
 		// muss LOKAL 1 .tbe-File angewählt sein
 		if (localPaths.size() != 1)
+		{
+		    System.out.println("***\nLocalPathsSize: " + localPaths.size());
+		    for(String s : localPaths)
+		    {
+			System.out.println(s);
+		    }
 		    JOptionPane.showMessageDialog(null, shareLabels
 			    .getString("oneLocalFile"));
+		}
 		else {
 		    filePath = localPaths.get(0);
 		    if (!filePath.substring(filePath.length() - 4,
@@ -371,10 +381,12 @@ public class ShareFrame {
 			JOptionPane.showMessageDialog(null, shareLabels
 				.getString("notTBEFile"));
 		    } else {
-
-			// .tbe-File öffnen
-			XMLHandler.openXML(filePath);
-			//close();
+			// TODO: .tbe-File öffnen
+			System.out.println("Open File: " + filePath);
+			Board board = XMLHandler.openXML(filePath);
+			tbe.addRecently(filePath);
+			tbe.setView(new WorkingView(board));
+			close();
 		    }
 		}
 	    }
