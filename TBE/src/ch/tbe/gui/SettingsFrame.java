@@ -69,8 +69,7 @@ public class SettingsFrame {
 	}
 	frame.setSize(500, 300);
 	
-	Dimension d = Toolkit.getDefaultToolkit().getScreenSize(); 
-	frame.setLocation( (d.width - frame.getSize().width ) / 2, (d.height- frame.getSize().height) / 2 );
+	frame.setLocationRelativeTo(null);
 	frame.setVisible(true);
     }
 
