@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,6 +68,9 @@ public class SettingsFrame {
 	    frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	}
 	frame.setSize(500, 300);
+	
+	Dimension d = Toolkit.getDefaultToolkit().getScreenSize(); 
+	frame.setLocation( (d.width - frame.getSize().width ) / 2, (d.height- frame.getSize().height) / 2 );
 	frame.setVisible(true);
     }
 
