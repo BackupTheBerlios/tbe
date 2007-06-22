@@ -18,4 +18,6 @@ noServer = Es wurde kein Server ausgewählt
 noLocals = Sie haben keine lokalen Dateien ausgewählt
 oneRemote = Wählen Sie genau einen Ordner auf dem Server aus
 noRemotes = Sie haben keine Dateien auf dem Server ausgewählt
-oneLocal = Wählen Sie genau einen lokalen Ordner aus
+oneLocalFolder = Wählen Sie genau einen lokalen Ordner aus
+oneLocalFile = Wählen Sie genau eine lokale Datei aus
+notTBEFile = Wählen Sie eine .tbe - Datei aus

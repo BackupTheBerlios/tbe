@@ -18,4 +18,6 @@ noServer = There is no Server choosen
 noLocals = You haven't choosen any local Files
 oneRemote = Choose exactly one Forlder on the Server
 noRemotes = You haven't choosen any Files on the Server
-oneLocal = Choose exactly one local Folder
+oneLocalFolder = Choose exactly one local Folder
+oneLocalFile = Choose exactly one local File
+notTBEFile = Choose a .tbe - File

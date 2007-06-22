@@ -34,6 +34,7 @@ import ch.tbe.util.FTPFileTreeModel;
 import ch.tbe.util.FTPHandler;
 import ch.tbe.util.FileTreeModel;
 import ch.tbe.util.PathFile;
+import ch.tbe.util.XMLHandler;
 
 public class ShareFrame {
     private TBE tbe = TBE.getInstance();
@@ -52,8 +53,7 @@ public class ShareFrame {
 
     private File[] roots = File.listRoots();
 
-    private PathFile currentRoot = new PathFile(roots[0], roots[0]
-	    .getName());
+    private PathFile currentRoot = new PathFile(roots[0], roots[0].getName());
 
     private JTree ftpTree, localTree;
 
@@ -99,8 +99,10 @@ public class ShareFrame {
 	driveBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1,
 		Color.BLACK));
 	class DriveListener implements ActionListener {
-	    public void actionPerformed(ActionEvent arg0) {
-		currentRoot = (PathFile) roots[driveBox.getSelectedIndex() - 1];
+	    public void actionPerformed(ActionEvent arg0) 
+	    {
+		File root = roots[driveBox.getSelectedIndex() - 1];
+		currentRoot = new PathFile(root, root.getName());
 		refresh();
 	    }
 	}
@@ -292,16 +294,15 @@ public class ShareFrame {
 				.getString("noLocals"));
 		    }
 		    // genau 1 Pfad auf Server gewählt && muss ein Ordner
-                        // sein!!
+		    // sein!!
 		    else if (remotePaths.size() != 1
 			    || remotePaths.get(0).contains(".")) {
 			JOptionPane.showMessageDialog(null, shareLabels
 				.getString("oneRemote"));
-		    } 
-		    else 
-		    {
+		    } else {
 			String path = localPaths.get(0);
-			folder = path.substring(path.lastIndexOf("/"), path.length());
+			folder = path.substring(path.lastIndexOf("/"), path
+				.length());
 			if (currentFTP.getName().equals("Public"))
 			    doPublicUpload(localPaths);
 			else
@@ -321,7 +322,7 @@ public class ShareFrame {
 				.getString("noRemotes"));
 		    }
 		    // genau 1 Pfad auf Local gewählt, muss ein Ordner
-                        // sein!!
+		    // sein!!
 		    else if (localPaths.size() != 1
 			    || localPaths.get(0).contains(".")) {
 			JOptionPane.showMessageDialog(null, shareLabels
@@ -341,23 +342,70 @@ public class ShareFrame {
 	}
 	panel.add(centerPanel, BorderLayout.CENTER);
 
+	JPanel borderPanel = new JPanel();
+	borderPanel.setBackground(Color.WHITE);
+
+	JButton cancelButton = new JButton(shareLabels.getString("cancel"));
+	class CancelListener extends MouseAdapter {
+	    @Override
+	    public void mouseReleased(MouseEvent arg0) {
+		close();
+	    }
+	}
+	cancelButton.addMouseListener(new CancelListener());
+	borderPanel.add(cancelButton);
+
+	JButton openButton = new JButton(shareLabels.getString("open"));
+	class OpenListener extends MouseAdapter {
+	    @Override
+	    public void mouseReleased(MouseEvent arg0) {
+		String filePath = "";
+		// muss LOKAL 1 .tbe-File angewählt sein
+		if (localPaths.size() != 1)
+		    JOptionPane.showMessageDialog(null, shareLabels
+			    .getString("oneLocalFile"));
+		else {
+		    filePath = localPaths.get(0);
+		    if (!filePath.substring(filePath.length() - 4,
+			    filePath.length()).equals(".tbe")) {
+			JOptionPane.showMessageDialog(null, shareLabels
+				.getString("notTBEFile"));
+		    } else {
+
+			// .tbe-File öffnen
+			XMLHandler.openXML(filePath);
+			//close();
+		    }
+		}
+	    }
+	}
+	openButton.addMouseListener(new OpenListener());
+	borderPanel.add(openButton);
+
+	panel.add(borderPanel, BorderLayout.SOUTH);
+
 	return panel;
     }
-    
-    private void doDownload(ArrayList<String> remotes) 
-    {
+
+    private void close() {
+	FTPHandler.disconnect();
+	frame.dispose();
+    }
+
+    private void doDownload(ArrayList<String> remotes) {
 	// neue List, sonst ConcurrentModifiedException...
 	ArrayList<String> remoteFiles = remotes;
-	
+
 	// RemotePaths zusammensetzen
 	ArrayList<String> newPaths = new ArrayList<String>();
 	ArrayList<String> newRemote = new ArrayList<String>();
 	for (int i = 0; i < remoteFiles.size(); i++) {
 	    String path = remoteFiles.get(i);
-	    
+
 	    if (path.contains(".")) // is File, add to NewPaths
 	    {
-		String pathToAdd = localPaths.get(0) + path.substring(path.indexOf(folder), path.length());
+		String pathToAdd = localPaths.get(0)
+			+ path.substring(path.indexOf(folder), path.length());
 		newPaths.add(pathToAdd);
 		newRemote.add(path);
 	    } else // is a Folder, redo the whole thing with subpaths...
@@ -376,7 +424,7 @@ public class ShareFrame {
 	    FTPHandler.download(currentFTP, newPaths, newRemote);
 	}
     }
-    
+
     // Lädt lokale Files ohne Ordnerstruktur auf den Server
     private void doPublicUpload(ArrayList<String> locals) {
 	ArrayList<String> local = locals;
@@ -406,21 +454,23 @@ public class ShareFrame {
 	if (newPaths.size() != 0)
 	    FTPHandler.upload(currentFTP, local, newPaths);
     }
-    
-    // Lädt lokale Files inkl. OrdnerStruktur auf den Server, leere Ordner ausgenommen
+
+    // Lädt lokale Files inkl. OrdnerStruktur auf den Server, leere Ordner
+    // ausgenommen
     private void doCustomUpload(ArrayList<String> locals) {
 	ArrayList<String> local = locals;
 
 	// RemotePaths zusammensetzen
 	ArrayList<String> newPaths = new ArrayList<String>();
-	for (int i = 0; i < local.size(); i++) 
-	{
+	for (int i = 0; i < local.size(); i++) {
 	    String path = local.get(i);
-	    
+
 	    if (path.contains(".")) // is File, add to NewPaths
 	    {
-		// hole Dateiname des lokalen Files und füge ihn zum remoteOrdner hinzu
-		String toAdd = remotePaths.get(0) + path.substring(path.indexOf(folder), path.length());
+		// hole Dateiname des lokalen Files und füge ihn zum
+		// remoteOrdner hinzu
+		String toAdd = remotePaths.get(0)
+			+ path.substring(path.indexOf(folder), path.length());
 		newPaths.add(toAdd);
 	    } else // is a Folder, redo the whole thing with subpaths...
 	    {
