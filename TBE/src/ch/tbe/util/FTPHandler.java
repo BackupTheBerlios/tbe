@@ -48,7 +48,6 @@ public final class FTPHandler {
 
 	for (int i = 0; i < sports.size(); i++) {
 	    String remoteSport = (REMOTESPORTPATH + "/" + sports.get(i));
-	    System.out.println("To install: " + remoteSport);
 
 	    getRemoteSubDirs(remoteSport);
 	    ArrayList<String> localPaths = new ArrayList<String>();
@@ -56,10 +55,7 @@ public final class FTPHandler {
 		String path = LOCALSPORTPATH + "/"
 			+ s.substring(REMOTESPORTPATH.length() + 1);
 		localPaths.add(path);
-		System.out.println("remote: " + s);
-		System.out.println("local: " + path);
 	    }
-
 	    download(server, localPaths, remotePaths);
 	}
     }
@@ -68,8 +64,6 @@ public final class FTPHandler {
 	ArrayList<String> dirs = getDir(dir);
 
 	for (String s : dirs) {
-	    System.out.println(s);
-
 	    // TODO: cvs kicken...
 	    if (s.contains(".")) {
 		remotePaths.add(s);
@@ -81,8 +75,6 @@ public final class FTPHandler {
     }
 
     private static void getLocalSubDirs(String dir) {
-	System.out.println("getLocalSubDirs called with: " + dir);
-
 	ArrayList<String> dirs = new ArrayList<String>();
 	String[] subDir = new File(dir).list();
 
@@ -110,7 +102,6 @@ public final class FTPHandler {
 
 	for (int i = 0; i < sports.size(); i++) {
 	    String sportToDelete = LOCALSPORTPATH + "/" + sports.get(i);
-	    System.out.println("To delete: " + sportToDelete);
 	    getLocalSubDirs(sportToDelete);
 
 	    for (String s : localPaths) {
