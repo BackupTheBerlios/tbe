@@ -563,7 +563,6 @@ public class ShareFrame {
 	frame.repaint();
 	contentPanel = createPanel();
 	frame.add(contentPanel);
-	frame.setVisible(false);
-	frame.setVisible(true);
+	frame.validate();
     }
 }

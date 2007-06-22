@@ -1,8 +1,6 @@
 package ch.tbe.gui;
 
-import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.io.File;
 import java.util.ArrayList;
@@ -71,20 +69,22 @@ public class TBE {
 
 	// TODO: check ob FirstStart oder nicht!
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	splashScreen.setProgress("Create WelcomeView", 60);
-	splashScreen.setProgress(100);
+	splashScreen.setProgress("Create WelcomeView", 100);
 	splashScreen.setScreenVisible(false);
+	frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 	frame.setVisible(true);
-	
 	if (this.UserName.equals("")){
 	    // Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 	    new SettingsFrame(true);
 	}else{
-	    this.setView(new WelcomeView(sports, lang, splashScreen));
+	    this.setView(new WelcomeView(sports, lang));
 	}
+	
+	
     }
 
     public void setView(View newView) {
+	frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 	if (view != null){
 	    frame.remove(this.view);
 	    
@@ -92,9 +92,9 @@ public class TBE {
 	    menu.refresh();
 	}
 	this.view = newView;
-	frame.add(view);
-	frame.setVisible(false);
-	frame.setVisible(true);
+	frame.add(view);	
+	frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	frame.validate();
     }
 
     public View getView() {

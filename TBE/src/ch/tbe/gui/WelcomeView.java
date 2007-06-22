@@ -38,19 +38,13 @@ public class WelcomeView extends View
 	private TBE tbe = TBE.getInstance();
 	private ArrayList<String> paths;
 	private JPanel welcome;
-	private SplashScreen sp;
-	
-	public WelcomeView(ArrayList sports, String lang, SplashScreen sp) 
-	{
-		this.sp = sp;
-		welcomeViewLabels = getResourceBundle(lang);
-		createPanel(true);
-	}
+
 	
 	public WelcomeView(ArrayList sports, String lang) 
 	{
+		this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		welcomeViewLabels = getResourceBundle(lang);
-		createPanel(false);
+		createPanel();
 	}
 	
 	private ResourceBundle getResourceBundle(String lang)
@@ -80,7 +74,7 @@ public class WelcomeView extends View
 		return folderLabel;
 	}
 	
-	private void createPanel(boolean start)
+	private void createPanel()
 	{
 		GridBagLayout globalGridbag = new GridBagLayout();
 		GridBagConstraints globalConstraints = new GridBagConstraints();
@@ -160,8 +154,7 @@ public class WelcomeView extends View
 				welcome.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		}
-		if(start){
-		sp.setProgress("Load Recently", 50);}
+
 		paths = tbe.getRecently();
 		JPanel pathPanel = new JPanel();
 		pathPanel.setLayout(new GridLayout(7,1));
@@ -224,17 +217,15 @@ public class WelcomeView extends View
 				welcome.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 		}
-		if(start){
-		sp.setProgress("Load Sports", 50);}
+
 		ArrayList<Sport> sports = tbe.getSports();
 		JPanel sportPanel = new JPanel();
 		sportPanel.setLayout(new GridLayout(7, 1));
 		sportPanel.setBackground(Color.WHITE);
-		int prog = 50;
+
 		for(Sport s : sports)
 		{
-			if(start){			
-				sp.setProgress("Load Sports", prog++);}
+
 			JPanel onePath = new JPanel();
 			onePath.setBackground(Color.WHITE);
 			onePath.setLayout(new GridLayout(1, 2, 0, 5));
@@ -263,17 +254,15 @@ public class WelcomeView extends View
 		welcome.add(centerPanel, BorderLayout.CENTER);
 		
 		this.add(welcome);
-		if(start){
-		sp.setProgress("Prepare to show", prog);}
+		this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));	
 	}
+
 	
 	public void refresh()
 	{
 		welcomeViewLabels = getResourceBundle(tbe.getLang());
 		this.remove(welcome);
-		this.repaint();
-		this.createPanel(false);
-		this.setVisible(false);
-		this.setVisible(true);
+		this.createPanel();
+		this.validate();
 	}
 }
