@@ -210,13 +210,11 @@ public final class XMLHandler {
 		    if (qName.equals("arrow")) {
 			if (actArrowType != null) {
 			    ArrowItem item = ItemFactory.getArrowItem(board.getSport(), actArrowType, actPoints);
-			    item.setText(atts.getValue("text"));
-			    if(item.getText() != null){
-				Point2D p = new Point2D.Double(new Double(atts.getValue("xLabelPos")),new Double(Double.valueOf(atts.getValue("yLabelPos"))));
-				if (p != null){
-				    TBEGraphConstants.setLabelPosition(item.getAttributes(), p);
-				}
-			    }
+			    item.setText(atts.getValue("text"));	
+			    Point2D p = new Point2D.Double(new Double(atts.getValue("xLabelPos")),new Double(Double.valueOf(atts.getValue("yLabelPos"))));
+			    TBEGraphConstants.setLabelPosition(item.getAttributes(), p);
+				
+			    
 			    if (item != null) {
 				board.addItem(item);
 			    }
@@ -455,7 +453,10 @@ public final class XMLHandler {
 			
 			
 			if(((ArrowItem)item).getText() != null){
-			    eItemComponent.setAttribute("text", ((ArrowItem)item).getText());
+			    eItemComponent.setAttribute("text", ((ArrowItem)item).getText());}
+			else{
+			    eItemComponent.setAttribute("text", "");}
+			
 			    Point2D p = TBEGraphConstants.getLabelPosition(((ArrowItem) item).getAttributes());
 			    if(p != null){
 				eItemComponent.setAttribute("xLabelPos", p.getX()+"");
@@ -465,7 +466,7 @@ public final class XMLHandler {
 				eItemComponent.setAttribute("xLabelPos", "0");
 				eItemComponent.setAttribute("yLabelPos", "0");
 			    }
-			}
+			
 			for (Point2D point : ((ArrowItem) item).getPoints()) {
 			    Element ePoint = new Element("point");
 			    ePoint.setAttribute("xCoordinate", String.valueOf(point.getX()));
