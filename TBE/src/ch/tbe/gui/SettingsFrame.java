@@ -45,6 +45,7 @@ public class SettingsFrame {
     private JPasswordField ftpPwField;
     private JComboBox langBox, ftpBox;
     private JTabbedPane tabs;
+    private JPanel buttonPanel;
     private JFrame frame;
     private FTPServer currentFTP = null;
     private JPanel FTPPanel;
@@ -150,8 +151,8 @@ public class SettingsFrame {
     }
 
     private JPanel createButtonPanel() {
-	JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-	panel.setBackground(Color.WHITE);
+	buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+	buttonPanel.setBackground(Color.WHITE);
 
 	JButton saveButton = new JButton(settingsLabels.getString("save"));
 	JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
@@ -166,9 +167,9 @@ public class SettingsFrame {
 	saveButton.addMouseListener(new saveButtonListener(true, false));
 	cancelButton.addMouseListener(new cancelButtonListener());
 
-	panel.add(saveButton);
-	panel.add(cancelButton);
-	return panel;
+	buttonPanel.add(saveButton);
+	buttonPanel.add(cancelButton);
+	return buttonPanel;
     }
 
     private JPanel createGeneralPanel() {
@@ -514,8 +515,7 @@ public class SettingsFrame {
 	    JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 	    buttonPanel.setBackground(Color.WHITE);
 
-	    JButton installButton = new JButton(settingsLabels
-		    .getString("install"));
+	    JButton installButton = new JButton(settingsLabels.getString("install"));
 	    installButton.addMouseListener(new saveButtonListener(false, false));
 
 	    buttonPanel.add(installButton);
@@ -571,8 +571,11 @@ public class SettingsFrame {
     public void refresh() {
 	settingsLabels = getResourceBundle(tbe.getLang());
 	frame.remove(tabs);
+	frame.remove(buttonPanel);
+	
+	frame.add(createTabbedPane(), java.awt.BorderLayout.CENTER);
+	frame.add(createButtonPanel(), BorderLayout.SOUTH);
 	frame.repaint();
-	frame.add(createTabbedPane());
 	frame.setVisible(false);
 	frame.setVisible(true);
     }
