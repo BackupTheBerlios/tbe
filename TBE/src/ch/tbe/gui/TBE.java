@@ -70,14 +70,18 @@ public class TBE {
 	frame.add(stateBar, java.awt.BorderLayout.SOUTH);
 
 	// TODO: check ob FirstStart oder nicht!
-	// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
-	splashScreen.setProgress("Create WelcomeView", 40);
-	this.setView(new WelcomeView(sports, lang, splashScreen));
-
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	splashScreen.setProgress("Create WelcomeView", 60);
 	splashScreen.setProgress(100);
 	splashScreen.setScreenVisible(false);
 	frame.setVisible(true);
+	
+	if (this.UserName.equals("")){
+	    // Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
+	    new SettingsFrame(true);
+	}else{
+	    this.setView(new WelcomeView(sports, lang, splashScreen));
+	}
     }
 
     public void setView(View newView) {
@@ -242,7 +246,9 @@ public class TBE {
 
     public void changeLang() {
 	menu.refresh();
-	view.refresh();
+	if (view != null){
+	    view.refresh();
+	}
     }
 
     // MAIN!

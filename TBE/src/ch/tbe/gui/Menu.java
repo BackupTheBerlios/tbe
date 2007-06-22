@@ -478,7 +478,7 @@ public class Menu extends JMenuBar {
 	class tbeSettingsListener extends MouseAdapter {
 	    @Override
 	    public void mouseReleased(MouseEvent arg0) {
-		new SettingsFrame();
+		new SettingsFrame(false);
 	    }
 	}
 	tbeSettings.addMouseListener(new tbeSettingsListener());

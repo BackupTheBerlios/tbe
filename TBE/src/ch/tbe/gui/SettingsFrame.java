@@ -51,16 +51,22 @@ public class SettingsFrame {
     private ArrayList<String> toInstall = new ArrayList<String>();
     private ArrayList<String> toDelete = new ArrayList<String>();
     private ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
+    private boolean isFirstStart;
     
-    public SettingsFrame() {
-	frame = new JFrame("TBE - Settings");
+    public SettingsFrame(boolean isFirstStart) {
+	this.isFirstStart = isFirstStart;
 	settingsLabels = getResourceBundle(tbe.getLang());
-
+	
+	if (isFirstStart){
+	    frame = new JFrame("TBE - Welcome");
+	    frame.add(createGeneralPanel(), java.awt.BorderLayout.CENTER);
+	}else{
+	    frame = new JFrame("TBE - Settings");
+	    frame.add(createTabbedPane(), java.awt.BorderLayout.CENTER);
+	    frame.add(createButtonPanel(), BorderLayout.SOUTH);
+	    frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+	}
 	frame.setSize(500, 300);
-	frame.add(createTabbedPane(), java.awt.BorderLayout.CENTER);
-	frame.add(createButtonPanel(), BorderLayout.SOUTH);
-
-	frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 	frame.setVisible(true);
     }
 
@@ -76,56 +82,66 @@ public class SettingsFrame {
     class saveButtonListener extends MouseAdapter {
 
 	private boolean closeAfter;
+	private boolean isFirstStart;
 
-	public saveButtonListener(boolean closeAfter) {
+	public saveButtonListener(boolean closeAfter, boolean isFirstStart) {
 	    this.closeAfter = closeAfter;
+	    this.isFirstStart = isFirstStart;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-	    if (tabs.getSelectedIndex() == 0) {
+	    if (isFirstStart){
 		if (checkUserInputs()) {
-		    tbe.setUser(prenameField.getText(),
-			    lastnameField.getText(), mailField.getText());
+		    tbe.setUser(prenameField.getText(), lastnameField.getText(), mailField.getText());
 		    tbe.setLang((String) langBox.getSelectedItem());
 		    XMLHandler.saveTBESettings();
 		    tbe.changeLang();
-
-		    if (closeAfter) {
-			frame.dispose();
-		    } else {
-			refresh();
-		    }
-		}
-	    }
-	    if (tabs.getSelectedIndex() == 1) {
-		if (checkFTPForm() == true) {
-		    String pw = new String(ftpPwField.getPassword());
-		    // neuer Server hinzufügen
-		    if (currentFTP.getName().equals("")) {
-			tbe.addFTPServer(ftpNameField.getText(), ftpHostField
-				.getText(), ftpUserField.getText(), pw);
-		    } else {
-			tbe.editFTPServer(ftpNameField.getText(), ftpHostField
-				.getText(), ftpUserField.getText(), pw);
-		    }
-		    currentFTP = null;
-		    XMLHandler.saveTBESettings();
-		    
-		    if (closeAfter) {
-			frame.dispose();
-		    } else {
-			refresh();
-			tabs.setSelectedIndex(1);
-		    }
-		}
-	    }
-	    if (tabs.getSelectedIndex() == 2) {
-		FTPHandler.installSport(toInstall);
-		FTPHandler.deleteSport(toDelete);
-		if (closeAfter) {
+		    tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
 		    frame.dispose();
 		}
+	    }else{
+		if (tabs.getSelectedIndex() == 0) {
+		    if (checkUserInputs()) {
+			tbe.setUser(prenameField.getText(), lastnameField.getText(), mailField.getText());
+			tbe.setLang((String) langBox.getSelectedItem());
+			XMLHandler.saveTBESettings();
+			tbe.changeLang();
+
+			if (closeAfter) {
+			    frame.dispose();
+    		    	} else {
+    		    	    refresh();
+    		    	}
+		    }
+    	    	}
+    	    	if (tabs.getSelectedIndex() == 1) {
+    	    	    if (checkFTPForm() == true) {
+    	    		String pw = new String(ftpPwField.getPassword());
+    	    		// neuer Server hinzufügen
+    	    		if (currentFTP.getName().equals("")) {
+    	    		    tbe.addFTPServer(ftpNameField.getText(), ftpHostField.getText(), ftpUserField.getText(), pw);
+    	    		} else {
+    	    		    tbe.editFTPServer(ftpNameField.getText(), ftpHostField.getText(), ftpUserField.getText(), pw);
+    	    		}
+    	    		currentFTP = null;
+    	    		XMLHandler.saveTBESettings();
+    		    
+    	    		if (closeAfter) {
+    	    		    frame.dispose();
+    	    		} else {
+    	    		    refresh();
+    	    		    tabs.setSelectedIndex(1);
+    	    		}
+    	    	    }
+    	    	}
+    	    	if (tabs.getSelectedIndex() == 2) {
+    	    	    FTPHandler.installSport(toInstall);
+    	    	    FTPHandler.deleteSport(toDelete);
+    	    	    if (closeAfter) {
+    	    		frame.dispose();
+    	    	    }
+    	    	}
 	    }
 	}
     }
@@ -144,7 +160,7 @@ public class SettingsFrame {
 	    }
 	}
 
-	saveButton.addMouseListener(new saveButtonListener(true));
+	saveButton.addMouseListener(new saveButtonListener(true, false));
 	cancelButton.addMouseListener(new cancelButtonListener());
 
 	panel.add(saveButton);
@@ -222,7 +238,7 @@ public class SettingsFrame {
 	cancelButton.addMouseListener(new cancelButtonListener());
 
 	JButton saveButton = new JButton(settingsLabels.getString("apply"));
-	saveButton.addMouseListener(new saveButtonListener(false));
+	saveButton.addMouseListener(new saveButtonListener(false, this.isFirstStart));
 
 	buttonPanel.add(saveButton);
 	buttonPanel.add(cancelButton);
@@ -372,7 +388,7 @@ public class SettingsFrame {
 	    cancelButton.addMouseListener(new cancelButtonListener());
 
 	    JButton saveButton = new JButton(settingsLabels.getString("apply"));
-	    saveButton.addMouseListener(new saveButtonListener(false));
+	    saveButton.addMouseListener(new saveButtonListener(false, false));
 
 	    buttonPanel.add(deleteButton);
 	    buttonPanel.add(saveButton);
@@ -497,7 +513,7 @@ public class SettingsFrame {
 
 	    JButton installButton = new JButton(settingsLabels
 		    .getString("install"));
-	    installButton.addMouseListener(new saveButtonListener(false));
+	    installButton.addMouseListener(new saveButtonListener(false, false));
 
 	    buttonPanel.add(installButton);
 
