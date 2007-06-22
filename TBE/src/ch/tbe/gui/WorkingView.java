@@ -521,7 +521,7 @@ public class WorkingView extends View {
     @Override
     public void refresh() {
 	legendBar.refresh();
-
+	((SideBar)sideBar).refresh();
     }
 
 }

@@ -18,32 +18,26 @@ import ch.tbe.util.AttributeTreeNode;
 
 public class SideBar extends JToolBar {
     private TBE tbe = TBE.getInstance();
-
     private ResourceBundle sideBarLabels;
-
     private Board board;
-
     private Attribute currentAttribute;
-
     private JTextField titleInputArea;
-
     private JTextArea textInputArea;
-
     private JPanel sidePanel;
-
     private JTree tree;
-
     private DefaultTreeModel treeModel;
-
     private AttributeTreeNode root;
-
     private JTextField description;
-
+    private JLabel descriptionLabel = new JLabel();
+    private JLabel attribLabel = new JLabel();
+    private JLabel title = new JLabel();
+    private JButton saveButton = new JButton();
+    private JButton cancelButton = new JButton();
     private final int TREESTRINGLENGTH = 30;
 
     public SideBar(Board board) {
 	this.board = board;
-	this.sideBarLabels = this.getResourceBundle(tbe.getLang());
+	this.setLanguage();
 	this.setOrientation(1);
 	this.createPanel();
 	Dimension d = new Dimension(250, this.getHeight());
@@ -56,14 +50,11 @@ public class SideBar extends JToolBar {
     private void createPanel() {
 
 	sidePanel = new JPanel();
-
 	sidePanel.setLayout(new BorderLayout());
 
 	// List of all Attributes
 
 	JPanel nPanel = new JPanel(new GridLayout(0, 1));
-	JLabel descriptionLabel = new JLabel(sideBarLabels
-		.getString("description"));
 	nPanel.add(descriptionLabel);
 	description = new JTextField();
 	description.addFocusListener(new FocusListener() {
@@ -75,8 +66,7 @@ public class SideBar extends JToolBar {
 	    public void focusLost(FocusEvent arg0) {
 		String s = description.getText();
 		if (s.trim().equals("")) {
-		    board.getDescription().setDescription(
-			    board.getSport().getName());
+		    board.getDescription().setDescription(board.getSport().getName());
 		    description.setText(board.getSport().getName());
 		} else {
 		    board.getDescription().setDescription(s);
@@ -88,7 +78,6 @@ public class SideBar extends JToolBar {
 	description.setText(board.getDescription().getDescription());
 	nPanel.add(description);
 	nPanel.add(Box.createHorizontalStrut(10));
-	JLabel attribLabel = new JLabel(sideBarLabels.getString("attr"));
 
 	nPanel.add(attribLabel, BorderLayout.NORTH);
 
@@ -183,14 +172,12 @@ public class SideBar extends JToolBar {
 	JPanel inputPanel = new JPanel(new BorderLayout());
 	JPanel northP = new JPanel(new GridLayout(0, 1));
 
-	JLabel title = new JLabel(sideBarLabels.getString("title"));
 	northP.add(title);
 
 	class TitleInputListener extends MouseAdapter {
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
-		if (titleInputArea.getText().equals(
-			sideBarLabels.getString("titleInput"))) {
+		if (titleInputArea.getText().equals(sideBarLabels.getString("titleInput"))) {
 		    titleInputArea.setText("");
 		}
 	    }
@@ -204,8 +191,7 @@ public class SideBar extends JToolBar {
 	class TextInputListener extends MouseAdapter {
 	    @Override
 	    public void mousePressed(MouseEvent arg0) {
-		if (textInputArea.getText().equals(
-			sideBarLabels.getString("textInput"))) {
+		if (textInputArea.getText().equals(sideBarLabels.getString("textInput"))) {
 		    textInputArea.setText("");
 		}
 	    }
@@ -227,7 +213,6 @@ public class SideBar extends JToolBar {
 
     private JPanel createButtonPanel() {
 	JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
-	JButton cancelButton = new JButton(sideBarLabels.getString("cancel"));
 	class cancelButtonListener implements ActionListener {
 
 	    public void actionPerformed(ActionEvent arg0) {
@@ -239,23 +224,19 @@ public class SideBar extends JToolBar {
 	    }
 	}
 	cancelButton.addActionListener(new cancelButtonListener());
-	JButton saveButton = new JButton(sideBarLabels.getString("save"));
+	
 	class saveButtonListener implements ActionListener {
 
 	    public void actionPerformed(ActionEvent arg0) {
 		if (titleInputArea.getText().equals("")
-			|| titleInputArea.getText().equals(
-				sideBarLabels.getString("titleInput"))) {
+			|| titleInputArea.getText().equals(sideBarLabels.getString("titleInput"))) {
 		    titleInputArea.setText("");
-		    JOptionPane.showMessageDialog(null, sideBarLabels
-			    .getString("titleInput"));
+		    JOptionPane.showMessageDialog(null, sideBarLabels.getString("titleInput"));
 		    titleInputArea.requestFocus();
 		} else if (textInputArea.getText().equals("")
-			|| textInputArea.getText().equals(
-				sideBarLabels.getString("textInput"))) {
+			|| textInputArea.getText().equals(sideBarLabels.getString("textInput"))) {
 		    textInputArea.setText("");
-		    JOptionPane.showMessageDialog(null, sideBarLabels
-			    .getString("textInput"));
+		    JOptionPane.showMessageDialog(null, sideBarLabels.getString("textInput"));
 		    textInputArea.requestFocus();
 		} else if (currentAttribute != null) {
 		    currentAttribute.setTitle(titleInputArea.getText());
@@ -264,20 +245,13 @@ public class SideBar extends JToolBar {
 		    titleInputArea.setText("");
 		    textInputArea.setText("");
 
-		    AttributeTreeNode node = (AttributeTreeNode) tree
-			    .getSelectionPath().getLastPathComponent();
+		    AttributeTreeNode node = (AttributeTreeNode) tree.getSelectionPath().getLastPathComponent();
 		    if (node.isLeaf()) {
-			node.setUserObject(makeSubstring(currentAttribute
-				.getText()));
-			((AttributeTreeNode) node.getParent())
-				.setUserObject(makeSubstring(currentAttribute
-					.getTitle()));
+			node.setUserObject(makeSubstring(currentAttribute.getText()));
+			((AttributeTreeNode) node.getParent()).setUserObject(makeSubstring(currentAttribute.getTitle()));
 		    } else {
-			node.setUserObject(makeSubstring(currentAttribute
-				.getTitle()));
-			((AttributeTreeNode) node.getFirstChild())
-				.setUserObject(makeSubstring(currentAttribute
-					.getText()));
+			node.setUserObject(makeSubstring(currentAttribute.getTitle()));
+			((AttributeTreeNode) node.getFirstChild()).setUserObject(makeSubstring(currentAttribute.getText()));
 		    }
 		    treeModel.nodeStructureChanged(root);
 		    currentAttribute = null;
@@ -311,16 +285,12 @@ public class SideBar extends JToolBar {
     private void deleteAttribute(TreePath path) {
 	if (path == null)
 	    return;
-	AttributeTreeNode current = (AttributeTreeNode) path
-		.getLastPathComponent();
+	AttributeTreeNode current = (AttributeTreeNode) path.getLastPathComponent();
 	Attribute myAttr = current.getA();
-	Object[] options = { sideBarLabels.getString("yes"),
-		sideBarLabels.getString("no") };
-	String question = sideBarLabels.getString("removeAttr") + "\n\""
-		+ myAttr.getTitle() + "\"";
+	Object[] options = { sideBarLabels.getString("yes"), sideBarLabels.getString("no") };
+	String question = sideBarLabels.getString("removeAttr") + "\n\""+ myAttr.getTitle() + "\"";
 	int answer = JOptionPane.showOptionDialog(null, question, "",
-		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-		options, options[1]);
+		JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 	if (answer == 0) {
 	    board.removeAttribute(myAttr);
 	    if (current.isLeaf()) {
@@ -332,7 +302,6 @@ public class SideBar extends JToolBar {
 	    titleInputArea.setText("");
 	    textInputArea.setText("");
 	    treeModel.nodeStructureChanged(root);
-
 	}
     }
 
@@ -340,8 +309,7 @@ public class SideBar extends JToolBar {
 	InputStream sideBarStream;
 	ResourceBundle labels = null;
 	try {
-	    sideBarStream = SideBar.class.getResourceAsStream("../config/lang/"
-		    + lang + "/sideBar.txt");
+	    sideBarStream = SideBar.class.getResourceAsStream("../config/lang/" + lang + "/sideBar.txt");
 	    labels = new PropertyResourceBundle(sideBarStream);
 	} catch (FileNotFoundException fnne) {
 	    System.out.println("LanguageFile for SideBar not found !");
@@ -349,5 +317,19 @@ public class SideBar extends JToolBar {
 	    System.out.println("Error with ResourceBundle SideBar!");
 	}
 	return labels;
+    }
+    
+    private void setLanguage(){
+	sideBarLabels = getResourceBundle(TBE.getInstance().getLang());
+	
+	descriptionLabel.setText(sideBarLabels.getString("description"));
+	attribLabel.setText(sideBarLabels.getString("attr"));
+	title.setText(sideBarLabels.getString("title"));
+	saveButton.setText(sideBarLabels.getString("save"));
+	cancelButton.setText(sideBarLabels.getString("cancel"));
+    }
+    
+    public void refresh(){
+	setLanguage();
     }
 }
