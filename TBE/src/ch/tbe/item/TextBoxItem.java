@@ -21,7 +21,7 @@ public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 	}
 	
 	public String getText(){
-	    return "";
+	    return this.getText();
 	}
 
 }
