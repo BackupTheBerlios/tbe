@@ -572,6 +572,7 @@ public class TBEGraphConstants {
 	 * arrays. The <code>keys</code> and <code>values</code> parameters must
 	 * match in size.
 	 */
+	@SuppressWarnings("unchecked")
 	public static Map createAttributes(Object[] cells, Object[] keys,
 			Object[] values) {
 		if (keys != null && values != null && keys.length != values.length)
@@ -604,6 +605,7 @@ public class TBEGraphConstants {
 	 * values. This method returns a map, from cells to maps, which in turn map
 	 * from keys to values.
 	 */
+	@SuppressWarnings("unchecked")
 	public static Map createAttributes(Object[] elements, CellMapper cm) {
 		Map attributes = new Hashtable();
 		for (int i = 0; i < elements.length; i++) {
@@ -624,6 +626,7 @@ public class TBEGraphConstants {
 
 	// Returns a nested map of cell, Map pairs where the map reflects
 	// the attributes returned by the model for this cell.
+	@SuppressWarnings("unchecked")
 	public static Map createAttributesFromModel(Object[] elements,
 			GraphModel model) {
 		Map attributes = new Hashtable();
@@ -640,6 +643,7 @@ public class TBEGraphConstants {
 	 * maps from old to new keys. The value in <code>map</code> must itself
 	 * be a map, and is cloned using <code>cloneMap</code>.
 	 */
+	@SuppressWarnings("unchecked")
 	public static Map replaceKeys(Map keyMap, Map map) {
 		Map newMap = new Hashtable();
 		Iterator it = map.entrySet().iterator();
@@ -668,6 +672,7 @@ public class TBEGraphConstants {
 	 * 
 	 * @return a map including all attributes from change merged with target
 	 */
+	@SuppressWarnings("unchecked")
 	public static Map merge(Map change, Map target) {
 		if (change != null && target != null) {
 			change = new Hashtable(change);
@@ -695,6 +700,7 @@ public class TBEGraphConstants {
 	 * @param font
 	 *            The value to set the font attribute to.
 	 */
+	@SuppressWarnings("unchecked")
 	public static void setFont(Map map, Font font) {
 		map.put(FONT, font);
 	}
@@ -715,6 +721,7 @@ public class TBEGraphConstants {
 	 * transport map indicating the attribute removal @ param value The
 	 * attributes to be removed
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setRemoveAttributes(Map map, Object[] value) {
 		map.put(REMOVEATTRIBUTES, value);
 	}
@@ -730,6 +737,7 @@ public class TBEGraphConstants {
 	 * Sets the moveableaxis attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setMoveableAxis(Map map, int axis) {
 		map.put(MOVEABLEAXIS, new Integer(axis));
 	}
@@ -748,6 +756,7 @@ public class TBEGraphConstants {
 	 * Sets the sizeableAxis attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setSizeableAxis(Map map, int axis) {
 		map.put(SIZEABLEAXIS, new Integer(axis));
 	}
@@ -765,6 +774,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the icon attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setIcon(Map map, Icon value) {
 	
 		Image i = ((ImageIcon) value).getImage();
@@ -789,6 +799,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the opaque attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setOpaque(Map map, boolean flag) {
 		map.put(OPAQUE, new Boolean(flag));
 	}
@@ -806,6 +817,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the opaque attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setGroupOpaque(Map map, boolean flag) {
 		map.put(GROUPOPAQUE, new Boolean(flag));
 	}
@@ -823,6 +835,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the border attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setBorder(Map map, Border value) {
 		map.put(BORDER, value);
 	}
@@ -837,6 +850,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the linecolor attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setLineColor(Map map, Color value) {
 		map.put(LINECOLOR, value);
 	}
@@ -852,6 +866,7 @@ public class TBEGraphConstants {
 	 * Sets the bordercolor attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setBorderColor(Map map, Color value) {
 		map.put(BORDERCOLOR, value);
 	}
@@ -866,6 +881,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the linewidth attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setLineWidth(Map map, float width) {
 		map.put(LINEWIDTH, new Float(width));
 	}
@@ -883,6 +899,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the foregrund attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setForeground(Map map, Color value) {
 		map.put(FOREGROUND, value);
 	}
@@ -898,6 +915,7 @@ public class TBEGraphConstants {
 	 * Sets the background attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setBackground(Map map, Color value) {
 		map.put(BACKGROUND, value);
 	}
@@ -913,6 +931,7 @@ public class TBEGraphConstants {
 	 * Sets the gradientcolor attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setGradientColor(Map map, Color value) {
 		map.put(GRADIENTCOLOR, value);
 	}
@@ -929,6 +948,7 @@ public class TBEGraphConstants {
 	 * aruguments of type SwingConstants (for JLabel) i.e. JLabel.TOP etc.
 	 * Default value is JLabel.CENTER. This method has no effect on edge cells.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setVerticalAlignment(Map map, int alignment) {
 		map.put(VERTICAL_ALIGNMENT, new Integer(alignment));
 	}
@@ -948,6 +968,7 @@ public class TBEGraphConstants {
 	 * aruguments of type SwingConstants (for JLabel) i.e. JLabel.LEFT etc.
 	 * Default is JLabel.CENTER. This method has no effect on edge cells.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setHorizontalAlignment(Map map, int alignment) {
 		map.put(HORIZONTAL_ALIGNMENT, new Integer(alignment));
 	}
@@ -966,6 +987,7 @@ public class TBEGraphConstants {
 	 * This method set the text of a label on vertext cell relative to image.
 	 * See JLabel api. Default value is JLabel.BOTTOM.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setVerticalTextPosition(Map map, int textPosition) {
 		map.put(VERTICAL_TEXT_POSITION, new Integer(textPosition));
 	}
@@ -984,6 +1006,7 @@ public class TBEGraphConstants {
 	 * This method set the text of a label on vertext cell relative to image.
 	 * See JLabel api. Default value is JLabel.CENTER.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setHorizontalTextPosition(Map map, int textPosition) {
 		map.put(HORIZONTAL_TEXT_POSITION, new Integer(textPosition));
 	}
@@ -1002,6 +1025,7 @@ public class TBEGraphConstants {
 	 * Sets the dashpattern attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setDashPattern(Map map, float[] value) {
 		map.put(DASHPATTERN, value);
 	}
@@ -1017,6 +1041,7 @@ public class TBEGraphConstants {
 	 * Sets the dashoffset attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setDashOffset(Map map, float value) {
 		map.put(DASHOFFSET, new Float(value));
 	}
@@ -1034,6 +1059,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the linestyle attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setLineStyle(Map map, int style) {
 		map.put(LINESTYLE, new Integer(style));
 	}
@@ -1051,6 +1077,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the beginsize attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setBeginSize(Map map, int style) {
 		map.put(BEGINSIZE, new Integer(style));
 	}
@@ -1068,6 +1095,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the endsize attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setEndSize(Map map, int style) {
 		map.put(ENDSIZE, new Integer(style));
 	}
@@ -1096,6 +1124,7 @@ public class TBEGraphConstants {
 	 * @see #ARROW_DOUBLELINE
 	 * @see #ARROW_DIAMOND
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setLineBegin(Map map, int style) {
 		map.put(LINEBEGIN, new Integer(style));
 	}
@@ -1135,6 +1164,7 @@ public class TBEGraphConstants {
 	 * @see #ARROW_DOUBLELINE
 	 * @see #ARROW_DIAMOND
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setLineEnd(Map map, int style) {
 		map.put(LINEEND, new Integer(style));
 	}
@@ -1168,6 +1198,7 @@ public class TBEGraphConstants {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	public static final void setRotation(Map map, int degree) {
 		map.put(ROTATION, new Integer(degree));
 	}
@@ -1175,6 +1206,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the value attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setValue(Map map, Object value) {
 		map.put(VALUE, value);
 	}
@@ -1194,6 +1226,7 @@ public class TBEGraphConstants {
 	 * Sets the label position attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setLabelPosition(Map map, Point2D position) {
 		map.put(LABELPOSITION, position);
 	}
@@ -1214,6 +1247,7 @@ public class TBEGraphConstants {
 	 * used to determine the actual label string. Extra labels only work with
 	 * edges currently.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setExtraLabels(Map map, Object[] definitions) {
 		map.put(EXTRALABELS, definitions);
 	}
@@ -1234,6 +1268,7 @@ public class TBEGraphConstants {
 	 * 
 	 * @see #getLabelPosition(Map)
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setExtraLabelPositions(Map map, Point2D[] positions) {
 		map.put(EXTRALABELPOSITIONS, positions);
 	}
@@ -1249,6 +1284,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets if the label should be painted along the edge.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setLabelAlongEdge(Map map, boolean flag) {
 		map.put(LABELALONGEDGE, new Boolean(flag));
 	}
@@ -1267,6 +1303,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the editable attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setEditable(Map map, boolean flag) {
 		map.put(EDITABLE, new Boolean(flag));
 	}
@@ -1284,6 +1321,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the moveable attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setMoveable(Map map, boolean flag) {
 		map.put(MOVEABLE, new Boolean(flag));
 	}
@@ -1301,6 +1339,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the sizeable attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setSizeable(Map map, boolean flag) {
 		map.put(SIZEABLE, new Boolean(flag));
 	}
@@ -1318,6 +1357,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the autosize attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setAutoSize(Map map, boolean flag) {
 		map.put(AUTOSIZE, new Boolean(flag));
 	}
@@ -1335,6 +1375,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the resize attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setResize(Map map, boolean flag) {
 		map.put(RESIZE, new Boolean(flag));
 	}
@@ -1353,6 +1394,7 @@ public class TBEGraphConstants {
 	 * Sets the constrained attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setConstrained(Map map, boolean flag) {
 		map.put(CONSTRAINED, new Boolean(flag));
 	}
@@ -1372,6 +1414,7 @@ public class TBEGraphConstants {
 	 * value. This detemines whether or not a cell may be selected. Vertices and
 	 * edges may be selectable, not ports.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setSelectable(Map map, boolean flag) {
 		map.put(SELECTABLE, new Boolean(flag));
 	}
@@ -1392,6 +1435,7 @@ public class TBEGraphConstants {
 	 * Sets the childrenselectable attribute in the specified map to the
 	 * specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setChildrenSelectable(Map map, boolean flag) {
 		map.put(CHILDRENSELECTABLE, new Boolean(flag));
 	}
@@ -1409,6 +1453,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the bendable attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setBendable(Map map, boolean flag) {
 		map.put(BENDABLE, new Boolean(flag));
 	}
@@ -1427,6 +1472,7 @@ public class TBEGraphConstants {
 	 * Sets the connectable attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setConnectable(Map map, boolean flag) {
 		map.put(CONNECTABLE, new Boolean(flag));
 	}
@@ -1445,6 +1491,7 @@ public class TBEGraphConstants {
 	 * Sets the disconnectable attribute in the specified map to the specified
 	 * value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setDisconnectable(Map map, boolean flag) {
 		map.put(DISCONNECTABLE, new Boolean(flag));
 	}
@@ -1467,6 +1514,7 @@ public class TBEGraphConstants {
 	 * where the two right-angled bends are. This attribute can only be applied
 	 * to an edge.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setPoints(Map map, java.util.List list) {
 		map.put(POINTS, list);
 	}
@@ -1483,6 +1531,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the routing attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setRouting(Map map, Edge.Routing routing) {
 		map.put(ROUTING, routing);
 	}
@@ -1500,6 +1549,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the bounds attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setBounds(Map map, Rectangle2D bounds) {
 		map.put(BOUNDS, bounds);
 	}
@@ -1515,6 +1565,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the inset attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setInset(Map map, int width) {
 		map.put(INSET, new Integer(width));
 	}
@@ -1533,6 +1584,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the size attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setSize(Map map, Dimension size) {
 		map.put(SIZE, size);
 	}
@@ -1549,6 +1601,7 @@ public class TBEGraphConstants {
 	 * The offset is the position of a port relative to its origin, note this
 	 * attribute is only for ports.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setOffset(Map map, Point2D offset) {
 		map.put(OFFSET, offset);
 	}
@@ -1565,6 +1618,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the beginfill attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setBeginFill(Map map, boolean flag) {
 		map.put(BEGINFILL, new Boolean(flag));
 	}
@@ -1582,6 +1636,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the endfill attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setEndFill(Map map, boolean flag) {
 		map.put(ENDFILL, new Boolean(flag));
 	}
@@ -1607,6 +1662,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the absolutey attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setAbsoluteY(Map map, boolean flag) {
 		map.put(ABSOLUTEY, new Boolean(flag));
 	}
@@ -1624,6 +1680,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the absolutex attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setAbsoluteX(Map map, boolean flag) {
 		map.put(ABSOLUTEX, new Boolean(flag));
 	}
@@ -1641,6 +1698,7 @@ public class TBEGraphConstants {
 	/**
 	 * Sets the removeall attribute in the specified map to the specified value.
 	 */
+	@SuppressWarnings("unchecked")
 	public static final void setRemoveAll(Map map, boolean flag) {
 		map.put(REMOVEALL, new Boolean(flag));
 	}
@@ -1677,6 +1735,7 @@ public class TBEGraphConstants {
 	 * @param link
 	 *            The value to set the link attribute to.
 	 */
+	@SuppressWarnings("unchecked")
 	public static void setLink(Map map, String link) {
 		map.put(LINK, link);
 	}
