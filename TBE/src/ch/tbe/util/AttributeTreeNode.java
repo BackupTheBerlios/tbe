@@ -6,6 +6,7 @@ import ch.tbe.Attribute;
 
 public class AttributeTreeNode extends DefaultMutableTreeNode {
 
+    private static final long serialVersionUID = 1L;
     private Attribute a;
 
     public AttributeTreeNode() {

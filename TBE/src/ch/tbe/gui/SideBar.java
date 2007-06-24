@@ -17,7 +17,7 @@ import ch.tbe.Board;
 import ch.tbe.util.AttributeTreeNode;
 
 public class SideBar extends JToolBar {
-    private TBE tbe = TBE.getInstance();
+    private static final long serialVersionUID = 1L;
     private ResourceBundle sideBarLabels;
     private Board board;
     private Attribute currentAttribute;

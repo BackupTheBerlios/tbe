@@ -29,6 +29,7 @@ import org.jgraph.graph.*;
 import ch.tbe.Sport;
 
 public class WorkingView extends View {
+    private static final long serialVersionUID = 1L;
     private TBE tbe = TBE.getInstance();
     private Board board;
     private Sport sport;

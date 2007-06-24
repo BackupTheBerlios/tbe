@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StateBar extends JPanel {
-
+    private static final long serialVersionUID = 1L;
     private JLabel strCoordinates = new JLabel("");
     private JLabel strMessage = new JLabel("");
     private JLabel strZoom = new JLabel("");

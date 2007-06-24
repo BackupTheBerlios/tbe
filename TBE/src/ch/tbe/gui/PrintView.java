@@ -27,8 +27,8 @@ import ch.tbe.framework.View;
 import ch.tbe.jgraph.TBECellViewFactory;
 
 public class PrintView extends View {
+    private static final long serialVersionUID = 1L;
     private final Board board;
-
     private TBE tbe = TBE.getInstance();
 
     public PrintView(Board board) {

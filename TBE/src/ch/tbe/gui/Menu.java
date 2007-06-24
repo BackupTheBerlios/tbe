@@ -25,8 +25,8 @@ import ch.tbe.util.PrintHandler;
 import ch.tbe.gui.WorkingView;
 
 public class Menu extends JMenuBar {
+    private static final long serialVersionUID = 1L;
     private ResourceBundle menuLabels;
-
     private Invoker invoker = Invoker.getInstance();
     private TBE tbe = TBE.getInstance();
     private JMenuItem editRedo;

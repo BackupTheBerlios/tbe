@@ -5,7 +5,6 @@ import java.util.List;
 
 import ch.tbe.*;
 import ch.tbe.framework.*;
-import ch.tbe.gui.Menu;
 import ch.tbe.gui.TBE;
 import ch.tbe.item.ShapeItem;
 import ch.tbe.item.TextBoxItem;

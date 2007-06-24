@@ -1,6 +1,5 @@
 package ch.tbe.util;
 
-import java.awt.Image;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;

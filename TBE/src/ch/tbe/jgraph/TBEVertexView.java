@@ -1,29 +1,25 @@
 package ch.tbe.jgraph;
 
 import org.jgraph.graph.CellViewRenderer;
-import org.jgraph.graph.VertexRenderer;
 import org.jgraph.graph.VertexView;
 
-public class TBEVertexView extends VertexView
-{
+public class TBEVertexView extends VertexView {
 
-	public static transient TBEVertexRenderer renderer = new TBEVertexRenderer();
-	
-	public TBEVertexView()
-	{
-		super();
-	}
+    private static final long serialVersionUID = 1L;
+    public static transient TBEVertexRenderer renderer = new TBEVertexRenderer();
 
-	public TBEVertexView(Object arg0)
-	{
-		super(arg0);
-	}
+    public TBEVertexView() {
+	super();
+    }
 
-	@Override
-	public CellViewRenderer getRenderer()
-	{
-		
-		return renderer;
-	}
+    public TBEVertexView(Object arg0) {
+	super(arg0);
+    }
+
+    @Override
+    public CellViewRenderer getRenderer() {
+
+	return renderer;
+    }
 
 }

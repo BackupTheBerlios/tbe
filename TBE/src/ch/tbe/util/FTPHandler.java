@@ -11,15 +11,10 @@ import com.enterprisedt.net.ftp.FTPException;
 
 public final class FTPHandler {
     private final static String REMOTESPORTPATH = "sport";
-
     private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";
-
     private final static String PUBLICHOST = "tbe.netstyle.ch";
-
     private static ArrayList<String> remotePaths = new ArrayList<String>();
-
     private static ArrayList<String> localPaths = new ArrayList<String>();
-
     private static FTPClient client = null;
 
     public static ArrayList<String> getAllSports() {

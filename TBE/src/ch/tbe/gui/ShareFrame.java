@@ -20,7 +20,6 @@ import java.util.Vector;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -32,7 +31,6 @@ import javax.swing.tree.TreePath;
 
 import ch.tbe.Board;
 import ch.tbe.FTPServer;
-import ch.tbe.framework.View;
 import ch.tbe.util.FTPFileTreeModel;
 import ch.tbe.util.FTPHandler;
 import ch.tbe.util.FileTreeModel;

@@ -2,9 +2,6 @@ package ch.tbe.util;
 
 import java.io.* ;
 import java.util.ArrayList;
-import java.util.List;
-
-import ch.tbe.gui.Menu;
 
 public final class FileSystemHandler
 {
