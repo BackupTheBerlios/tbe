@@ -24,10 +24,12 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent {
 	TBEGraphConstants.setPoints(this.getAttributes(), points);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Point2D> getPoints() {
 	return TBEGraphConstants.getPoints(this.getAttributes());
     }
 
+    @SuppressWarnings("unchecked")
     public void addPoint() {
 	int size = TBEGraphConstants.getPoints(this.getAttributes()).size();
 	double lastX = ((Point2D) TBEGraphConstants.getPoints(
