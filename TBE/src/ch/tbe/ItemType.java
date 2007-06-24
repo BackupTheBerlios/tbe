@@ -3,7 +3,6 @@ package ch.tbe;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
-import java.awt.Component;
 import java.awt.Toolkit;
 
 import javax.swing.Icon;

@@ -14,6 +14,7 @@ import ch.tbe.jgraph.TBEBasicGraphUI;
 
 public class Board extends JGraph {
 
+    private static final long serialVersionUID = 1L;
     private String path = "";
     private Field field;
     private Description description;

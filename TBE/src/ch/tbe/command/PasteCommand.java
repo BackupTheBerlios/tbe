@@ -8,7 +8,6 @@ import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
-import ch.tbe.util.ComponentSelection;
 
 public class PasteCommand extends Command implements ClipboardOwner
 {
