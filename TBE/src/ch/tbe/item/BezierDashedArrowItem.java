@@ -8,20 +8,19 @@ import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public class BezierDashedArrowItem extends ArrowItem {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final float[] DASH = new float[] { 6, 6 };
+	private final float[] DASH = new float[] { 6, 6 };
 
-    public BezierDashedArrowItem(List<Point2D> points, ItemType itemType) {
-	super(itemType);
-	TBEGraphConstants.setLineStyle(this.getAttributes(),
-		TBEGraphConstants.STYLE_BEZIER);
-	TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
-	setPoints(points);
-    }
+	public BezierDashedArrowItem(List<Point2D> points, ItemType itemType) {
+		super(itemType);
+		TBEGraphConstants.setLineStyle(this.getAttributes(), TBEGraphConstants.STYLE_BEZIER);
+		TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
+		setPoints(points);
+	}
 
-    public String getType() {
-	return "BezierDashedArrowTool";
-    }
+	public String getType() {
+		return "BezierDashedArrowTool";
+	}
 
 }

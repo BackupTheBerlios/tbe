@@ -5,17 +5,17 @@ import ch.tbe.framework.ItemComponent;
 
 public class RotateCommand extends Command {
 
-    public RotateCommand(ItemComponent[] items) {
-	super(items);
+	public RotateCommand(ItemComponent[] items) {
+		super(items);
 
-    }
+	}
 
-    public void redo() {
-	// TODO
-    }
+	public void redo() {
+		// TODO
+	}
 
-    public void undo() {
-	// TODO
+	public void undo() {
+		// TODO
 
-    }
+	}
 }

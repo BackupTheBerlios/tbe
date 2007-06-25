@@ -12,73 +12,50 @@ import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.jgraph.TBEGraphConstants;
 
-public class MoveCommand extends Command
-{
+public class MoveCommand extends Command {
 	private WorkingView view;
 	private ItemComponent[] endItems;
 	private ItemComponent[] startItems;
 
-	public MoveCommand(ItemComponent[] items)
-	{
+	public MoveCommand(ItemComponent[] items) {
 		super(items);
 		this.view = (WorkingView) TBE.getInstance().getView();
 		this.startItems = view.getBoard().cloneItems(items);
 	}
 
-	public void undo()
-	{
+	public void undo() {
 
-		for (int i = 0; i < items.length; i++)
-		{
-			if (items[i] instanceof ArrowItem)
-			{
-				List p = TBEGraphConstants.getPoints(((DefaultGraphCell) startItems[i])
-						.getAttributes());
-				TBEGraphConstants.setPoints(((DefaultGraphCell) items[i])
-						.getAttributes(), p);
-			}
-			else
-			{
-				Rectangle2D r = TBEGraphConstants
-						.getBounds(((DefaultGraphCell) startItems[i])
-								.getAttributes());
-				TBEGraphConstants.setBounds(((DefaultGraphCell) items[i])
-						.getAttributes(), r);
+		for (int i = 0; i < items.length; i++) {
+			if (items[i] instanceof ArrowItem) {
+				List p = TBEGraphConstants.getPoints(((DefaultGraphCell) startItems[i]).getAttributes());
+				TBEGraphConstants.setPoints(((DefaultGraphCell) items[i]).getAttributes(), p);
+			} else {
+				Rectangle2D r = TBEGraphConstants.getBounds(((DefaultGraphCell) startItems[i]).getAttributes());
+				TBEGraphConstants.setBounds(((DefaultGraphCell) items[i]).getAttributes(), r);
 			}
 		}
 		view.getBoard().addItem(items);
 
 	}
 
-	public void redo()
-	{
+	public void redo() {
 
-		for (int i = 0; i < items.length; i++)
-		{
+		for (int i = 0; i < items.length; i++) {
 
-			if (items[i] instanceof ArrowItem)
-			{
-				List p = TBEGraphConstants.getPoints(((DefaultGraphCell) endItems[i])
-						.getAttributes());
-				TBEGraphConstants.setPoints(((DefaultGraphCell) items[i])
-						.getAttributes(), p);
-				
-			}
-			else
-			{
-				Rectangle2D r = TBEGraphConstants
-						.getBounds(((DefaultGraphCell) endItems[i])
-								.getAttributes());
-				TBEGraphConstants.setBounds(((DefaultGraphCell) items[i])
-						.getAttributes(), r);
+			if (items[i] instanceof ArrowItem) {
+				List p = TBEGraphConstants.getPoints(((DefaultGraphCell) endItems[i]).getAttributes());
+				TBEGraphConstants.setPoints(((DefaultGraphCell) items[i]).getAttributes(), p);
+
+			} else {
+				Rectangle2D r = TBEGraphConstants.getBounds(((DefaultGraphCell) endItems[i]).getAttributes());
+				TBEGraphConstants.setBounds(((DefaultGraphCell) items[i]).getAttributes(), r);
 			}
 		}
 		view.getBoard().addItem(items);
 
 	}
 
-	public void setMoveEnd(ItemComponent[] endItems)
-	{
+	public void setMoveEnd(ItemComponent[] endItems) {
 		this.endItems = view.getBoard().cloneItems(endItems);
 	}
 }

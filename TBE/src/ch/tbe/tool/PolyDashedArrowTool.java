@@ -13,24 +13,21 @@ import ch.tbe.gui.WorkingView;
 import ch.tbe.item.PolyDashedArrowItem;
 
 public class PolyDashedArrowTool extends ArrowTool {
- 
-	public PolyDashedArrowTool(ItemType shapeType)
-	{
+
+	public PolyDashedArrowTool(ItemType shapeType) {
 		super(shapeType);
-		
+
 	}
 
-	public void mouseDown(int x, int y, MouseEvent e)
-	{
+	public void mouseDown(int x, int y, MouseEvent e) {
 
 		List<Point2D> points = new ArrayList<Point2D>();
-		points.add(new Point2D.Double(x,y));		
-		points.add(new Point2D.Double(x+DEFAULTLENGTH,y));
-		
-		ItemComponent[] items = new ItemComponent[] { new PolyDashedArrowItem(points, itemType)};
+		points.add(new Point2D.Double(x, y));
+		points.add(new Point2D.Double(x + DEFAULTLENGTH, y));
+
+		ItemComponent[] items = new ItemComponent[] { new PolyDashedArrowItem(points, itemType) };
 		super.createCommand(items);
 		((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	}
- 
+
 }
- 

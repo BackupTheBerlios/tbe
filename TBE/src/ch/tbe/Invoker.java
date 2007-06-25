@@ -10,53 +10,53 @@ public class Invoker {
 	private Stack<List<Command>> doneCommands = new Stack<List<Command>>();
 	private Stack<List<Command>> undoneCommands = new Stack<List<Command>>();
 	private List<Command> actCommands;
-	
-	private Invoker(){}
-	
+
+	private Invoker() {
+	}
+
 	public static Invoker getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new Invoker();
 		}
 		return instance;
 	}
- 
+
 	public void execute(List<Command> actCommands) {
 		doneCommands.push(actCommands);
-		
-		for (int i=0; i< actCommands.size()-1; i++){
+
+		for (int i = 0; i < actCommands.size() - 1; i++) {
 			actCommands.get(i).redo();
 		}
 	}
-	 
+
 	public void undo() {
-		if (this.canUndo()){
+		if (this.canUndo()) {
 			actCommands = doneCommands.pop();
 			undoneCommands.push(actCommands);
-			
-			for (int i=0; i<= actCommands.size()-1; i++){
+
+			for (int i = 0; i <= actCommands.size() - 1; i++) {
 				actCommands.get(i).undo();
 			}
 		}
 	}
-	 
+
 	public void redo() {
-		if (this.canRedo()){
+		if (this.canRedo()) {
 			actCommands = undoneCommands.pop();
 			doneCommands.push(actCommands);
-		
-			for (int i=0; i<= actCommands.size()-1; i++){
+
+			for (int i = 0; i <= actCommands.size() - 1; i++) {
 				actCommands.get(i).redo();
 			}
 		}
 	}
-	
-	public boolean canUndo(){
+
+	public boolean canUndo() {
 		return !doneCommands.isEmpty();
 	}
-	
-	public boolean canRedo(){
+
+	public boolean canRedo() {
 		return !undoneCommands.isEmpty();
 	}
-	 
+
 }
- 

@@ -13,48 +13,45 @@ import ch.tbe.framework.ItemComponent;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public class ShapeItem extends DefaultGraphCell implements ItemComponent {
-    private static final long serialVersionUID = 1L;
-    private ItemType itemType;
+	private static final long serialVersionUID = 1L;
+	private ItemType itemType;
 
-    public ShapeItem(ItemType shapeType, Point2D p) {
+	public ShapeItem(ItemType shapeType, Point2D p) {
 
-	this.itemType = shapeType;
-	double maxSideWidth = this.itemType.getMaxSideWidth();
+		this.itemType = shapeType;
+		double maxSideWidth = this.itemType.getMaxSideWidth();
 
-	int max = Math.max(shapeType.getPicture().getIconWidth(), shapeType
-		.getPicture().getIconHeight());
-	if (maxSideWidth > max) {
-	    maxSideWidth = max;
+		int max = Math.max(shapeType.getPicture().getIconWidth(), shapeType.getPicture().getIconHeight());
+		if (maxSideWidth > max) {
+			maxSideWidth = max;
+		}
+		TBEGraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p.getX(), p.getY(), maxSideWidth, maxSideWidth));
+		TBEGraphConstants.setIcon(this.getAttributes(), shapeType.getPicture());
+		TBEGraphConstants.setEditable(this.getAttributes(), false);
+
 	}
-	TBEGraphConstants.setBounds(this.getAttributes(),
-		new Rectangle2D.Double(p.getX(), p.getY(), maxSideWidth,
-			maxSideWidth));
-	TBEGraphConstants.setIcon(this.getAttributes(), shapeType.getPicture());
-	TBEGraphConstants.setEditable(this.getAttributes(), false);
 
-    }
+	public Icon getIcon() {
+		return itemType.getIcon();
+	}
 
-    public Icon getIcon() {
-	return itemType.getIcon();
-    }
+	public ShapeItem clone() {
+		ShapeItem s = (ShapeItem) super.clone();
+		s.attributes = (AttributeMap) attributes.clone();
+		s.itemType = this.itemType;
+		return s;
+	}
 
-    public ShapeItem clone() {
-	ShapeItem s = (ShapeItem) super.clone();
-	s.attributes = (AttributeMap) attributes.clone();
-	s.itemType = this.itemType;
-	return s;
-    }
+	public void setRotation(int degree) {
+		TBEGraphConstants.setRotation(this.getAttributes(), degree);
+	}
 
-    public void setRotation(int degree) {
-	TBEGraphConstants.setRotation(this.getAttributes(), degree);
-    }
+	public int getRotation() {
+		return TBEGraphConstants.getRotation(this.getAttributes());
+	}
 
-    public int getRotation() {
-	return TBEGraphConstants.getRotation(this.getAttributes());
-    }
-
-    public String getType() {
-	return itemType.getName();
-    }
+	public String getType() {
+		return itemType.getName();
+	}
 
 }

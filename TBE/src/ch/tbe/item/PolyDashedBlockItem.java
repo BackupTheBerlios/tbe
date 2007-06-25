@@ -8,22 +8,21 @@ import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public class PolyDashedBlockItem extends ArrowItem {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final float[] DASH = new float[] { 6, 6 };
+	private final float[] DASH = new float[] { 6, 6 };
 
-    public PolyDashedBlockItem(List<Point2D> points, ItemType itemType) {
-	super(itemType);
+	public PolyDashedBlockItem(List<Point2D> points, ItemType itemType) {
+		super(itemType);
 
-	TBEGraphConstants.setLineEnd(this.getAttributes(),
-		TBEGraphConstants.ARROW_BLOCK);
-	TBEGraphConstants.setEndFill(this.getAttributes(), false);
-	TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
-	setPoints(points);
-    }
+		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_BLOCK);
+		TBEGraphConstants.setEndFill(this.getAttributes(), false);
+		TBEGraphConstants.setDashPattern(this.getAttributes(), DASH);
+		setPoints(points);
+	}
 
-    public String getType() {
-	return "PolyDashedBlockTool";
-    }
+	public String getType() {
+		return "PolyDashedBlockTool";
+	}
 
 }

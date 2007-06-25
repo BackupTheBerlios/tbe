@@ -5,21 +5,21 @@ import org.jgraph.graph.VertexView;
 
 public class TBEVertexView extends VertexView {
 
-    private static final long serialVersionUID = 1L;
-    public static transient TBEVertexRenderer renderer = new TBEVertexRenderer();
+	private static final long serialVersionUID = 1L;
+	public static transient TBEVertexRenderer renderer = new TBEVertexRenderer();
 
-    public TBEVertexView() {
-	super();
-    }
+	public TBEVertexView() {
+		super();
+	}
 
-    public TBEVertexView(Object arg0) {
-	super(arg0);
-    }
+	public TBEVertexView(Object arg0) {
+		super(arg0);
+	}
 
-    @Override
-    public CellViewRenderer getRenderer() {
+	@Override
+	public CellViewRenderer getRenderer() {
 
-	return renderer;
-    }
+		return renderer;
+	}
 
 }

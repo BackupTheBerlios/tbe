@@ -8,64 +8,60 @@ import ch.tbe.ItemType;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public abstract class ArrowItem extends DefaultEdge implements ItemComponent {
-    private ItemType itemType;
+	private ItemType itemType;
 
-    protected final int DEFAULTLENGTH = 20;
+	protected final int DEFAULTLENGTH = 20;
 
-    protected ArrowItem(ItemType itemType) {
-	this.itemType = itemType;
-	TBEGraphConstants.setLineEnd(this.getAttributes(),
-		TBEGraphConstants.ARROW_CLASSIC);
-	TBEGraphConstants.setEndFill(this.getAttributes(), true);
-
-    }
-
-    public void setPoints(List<Point2D> points) {
-	TBEGraphConstants.setPoints(this.getAttributes(), points);
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<Point2D> getPoints() {
-	return TBEGraphConstants.getPoints(this.getAttributes());
-    }
-
-    @SuppressWarnings("unchecked")
-    public void addPoint() {
-	int size = TBEGraphConstants.getPoints(this.getAttributes()).size();
-	double lastX = ((Point2D) TBEGraphConstants.getPoints(
-		this.getAttributes()).get(size - 1)).getX();
-	double lastY = ((Point2D) TBEGraphConstants.getPoints(
-		this.getAttributes()).get(size - 1)).getY();
-
-	Point2D point = new Point2D.Double(lastX + DEFAULTLENGTH, lastY);
-	TBEGraphConstants.getPoints(this.getAttributes()).add(point);
-    }
-
-    public void removePoint() {
-	if (TBEGraphConstants.getPoints(this.getAttributes()).size() > 2) {
-	    int size = TBEGraphConstants.getPoints(this.getAttributes()).size();
-	    Point2D lastP = ((Point2D) TBEGraphConstants.getPoints(
-		    this.getAttributes()).get(size - 1));
-	    TBEGraphConstants.getPoints(this.getAttributes()).remove(lastP);
+	protected ArrowItem(ItemType itemType) {
+		this.itemType = itemType;
+		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_CLASSIC);
+		TBEGraphConstants.setEndFill(this.getAttributes(), true);
 
 	}
-    }
 
-    public Icon getIcon() {
-	return itemType.getIcon();
-    }
+	public void setPoints(List<Point2D> points) {
+		TBEGraphConstants.setPoints(this.getAttributes(), points);
+	}
 
-    public ItemType getItemType() {
-	return itemType;
-    }
+	@SuppressWarnings("unchecked")
+	public List<Point2D> getPoints() {
+		return TBEGraphConstants.getPoints(this.getAttributes());
+	}
 
-    public String getText() {
-	if (super.getUserObject() == null)
-	    return null;
-	return super.getUserObject().toString();
-    }
+	@SuppressWarnings("unchecked")
+	public void addPoint() {
+		int size = TBEGraphConstants.getPoints(this.getAttributes()).size();
+		double lastX = ((Point2D) TBEGraphConstants.getPoints(this.getAttributes()).get(size - 1)).getX();
+		double lastY = ((Point2D) TBEGraphConstants.getPoints(this.getAttributes()).get(size - 1)).getY();
 
-    public void setText(String s) {
-	super.setUserObject(s);
-    }
+		Point2D point = new Point2D.Double(lastX + DEFAULTLENGTH, lastY);
+		TBEGraphConstants.getPoints(this.getAttributes()).add(point);
+	}
+
+	public void removePoint() {
+		if (TBEGraphConstants.getPoints(this.getAttributes()).size() > 2) {
+			int size = TBEGraphConstants.getPoints(this.getAttributes()).size();
+			Point2D lastP = ((Point2D) TBEGraphConstants.getPoints(this.getAttributes()).get(size - 1));
+			TBEGraphConstants.getPoints(this.getAttributes()).remove(lastP);
+
+		}
+	}
+
+	public Icon getIcon() {
+		return itemType.getIcon();
+	}
+
+	public ItemType getItemType() {
+		return itemType;
+	}
+
+	public String getText() {
+		if (super.getUserObject() == null)
+			return null;
+		return super.getUserObject().toString();
+	}
+
+	public void setText(String s) {
+		super.setUserObject(s);
+	}
 }

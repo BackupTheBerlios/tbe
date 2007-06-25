@@ -8,26 +8,26 @@ import ch.tbe.framework.ItemComponent;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public TextBoxItem(Rectangle2D.Double rect) {
+	public TextBoxItem(Rectangle2D.Double rect) {
 
-	super(new String("Text"));
-	TBEGraphConstants.setBounds(this.getAttributes(), rect);
-    }
+		super(new String("Text"));
+		TBEGraphConstants.setBounds(this.getAttributes(), rect);
+	}
 
-    public String getType() {
-	return "TextBox";
-    }
+	public String getType() {
+		return "TextBox";
+	}
 
-    public String getText() {
-	if (super.getUserObject() == null)
-	    return null;
-	return super.getUserObject().toString();
-    }
+	public String getText() {
+		if (super.getUserObject() == null)
+			return null;
+		return super.getUserObject().toString();
+	}
 
-    public void setText(String s) {
-	super.setUserObject(s);
-    }
+	public void setText(String s) {
+		super.setUserObject(s);
+	}
 
 }

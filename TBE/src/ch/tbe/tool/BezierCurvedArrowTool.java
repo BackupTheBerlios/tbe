@@ -5,19 +5,15 @@ import java.awt.event.MouseEvent;
 import ch.tbe.ItemType;
 import ch.tbe.framework.ArrowTool;
 
-public class BezierCurvedArrowTool extends ArrowTool{
+public class BezierCurvedArrowTool extends ArrowTool {
 
-	public BezierCurvedArrowTool(ItemType shapeType)
-	{
+	public BezierCurvedArrowTool(ItemType shapeType) {
 		super(shapeType);
-		
+
 	}
 
-	public void mouseDown(int x, int y, MouseEvent e)
-	{
-		
-		
+	public void mouseDown(int x, int y, MouseEvent e) {
+
 	}
- 
+
 }
- 

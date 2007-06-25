@@ -7,15 +7,13 @@ import java.awt.geom.Point2D;
  * @author David Meier 10/05/2007
  * 
  */
-public class Curved
-{
+public class Curved {
 
 	private Point2D[] p;
 	private final int SPACE = 2;
 	private final int HEIGHT = 4;
 
-	public Curved(Point2D start, Point2D end)
-	{
+	public Curved(Point2D start, Point2D end) {
 
 		double xSpace, ySpace;
 
@@ -34,29 +32,23 @@ public class Curved
 		double xHeight = -eVectory * HEIGHT;
 
 		p = new Point2D[npoints];
-		p[0] = new Point2D.Double(start.getX() + xSpace + xHeight, start.getY()
-				+ ySpace + yHeight);
+		p[0] = new Point2D.Double(start.getX() + xSpace + xHeight, start.getY() + ySpace + yHeight);
 
 		int j = 1;
-		for (int i = 1; i < npoints; i++)
-		{
+		for (int i = 1; i < npoints; i++) {
 
-			switch (j)
-			{
+			switch (j) {
 			case 0:
-				p[i] = new Point2D.Double(p[i - 1].getX() + xSpace + xHeight,
-						p[i - 1].getY() + ySpace + yHeight);
+				p[i] = new Point2D.Double(p[i - 1].getX() + xSpace + xHeight, p[i - 1].getY() + ySpace + yHeight);
 				j++;
 				break;
 			case 1:
 			case 2:
-				p[i] = new Point2D.Double(p[i - 1].getX() + xSpace - xHeight,
-						p[i - 1].getY() + ySpace - yHeight);
+				p[i] = new Point2D.Double(p[i - 1].getX() + xSpace - xHeight, p[i - 1].getY() + ySpace - yHeight);
 				j++;
 				break;
 			case 3:
-				p[i] = new Point2D.Double(p[i - 1].getX() + xSpace + xHeight,
-						p[i - 1].getY() + ySpace + yHeight);
+				p[i] = new Point2D.Double(p[i - 1].getX() + xSpace + xHeight, p[i - 1].getY() + ySpace + yHeight);
 				j = 0;
 				break;
 			}
@@ -66,24 +58,22 @@ public class Curved
 	}
 
 	/**
-	 * Returns the calculated courved points.
-	 * 
-	 * @return the calculated courved points
-	 */
-	public Point2D[] getPoints()
-	{
+   * Returns the calculated courved points.
+   * 
+   * @return the calculated courved points
+   */
+	public Point2D[] getPoints() {
 
 		return p;
 	}
 
 	/**
-	 * Returns the curved points at position i.
-	 * 
-	 * @param i
-	 * @return the curved point at position i
-	 */
-	public Point2D getPoint(int i)
-	{
+   * Returns the curved points at position i.
+   * 
+   * @param i
+   * @return the curved point at position i
+   */
+	public Point2D getPoint(int i) {
 		return p[i];
 	}
 

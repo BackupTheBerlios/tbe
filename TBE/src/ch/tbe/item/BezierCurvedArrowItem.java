@@ -7,13 +7,13 @@ import ch.tbe.ItemType;
 import ch.tbe.framework.ArrowItem;
 
 public class BezierCurvedArrowItem extends ArrowItem {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public BezierCurvedArrowItem(List<Point2D> points, ItemType itemType) {
-	super(itemType);
-    }
+	public BezierCurvedArrowItem(List<Point2D> points, ItemType itemType) {
+		super(itemType);
+	}
 
-    public String getType() {
-	return "BezierCurvedArrowTool";
-    }
+	public String getType() {
+		return "BezierCurvedArrowTool";
+	}
 }

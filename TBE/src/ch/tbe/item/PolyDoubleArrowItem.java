@@ -8,16 +8,16 @@ import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public class PolyDoubleArrowItem extends ArrowItem {
-    private static final long serialVersionUID = 1L;
-    public PolyDoubleArrowItem(List<Point2D> points, ItemType itemType) {
-	super(itemType);
+	private static final long serialVersionUID = 1L;
 
-	TBEGraphConstants.setLineStyle(this.getAttributes(),
-		TBEGraphConstants.STYLE_DOUBLELINE);
-	setPoints(points);
-    }
+	public PolyDoubleArrowItem(List<Point2D> points, ItemType itemType) {
+		super(itemType);
 
-    public String getType() {
-	return "PolyDoubleArrowTool";
-    }
+		TBEGraphConstants.setLineStyle(this.getAttributes(), TBEGraphConstants.STYLE_DOUBLELINE);
+		setPoints(points);
+	}
+
+	public String getType() {
+		return "PolyDoubleArrowTool";
+	}
 }

@@ -8,19 +8,18 @@ import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.TBEGraphConstants;
 
 public class PolySolidBlockItem extends ArrowItem {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public PolySolidBlockItem(List<Point2D> points, ItemType itemType) {
-	super(itemType);
+	public PolySolidBlockItem(List<Point2D> points, ItemType itemType) {
+		super(itemType);
 
-	TBEGraphConstants.setLineEnd(this.getAttributes(),
-		TBEGraphConstants.ARROW_BLOCK);
-	TBEGraphConstants.setEndFill(this.getAttributes(), false);
-	setPoints(points);
-    }
+		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_BLOCK);
+		TBEGraphConstants.setEndFill(this.getAttributes(), false);
+		setPoints(points);
+	}
 
-    public String getType() {
-	return "PolySolidBlockTool";
-    }
+	public String getType() {
+		return "PolySolidBlockTool";
+	}
 
 }
