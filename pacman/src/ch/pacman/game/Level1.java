@@ -1,4 +1,4 @@
-package ch.pacman.graph;
+package ch.pacman.game;
 
 import jdsl.graph.api.Edge;
 import jdsl.graph.api.Vertex;
