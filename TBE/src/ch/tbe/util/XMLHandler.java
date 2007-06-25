@@ -238,10 +238,8 @@ public final class XMLHandler {
 					if (item != null) {
 						item.setText(actText);
 						board.addItem(item);
-						
-						//TODO: remove System.out
-						System.out.println(actLabelPosition);
 						TBEGraphConstants.setLabelPosition(item.getAttributes(), actLabelPosition);
+						board.addItem(item);
 					}
 					actArrowType = null;
 					actPoints.clear();
@@ -435,8 +433,6 @@ public final class XMLHandler {
 
 						Point2D p = TBEGraphConstants.getLabelPosition(((ArrowItem) item).getAttributes());
 						
-						//TODO: Remove System.out
-						System.out.println(p);
 						if (p != null) {
 							eItemComponent.setAttribute("xLabelPos", p.getX() + "");
 							eItemComponent.setAttribute("yLabelPos", p.getY() + "");
