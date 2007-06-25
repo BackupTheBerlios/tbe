@@ -1,20 +1,19 @@
 package ch.pacman.graph;
 
 import ch.pacman.Game;
-import ch.pacman.exceptions.SupremeException;
 import jdsl.core.api.InvalidAttributeException;
 import jdsl.core.api.ObjectIterator;
 import jdsl.graph.api.*;
 
-public class pacNode implements Vertex {
+public class pacVertex implements Vertex {
 	
 	int x = 0;
 	int y = 0;
 	
-	pacNode north;
-	pacNode south;
-	pacNode west;
-	pacNode east;
+	pacVertex north;
+	pacVertex south;
+	pacVertex west;
+	pacVertex east;
 	
 	boolean fruit = false;
 	boolean point = false;
@@ -22,7 +21,7 @@ public class pacNode implements Vertex {
 	
 	Game game;
 
-	public pacNode(Game game, int x, int y, boolean fruit, boolean supreme) {
+	public pacVertex(Game game, int x, int y, boolean fruit, boolean supreme) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -78,35 +77,35 @@ public class pacNode implements Vertex {
 		
 	}
 
-	public pacNode getEast() {
+	public pacVertex getEast() {
 		return east;
 	}
 
-	public void setEast(pacNode east) {
+	public void setEast(pacVertex east) {
 		this.east = east;
 	}
 
-	public pacNode getNorth() {
+	public pacVertex getNorth() {
 		return north;
 	}
 
-	public void setNorth(pacNode north) {
+	public void setNorth(pacVertex north) {
 		this.north = north;
 	}
 
-	public pacNode getSouth() {
+	public pacVertex getSouth() {
 		return south;
 	}
 
-	public void setSouth(pacNode south) {
+	public void setSouth(pacVertex south) {
 		this.south = south;
 	}
 
-	public pacNode getWest() {
+	public pacVertex getWest() {
 		return west;
 	}
 
-	public void setWest(pacNode west) {
+	public void setWest(pacVertex west) {
 		this.west = west;
 	}
 }

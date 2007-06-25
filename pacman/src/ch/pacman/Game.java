@@ -24,9 +24,9 @@ public class Game extends JPanel implements Runnable{
 	
 
 	@Override
-	public void paintComponents(Graphics g)
+	public void paintComponent(Graphics g)
 	{
-		super.paintComponents(g);
+		super.paintComponent(g);
 		if (goff==null && d.width>0 && d.height>0)
 	    {
 	      ii = createImage(d.width, d.height);
@@ -41,7 +41,7 @@ public class Game extends JPanel implements Runnable{
 	    DrawMaze();
 
 
-	    g.drawImage(ii, 10, 30, this);
+	    g.drawImage(ii, 0, 0, this);
 	}
 
 

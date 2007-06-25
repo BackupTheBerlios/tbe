@@ -1,6 +1,7 @@
 package ch.pacman.game;
 
-import ch.pacman.graph.pacNode;
+import ch.pacman.Game;
+import ch.pacman.graph.pacVertex;
 
 public class PacMan implements Runnable{
 
@@ -9,7 +10,7 @@ public class PacMan implements Runnable{
 	int destX = 0;
 	int destY = 0;
 	
-	public PacMan(int actX, int actY) {
+	public PacMan(Game game, int actX, int actY) {
 		super();
 		this.actX = actX;
 		this.actY = actY;
@@ -20,7 +21,7 @@ public class PacMan implements Runnable{
 		
 	}
 
-	public void evaluateField(pacNode node){
+	public void evaluateField(pacVertex node){
 		node.evaluateField();
 	}
 }
