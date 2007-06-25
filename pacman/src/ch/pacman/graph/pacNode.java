@@ -5,6 +5,8 @@ import jdsl.core.api.ObjectIterator;
 import jdsl.graph.api.*;
 
 public class pacNode implements Vertex {
+	
+	
 
 	public Object element() {
 		// TODO Auto-generated method stub
@@ -35,5 +37,7 @@ public class pacNode implements Vertex {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public void 
 
 }
