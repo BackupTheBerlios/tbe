@@ -23,6 +23,7 @@ public class RotateCommand  extends Command
 	    int temp =  TBEGraphConstants.getRotation(((DefaultGraphCell)items[0]).getAttributes());
 	    TBEGraphConstants.setRotation(((DefaultGraphCell)items[0]).getAttributes(), rotation);
 	    ((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
+	    ((WorkingView) TBE.getInstance().getView()).setRotateValue(rotation);
 	    this.rotation = temp;
 	}
 
@@ -31,6 +32,7 @@ public class RotateCommand  extends Command
 	    int temp =   TBEGraphConstants.getRotation(((DefaultGraphCell)items[0]).getAttributes());
 	    TBEGraphConstants.setRotation(((DefaultGraphCell)items[0]).getAttributes(), rotation);
 	    ((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
+	    ((WorkingView) TBE.getInstance().getView()).setRotateValue(rotation);
 	    this.rotation = temp;
 	}
 
