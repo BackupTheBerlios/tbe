@@ -40,7 +40,6 @@ import org.xml.sax.helpers.DefaultHandler;
  */
 public final class XMLHandler {
 	private static ArrayList<Sport> sports = new ArrayList<Sport>();
-
 	private static Board board = null;
 
 	/**
@@ -122,22 +121,18 @@ public final class XMLHandler {
 	}
 
 	/**
-   * @param path:
-   *          Path to the xml-document
+   * @param Path
+   *          to the xml-document
    * @return the opened board
    */
 	public static Board openXML(String path) {
+		
 		class SaxHandler extends DefaultHandler {
 			GraphModel model = new DefaultGraphModel();
-
 			GraphLayoutCache view = new GraphLayoutCache(model, new TBECellViewFactory());
-
 			String actArrowType;
-
 			List<Point2D> actPoints = new ArrayList<Point2D>();
-
 			Point2D actLabelPosition;
-
 			String actText;
 
 			public void loadFile(String path) {
@@ -243,6 +238,9 @@ public final class XMLHandler {
 					if (item != null) {
 						item.setText(actText);
 						board.addItem(item);
+						
+						//TODO: remove System.out
+						System.out.println(actLabelPosition);
 						TBEGraphConstants.setLabelPosition(item.getAttributes(), actLabelPosition);
 					}
 					actArrowType = null;
@@ -279,11 +277,8 @@ public final class XMLHandler {
 	private static void openSport(String sport) {
 		class SaxHandler extends DefaultHandler {
 			private ArrayList<ItemType> shapes = new ArrayList<ItemType>();
-
 			private ArrayList<ItemType> arrows = new ArrayList<ItemType>();
-
 			private ArrayList<Field> fields = new ArrayList<Field>();
-
 			private Sport actSport;
 
 			public void loadSport(String sport) {
@@ -439,6 +434,9 @@ public final class XMLHandler {
 						}
 
 						Point2D p = TBEGraphConstants.getLabelPosition(((ArrowItem) item).getAttributes());
+						
+						//TODO: Remove System.out
+						System.out.println(p);
 						if (p != null) {
 							eItemComponent.setAttribute("xLabelPos", p.getX() + "");
 							eItemComponent.setAttribute("yLabelPos", p.getY() + "");
