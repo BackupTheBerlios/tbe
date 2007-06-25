@@ -18,7 +18,7 @@ public class Game extends JPanel implements Runnable{
 	
 	 
 	public Game(){
-		this.setSize(400,400);
+		this.setSize(d);
 	}
 	
 	

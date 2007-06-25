@@ -2,13 +2,12 @@ package ch.pacman.game;
 
 import java.awt.Color;
 import java.awt.Image;
-
-import ch.pacman.graph.pacGraph;
+import jdsl.graph.ref.IncidenceListGraph;
 
 
 public abstract class Level
 {
-	protected pacGraph graph = new pacGraph();
+	protected IncidenceListGraph graph = new IncidenceListGraph();
 	
 	protected short[]   leveldata = null;
 	public static Color		dotcolor=new Color(192,192,0);
