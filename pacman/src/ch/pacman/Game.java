@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import ch.pacman.game.Level;
 import ch.pacman.game.Level1;
 
@@ -14,7 +13,8 @@ public class Game extends JPanel implements Runnable{
 	private Graphics	goff;
 	private Dimension	d = new Dimension(400,400);
 	private Image		ii;
-	private short[] screendata = level.getLeveldata();
+	private short[][] screendata = level.getLeveldata();
+	
 	
 	 
 	public Game(){
