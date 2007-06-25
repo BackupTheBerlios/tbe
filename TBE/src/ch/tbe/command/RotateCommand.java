@@ -33,4 +33,8 @@ public class RotateCommand  extends Command
 	    ((WorkingView) TBE.getInstance().getView()).getBoard().addItem(items);
 	    this.rotation = temp;
 	}
+
+	public void setRotation(int rotation) {
+  	this.rotation = rotation;
+  }
 }

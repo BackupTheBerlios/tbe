@@ -285,6 +285,24 @@ public class WorkingView extends View {
 	    }
 
 	});
+	rotateSlider.addMouseListener(new MouseAdapter(){
+		
+		private int value;
+		public void mousePressed(MouseEvent e){
+			value = rotateSlider.getValue();
+		}
+		
+		public void mouseReleased(MouseEvent e){
+			if (value != rotateSlider.getValue()){
+				RotateCommand rc =  new RotateCommand(board.getSelectedItems());
+		    ArrayList<Command> actCommands = new ArrayList<Command>();
+		    actCommands.add(rc);
+		    TBE.getInstance().addCommands(actCommands);
+		    rc.setRotation(value);
+				
+			}
+		}
+	});
 
 	rotate.setToolTipText(workingViewLabels.getString("rotate"));
 
