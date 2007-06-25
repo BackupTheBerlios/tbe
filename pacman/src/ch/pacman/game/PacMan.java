@@ -1,20 +1,27 @@
 package ch.pacman.game;
 
+import ch.pacman.Game;
+import ch.pacman.graph.pacNode;
+
 public class PacMan implements Runnable{
 
-	public boolean supreme = false;
+	int actX = 0;
+	int actY = 0;
+	int destX = 0;
+	int destY = 0;
 	
+	public PacMan(Game game, int actX, int actY) {
+		super();
+		this.actX = actX;
+		this.actY = actY;
+	}
+
 	public void run() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	public boolean isSupreme() {
-		return supreme;
+	public void evaluateField(pacNode node){
+		node.evaluateField();
 	}
-
-	public void setSupreme(boolean supreme) {
-		this.supreme = supreme;
-	}
-
 }

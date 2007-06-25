@@ -3,30 +3,28 @@ package ch.pacman;
 import java.awt.*;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import ch.pacman.game.Level;
 import ch.pacman.game.Level1;
 
-public class Game extends JFrame implements Runnable{
+public class Game extends JPanel implements Runnable{
 	
 	private Level level = new Level1();
 	private Graphics	goff;
-	private Dimension	d = new Dimension(800,600);
+	private Dimension	d = new Dimension(400,400);
 	private Image		ii;
 	private short[] screendata = level.getLeveldata();
-	 
+	
 	 
 	public Game(){
-		this.setSize(d);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		this.setVisible(true);
+		this.setSize(400,400);
 	}
 	
 	
 
 	@Override
-	public void paint(Graphics g)
+	public void paintComponents(Graphics g)
 	{
 		super.paintComponents(g);
 		if (goff==null && d.width>0 && d.height>0)
@@ -43,7 +41,7 @@ public class Game extends JFrame implements Runnable{
 	    DrawMaze();
 
 
-	    g.drawImage(ii, 0, 0, this);
+	    g.drawImage(ii, 10, 30, this);
 	}
 
 
@@ -98,11 +96,27 @@ public class Game extends JFrame implements Runnable{
 	}
 	
 	public static void main(String[] args){
+		JFrame f = new JFrame("PacMan");
+		f.setSize(400,400);
+		f.setBackground(Color.BLACK);
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
 		Game pacman = new Game();
+		f.add(pacman);
 		Thread t = new Thread(pacman);
+		f.setVisible(true);
 	}
 	
 	public void setVisited(int x, int y){
+		
+	}
+	
+	public void setSupreme(){
+		
+	}
+	
+	public void getSupreme(){
 		
 	}
 
