@@ -10,7 +10,7 @@ import ch.pacman.game.Level1;
 
 public class Game extends JPanel implements Runnable{
 	
-	private Level level = new Level1();
+	private Level level = new Level1(this);
 	private Graphics	goff;
 	private Dimension	d = new Dimension(400,400);
 	private Image		ii;
