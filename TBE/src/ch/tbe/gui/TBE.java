@@ -50,9 +50,7 @@ public class TBE {
 		XMLHandler.loadTBESettings();
 
 		this.sports = XMLHandler.getSports();
-
-		// TODO: Sprache wird beim FirstStart gesetzt und dann aus dem
-		// PropertiesFile ausgelesen
+		
 		splashScreen.setProgress("Create Frame", 5);
 
 		frame = new JFrame("TBE - Tactic Board Editor");
@@ -68,7 +66,6 @@ public class TBE {
 		stateBar.setState("Welcome to TBE");
 		frame.add(stateBar, java.awt.BorderLayout.SOUTH);
 
-		// TODO: check ob FirstStart oder nicht!
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		splashScreen.setProgress("Create WelcomeView", 100);
 		splashScreen.setScreenVisible(false);
@@ -114,8 +111,7 @@ public class TBE {
 
 	public void saveAs() {
 		if (view instanceof WorkingView) {
-			// TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht
-			// möglich ist.
+			// TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht möglich ist.
 			((WorkingView) view).getBoard().setPath("");
 			XMLHandler.saveBoard(((WorkingView) view).getBoard());
 		}
@@ -125,15 +121,6 @@ public class TBE {
 		if (view instanceof WorkingView) {
 			XMLHandler.saveBoard(((WorkingView) view).getBoard());
 		}
-	}
-
-	public void load(String path) {
-	}
-
-	public void changeField(Field field) {
-	}
-
-	public void clear() {
 	}
 
 	public void load() {
