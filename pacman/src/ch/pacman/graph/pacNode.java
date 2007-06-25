@@ -1,6 +1,7 @@
 package ch.pacman.graph;
 
 import ch.pacman.Game;
+import ch.pacman.exceptions.SupremeException;
 import jdsl.core.api.InvalidAttributeException;
 import jdsl.core.api.ObjectIterator;
 import jdsl.graph.api.*;
@@ -32,19 +33,20 @@ public class pacNode implements Vertex {
 	}
 
 	public int evaluateField() {
-		int score = 0;
 		if(supreme){
 			game.setSupreme();
-			score = 200;
+			game.setVisited(x,y);
+			return 200;
 		}
 		if(point){
-			score = 100;
+			game.setVisited(x,y);
+			return 100;
 		}
 		if(fruit){
-			score = 500;
+			game.setVisited(x,y);
+			return 500;
 		}
-		game.setVisited(x,y);
-		return score;
+		return 0;
 	}
 
 	public Object element() {
