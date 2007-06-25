@@ -67,15 +67,18 @@ public class TBE {
 		frame.add(stateBar, java.awt.BorderLayout.SOUTH);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		splashScreen.setProgress("Create WelcomeView", 100);
+
+		splashScreen.setProgress("Create WelcomeView", 40);
+		if (!this.UserName.equals("")) {
+			this.setView(new WelcomeView(sports, lang));
+		}
+		splashScreen.setProgress("Open TBE", 100);
 		splashScreen.setScreenVisible(false);
-		frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+		frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		frame.setVisible(true);
 		if (this.UserName.equals("")) {
 			// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 			new SettingsFrame(true);
-		} else {
-			this.setView(new WelcomeView(sports, lang));
 		}
 
 	}
