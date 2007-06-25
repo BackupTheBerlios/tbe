@@ -68,8 +68,8 @@ public class TBE {
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		splashScreen.setProgress("Create WelcomeView", 40);
 		if (!this.UserName.equals("")) {
+			splashScreen.setProgress("Create WelcomeView", 40);
 			this.setView(new WelcomeView(sports, lang));
 		}
 		splashScreen.setProgress("Open TBE", 100);
