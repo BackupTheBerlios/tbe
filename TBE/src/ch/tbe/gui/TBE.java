@@ -80,7 +80,6 @@ public class TBE {
 			// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 			new SettingsFrame(true);
 		}
-
 	}
 
 	public void setView(View newView) {
