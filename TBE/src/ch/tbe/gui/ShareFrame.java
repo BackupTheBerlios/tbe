@@ -356,19 +356,14 @@ public class ShareFrame {
 				String filePath = "";
 				// muss LOKAL 1 .tbe-File angewählt sein
 				if (localPaths.size() != 1) {
-					System.out.println("***\nLocalPathsSize: " + localPaths.size());
-					for (String s : localPaths) {
-						System.out.println(s);
-					}
 					JOptionPane.showMessageDialog(null, shareLabels.getString("oneLocalFile"));
 				} else {
 					filePath = localPaths.get(0);
 					if (!filePath.substring(filePath.length() - 4, filePath.length()).equals(".tbe")) {
 						JOptionPane.showMessageDialog(null, shareLabels.getString("notTBEFile"));
 					} else {
-						System.out.println("Open File: " + filePath);
-						Board board = XMLHandler.openXML(filePath);
-						tbe.addRecently(filePath);
+						Board board = XMLHandler.openXML(new File(filePath).getPath());
+						tbe.addRecently(new File(filePath).getPath());
 						tbe.setView(new WorkingView(board));
 						close();
 					}
