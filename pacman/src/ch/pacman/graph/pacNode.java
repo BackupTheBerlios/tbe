@@ -32,8 +32,17 @@ public class pacNode implements Vertex {
 		this.game = game;
 	}
 
-	public void evaluateField() throws SupremeException {
-		
+	public int evaluateField() throws SupremeException {
+		if(supreme) throw new SupremeException();
+		if(point){
+			game.setVisited(x,y);
+			return 100;
+		}
+		if(fruit){
+			game.setVisited(x,y);
+			return 500;
+		}
+		return 0;
 	}
 
 	public Object element() {

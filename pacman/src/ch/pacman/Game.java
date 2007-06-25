@@ -26,7 +26,7 @@ public class Game extends JFrame implements Runnable{
 	
 
 	@Override
-	public void paintComponents(Graphics g)
+	public void paint(Graphics g)
 	{
 		super.paintComponents(g);
 		if (goff==null && d.width>0 && d.height>0)
@@ -97,5 +97,13 @@ public class Game extends JFrame implements Runnable{
 		
 	}
 	
+	public static void main(String[] args){
+		Game pacman = new Game();
+		Thread t = new Thread(pacman);
+	}
+	
+	public void setVisited(int x, int y){
+		
+	}
 
 }
