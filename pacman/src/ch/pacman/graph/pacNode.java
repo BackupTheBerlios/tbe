@@ -33,20 +33,19 @@ public class pacNode implements Vertex {
 	}
 
 	public int evaluateField() {
+		int score = 0;
 		if(supreme){
 			game.setSupreme();
-			game.setVisited(x,y);
-			return 200;
+			score = 200;
 		}
 		if(point){
-			game.setVisited(x,y);
-			return 100;
+			score = 100;
 		}
 		if(fruit){
-			game.setVisited(x,y);
-			return 500;
+			score = 500;
 		}
-		return 0;
+		game.setVisited(x,y);
+		return score;
 	}
 
 	public Object element() {

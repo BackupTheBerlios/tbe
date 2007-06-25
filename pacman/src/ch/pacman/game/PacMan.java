@@ -1,6 +1,5 @@
 package ch.pacman.game;
 
-import ch.pacman.Game;
 import ch.pacman.graph.pacNode;
 
 public class PacMan implements Runnable{
@@ -10,7 +9,7 @@ public class PacMan implements Runnable{
 	int destX = 0;
 	int destY = 0;
 	
-	public PacMan(Game game, int actX, int actY) {
+	public PacMan(int actX, int actY) {
 		super();
 		this.actX = actX;
 		this.actY = actY;
