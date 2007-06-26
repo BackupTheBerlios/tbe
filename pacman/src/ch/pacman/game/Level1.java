@@ -1,11 +1,8 @@
 package ch.pacman.game;
 
 import java.awt.Point;
-
-import ch.pacman.Game;
 import ch.pacman.graph.PacVertex;
-import jdsl.graph.api.Edge;
-import jdsl.graph.api.Vertex;
+
 
 public class Level1 extends Level
 {

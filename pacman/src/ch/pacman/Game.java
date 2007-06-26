@@ -450,8 +450,8 @@ public class Game extends JPanel implements Runnable
 			}
 			if ((ch & 32) != 0)
 			{
-				// scared=true;
-				// scaredcount=scaredtime;
+				//scared=true;
+				//scaredcount=scaredtime;
 				screendata[row][col] = (short) (ch & 15);
 				// score+=5;
 			}
