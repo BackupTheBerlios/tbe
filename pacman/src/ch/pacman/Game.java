@@ -6,9 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-import ch.pacman.game.Ghost;
-import ch.pacman.game.Level;
-import ch.pacman.game.Level1;
+import ch.pacman.game.*;
 
 public class Game extends JPanel implements Runnable
 {
@@ -44,6 +42,9 @@ public class Game extends JPanel implements Runnable
 	private int[] dx, dy;
 
 	private int ghostanimpos = 0;
+	final int	animdelay=8;
+	int		animcount=animdelay;
+	final int     ghostanimcount=2;
 
 	private boolean ingame = true; // TODO
 
@@ -55,10 +56,7 @@ public class Game extends JPanel implements Runnable
 		GetImages();
 		dx = new int[4];
 		dy = new int[4];
-		for (int i = 0; i < 4; i++)
-		{
-			ghosts.add(new Ghost(0, 0, 3));
-		}
+		
 		GameInit();
 
 	}
@@ -70,6 +68,10 @@ public class Game extends JPanel implements Runnable
 		// scaredtime=maxscaredtime;
 
 		nrofGhosts = 3;
+		for (int i = 0; i <= nrofGhosts; i++)
+		{
+			ghosts.add(new Ghost(0, 0, 3));
+		}
 		// scaredtime=maxscaredtime;
 		this.LevelInit();
 	}
@@ -83,14 +85,14 @@ public class Game extends JPanel implements Runnable
 
 	public void LevelContinue()
 	{
-		short i;
+
 		int dx = 1;
 		int random;
 
 		for (Ghost g : ghosts)
 		{
-			// g.setActY(7*Level.blocksize);
-			// g.setActY(7*Level.blocksize);
+			g.setActX(7*Level.blocksize);
+			g.setActY(7*Level.blocksize);
 
 			g.setDestY(0);
 			g.setDestX(dx);
@@ -117,7 +119,6 @@ public class Game extends JPanel implements Runnable
 	@Override
 	public void paintComponent(Graphics g)
 	{
-		System.out.print("repaint");
 		super.paintComponent(g);
 		if (goff == null && d.width > 0 && d.height > 0)
 		{
@@ -131,6 +132,7 @@ public class Game extends JPanel implements Runnable
 		goff.fillRect(0, 0, d.width, d.height);
 
 		DrawMaze();
+		DoAnim();
 
 		if (ingame)
 			PlayGame();
@@ -139,6 +141,26 @@ public class Game extends JPanel implements Runnable
 
 		g.drawImage(ii, 0, 0, this);
 	}
+	
+	  public void DoAnim()
+	  {
+	    animcount--;
+	    if (animcount<=0)
+	    {
+	      animcount=animdelay;
+	      ghostanimpos++;
+	      if (ghostanimpos>=ghostanimcount)
+	        ghostanimpos=0;
+	    }
+//	    pacanimcount--;
+//	    if (pacanimcount<=0)
+//	    {
+//	      pacanimcount=pacanimdelay;
+//	      pacmananimpos=pacmananimpos+pacanimdir;
+//	      if (pacmananimpos==(pacmananimcount-1) ||  pacmananimpos==0)
+//	        pacanimdir=-pacanimdir;
+//	    }
+	  }
 
 	public void PlayGame()
 	{
@@ -259,7 +281,6 @@ public class Game extends JPanel implements Runnable
 
 	public void MoveGhosts()
 	{
-		short i;
 		int row;
 		int col;
 		int count;
@@ -269,8 +290,8 @@ public class Game extends JPanel implements Runnable
 			if (g.getActX() % Level.blocksize == 0
 					&& g.getActY() % Level.blocksize == 0)
 			{
-				row = g.getActX() / Level.blocksize;
-				col = (int) (g.getActY() / Level.blocksize);
+				col = g.getActX() / Level.blocksize;
+				row = g.getActY() / Level.blocksize;
 
 				count = 0;
 				if ((screendata[row][col] & 1) == 0 && g.getDestX() != 1)
@@ -317,9 +338,9 @@ public class Game extends JPanel implements Runnable
 					g.setDestY(dy[count]);
 				}
 			}
-			g.setActX(g.getDestX() + (g.getDestX() * g.getSpeed()));
-			g.setActX(g.getDestY() + (g.getDestY() * g.getSpeed()));
-			DrawGhost(g.getDestX() + 1, (g.getDestY() + 1));
+			g.setActX(g.getActX() + (g.getDestX() * g.getSpeed()));
+			g.setActY(g.getActY() + (g.getDestY() * g.getSpeed()));
+			DrawGhost(g.getActX() + 1, (g.getActY() + 1));
 
 			// if (pacmanx>(ghostx[i]-12) && pacmanx<(ghostx[i]+12) &&
 			// pacmany>(ghosty[i]-12) && pacmany<(ghosty[i]+12) && ingame)
