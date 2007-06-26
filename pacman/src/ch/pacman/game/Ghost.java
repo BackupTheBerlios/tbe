@@ -7,28 +7,29 @@ public class Ghost implements Runnable {
 	int actX = 0;
 	int actY = 0;
 	int destX = 0;
-	int desY = 0;
-	boolean       scared=false;
+	int destY = 0;
+	int speed = 0;
 	
-	public Ghost(int actX, int actY) {
+	public int getSpeed()
+	{
+		return speed;
+	}
+
+	public void setSpeed(int speed)
+	{
+		this.speed = speed;
+	}
+
+	public Ghost(int actX, int actY, int speed) {
 		super();
 		this.actX = actX;
 		this.actY = actY;
+		this.speed = speed;
 	}
 
 	public void run() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public boolean isScared()
-	{
-		return scared;
-	}
-
-	public void setScared(boolean scared)
-	{
-		this.scared = scared;
 	}
 
 	public int getActX()
@@ -61,14 +62,14 @@ public class Ghost implements Runnable {
 		this.destX = destX;
 	}
 
-	public int getDesY()
+	public int getDestY()
 	{
-		return desY;
+		return destY;
 	}
 
-	public void setDesY(int desY)
+	public void setDestY(int destY)
 	{
-		this.desY = desY;
+		this.destY = destY;
 	}
 
 }
