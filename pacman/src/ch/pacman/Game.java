@@ -10,7 +10,6 @@ import ch.pacman.game.Ghost;
 import ch.pacman.game.Level;
 import ch.pacman.game.Level1;
 
-
 public class Game extends JPanel implements Runnable
 {
 
@@ -39,82 +38,86 @@ public class Game extends JPanel implements Runnable
 	private Image pacman3up, pacman3down, pacman3left, pacman3right;
 
 	private Image pacman4up, pacman4down, pacman4left, pacman4right;
-	private MediaTracker  thetracker = null;
-	private  int[]		dx,dy;
-	private int		ghostanimpos=0;
-	private boolean ingame = true; //TODO
+
+	private MediaTracker thetracker = null;
+
+	private int[] dx, dy;
+
+	private int ghostanimpos = 0;
+
+	private boolean ingame = true; // TODO
 
 	public Game()
 	{
-		
+
 		this.setSize(d);
 		this.setBackground(Color.black);
 		GetImages();
-	    dx=new int[4];
-	    dy=new int[4];
+		dx = new int[4];
+		dy = new int[4];
 		for (int i = 0; i < 4; i++)
 		{
 			ghosts.add(new Ghost(0, 0, 3));
 		}
 		GameInit();
-		
 
 	}
-	
-	  public void GameInit()
-	  {
-	    //pacsleft=3;
-	    //score=0;
-	    //scaredtime=maxscaredtime;
 
-	    nrofGhosts=3;
-	    //scaredtime=maxscaredtime;
-	    this.LevelInit();
-	  }
-	  
-	  public void LevelInit()
-	  {
-		  level = new Level1();
-		  screendata = level.getLeveldata().clone();
-			System.out.println(screendata);
-	  LevelContinue();}
-	  
-	  public void LevelContinue()
-	  {
-	    short i;
-	    int dx=1;
-	    int random;
+	public void GameInit()
+	{
+		// pacsleft=3;
+		// score=0;
+		// scaredtime=maxscaredtime;
 
-	    for (Ghost g : ghosts)
-	    {
-	      g.setActY(7*Level.blocksize);
-	      g.setActY(7*Level.blocksize);
-	      
-	      g.setDestY(0);
-	      g.setDestX(dx);
-	      dx=-dx;
-//	      random=(int)(Math.random()*(currentspeed+1));
-//	      if (random>currentspeed)
-//	        random=currentspeed;
-//	      ghostspeed[i]=validspeeds[random];
-	    }
-	    screendata[7][6]=10;
-	    screendata[7][8]=10;
-//	    pacmanx=7*blocksize;
-//	    pacmany=11*blocksize;
-//	    pacmandx=0;
-//	    pacmandy=0;
-//	    reqdx=0;
-//	    reqdy=0;
-//	    viewdx=-1;
-//	    viewdy=0;
-//	    dying=false;
-	    scared=false;
-	  }
+		nrofGhosts = 3;
+		// scaredtime=maxscaredtime;
+		this.LevelInit();
+	}
+
+	public void LevelInit()
+	{
+		level = new Level1();
+		screendata = level.getLeveldata().clone();
+		LevelContinue();
+	}
+
+	public void LevelContinue()
+	{
+		short i;
+		int dx = 1;
+		int random;
+
+		for (Ghost g : ghosts)
+		{
+			// g.setActY(7*Level.blocksize);
+			// g.setActY(7*Level.blocksize);
+
+			g.setDestY(0);
+			g.setDestX(dx);
+			dx = -dx;
+			// random=(int)(Math.random()*(currentspeed+1));
+			// if (random>currentspeed)
+			// random=currentspeed;
+			// ghostspeed[i]=validspeeds[random];
+		}
+		screendata[7][6] = 10;
+		screendata[7][8] = 10;
+		// pacmanx=7*blocksize;
+		// pacmany=11*blocksize;
+		// pacmandx=0;
+		// pacmandy=0;
+		// reqdx=0;
+		// reqdy=0;
+		// viewdx=-1;
+		// viewdy=0;
+		// dying=false;
+		scared = false;
+	}
 
 	@Override
 	public void paintComponent(Graphics g)
 	{
+		System.out.print("repaint");
 		super.paintComponent(g);
 		if (goff == null && d.width > 0 && d.height > 0)
 		{
@@ -130,62 +133,61 @@ public class Game extends JPanel implements Runnable
 		DrawMaze();
 
 		if (ingame)
-		      PlayGame();
-		    //else
-		      //PlayDemo();
+			PlayGame();
+		// else
+		// PlayDemo();
 
-		    g.drawImage(ii, 0, 0, this);
+		g.drawImage(ii, 0, 0, this);
 	}
-	
-	  public void PlayGame()
-	  {
-//	    if (dying)
-//	    {
-//	      Death();
-//	    }
-//	    else
-//	    {
-//	      CheckScared();
-//	      MovePacMan();
-//	      DrawPacMan();
-	      MoveGhosts();
-	      CheckMaze();
-//	    }  
-	  }
-	  
-	  public void CheckMaze()
-	  {
-//	    short i=0;
-//	    boolean finished=true;
-//
-//	    while (i<Level.nrofblocks*Level.nrofblocks && finished)
-//	    {
-//	      if ((screendata[i]&48)!=0)
-//	        finished=false;
-//	      i++;
-//	    }
-//	    if (finished)
-//	    {
-//	      score+=50;
-//	      DrawScore();
-//	      try
-//	      { 
-//	        Thread.sleep(3000);
-//	      }
-//	      catch (InterruptedException e)
-//	      {
-//	      }
-//	      if (nrofghosts < maxghosts)
-//	        nrofghosts++; 
-//	      if (currentspeed<maxspeed)
-//	        currentspeed++;
-//	      scaredtime=scaredtime-20;
-//	      if (scaredtime<minscaredtime)
-//	        scaredtime=minscaredtime;
-//	      LevelInit();
-//	    }
-	  }
 
+	public void PlayGame()
+	{
+		// if (dying)
+		// {
+		// Death();
+		// }
+		// else
+		// {
+		// CheckScared();
+		// MovePacMan();
+		// DrawPacMan();
+		MoveGhosts();
+		CheckMaze();
+		// }
+	}
+
+	public void CheckMaze()
+	{
+		// short i=0;
+		// boolean finished=true;
+		//
+		// while (i<Level.nrofblocks*Level.nrofblocks && finished)
+		// {
+		// if ((screendata[i]&48)!=0)
+		// finished=false;
+		// i++;
+		// }
+		// if (finished)
+		// {
+		// score+=50;
+		// DrawScore();
+		// try
+		// {
+		// Thread.sleep(3000);
+		// }
+		// catch (InterruptedException e)
+		// {
+		// }
+		// if (nrofghosts < maxghosts)
+		// nrofghosts++;
+		// if (currentspeed<maxspeed)
+		// currentspeed++;
+		// scaredtime=scaredtime-20;
+		// if (scaredtime<minscaredtime)
+		// scaredtime=minscaredtime;
+		// LevelInit();
+		// }
+	}
 
 	public void DrawMaze()
 	{
@@ -202,7 +204,7 @@ public class Game extends JPanel implements Runnable
 			for (x = 0; x < Level.scrsize; x += Level.blocksize)
 			{
 				goff.setColor(Level.mazecolor);
-				System.out.println(screendata);
+
 				if ((screendata[i][j] & 1) != 0)
 				{
 					goff.drawLine(x, y, x, y + Level.blocksize - 1);
@@ -339,7 +341,18 @@ public class Game extends JPanel implements Runnable
 
 	public void run()
 	{
-		// TODO Auto-generated method stub
+		while (true)
+		{
+			this.repaint();
+			try
+			{
+				Thread.currentThread().sleep(50);
+			} catch (InterruptedException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 
 	}
 
@@ -354,6 +367,7 @@ public class Game extends JPanel implements Runnable
 		f.add(pacman);
 		Thread t = new Thread(pacman);
 		f.setVisible(true);
+		t.start();
 	}
 
 	public void setVisited(int x, int y)
@@ -422,7 +436,9 @@ public class Game extends JPanel implements Runnable
 			return;
 		}
 	}
-	private Image createImage(String path) {
+
+	private Image createImage(String path)
+	{
 		URL folderURL = Game.class.getResource(path);
 		Image image = (new ImageIcon(folderURL)).getImage();
 		return image;

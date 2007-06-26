@@ -40,6 +40,7 @@ public class Ghost{
 	public void setActX(int actX)
 	{
 		this.actX = actX;
+		System.out.println("setX"+actX);
 	}
 
 	public int getActY()
@@ -50,6 +51,7 @@ public class Ghost{
 	public void setActY(int actY)
 	{
 		this.actY = actY;
+		System.out.println("setY"+actY);
 	}
 
 	public int getDestX()
