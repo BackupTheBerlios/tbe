@@ -28,7 +28,8 @@ public class Game extends JPanel implements Runnable
 	private short[][] screendata;
 
 	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
-
+	private PacMan pacman;
+	
 	private Image ghost1, ghost2, ghostscared1, ghostscared2;
 
 	private Image pacman1, pacman2up, pacman2left, pacman2right, pacman2down;
@@ -45,6 +46,11 @@ public class Game extends JPanel implements Runnable
 	final int	animdelay=8;
 	int		animcount=animdelay;
 	final int     ghostanimcount=2;
+	 final int     pacanimdelay=2;
+	  int		pacmananimpos=0;
+	  int           pacanimcount=pacanimdelay;
+	  int		pacanimdir=1;
+	  final int     pacmananimcount=4;
 
 	private boolean ingame = true; // TODO
 
@@ -72,6 +78,7 @@ public class Game extends JPanel implements Runnable
 		{
 			ghosts.add(new Ghost(0, 0, 3));
 		}
+		pacman = new PacMan(0,0,4);
 		// scaredtime=maxscaredtime;
 		this.LevelInit();
 	}
@@ -104,8 +111,8 @@ public class Game extends JPanel implements Runnable
 		}
 		screendata[7][6] = 10;
 		screendata[7][8] = 10;
-		// pacmanx=7*blocksize;
-		// pacmany=11*blocksize;
+		pacman.setActX(7*Level.blocksize);
+		pacman.setActY(13*Level.blocksize);
 		// pacmandx=0;
 		// pacmandy=0;
 		// reqdx=0;
@@ -152,14 +159,14 @@ public class Game extends JPanel implements Runnable
 	      if (ghostanimpos>=ghostanimcount)
 	        ghostanimpos=0;
 	    }
-//	    pacanimcount--;
-//	    if (pacanimcount<=0)
-//	    {
-//	      pacanimcount=pacanimdelay;
-//	      pacmananimpos=pacmananimpos+pacanimdir;
-//	      if (pacmananimpos==(pacmananimcount-1) ||  pacmananimpos==0)
-//	        pacanimdir=-pacanimdir;
-//	    }
+	    pacanimcount--;
+	    if (pacanimcount<=0)
+	    {
+	      pacanimcount=pacanimdelay;
+	      pacmananimpos=pacmananimpos+pacanimdir;
+	      if (pacmananimpos==(pacmananimcount-1) ||  pacmananimpos==0)
+	        pacanimdir=-pacanimdir;
+    }
 	  }
 
 	public void PlayGame()
@@ -171,8 +178,7 @@ public class Game extends JPanel implements Runnable
 		// else
 		// {
 		// CheckScared();
-		// MovePacMan();
-		// DrawPacMan();
+		MovePacMan();
 		MoveGhosts();
 		CheckMaze();
 		// }
@@ -341,6 +347,8 @@ public class Game extends JPanel implements Runnable
 			g.setActX(g.getActX() + (g.getDestX() * g.getSpeed()));
 			g.setActY(g.getActY() + (g.getDestY() * g.getSpeed()));
 			DrawGhost(g.getActX() + 1, (g.getActY() + 1));
+			
+			
 
 			// if (pacmanx>(ghostx[i]-12) && pacmanx<(ghostx[i]+12) &&
 			// pacmany>(ghosty[i]-12) && pacmany<(ghosty[i]+12) && ingame)
@@ -358,7 +366,199 @@ public class Game extends JPanel implements Runnable
 			// }
 			// }
 		}
+		
+		
 	}
+	
+	public void MovePacMan(){
+				
+		int row;
+		int col;
+		int count;
+		
+		if (pacman.getActX() % Level.blocksize == 0
+				&& pacman.getActY() % Level.blocksize == 0)
+		{
+			col = pacman.getActX() / Level.blocksize;
+			row = pacman.getActY() / Level.blocksize;
+
+			count = 0;
+			if ((screendata[row][col] & 1) == 0 && pacman.getDestX() != 1)
+			{
+				dx[count] = -1;
+				dy[count] = 0;
+				count++;
+			}
+			if ((screendata[row][col] & 2) == 0 && pacman.getDestY() != 1)
+			{
+				dx[count] = 0;
+				dy[count] = -1;
+				count++;
+			}
+			if ((screendata[row][col] & 4) == 0 && pacman.getDestX() != -1)
+			{
+				dx[count] = 1;
+				dy[count] = 0;
+				count++;
+			}
+			if ((screendata[row][col] & 8) == 0 && pacman.getDestY() != -1)
+			{
+				dx[count] = 0;
+				dy[count] = 1;
+				count++;
+			}
+			if (count == 0)
+			{
+				if ((screendata[row][col] & 15) == 15)
+				{
+					pacman.setDestX(0);
+					pacman.setDestY(0);
+				} else
+				{
+					pacman.setDestX(-pacman.getDestX());
+					pacman.setDestY(-pacman.getDestY());
+				}
+			} else
+			{
+				count = (int) (Math.random() * count);
+				if (count > 3)
+					count = 3;
+				pacman.setDestX(dx[count]);
+				pacman.setDestY(dy[count]);
+			}
+		}
+		pacman.setActX(pacman.getActX() + (pacman.getDestX() * pacman.getSpeed()));
+		pacman.setActY(pacman.getActY() + (pacman.getDestY() * pacman.getSpeed()));
+		
+
+		int ch;
+
+	    if (pacman.getActX()%Level.blocksize==0 && pacman.getActY()%Level.blocksize==0)
+	    {
+	    	col = pacman.getActX() / Level.blocksize;
+			row = pacman.getActY() / Level.blocksize;
+	
+	      ch=screendata[row][col];
+	      if ((ch&16)!=0)
+	      {
+	        screendata[row][col]=(short)(ch&15);
+	        //score++;
+	      }
+	      if ((ch&32)!=0)
+	      {
+	        //scared=true;
+	        //scaredcount=scaredtime;
+	        screendata[row][col]=(short)(ch&15);
+	        //score+=5;
+	      }
+
+//	      if (reqdx!=0 || reqdy!=0)
+//	      {
+//	        if (!( (reqdx==-1 && reqdy==0 && (ch&1)!=0) ||
+//	           (reqdx==1 && reqdy==0 && (ch&4)!=0) ||
+//	           (reqdx==0 && reqdy==-1 && (ch&2)!=0) ||
+//	           (reqdx==0 && reqdy==1 && (ch&8)!=0)))
+//	        {
+//	          pacmandx=reqdx;
+//	          pacmandy=reqdy;
+//	          viewdx=pacmandx;
+//	          viewdy=pacmandy;
+//	        }
+	      }
+		DrawPacMan();
+	}
+	
+	public void DrawPacMan()
+	  {
+		System.out.println(pacman.getDestX());
+	    if (pacman.getDestX()==-1)
+	      DrawPacManLeft();
+	    else if (pacman.getDestX()==1)
+	      DrawPacManRight();
+	    else if (pacman.getDestY()==-1)
+	      DrawPacManUp();
+	    else
+	      DrawPacManDown();
+	  }
+
+	  public void DrawPacManUp()
+	  {
+	    switch(pacmananimpos)
+	    {
+	      case 1:
+	        goff.drawImage(pacman2up,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 2:
+	        goff.drawImage(pacman3up,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 3:
+	        goff.drawImage(pacman4up,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      default:
+	        goff.drawImage(pacman1,pacman.getDestX()+1,pacman.getActY()+1,this);
+	        break;
+	    }
+	  }
+
+
+	  public void DrawPacManDown()
+	  {
+	    switch(pacmananimpos)
+	    {
+	      case 1:
+	        goff.drawImage(pacman2down,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 2:
+	        goff.drawImage(pacman3down,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 3:
+	        goff.drawImage(pacman4down,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      default:
+	        goff.drawImage(pacman1,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	    }
+	  }
+
+
+	  public void DrawPacManLeft()
+	  {
+	    switch(pacmananimpos)
+	    {
+	      case 1:
+	        goff.drawImage(pacman2left,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 2:
+	        goff.drawImage(pacman3left,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 3:
+	        goff.drawImage(pacman4left,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      default:
+	        goff.drawImage(pacman1,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	    }
+	  }
+
+
+	  public void DrawPacManRight()
+	  {
+	    switch(pacmananimpos)
+	    {
+	      case 1:
+	        goff.drawImage(pacman2right,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 2:
+	        goff.drawImage(pacman3right,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      case 3:
+	        goff.drawImage(pacman4right,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	      default:
+	        goff.drawImage(pacman1,pacman.getActX()+1,pacman.getActY()+1,this);
+	        break;
+	    }
+	  }
 
 	public void run()
 	{
