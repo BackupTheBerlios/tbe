@@ -268,4 +268,8 @@ public class TBE {
 		return this.stateBar;
 	}
 
+	public JFrame getFrame() {
+  	return frame;
+  }
+
 }

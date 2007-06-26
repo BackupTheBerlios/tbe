@@ -467,7 +467,13 @@ public class Menu extends JMenuBar {
 		tbeSettings.addMouseListener(new tbeSettingsListener());
 
 		JMenuItem tbeAbout = new JMenuItem(menuLabels.getString("tbe2"));
-
+		class tbeAboutListener extends MouseAdapter {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				new AboutFrame(TBE.getInstance().getFrame());
+			}
+		}
+		tbeAbout.addMouseListener(new tbeAboutListener());
 		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
 
 		tbemenu.add(tbeSettings);
