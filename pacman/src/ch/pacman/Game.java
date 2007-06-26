@@ -1,9 +1,12 @@
 package ch.pacman;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import ch.pacman.game.Ghost;
 import ch.pacman.game.Level;
 import ch.pacman.game.Level1;
 
@@ -15,14 +18,19 @@ public class Game extends JPanel implements Runnable
 	private Graphics goff;
 
 	private Dimension d = new Dimension(400, 400);
-
+	private int		deathcounter;
 	private Image ii;
-
+	private final int nrofGhosts = 3;
 	private short[][] screendata = level.getLeveldata();
+	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 
 	public Game()
 	{
 		this.setSize(d);
+		for(int i = 0 ; i < 4; i++){
+			ghosts.add(new Ghost(0,0));
+		}
+		
 	}
 
 	@Override
@@ -94,6 +102,106 @@ public class Game extends JPanel implements Runnable
 			i++;
 		}
 	}
+	
+	 public void DrawGhost(int x, int y)
+	  {
+	    if (ghostanimpos==0 && !scared)
+	    {
+	      goff.drawImage(ghost1,x,y,this);
+	    }
+	    else if (ghostanimpos==1 && !scared)
+	    {
+	      goff.drawImage(ghost2,x,y,this);
+	    }
+	    else if (ghostanimpos==0 && scared)
+	    {
+	      goff.drawImage(ghostscared1,x,y,this);
+	    }
+	    else if (ghostanimpos==1 && scared)
+	    {
+	      goff.drawImage(ghostscared2,x,y,this);
+	    }
+	  }
+	 
+	  public void MoveGhosts()
+	  {
+	    short i;
+	    int pos;
+	    int count;
+
+	    for (Ghost g : ghosts)
+	    {
+	      if (g.getActX() % Level.blocksize==0 && ghosty[i]%Level.blocksize==0)
+	      {
+	        pos=g.getActX()/Level.blocksize+Level.nrofblocks*(int)(ghosty[i]/Level.blocksize);
+
+	        count=0;
+	        if ((screendata[pos]&1)==0 && ghostdx[i]!=1)
+	        {
+	          dx[count]=-1;
+	          dy[count]=0;
+	          count++;
+	        }
+	        if ((screendata[pos]&2)==0 && ghostdy[i]!=1)
+	        {
+	          dx[count]=0;
+	          dy[count]=-1;
+	          count++;
+	        }
+	        if ((screendata[pos]&4)==0 && ghostdx[i]!=-1)
+	        {
+	          dx[count]=1;
+	          dy[count]=0;
+	          count++;
+	        }
+	        if ((screendata[pos]&8)==0 && ghostdy[i]!=-1)
+	        {
+	          dx[count]=0;
+	          dy[count]=1;
+	          count++;
+	        }
+	        if (count==0)
+	        {
+	          if ((screendata[pos]&15)==15)
+	          {
+	            ghostdx[i]=0;
+	            ghostdy[i]=0;
+	          }
+	          else
+	          {
+	            ghostdx[i]=-ghostdx[i];
+	            ghostdy[i]=-ghostdy[i];
+	          }
+	        }
+	        else
+	        {
+	          count=(int)(Math.random()*count);
+	          if (count>3) count=3;
+	          ghostdx[i]=dx[count];
+	          ghostdy[i]=dy[count];
+	        }
+	      }
+	      ghostx[i]=ghostx[i]+(ghostdx[i]*ghostspeed[i]);
+	      ghosty[i]=ghosty[i]+(ghostdy[i]*ghostspeed[i]);
+	      DrawGhost(ghostx[i]+1,ghosty[i]+1);
+
+	      if (pacmanx>(ghostx[i]-12) && pacmanx<(ghostx[i]+12) &&
+	          pacmany>(ghosty[i]-12) && pacmany<(ghosty[i]+12) && ingame)
+	      {
+	        if (scared)
+	        {
+	          score+=10;
+	          g.setActX(7*Level.blocksize);
+	          g.setActY(7*Level.blocksize);
+	        }
+	        else
+	        {
+	          dying=true;
+	          deathcounter=64;
+	        }
+	      }
+	    }
+	  }
 
 	public void run()
 	{
