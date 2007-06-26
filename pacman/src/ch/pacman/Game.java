@@ -62,6 +62,10 @@ public class Game extends JPanel implements Runnable
 	private final int pacmananimcount = 4;
 
 	private boolean ingame = true; // TODO
+	
+	private int scaredcount ,scaredtime;
+	private  final	int	maxscaredtime=120;
+	private  final int     minscaredtime=20;
 
 	public Game()
 	{
@@ -80,7 +84,7 @@ public class Game extends JPanel implements Runnable
 	{
 		// pacsleft=3;
 		// score=0;
-		// scaredtime=maxscaredtime;
+		scaredtime=maxscaredtime;
 
 		nrofGhosts = 3;
 		for (int i = 0; i <= nrofGhosts; i++)
@@ -88,7 +92,7 @@ public class Game extends JPanel implements Runnable
 			ghosts.add(new Ghost(0, 0, 3));
 		}
 		pacman = new PacMan(0, 0, 4);
-		// scaredtime=maxscaredtime;
+		scaredtime=maxscaredtime;
 		this.LevelInit();
 	}
 
@@ -181,7 +185,7 @@ public class Game extends JPanel implements Runnable
 		// }
 		// else
 		// {
-		// CheckScared();
+		CheckScared();
 		MovePacMan();
 		MoveGhosts();
 		CheckMaze();
@@ -450,8 +454,8 @@ public class Game extends JPanel implements Runnable
 			}
 			if ((ch & 32) != 0)
 			{
-				//scared=true;
-				//scaredcount=scaredtime;
+				scared=true;
+				scaredcount=scaredtime;
 				screendata[row][col] = (short) (ch & 15);
 				// score+=5;
 			}
@@ -592,6 +596,31 @@ public class Game extends JPanel implements Runnable
 		}
 
 	}
+	
+	 public void CheckScared()
+	  {
+	    scaredcount--;
+	    if (scaredcount<=0)
+	      scared=false;
+
+	    if (scared && scaredcount>=30)
+	      Level.mazecolor=new Color(192,32,255);
+	    else
+	    	Level.mazecolor=new Color(32,192,255);
+
+	    if (scared)
+	    {
+	      screendata[7][6]=11;
+	      screendata[7][8]=14;
+	    }
+	    else
+	    {
+	      screendata[7][6]=10;
+	      screendata[7][8]=10;
+	    }
+	  }
+	
+	
 
 	public static void main(String[] args)
 	{
