@@ -16,7 +16,7 @@ public class Game extends JPanel implements Runnable
 	private Level level = new Level1(this);
 
 	private Graphics goff;
-
+	private boolean       scared=false;
 	private Dimension d = new Dimension(400, 400);
 	private int		deathcounter;
 	private Image ii;
