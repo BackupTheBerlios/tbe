@@ -7,9 +7,8 @@ import jdsl.graph.api.Vertex;
 
 public class Level1 extends Level
 {
-	Game game;
 	
-	public Level1(Game game){
+	public Level1(){
 		this.createLevel();
 	}
 	
@@ -34,16 +33,16 @@ public class Level1 extends Level
 				{25,26,26,28, 3, 2, 2, 2, 2, 2, 6,25,26,26,28}  };
 		
 		
-		pathdata[0][0] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][1] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][2] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][3] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][4] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][5] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][6] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][7] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][8] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
-		pathdata[0][9] = graph.insertVertex(new PacVertex(game, 0, 0, true, false));
+		pathdata[0][0] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][1] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][2] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][3] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][4] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][5] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][6] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][7] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][8] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][9] = graph.insertVertex(new PacVertex(0, 0, true, false));
 	     
 
 	     Edge e01 = graph.insertEdge(pathdata[0][0],pathdata[0][1],"south");

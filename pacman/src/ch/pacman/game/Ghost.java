@@ -2,7 +2,7 @@ package ch.pacman.game;
 
 import ch.pacman.Game;
 
-public class Ghost implements Runnable {
+public class Ghost{
 	
 	int actX = 0;
 	int actY = 0;

@@ -21,7 +21,7 @@ public class PacMan implements Runnable{
 		
 	}
 
-	public void evaluateField(PacVertex node){
-		node.evaluateField();
-	}
+//	public void evaluateField(PacVertex node){
+//		node.evaluateField();
+//	}
 }

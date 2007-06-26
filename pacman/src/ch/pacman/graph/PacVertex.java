@@ -16,33 +16,33 @@ public class PacVertex{
 	boolean point = false;
 	boolean supreme = false;
 	
-	Game game;
 
-	public PacVertex(Game game, int x, int y, boolean fruit, boolean supreme) {
+
+	public PacVertex(int x, int y, boolean fruit, boolean supreme) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.fruit = fruit;
 		this.supreme = supreme;
 		this.point = (!supreme && !fruit);
-		this.game = game;
+
 	}
 
-	public int evaluateField() {
-		int score = 0;
-		if(supreme){
-			game.setSupreme();
-			score = 200;
-		}
-		if(point){
-			score = 100;
-		}
-		if(fruit){
-			score = 500;
-		}
-		game.setVisited(x,y);
-		return score;
-	}
+//	public int evaluateField() {
+//		int score = 0;
+//		if(supreme){
+//			game.setSupreme();
+//			score = 200;
+//		}
+//		if(point){
+//			score = 100;
+//		}
+//		if(fruit){
+//			score = 500;
+//		}
+//		game.setVisited(x,y);
+//		return score;
+//	}
 
 	
 	public PacVertex getEast() {
