@@ -1,5 +1,7 @@
 package ch.pacman.game;
 
+import java.awt.Point;
+
 import ch.pacman.Game;
 import ch.pacman.graph.PacVertex;
 import jdsl.graph.api.Edge;
@@ -13,6 +15,9 @@ public class Level2 extends Level
 	}
 	
 	private void createLevel(){
+		
+		this.pacManStart = new Point(7 * Level.blocksize,11 * Level.blocksize);
+		this.ghostStart = new Point(7 * Level.blocksize,7 * Level.blocksize);
 		
 		
 		leveldata = new short[][]{ 

@@ -45,21 +45,21 @@ public class Game extends JPanel implements Runnable
 
 	private int ghostanimpos = 0;
 
-	final int animdelay = 8;
+	private final int animdelay = 8;
 
-	int animcount = animdelay;
+	private int animcount = animdelay;
 
-	final int ghostanimcount = 2;
+	private final int ghostanimcount = 2;
 
-	final int pacanimdelay = 2;
+	private final int pacanimdelay = 2;
 
-	int pacmananimpos = 0;
+	private int pacmananimpos = 0;
 
-	int pacanimcount = pacanimdelay;
+	private int pacanimcount = pacanimdelay;
 
-	int pacanimdir = 1;
+	private int pacanimdir = 1;
 
-	final int pacmananimcount = 4;
+	private final int pacmananimcount = 4;
 
 	private boolean ingame = true; // TODO
 
@@ -107,8 +107,8 @@ public class Game extends JPanel implements Runnable
 
 		for (Ghost g : ghosts)
 		{
-			g.setActX(7 * Level.blocksize);
-			g.setActY(7 * Level.blocksize);
+			g.setActX(level.getGhostStart().x);
+			g.setActY(level.getGhostStart().y);
 
 			g.setDestY(0);
 			g.setDestX(dx);
@@ -120,14 +120,9 @@ public class Game extends JPanel implements Runnable
 		}
 		screendata[7][6] = 10;
 		screendata[7][8] = 10;
-		pacman.setActX(7 * Level.blocksize);
-		pacman.setActY(13 * Level.blocksize);
-		// pacmandx=0;
-		// pacmandy=0;
-		// reqdx=0;
-		// reqdy=0;
-		// viewdx=-1;
-		// viewdy=0;
+		pacman.setActX(level.getPacManStart().x);
+		pacman.setActY(level.getPacManStart().y);
+
 		// dying=false;
 		scared = false;
 	}

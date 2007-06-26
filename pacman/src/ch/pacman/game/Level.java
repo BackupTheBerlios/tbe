@@ -2,6 +2,8 @@ package ch.pacman.game;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.Point;
+
 import jdsl.graph.api.Vertex;
 import jdsl.graph.ref.IncidenceListGraph;
 
@@ -27,10 +29,18 @@ public abstract class Level
 	
 	protected Vertex[][] pathdata = new Vertex[nrofblocks][nrofblocks];
 	protected short[][]   leveldata = null;
+	protected Point pacManStart = new Point(0,0);
+	protected Point ghostStart = new Point (nrofblocks,nrofblocks);
 	
 	public short[][] getLeveldata()
 	{
 		return leveldata;
+	}
+	public Point getPacManStart(){
+		return pacManStart;
+	}
+	public Point getGhostStart(){
+		return ghostStart;
 	}
 	
 
