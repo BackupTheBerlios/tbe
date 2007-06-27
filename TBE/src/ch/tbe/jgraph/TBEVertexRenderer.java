@@ -22,16 +22,12 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.ImageObserver;
 import java.io.Serializable;
 import java.util.Map;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
-
 import org.jgraph.JGraph;
-import org.jgraph.graph.CellView;
-import org.jgraph.graph.CellViewRenderer;
-import org.jgraph.graph.GraphConstants;
-import org.jgraph.graph.VertexView;
+import org.jgraph.graph.*;
+
 
 /**
  * This renderer displays entries that implement the CellView interface and
@@ -42,16 +38,20 @@ import org.jgraph.graph.VertexView;
  * GraphConstants.LINEWIDTH GraphConstants.FOREGROUND GraphConstants.BACKGROUND
  * GraphConstants.VERTICAL_ALIGNMENT GraphConstants.HORIZONTAL_ALIGNMENT
  * GraphConstants.VERTICAL_TEXT_POSITION GraphConstants.HORIZONTAL_TEXT_POSITION
- * </li>
+ * </li> 
  * 
  * @version 1.0 1/1/02
  * @author Gaudenz Alder
  */
 
+
 public class TBEVertexRenderer extends JLabel implements CellViewRenderer, ImageObserver, Serializable {
-	private static final long serialVersionUID = 1L;
+
+  private static final long serialVersionUID = 1L;
 
 	Map map;
+
+	JGraph graph;
 
 	/** Cache the current shape for drawing. */
 	transient protected VertexView view;
@@ -97,6 +97,7 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer, Image
    * @return the component used to render the value.
    */
 	public Component getRendererComponent(JGraph graph, CellView view, boolean sel, boolean focus, boolean preview) {
+		this.graph = graph;
 		gridColor = graph.getGridColor();
 		highlightColor = graph.getHighlightColor();
 		lockedHandleColor = graph.getLockedHandleColor();
@@ -149,7 +150,6 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer, Image
    */
 	protected void installAttributes(CellView view) {
 		map = view.getAllAttributes();
-		// setIcon(GraphConstants.getIcon(map));
 		setOpaque(GraphConstants.isOpaque(map));
 		setBorder(GraphConstants.getBorder(map));
 		setVerticalAlignment(GraphConstants.getVerticalAlignment(map));
@@ -190,7 +190,6 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer, Image
 			if (map != null) {
 
 				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-				Rectangle2D r = GraphConstants.getBounds(map);
 				Image i = TBEGraphConstants.getIcon(map);
 				if (i != null) {
 
@@ -198,6 +197,7 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer, Image
 					g2d.rotate(Math.toRadians(TBEGraphConstants.getRotation(map)));
 					g2d.translate(-getWidth() / 2, -getHeight() / 2);
 
+					Rectangle2D r = computePoints();
 					g2d.drawImage(i, (int) (getWidth() / 2 - r.getWidth() / 2), (int) (getHeight() / 2 - r.getHeight() / 2), (int) r.getWidth(), (int) r.getHeight(), this);
 				}
 
@@ -205,6 +205,48 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer, Image
 		} catch (IllegalArgumentException e) {
 			// JDK Bug: Zero length string passed to TextLayout constructor
 		}
+	}
+
+	private Rectangle2D computePoints() {
+		Rectangle2D r = TBEGraphConstants.getBounds(map);
+
+		Point2D cP = new Point2D.Double(r.getCenterX(), r.getCenterY());
+
+		double rad = Math.toRadians(TBEGraphConstants.getRotation(map));
+		Point2D[] newPoints = new Point2D[4];
+		Point2D[] points = new Point2D[] { new Point2D.Double(r.getX(), r.getY()), new Point2D.Double(r.getX() + r.getWidth(), r.getY()), new Point2D.Double(r.getX() + r.getWidth(), r.getY() + r.getHeight()), new Point2D.Double(r.getX(), r.getY() + r.getHeight()) };
+
+		for (int i = 0; i < points.length; i++) {
+			newPoints[i] = new Point2D.Double(cP.getX() + Math.cos(rad) * (points[i].getX() - cP.getX()) + (-Math.sin(rad) * (points[i].getY() - cP.getY())), cP.getY() + Math.sin(rad) * (points[i].getX() - cP.getX()) + (-Math.cos(rad) * (points[i].getY() - cP.getY())));
+		}
+
+		double minX = newPoints[0].getX();
+		double maxX = newPoints[0].getX();
+		double minY = newPoints[0].getY();
+		double maxY = newPoints[0].getY();
+		for (int i = 1; i < newPoints.length; i++) {
+			if (minX > newPoints[i].getX()) {
+				minX = newPoints[i].getX();
+			}
+			if (maxX < newPoints[i].getX()) {
+				maxX = newPoints[i].getX();
+			}
+			if (minY > newPoints[i].getY()) {
+				minY = newPoints[i].getY();
+			}
+			if (maxY < newPoints[i].getY()) {
+				maxY = newPoints[i].getY();
+			}
+		}
+
+		Rectangle2D after = new Rectangle2D.Double(minX, minY, maxX - minX, maxY - minY);
+		double wFact = r.getWidth() / after.getWidth();
+		double hFact = r.getHeight() / after.getHeight();
+		double fact = Math.min(wFact, hFact);
+		double newWidth = Math.sqrt(Math.pow(newPoints[1].getX() - newPoints[0].getX(), 2) + Math.pow(newPoints[1].getY() - newPoints[0].getY(), 2)) * fact;
+		double newHeight = Math.sqrt(Math.pow(newPoints[3].getX() - newPoints[0].getX(), 2) + Math.pow(newPoints[3].getY() - newPoints[0].getY(), 2)) * fact;
+		return new Rectangle2D.Double(minX, minY, newWidth, newHeight);
+
 	}
 
 	/**

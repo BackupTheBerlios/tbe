@@ -542,6 +542,12 @@ public class TBEGraphConstants {
    * values for this key.
    */
 	public final static String LINK = "link";
+	
+	/**
+   * Key for the <code>iconbounds</code> attribute. Use instances of
+   * Rectangle as values for this key.
+   */
+public static final String ICONBOUNDS = "iconbounds";
 
 	/**
    * Overloaded method that passes arguments on as arrays
@@ -764,8 +770,6 @@ public class TBEGraphConstants {
 	public static final void setIcon(Map map, Icon value) {
 
 		Image i = ((ImageIcon) value).getImage();
-		// i.getScaledInstance(value.getIconWidth(), value.getIconHeight(),
-    // Image.SCALE_SMOOTH);
 		Rectangle2D r = getBounds(map);
 
 		double factor = (double) (r.getHeight() / Math.max(value.getIconWidth(), value.getIconHeight()));
@@ -1185,6 +1189,7 @@ public class TBEGraphConstants {
 	@SuppressWarnings("unchecked")
 	public static final void setRotation(Map map, int degree) {
 		map.put(ROTATION, new Integer(degree));
+		//computePoints(map);
 	}
 
 	/**
@@ -1728,4 +1733,5 @@ public class TBEGraphConstants {
 		String link = (String) map.get(LINK);
 		return link;
 	}
+
 }
