@@ -149,15 +149,16 @@ public class TBE implements Runnable {
 				return "TBE (*.tbe)";
 			}
 		});
-		chooser.showOpenDialog(new Frame());
-
-		File filename = chooser.getSelectedFile();
-		try {
-			Board board = XMLHandler.openXML(filename.getPath());
-			this.addRecently(filename.getPath());
-			this.setView(new WorkingView(board));
-		} catch (Exception ex) {
-			System.err.println("Could not load file");
+		int answer = chooser.showOpenDialog(new Frame());
+		if (answer == 0) {
+			File filename = chooser.getSelectedFile();
+			try {
+				Board board = XMLHandler.openXML(filename.getPath());
+				this.addRecently(filename.getPath());
+				this.setView(new WorkingView(board));
+			} catch (Exception ex) {
+				System.err.println("Could not load file");
+			}
 		}
 	}
 

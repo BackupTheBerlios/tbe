@@ -122,23 +122,25 @@ public class PrintHandler implements Printable {
 			}
 		});
 
-		chooser.showSaveDialog(new Frame());
-
-		File filename = chooser.getSelectedFile();
-		if (filename != null && !filename.getPath().toLowerCase().endsWith(".jpg")) {
-			filename = new File(filename.getPath() + ".jpg");
-		}
-		Dimension size = comp.getSize();
-		BufferedImage myImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
-		Graphics2D g2 = myImage.createGraphics();
-		comp.paint(g2);
-		try {
-			OutputStream out = new FileOutputStream(filename);
-			JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
-			encoder.encode(myImage);
-			out.close();
-		} catch (Exception e) {
-			// TODO exeption handling
+		int answer = chooser.showSaveDialog(new Frame());
+		if (answer == 0) {
+			File filename = chooser.getSelectedFile();
+			if (filename != null && !filename.getPath().toLowerCase().endsWith(".jpg")) {
+				filename = new File(filename.getPath() + ".jpg");
+			}
+			Dimension size = comp.getSize();
+			BufferedImage myImage = new BufferedImage(size.width, size.height, BufferedImage.TYPE_INT_RGB);
+			Graphics2D g2 = myImage.createGraphics();
+			comp.paint(g2);
+			try {
+				OutputStream out = new FileOutputStream(filename);
+				JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(out);
+				encoder.encode(myImage);
+				out.close();
+			} catch (Exception e) {
+				// TODO exeption handling
+				System.err.println("Export-Error");
+			}
 		}
 	}
 
@@ -204,7 +206,7 @@ public class PrintHandler implements Printable {
 		}
 
 		f.setVisible(true); // Don't know why, but is needed to print/export without
-                        // preview
+		// preview
 		f.setVisible(visible);
 
 		return p;
