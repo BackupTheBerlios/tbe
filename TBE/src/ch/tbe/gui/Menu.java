@@ -323,6 +323,10 @@ public class Menu extends JMenuBar {
 		editSelectAll.addActionListener(new editSelectAllListener());
 		editSelectAll.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 
+		editCopy.setIcon(new ImageIcon(TBE.class.getResource("../pics/copy.png")));
+		editInsert.setIcon(new ImageIcon(TBE.class.getResource("../pics/paste.png")));
+		editCut.setIcon(new ImageIcon(TBE.class.getResource("../pics/cut.png")));
+		editInsert.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
 		editUndo.setIcon(new ImageIcon(TBE.class.getResource("../pics/undo.png")));
 		editRedo.setIcon(new ImageIcon(TBE.class.getResource("../pics/redo.png")));
 
@@ -473,9 +477,13 @@ public class Menu extends JMenuBar {
 				new AboutFrame(TBE.getInstance().getFrame());
 			}
 		}
+		
+		
 		tbeAbout.addMouseListener(new tbeAboutListener());
-		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
 
+		tbeSettings.setIcon(new ImageIcon(TBE.class.getResource("../pics/settings.png")));
+		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
+		
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
 
