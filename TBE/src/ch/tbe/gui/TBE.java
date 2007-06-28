@@ -35,8 +35,7 @@ public class TBE {
 	private View view;
 	private StateBar stateBar = StateBar.getInstance();
 
-	private TBE() {
-	}
+	private TBE() {}
 
 	public static TBE getInstance() {
 		return instance;

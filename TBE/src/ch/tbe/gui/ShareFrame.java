@@ -455,7 +455,7 @@ public class ShareFrame {
 		if (newPaths.size() != 0)
 			FTPHandler.upload(currentFTP, local, newPaths);
 	}
-
+	
 	// Lädt lokale Files inkl. OrdnerStruktur auf den Server, leere Ordner
 	// ausgenommen
 	private void doCustomUpload(ArrayList<String> locals) {

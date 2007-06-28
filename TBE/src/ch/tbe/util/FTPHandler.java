@@ -68,7 +68,7 @@ public final class FTPHandler {
 	private static void getLocalSubDirs(String dir) {
 		ArrayList<String> dirs = new ArrayList<String>();
 		String[] subDir = new File(dir).list();
-
+		
 		for (int i = 0; i < subDir.length; i++) {
 			dirs.add(subDir[i]);
 		}
@@ -77,7 +77,7 @@ public final class FTPHandler {
 			// TODO: cvs kicken...
 			if (s.contains(".")) {
 				localPaths.add(dir + "/" + s);
-			} else if (s.contains("cvs")) {
+			} else if (s.contains("CVS")) {
 			} else {
 				getLocalSubDirs(dir + "/" + s);
 			}
@@ -85,7 +85,6 @@ public final class FTPHandler {
 	}
 
 	public static void deleteSport(ArrayList<String> sports) {
-
 		for (int i = 0; i < sports.size(); i++) {
 			String sportToDelete = LOCALSPORTPATH + "/" + sports.get(i);
 			getLocalSubDirs(sportToDelete);
@@ -97,7 +96,6 @@ public final class FTPHandler {
 				// Ordner löschen
 				new File(s.substring(0, s.lastIndexOf("/"))).delete();
 			}
-
 		}
 	}
 
