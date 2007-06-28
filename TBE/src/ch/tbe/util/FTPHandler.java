@@ -74,8 +74,6 @@ public final class FTPHandler {
 		}
 
 		for (String s : dirs) {
-			File check = new File(s);
-
 			// TODO: cvs kicken...
 			if (s.contains(".")) {
 				localPaths.add(dir + "/" + s);
