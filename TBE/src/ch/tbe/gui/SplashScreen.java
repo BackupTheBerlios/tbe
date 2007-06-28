@@ -1,8 +1,11 @@
 package ch.tbe.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.net.URL;
+
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -12,7 +15,6 @@ import javax.swing.SwingUtilities;
 
 public class SplashScreen extends JWindow implements Runnable{
 	private static final long serialVersionUID = 1L;
-	private BorderLayout borderLayout1 = new BorderLayout();
 	private JLabel imageLabel = new JLabel();
 	private JPanel southPanel = new JPanel();
 	private FlowLayout southPanelFlowLayout = new FlowLayout();
@@ -39,10 +41,13 @@ public class SplashScreen extends JWindow implements Runnable{
 	// note - this class created with JBuilder
 	void jbInit() throws Exception {
 		imageLabel.setIcon(imageIcon);
-		this.setLayout(borderLayout1);
+		this.setLayout(new FlowLayout());
 		southPanel.setLayout(southPanelFlowLayout);
-		this.add(imageLabel, BorderLayout.CENTER);
-		this.add(southPanel, BorderLayout.SOUTH);
+		JPanel splashPanel = new JPanel(new FlowLayout());
+		splashPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		splashPanel.add(imageLabel, BorderLayout.CENTER);
+		splashPanel.add(southPanel, BorderLayout.SOUTH);
+		this.add(splashPanel);
 		southPanel.add(progressBar, null);
 		this.pack();
 		this.setLocationRelativeTo(null);
