@@ -199,14 +199,14 @@ public class PrintHandler implements Printable {
 			f.add(buttons, BorderLayout.NORTH);
 		}
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		if (f.getPreferredSize().height > toolkit.getScreenSize().getHeight()) {
-			f.setSize(new Dimension((int) f.getPreferredSize().getWidth(), (int) toolkit.getScreenSize().getHeight() - 50));
+		if (f.getPreferredSize().height >= toolkit.getScreenSize().getHeight()) {
+			f.setSize(new Dimension((int) f.getPreferredSize().getWidth(), (int) toolkit.getScreenSize().getHeight() - 100));
 		} else {
 			f.pack();
 		}
 
-		f.setVisible(true); // Don't know why, but is needed to print/export without
-		// preview
+		f.setVisible(true); // Don't know why, but is needed to print/export without preview
+		f.setLocationRelativeTo(null);
 		f.setVisible(visible);
 
 		return p;
