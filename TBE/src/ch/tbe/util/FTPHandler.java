@@ -85,8 +85,6 @@ public final class FTPHandler {
 	}
 
 	public static void deleteSport(ArrayList<String> sports) {
-		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
-		connect(server);
 
 		for (int i = 0; i < sports.size(); i++) {
 			String sportToDelete = LOCALSPORTPATH + "/" + sports.get(i);
@@ -94,11 +92,10 @@ public final class FTPHandler {
 
 			for (String s : localPaths) {
 				// Files löschen
-				File del = new File(s);
-				boolean bool = del.delete();
+				new File(s).delete();
 
 				// Ordner löschen
-				bool = new File(s.substring(0, s.lastIndexOf("/"))).delete();
+				new File(s.substring(0, s.lastIndexOf("/"))).delete();
 			}
 
 		}

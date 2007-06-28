@@ -186,7 +186,11 @@ public class Menu extends JMenuBar {
 		fileShare.setIcon(new ImageIcon(TBE.class.getResource("../pics/share.png")));
 		fileExport.setIcon(new ImageIcon(TBE.class.getResource("../pics/export.png")));
 		fileSave.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
+		fileSaveAs.setIcon(new ImageIcon(TBE.class.getResource("../pics/saveas.png")));
 		filePrint.setIcon(new ImageIcon(TBE.class.getResource("../pics/print.png")));
+		filePreview.setIcon(new ImageIcon(TBE.class.getResource("../pics/printview.png")));
+		fileClose.setIcon(new ImageIcon(TBE.class.getResource("../pics/close.png")));
+		fileQuit.setIcon(new ImageIcon(TBE.class.getResource("../pics/exit.png")));
 
 		if (TBE.getInstance().getView() instanceof WorkingView) {
 		} else {
@@ -324,11 +328,15 @@ public class Menu extends JMenuBar {
 		editSelectAll.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 
 		editCopy.setIcon(new ImageIcon(TBE.class.getResource("../pics/copy.png")));
+		editDelete.setIcon(new ImageIcon(TBE.class.getResource("../pics/delete.png")));
 		editInsert.setIcon(new ImageIcon(TBE.class.getResource("../pics/paste.png")));
 		editCut.setIcon(new ImageIcon(TBE.class.getResource("../pics/cut.png")));
 		editInsert.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
+		editSelectAll.setIcon(new ImageIcon(TBE.class.getResource("../pics/select.png")));
 		editUndo.setIcon(new ImageIcon(TBE.class.getResource("../pics/undo.png")));
 		editRedo.setIcon(new ImageIcon(TBE.class.getResource("../pics/redo.png")));
+		editAddPoint.setIcon(new ImageIcon(TBE.class.getResource("../pics/add.png")));
+		editRemovePoint.setIcon(new ImageIcon(TBE.class.getResource("../pics/remove.png")));
 
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
@@ -372,6 +380,9 @@ public class Menu extends JMenuBar {
 			// fieldMenu =
 			// createFieldMenu(TBE.getInstance().getSports().get(0).getFields());
 		}
+		
+		fieldMenu.setIcon(new ImageIcon(TBE.class.getResource("../pics/changeField.png")));
+		boardClear.setIcon(new ImageIcon(TBE.class.getResource("../pics/delete.png")));
 		boardmenu.add(fieldMenu);
 		boardmenu.add(boardClear);
 
@@ -450,7 +461,7 @@ public class Menu extends JMenuBar {
 		}
 
 		for (Field field : fields) {
-			fieldMenu = new JMenuItem(field.getName());
+			fieldMenu = new JMenuItem(field.getDescription());
 			fieldMenu.addMouseListener(new fieldListener(field));
 			boardChangeField.add(fieldMenu);
 		}
