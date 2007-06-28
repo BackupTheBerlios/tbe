@@ -44,8 +44,6 @@ public class TBE implements Runnable{
 		splashScreen.setScreenVisible(true);
 		splashScreen.setProgress("Read Settings", 0);
 
-		Thread splashThread = new Thread(splashScreen);
-		splashThread.start();
 		XMLHandler.loadTBESettings();
 
 		this.sports = XMLHandler.getSports();
@@ -70,8 +68,7 @@ public class TBE implements Runnable{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		if (!this.UserName.equals("")) {
 			splashScreen.setProgress("Create WelcomeView", 40);
-			WelcomeView welcomeView = new WelcomeView(sports, lang);
-			this.setView(welcomeView);
+			this.setView(new WelcomeView(sports, lang));
 		}
 		splashScreen.setProgress("Open TBE", 100);
 		splashScreen.setScreenVisible(false);

@@ -13,7 +13,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-public class SplashScreen extends JWindow implements Runnable{
+public class SplashScreen extends JWindow{
 	private static final long serialVersionUID = 1L;
 	private JLabel imageLabel = new JLabel();
 	private JPanel southPanel = new JPanel();
@@ -24,18 +24,12 @@ public class SplashScreen extends JWindow implements Runnable{
 	public SplashScreen() {
 		final URL url = TBE.class.getResource("../pics/logo_anim.gif");
 		imageIcon = new ImageIcon(url);
-
 		try {
 			jbInit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-	
-	public void run() {
-		while(!Thread.currentThread().isInterrupted()){
-		}
-  }
 
 
 	// note - this class created with JBuilder
