@@ -10,7 +10,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JWindow;
 import javax.swing.SwingUtilities;
 
-public class SplashScreen extends JWindow {
+public class SplashScreen extends JWindow implements Runnable{
 	private static final long serialVersionUID = 1L;
 	private BorderLayout borderLayout1 = new BorderLayout();
 	private JLabel imageLabel = new JLabel();
@@ -29,6 +29,12 @@ public class SplashScreen extends JWindow {
 			ex.printStackTrace();
 		}
 	}
+	
+	public void run() {
+		while(!Thread.currentThread().isInterrupted()){
+		}
+  }
+
 
 	// note - this class created with JBuilder
 	void jbInit() throws Exception {
@@ -68,6 +74,7 @@ public class SplashScreen extends JWindow {
 	}
 
 	public void setScreenVisible(boolean b) {
+		if(!b) Thread.currentThread().interrupt();
 		final boolean boo = b;
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -85,5 +92,4 @@ public class SplashScreen extends JWindow {
 		}
 		progressBar.setString(message);
 	}
-
 }

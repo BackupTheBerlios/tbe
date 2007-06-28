@@ -212,7 +212,6 @@ public class WelcomeView extends View {
 		sportPanel.setBackground(Color.WHITE);
 
 		for (Sport s : sports) {
-
 			JPanel onePath = new JPanel();
 			onePath.setBackground(Color.WHITE);
 			onePath.setLayout(new GridLayout(1, 2, 0, 5));

@@ -18,7 +18,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileFilter;
 
-public class TBE {
+public class TBE implements Runnable{
 	private static TBE instance = new TBE();
 
 	private ArrayList<Sport> sports = new ArrayList<Sport>();
@@ -37,15 +37,15 @@ public class TBE {
 
 	private TBE() {}
 
-	public static TBE getInstance() {
-		return instance;
-	}
-
-	public void initialize() {
+	@Override
+  public void run() {
 		SplashScreen splashScreen = new SplashScreen();
 		splashScreen.setProgressMax(100);
 		splashScreen.setScreenVisible(true);
 		splashScreen.setProgress("Read Settings", 0);
+
+		Thread splashThread = new Thread(splashScreen);
+		splashThread.start();
 		XMLHandler.loadTBESettings();
 
 		this.sports = XMLHandler.getSports();
@@ -53,6 +53,7 @@ public class TBE {
 		splashScreen.setProgress("Create Frame", 5);
 
 		frame = new JFrame("TBE - Tactic Board Editor");
+		//splashScreen.setAlwaysOnTop(true);
 		splashScreen.setProgress(10);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -64,21 +65,25 @@ public class TBE {
 
 		stateBar.setState("Welcome to TBE");
 		frame.add(stateBar, java.awt.BorderLayout.SOUTH);
-
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		frame.setVisible(true);
+		splashScreen.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		if (!this.UserName.equals("")) {
 			splashScreen.setProgress("Create WelcomeView", 40);
-			this.setView(new WelcomeView(sports, lang));
+			WelcomeView welcomeView = new WelcomeView(sports, lang);
+			this.setView(welcomeView);
 		}
 		splashScreen.setProgress("Open TBE", 100);
 		splashScreen.setScreenVisible(false);
 		frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-		frame.setVisible(true);
 		if (this.UserName.equals("")) {
 			// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 			new SettingsFrame(true);
 		}
+	}
+
+	public static TBE getInstance() {
+		return instance;
 	}
 
 	public void setView(View newView) {
@@ -240,7 +245,8 @@ public class TBE {
 
 	// MAIN!
 	public static void main(String[] args) {
-		TBE.getInstance().initialize();
+		Thread tbe = new Thread(TBE.getInstance());
+		tbe.start();
 	}
 
 	public Clipboard getClipboard() {
