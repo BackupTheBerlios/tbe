@@ -87,6 +87,7 @@ public class Menu extends JMenuBar {
 		class fileOpenListener extends MouseAdapter {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
+				tbe.checkSave(false);
 				tbe.load();
 			}
 		}

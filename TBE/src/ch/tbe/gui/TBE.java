@@ -58,9 +58,9 @@ public class TBE implements Runnable {
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		// splashScreen.setAlwaysOnTop(true);
 		splashScreen.setProgress(10);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		frame.setMinimumSize(new Dimension((int) toolkit.getScreenSize().getWidth() / 2, (int) toolkit.getScreenSize().getHeight() / 2));
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		splashScreen.setProgress(20);
 		menu = new Menu(lang);
 		frame.setJMenuBar(menu);

@@ -62,6 +62,7 @@ public class WorkingView extends View {
 	public WorkingView(Board board) {
 		this.sport = board.getSport();
 		this.board = board;
+		tbe.setSaved(true);
 		createWorkingView();
 	}
 
