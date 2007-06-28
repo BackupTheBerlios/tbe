@@ -67,7 +67,18 @@ public class TBE implements Runnable {
 		splashScreen.setProgress(30);
 		frame.addWindowListener(new java.awt.event.WindowAdapter() {
 			public void windowClosing(WindowEvent winEvt) {
-				checkSave(true);
+				switch (checkSave()) {
+
+				case 0:
+					TBE.this.save();
+					if (!saved)
+						break;
+				case 1:
+				case -1:
+					System.exit(0);
+					break;
+				}
+
 			}
 		});
 
@@ -308,33 +319,14 @@ public class TBE implements Runnable {
 		this.saved = saveState;
 	}
 
-	public void checkSave(boolean exit) {
+	public int checkSave() {
 		if (view instanceof WorkingView && !saved) {
 			ResourceBundle tbeLabels = TBE.this.getResourceBundle();
 			Object[] options = { tbeLabels.getString("save"), tbeLabels.getString("nosave"), tbeLabels.getString("cancel") };
 			String question = tbeLabels.getString("saveBoard");
-			int answer = JOptionPane.showOptionDialog(null, question, "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-
-			switch (answer) {
-			case 0:
-				TBE.this.save();
-				if (!saved)
-					break;
-			case 1:
-				if (exit)
-					System.exit(0);
-				else
-					setView(new WelcomeView(getSports(), getLang()));
-				break;
-			}
-
-		} else {
-			if (exit)
-				System.exit(0);
-			else
-				setView(new WelcomeView(getSports(), getLang()));
+			return JOptionPane.showOptionDialog(null, question, "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 		}
-
+		return -1;
 	}
 
 }

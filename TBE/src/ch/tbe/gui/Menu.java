@@ -74,7 +74,17 @@ public class Menu extends JMenuBar {
 			public void actionPerformed(ActionEvent arg0) {
 				View v = tbe.getView();
 				if (v instanceof WorkingView) {
-					tbe.checkSave(false);
+					switch (tbe.checkSave()) {
+
+					case 0:
+						tbe.save();
+						if (!tbe.isSaved())
+							break;
+					case 1:
+					case -1:
+						tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
+						break;
+					}
 				}
 
 			}
@@ -87,8 +97,18 @@ public class Menu extends JMenuBar {
 		class fileOpenListener extends MouseAdapter {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				tbe.checkSave(false);
-				tbe.load();
+				switch (tbe.checkSave()) {
+
+				case 0:
+					tbe.save();
+					if (!tbe.isSaved())
+						break;
+				case 1:
+				case -1:
+					tbe.load();
+					break;
+				}
+
 			}
 		}
 		fileOpen.addMouseListener(new fileOpenListener());
@@ -162,7 +182,17 @@ public class Menu extends JMenuBar {
 		class fileCloseListener implements ActionListener {
 
 			public void actionPerformed(ActionEvent arg0) {
-				tbe.checkSave(false);
+				switch (tbe.checkSave()) {
+
+				case 0:
+					tbe.save();
+					if (!tbe.isSaved())
+						break;
+				case 1:
+				case -1:
+					tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
+					break;
+				}
 
 			}
 		}
@@ -173,7 +203,17 @@ public class Menu extends JMenuBar {
 		class fileQuitListener extends MouseAdapter {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				tbe.checkSave(true);
+				switch (tbe.checkSave()) {
+
+				case 0:
+					tbe.save();
+					if (!tbe.isSaved())
+						break;
+				case 1:
+				case -1:
+					tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
+					break;
+				}
 			}
 		}
 		fileQuit.addMouseListener(new fileQuitListener());
