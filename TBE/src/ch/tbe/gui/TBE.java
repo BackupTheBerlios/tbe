@@ -126,7 +126,7 @@ public class TBE implements Runnable {
 			// TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht möglich
 			// ist.
 			((WorkingView) view).getBoard().setPath("");
-			XMLHandler.saveBoard(((WorkingView) view).getBoard());
+			saved = XMLHandler.saveBoard(((WorkingView) view).getBoard());
 		}
 	}
 
