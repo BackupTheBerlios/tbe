@@ -67,16 +67,16 @@ public class TBE implements Runnable{
 		splashScreen.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		if (!this.UserName.equals("")) {
-			splashScreen.setProgress("Create WelcomeView", 40);
+			splashScreen.setProgress("Create WelcomeView", 50);
 			this.setView(new WelcomeView(sports, lang));
 		}
 		splashScreen.setProgress("Open TBE", 100);
-		splashScreen.setScreenVisible(false);
 		frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		if (this.UserName.equals("")) {
 			// Beim FirstStart wird Language, Userpre- & lastname und mail gesetzt
 			new SettingsFrame(true);
 		}
+		splashScreen.setScreenVisible(false);
 	}
 
 	public static TBE getInstance() {

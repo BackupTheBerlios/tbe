@@ -35,14 +35,11 @@ public class SplashScreen extends JWindow{
 	// note - this class created with JBuilder
 	void jbInit() throws Exception {
 		imageLabel.setIcon(imageIcon);
-		this.setLayout(new FlowLayout());
+		this.setLayout(new BorderLayout());
 		southPanel.setLayout(southPanelFlowLayout);
-		JPanel splashPanel = new JPanel(new FlowLayout());
-		splashPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		splashPanel.add(imageLabel, BorderLayout.CENTER);
-		splashPanel.add(southPanel, BorderLayout.SOUTH);
-		this.add(splashPanel);
 		southPanel.add(progressBar, null);
+		this.add(imageLabel, BorderLayout.NORTH);
+		this.add(southPanel, BorderLayout.SOUTH);
 		this.pack();
 		this.setLocationRelativeTo(null);
 	}
