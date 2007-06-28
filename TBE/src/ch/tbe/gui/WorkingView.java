@@ -54,6 +54,7 @@ public class WorkingView extends View {
 		GraphLayoutCache view = new GraphLayoutCache(model, new TBECellViewFactory());
 		this.board = new Board(model, view, sport);
 		board.getDescription().setDescription(sport.getName());
+		tbe.setSaved(false);
 		createWorkingView();
 
 	}
@@ -346,9 +347,6 @@ public class WorkingView extends View {
 		return this.board;
 	}
 
-	public void changeField(Field field) {
-	}
-
 	public void clear() {
 
 		ItemComponent[] items = board.getItems();
@@ -485,12 +483,6 @@ public class WorkingView extends View {
 		} else {
 			board.setCursor(tool.getShapeType().getCursor());
 		}
-	}
-
-	public void closeOrNew() {
-		// TODO Save???
-
-		tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
 	}
 
 	public Tool getTool() {

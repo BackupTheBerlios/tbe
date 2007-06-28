@@ -71,6 +71,7 @@ public class SideBar extends JToolBar {
 				} else {
 					board.getDescription().setDescription(s);
 				}
+				TBE.getInstance().setSaved(false);
 
 			}
 
@@ -240,6 +241,7 @@ public class SideBar extends JToolBar {
 
 					titleInputArea.setText("");
 					textInputArea.setText("");
+					TBE.getInstance().setSaved(false);
 
 					AttributeTreeNode node = (AttributeTreeNode) tree.getSelectionPath().getLastPathComponent();
 					if (node.isLeaf()) {
@@ -285,6 +287,7 @@ public class SideBar extends JToolBar {
 		int answer = JOptionPane.showOptionDialog(null, question, "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 		if (answer == 0) {
 			board.removeAttribute(myAttr);
+			TBE.getInstance().setSaved(false);
 			if (current.isLeaf()) {
 				root.remove((AttributeTreeNode) current.getParent());
 			} else {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Stack;
 
 import ch.tbe.framework.*;
+import ch.tbe.gui.TBE;
 
 public class Invoker {
 	private static Invoker instance = null;
@@ -23,6 +24,7 @@ public class Invoker {
 
 	public void execute(List<Command> actCommands) {
 		doneCommands.push(actCommands);
+		TBE.getInstance().setSaved(false);
 
 		for (int i = 0; i < actCommands.size() - 1; i++) {
 			actCommands.get(i).redo();

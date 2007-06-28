@@ -126,7 +126,7 @@ public final class XMLHandler {
    * @return the opened board
    */
 	public static Board openXML(String path) {
-		
+
 		class SaxHandler extends DefaultHandler {
 			GraphModel model = new DefaultGraphModel();
 			GraphLayoutCache view = new GraphLayoutCache(model, new TBECellViewFactory());
@@ -355,7 +355,9 @@ public final class XMLHandler {
 		board = myBoard;
 	}
 
-	public static void saveBoard(Board board) {
+	public static boolean saveBoard(Board board) {
+
+		int answer = 0;
 		if (board.getPath().equals("")) {
 			JFileChooser chooser = new JFileChooser();
 
@@ -368,16 +370,19 @@ public final class XMLHandler {
 					return "TBE (*.tbe)";
 				}
 			});
-			chooser.showSaveDialog(new Frame());
+			answer = chooser.showSaveDialog(new Frame());
+			if (answer == 0) {
+				TBE.getInstance().setSaved(true);
 
-			File filename = chooser.getSelectedFile();
+				File filename = chooser.getSelectedFile();
 
-			if (filename != null && !filename.getPath().toLowerCase().endsWith(".tbe")) {
-				filename = new File(filename.getPath() + ".tbe");
+				if (filename != null && !filename.getPath().toLowerCase().endsWith(".tbe")) {
+					filename = new File(filename.getPath() + ".tbe");
+				}
+
+				board.setPath(filename.getPath());
+				TBE.getInstance().addRecently(filename.getPath());
 			}
-
-			board.setPath(filename.getPath());
-			TBE.getInstance().addRecently(filename.getPath());
 		}
 
 		if (!board.getPath().equals("")) {
@@ -432,7 +437,7 @@ public final class XMLHandler {
 						}
 
 						Point2D p = TBEGraphConstants.getLabelPosition(((ArrowItem) item).getAttributes());
-						
+
 						if (p != null) {
 							eItemComponent.setAttribute("xLabelPos", p.getX() + "");
 							eItemComponent.setAttribute("yLabelPos", p.getY() + "");
@@ -490,6 +495,7 @@ public final class XMLHandler {
 				ex.printStackTrace();
 			}
 		}
+		return answer == 0;
 	}
 
 	public static void saveTBESettings() {

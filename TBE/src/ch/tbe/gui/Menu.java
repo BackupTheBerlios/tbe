@@ -74,7 +74,7 @@ public class Menu extends JMenuBar {
 			public void actionPerformed(ActionEvent arg0) {
 				View v = tbe.getView();
 				if (v instanceof WorkingView) {
-					((WorkingView) v).closeOrNew();
+					tbe.checkSave(false);
 				}
 
 			}
@@ -161,10 +161,7 @@ public class Menu extends JMenuBar {
 		class fileCloseListener implements ActionListener {
 
 			public void actionPerformed(ActionEvent arg0) {
-				View v = tbe.getView();
-				if (v instanceof WorkingView) {
-					((WorkingView) v).closeOrNew();
-				}
+				tbe.checkSave(false);
 
 			}
 		}
@@ -175,8 +172,7 @@ public class Menu extends JMenuBar {
 		class fileQuitListener extends MouseAdapter {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				// TODO: save abfragen
-				System.exit(0);
+				tbe.checkSave(true);
 			}
 		}
 		fileQuit.addMouseListener(new fileQuitListener());
@@ -380,7 +376,7 @@ public class Menu extends JMenuBar {
 			// fieldMenu =
 			// createFieldMenu(TBE.getInstance().getSports().get(0).getFields());
 		}
-		
+
 		fieldMenu.setIcon(new ImageIcon(TBE.class.getResource("../pics/changeField.png")));
 		boardClear.setIcon(new ImageIcon(TBE.class.getResource("../pics/delete.png")));
 		boardmenu.add(fieldMenu);
@@ -457,6 +453,7 @@ public class Menu extends JMenuBar {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				((WorkingView) TBE.getInstance().getView()).getBoard().setField(this.field);
+				TBE.getInstance().setSaved(false);
 			}
 		}
 
@@ -488,13 +485,12 @@ public class Menu extends JMenuBar {
 				new AboutFrame(TBE.getInstance().getFrame());
 			}
 		}
-		
-		
+
 		tbeAbout.addMouseListener(new tbeAboutListener());
 
 		tbeSettings.setIcon(new ImageIcon(TBE.class.getResource("../pics/settings.png")));
 		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
-		
+
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
 

@@ -2,23 +2,25 @@ package ch.tbe.gui;
 
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.awt.event.WindowEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
 import ch.tbe.*;
-
 import ch.tbe.framework.Command;
 import ch.tbe.framework.View;
-
 import ch.tbe.util.XMLHandler;
-
 import java.util.List;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 
-public class TBE implements Runnable{
+public class TBE implements Runnable {
 	private static TBE instance = new TBE();
 
 	private ArrayList<Sport> sports = new ArrayList<Sport>();
@@ -34,11 +36,13 @@ public class TBE implements Runnable{
 	private Clipboard clipboard = new Clipboard("TBE ClipBoard");
 	private View view;
 	private StateBar stateBar = StateBar.getInstance();
+	private boolean saved = true;
 
-	private TBE() {}
+	private TBE() {
+	}
 
 	@Override
-  public void run() {
+	public void run() {
 		SplashScreen splashScreen = new SplashScreen();
 		splashScreen.setProgressMax(100);
 		splashScreen.setScreenVisible(true);
@@ -47,11 +51,12 @@ public class TBE implements Runnable{
 		XMLHandler.loadTBESettings();
 
 		this.sports = XMLHandler.getSports();
-		
+
 		splashScreen.setProgress("Create Frame", 5);
 
 		frame = new JFrame("TBE - Tactic Board Editor");
-		//splashScreen.setAlwaysOnTop(true);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		// splashScreen.setAlwaysOnTop(true);
 		splashScreen.setProgress(10);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -60,12 +65,16 @@ public class TBE implements Runnable{
 		menu = new Menu(lang);
 		frame.setJMenuBar(menu);
 		splashScreen.setProgress(30);
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(WindowEvent winEvt) {
+				checkSave(true);
+			}
+		});
 
 		stateBar.setState("Welcome to TBE");
 		frame.add(stateBar, java.awt.BorderLayout.SOUTH);
 		frame.setVisible(true);
 		splashScreen.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 		if (!this.UserName.equals("")) {
 			splashScreen.setProgress("Create WelcomeView", 50);
 			this.setView(new WelcomeView(sports, lang));
@@ -114,7 +123,8 @@ public class TBE implements Runnable{
 
 	public void saveAs() {
 		if (view instanceof WorkingView) {
-			// TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht möglich ist.
+			// TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht möglich
+			// ist.
 			((WorkingView) view).getBoard().setPath("");
 			XMLHandler.saveBoard(((WorkingView) view).getBoard());
 		}
@@ -122,8 +132,9 @@ public class TBE implements Runnable{
 
 	public void save() {
 		if (view instanceof WorkingView) {
-			XMLHandler.saveBoard(((WorkingView) view).getBoard());
+			saved = XMLHandler.saveBoard(((WorkingView) view).getBoard());
 		}
+
 	}
 
 	public void load() {
@@ -271,7 +282,58 @@ public class TBE implements Runnable{
 	}
 
 	public JFrame getFrame() {
-  	return frame;
-  }
+		return frame;
+	}
+
+	private ResourceBundle getResourceBundle() {
+		InputStream tbeStream;
+		ResourceBundle labels = null;
+		try {
+			tbeStream = TBE.class.getResourceAsStream("../config/lang/" + lang + "/tbe.txt");
+			labels = new PropertyResourceBundle(tbeStream);
+		} catch (FileNotFoundException fnne) {
+			System.out.println("LanguageFile for TBE not found !");
+		} catch (IOException ioe) {
+			System.out.println("Error with ResourceBundle TBE!");
+		}
+		return labels;
+	}
+
+	public boolean isSaved() {
+		return saved;
+	}
+
+	public void setSaved(boolean saveState) {
+		this.saved = saveState;
+	}
+
+	public void checkSave(boolean exit) {
+		if (view instanceof WorkingView && !saved) {
+			ResourceBundle tbeLabels = TBE.this.getResourceBundle();
+			Object[] options = { tbeLabels.getString("save"), tbeLabels.getString("nosave"), tbeLabels.getString("cancel") };
+			String question = tbeLabels.getString("saveBoard");
+			int answer = JOptionPane.showOptionDialog(null, question, "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
+			switch (answer) {
+			case 0:
+				TBE.this.save();
+				if (!saved)
+					break;
+			case 1:
+				if (exit)
+					System.exit(0);
+				else
+					setView(new WelcomeView(getSports(), getLang()));
+				break;
+			}
+
+		} else {
+			if (exit)
+				System.exit(0);
+			else
+				setView(new WelcomeView(getSports(), getLang()));
+		}
+
+	}
 
 }
