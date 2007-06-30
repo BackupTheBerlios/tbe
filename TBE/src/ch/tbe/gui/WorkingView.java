@@ -70,6 +70,7 @@ public class WorkingView extends View {
 		workingViewLabels = getResourceBundle(tbe.getLang());
 		this.setLayout(new BorderLayout());
 		this.setBackground(Color.WHITE);
+		Invoker.getInstance().clear();
 
 		// Toolbar
 		this.add(toolbar, BorderLayout.NORTH);

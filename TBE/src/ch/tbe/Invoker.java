@@ -35,7 +35,7 @@ public class Invoker {
 		if (this.canUndo()) {
 			actCommands = doneCommands.pop();
 			undoneCommands.push(actCommands);
-
+			TBE.getInstance().setSaved(false);
 			for (int i = 0; i <= actCommands.size() - 1; i++) {
 				actCommands.get(i).undo();
 			}
@@ -46,7 +46,7 @@ public class Invoker {
 		if (this.canRedo()) {
 			actCommands = undoneCommands.pop();
 			doneCommands.push(actCommands);
-
+			TBE.getInstance().setSaved(false);
 			for (int i = 0; i <= actCommands.size() - 1; i++) {
 				actCommands.get(i).redo();
 			}
@@ -59,6 +59,11 @@ public class Invoker {
 
 	public boolean canRedo() {
 		return !undoneCommands.isEmpty();
+	}
+
+	public void clear() {
+		doneCommands.clear();
+		undoneCommands.clear();
 	}
 
 }
