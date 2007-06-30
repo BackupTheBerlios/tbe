@@ -3,6 +3,7 @@ package ch.tbe.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Event;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +33,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import ch.tbe.FTPServer;
 import ch.tbe.util.FTPHandler;
@@ -68,7 +73,6 @@ public class SettingsFrame {
 			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		}
 		frame.setSize(500, 300);
-
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
@@ -82,7 +86,7 @@ public class SettingsFrame {
 		return tabs;
 	}
 
-	class saveButtonListener extends MouseAdapter {
+	class saveButtonListener implements ActionListener {
 
 		private boolean closeAfter;
 		private boolean isFirstStart;
@@ -92,8 +96,7 @@ public class SettingsFrame {
 			this.isFirstStart = isFirstStart;
 		}
 
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
+		public void actionPerformed(ActionEvent arg0) {
 			if (isFirstStart) {
 				if (checkUserInputs()) {
 					tbe.setUser(prenameField.getText(), lastnameField.getText(), mailField.getText());
@@ -156,15 +159,16 @@ public class SettingsFrame {
 		JButton saveButton = new JButton(settingsLabels.getString("save"));
 		JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
 
-		class cancelButtonListener extends MouseAdapter {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		class cancelButtonListener implements ActionListener {
+
+			public void actionPerformed(ActionEvent arg0) {
 				frame.dispose();
-			}
+	      
+      }
 		}
 
-		saveButton.addMouseListener(new saveButtonListener(true, false));
-		cancelButton.addMouseListener(new cancelButtonListener());
+		saveButton.addActionListener(new saveButtonListener(true, false));
+		cancelButton.addActionListener(new cancelButtonListener());
 
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
@@ -227,9 +231,9 @@ public class SettingsFrame {
 		buttonPanel.setBackground(Color.WHITE);
 
 		JButton cancelButton = new JButton(settingsLabels.getString("undo"));
-		class cancelButtonListener extends MouseAdapter {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		class cancelButtonListener implements ActionListener {
+			
+			public void actionPerformed(ActionEvent arg0) {
 				prenameField.setText(tbe.getUserPrename());
 				lastnameField.setText(tbe.getUserName());
 				mailField.setText(tbe.getUserEmail());
@@ -238,10 +242,10 @@ public class SettingsFrame {
 				mailField.setBorder(new LineBorder(Color.black, 1));
 			}
 		}
-		cancelButton.addMouseListener(new cancelButtonListener());
+		cancelButton.addActionListener(new cancelButtonListener());
 
 		JButton saveButton = new JButton(settingsLabels.getString("apply"));
-		saveButton.addMouseListener(new saveButtonListener(false, this.isFirstStart));
+		saveButton.addActionListener(new saveButtonListener(false, this.isFirstStart));
 
 		buttonPanel.add(saveButton);
 		buttonPanel.add(cancelButton);
@@ -296,16 +300,16 @@ public class SettingsFrame {
 		northPanel.add(ftpBox);
 
 		JButton newFTPbutton = new JButton(settingsLabels.getString("new"));
-		class newServerListener extends MouseAdapter {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		class newServerListener implements ActionListener {
+			
+			public void actionPerformed(ActionEvent arg0) {
 				currentFTP = new FTPServer("", "", "", "");
 				refresh();
 				tabs.setSelectedIndex(1);
 			}
 
 		}
-		newFTPbutton.addMouseListener(new newServerListener());
+		newFTPbutton.addActionListener(new newServerListener());
 		northPanel.add(newFTPbutton);
 
 		panel.add(northPanel, BorderLayout.NORTH);
@@ -360,21 +364,21 @@ public class SettingsFrame {
 			buttonPanel.setBackground(Color.WHITE);
 
 			JButton deleteButton = new JButton(settingsLabels.getString("delete"));
-			class deleteButtonListener extends MouseAdapter {
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
+			class deleteButtonListener implements ActionListener {
+				
+				public void actionPerformed(ActionEvent arg0) {
 					tbe.removeFTPServer(currentFTP.getName());
 					currentFTP = null;
 					refresh();
 					tabs.setSelectedIndex(1);
 				}
 			}
-			deleteButton.addMouseListener(new deleteButtonListener());
+			deleteButton.addActionListener(new deleteButtonListener());
 
 			JButton cancelButton = new JButton(settingsLabels.getString("undo"));
-			class cancelButtonListener extends MouseAdapter {
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
+			class cancelButtonListener implements ActionListener {
+				
+				public void actionPerformed(ActionEvent arg0) {
 					if (currentFTP.getName().equals("")) {
 						currentFTP = null;
 						refresh();
@@ -387,10 +391,10 @@ public class SettingsFrame {
 					}
 				}
 			}
-			cancelButton.addMouseListener(new cancelButtonListener());
+			cancelButton.addActionListener(new cancelButtonListener());
 
 			JButton saveButton = new JButton(settingsLabels.getString("apply"));
-			saveButton.addMouseListener(new saveButtonListener(false, false));
+			saveButton.addActionListener(new saveButtonListener(false, false));
 
 			buttonPanel.add(deleteButton);
 			buttonPanel.add(saveButton);
@@ -417,16 +421,16 @@ public class SettingsFrame {
 
 		if (connected == false) {
 			JButton connectButton = new JButton(settingsLabels.getString("connect"));
-			class connectListener extends MouseAdapter {
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
+			class connectListener implements ActionListener {
+				
+				public void actionPerformed(ActionEvent arg0) {
 					connected = true;
 					refresh();
 					tabs.setSelectedIndex(2);
 				}
 
 			}
-			connectButton.addMouseListener(new connectListener());
+			connectButton.addActionListener(new connectListener());
 
 			constraints.gridx = 0;
 			constraints.gridy = 0;
@@ -446,7 +450,7 @@ public class SettingsFrame {
 
 			ArrayList<String> sports = FTPHandler.getAllSports();
 
-			class checkBoxListener extends MouseAdapter {
+			class checkBoxListener implements ChangeListener {
 				private String sport;
 
 				private JCheckBox myBox;
@@ -456,8 +460,8 @@ public class SettingsFrame {
 					this.sport = sport;
 				}
 
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
+				
+				public void stateChanged(ChangeEvent arg0) {
 					if (myBox.isSelected()) {
 						if (!installedSports.contains(sport)) {
 							toInstall.add(sport);
@@ -494,7 +498,7 @@ public class SettingsFrame {
 					checkBox.setSelected(true);
 				}
 
-				checkBox.addMouseListener(new checkBoxListener(checkBox, sports.get(i)));
+				checkBox.addChangeListener(new checkBoxListener(checkBox, sports.get(i)));
 				listPanel.add(checkBox, formConstraints);
 			}
 
@@ -512,7 +516,7 @@ public class SettingsFrame {
 			buttonPanel.setBackground(Color.WHITE);
 
 			JButton installButton = new JButton(settingsLabels.getString("install"));
-			installButton.addMouseListener(new saveButtonListener(false, false));
+			installButton.addActionListener(new saveButtonListener(false, false));
 
 			buttonPanel.add(installButton);
 
@@ -568,12 +572,9 @@ public class SettingsFrame {
 		settingsLabels = getResourceBundle(tbe.getLang());
 		frame.remove(tabs);
 		frame.remove(buttonPanel);
-
 		frame.add(createTabbedPane(), java.awt.BorderLayout.CENTER);
 		frame.add(createButtonPanel(), BorderLayout.SOUTH);
-		frame.repaint();
-		frame.setVisible(false);
-		frame.setVisible(true);
+		frame.validate();
 	}
 
 	private boolean checkUserInputs() {

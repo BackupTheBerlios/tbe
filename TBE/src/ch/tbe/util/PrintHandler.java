@@ -9,8 +9,6 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import ch.tbe.Board;
 import ch.tbe.gui.PrintView;
 import ch.tbe.gui.TBE;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.print.*;
 import java.io.File;
@@ -25,16 +23,14 @@ import java.util.ResourceBundle;
 public class PrintHandler implements Printable {
 	private Component componentToBePrinted;
 
-	private static JFrame f;
-
 	private static JPanel p;
 
 	private static Board b;
 
 	public static void printBoard(Board b) {
 		PrintHandler.b = b;
-
-		new PrintHandler(PrintHandler.createLayout(false)).print();
+		PrintHandler.createLayout(false);
+		new PrintHandler(p).print();
 
 	}
 
@@ -104,8 +100,8 @@ public class PrintHandler implements Printable {
 	public static void exportBoard(Board b) {
 		PrintHandler.b = b;
 
-		Component comp = createLayout(false);
-		export(comp);
+		createLayout(false);
+		export(p);
 
 	}
 
@@ -144,7 +140,7 @@ public class PrintHandler implements Printable {
 		}
 	}
 
-	private static Component createLayout(boolean visible) {
+	private static void createLayout(boolean visible) {
 
 		InputStream printHandlerStream;
 		ResourceBundle rb = null;
@@ -157,59 +153,30 @@ public class PrintHandler implements Printable {
 			System.out.println("Error with ResourceBundle PrintHandler!");
 		}
 
-		f = new JFrame(rb.getString("title"));
-		f.setLayout(new BorderLayout());
-		f.setBackground(Color.WHITE);
 		p = new PrintView(b);
-		f.add(new JScrollPane(p), BorderLayout.CENTER);
-		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		f.setResizable(false);
+
+		JScrollPane pane = new JScrollPane(p);
 		if (visible) {
-
-			JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-			class printListener implements ActionListener {
-				public void actionPerformed(ActionEvent e) {
-					new PrintHandler(p).print();
-					f.dispose();
-				}
+			Object[] options = { rb.getString("print"), rb.getString("export"), rb.getString("cancel") };
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			if (pane.getPreferredSize().height >= toolkit.getScreenSize().getHeight()) {
+				pane.setPreferredSize(new Dimension((int) pane.getPreferredSize().getWidth() + 20, (int) toolkit.getScreenSize().getHeight() - 200));
 			}
-			JButton print = new JButton(rb.getString("print"));
 
-			print.addActionListener(new printListener());
-
-			class exportListener implements ActionListener {
-				public void actionPerformed(ActionEvent e) {
-					export(p);
-					f.dispose();
-				}
+			switch (JOptionPane.showOptionDialog(null, pane, rb.getString("title"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1])) {
+			case 0:
+				new PrintHandler(p).print();
+				break;
+			case 1:
+				export(p);
 			}
-			JButton export = new JButton(rb.getString("export"));
-			export.addActionListener(new exportListener());
-
-			class cancelListener implements ActionListener {
-				public void actionPerformed(ActionEvent e) {
-					f.dispose();
-				}
-			}
-			JButton cancel = new JButton(rb.getString("cancel"));
-			cancel.addActionListener(new cancelListener());
-			buttons.add(print);
-			buttons.add(export);
-			buttons.add(cancel);
-			f.add(buttons, BorderLayout.NORTH);
-		}
-		Toolkit toolkit = Toolkit.getDefaultToolkit();
-		if (f.getPreferredSize().height >= toolkit.getScreenSize().getHeight()) {
-			f.setSize(new Dimension((int) f.getPreferredSize().getWidth(), (int) toolkit.getScreenSize().getHeight() - 100));
 		} else {
+			JFrame f = new JFrame();
+			f.add(pane);
 			f.pack();
+
 		}
 
-		f.setVisible(true); // Don't know why, but is needed to print/export without preview
-		f.setLocationRelativeTo(null);
-		f.setVisible(visible);
-
-		return p;
 	}
 
 }

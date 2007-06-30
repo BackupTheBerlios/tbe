@@ -211,7 +211,7 @@ public class Menu extends JMenuBar {
 						break;
 				case 1:
 				case -1:
-					tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
+					System.exit(0);
 					break;
 				}
 			}
