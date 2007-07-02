@@ -156,6 +156,8 @@ public class PrintHandler implements Printable {
 		p = new PrintView(b);
 
 		JScrollPane pane = new JScrollPane(p);
+		JFrame f = new JFrame();
+		
 		if (visible) {
 			Object[] options = { rb.getString("print"), rb.getString("export"), rb.getString("cancel") };
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -167,11 +169,12 @@ public class PrintHandler implements Printable {
 			case 0:
 				new PrintHandler(p).print();
 				break;
-			case 1:
+			case 1:	
+				f.add(pane);
+				f.pack();
 				export(p);
 			}
 		} else {
-			JFrame f = new JFrame();
 			f.add(pane);
 			f.pack();
 

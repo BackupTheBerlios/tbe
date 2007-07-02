@@ -1,3 +1,7 @@
+#Title
+title1 = TBE - Welcome
+title2 = TBE - Settings
+
 # Tabs
 general = General
 ftp = FTP
@@ -25,6 +29,7 @@ connect = Connect
 install = Install
 undo = Undo
 apply = Apply
+exit = Exit
 
 # Demands
 chooseServer = Choose Server

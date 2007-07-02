@@ -63,6 +63,9 @@ public class WorkingView extends View {
 		this.sport = board.getSport();
 		this.board = board;
 		tbe.setSaved(true);
+		
+		int value = board.getPath().lastIndexOf("\\");
+		tbe.getFrame().setTitle("TBE - Tactic Board Editor - "+board.getPath().substring(value+1));
 		createWorkingView();
 	}
 

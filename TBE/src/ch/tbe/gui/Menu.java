@@ -191,6 +191,7 @@ public class Menu extends JMenuBar {
 				case 1:
 				case -1:
 					tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
+					tbe.getFrame().setTitle("TBE - Tactic Board Editor");
 					break;
 				}
 

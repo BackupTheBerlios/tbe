@@ -138,12 +138,22 @@ public class TBE implements Runnable {
 			// ist.
 			((WorkingView) view).getBoard().setPath("");
 			saved = XMLHandler.saveBoard(((WorkingView) view).getBoard());
+			if (saved){
+				String path =((WorkingView) view).getBoard().getPath();
+				int value = path.lastIndexOf("\\");
+				frame.setTitle("TBE - Tactic Board Editor - "+((WorkingView) view).getBoard().getPath().substring(value+1));
+			}
 		}
 	}
 
 	public void save() {
 		if (view instanceof WorkingView) {
 			saved = XMLHandler.saveBoard(((WorkingView) view).getBoard());
+			if (saved){
+				String path =((WorkingView) view).getBoard().getPath();
+				int value = path.lastIndexOf("\\");
+				frame.setTitle("TBE - Tactic Board Editor - "+((WorkingView) view).getBoard().getPath().substring(value+1));
+			}
 		}
 
 	}
@@ -324,7 +334,7 @@ public class TBE implements Runnable {
 			ResourceBundle tbeLabels = TBE.this.getResourceBundle();
 			Object[] options = { tbeLabels.getString("save"), tbeLabels.getString("nosave"), tbeLabels.getString("cancel") };
 			String question = tbeLabels.getString("saveBoard");
-			return JOptionPane.showOptionDialog(null, question, "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+			return JOptionPane.showOptionDialog(null, question, "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		}
 		return -1;
 	}

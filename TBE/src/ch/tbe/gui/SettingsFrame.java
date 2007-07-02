@@ -1,20 +1,7 @@
 package ch.tbe.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,23 +10,13 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
+import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ch.tbe.FTPServer;
-import ch.tbe.util.FTPHandler;
-import ch.tbe.util.FileSystemHandler;
-import ch.tbe.util.XMLHandler;
+import ch.tbe.util.*;
 
 public class SettingsFrame {
 	private TBE tbe = TBE.getInstance();
@@ -49,32 +26,91 @@ public class SettingsFrame {
 	private JPasswordField ftpPwField;
 	private JComboBox langBox, ftpBox;
 	private JTabbedPane tabs;
-	private JPanel buttonPanel;
-	private JFrame frame;
 	private FTPServer currentFTP = null;
-	private JPanel FTPPanel;
+	private JPanel FTPPanel, buttonPanel;
 	private boolean connected = false;
 	private ArrayList<String> toInstall = new ArrayList<String>();
 	private ArrayList<String> toDelete = new ArrayList<String>();
 	private ArrayList<String> installedSports = FileSystemHandler.getInstalledSports();
-	private boolean isFirstStart;
+	private JDialog dialog;
+	private boolean firstStart = false;
 
 	public SettingsFrame(boolean isFirstStart) {
-		this.isFirstStart = isFirstStart;
+		this.firstStart = isFirstStart;
+
 		settingsLabels = getResourceBundle(tbe.getLang());
 
 		if (isFirstStart) {
-			frame = new JFrame("TBE - Welcome");
-			frame.add(createGeneralPanel(), java.awt.BorderLayout.CENTER);
+			dialog = new JDialog(tbe.getFrame(), settingsLabels.getString("title1"), true);
+			dialog.setLayout(new BorderLayout());
+			dialog.add(createGeneralPanel(), java.awt.BorderLayout.CENTER);
+			dialog.add(createButtonPanel(), BorderLayout.SOUTH);
 		} else {
-			frame = new JFrame("TBE - Settings");
-			frame.add(createTabbedPane(), java.awt.BorderLayout.CENTER);
-			frame.add(createButtonPanel(), BorderLayout.SOUTH);
-			frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+			dialog = new JDialog(tbe.getFrame(), settingsLabels.getString("title2"), true);
+			dialog.setLayout(new BorderLayout());
+			dialog.add(createTabbedPane(), BorderLayout.CENTER);
+			dialog.add(createButtonPanel(), BorderLayout.SOUTH);
+
 		}
-		frame.setSize(500, 300);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		dialog.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent winEvt) {
+				if (firstStart) {
+					System.exit(0);
+				} else {
+					dialog.dispose();
+				}
+			}
+		});
+		dialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		dialog.setResizable(false);
+		dialog.setSize(500, 300);
+		dialog.setLocationRelativeTo(null);
+		dialog.setBackground(Color.WHITE);
+		dialog.setVisible(true);
+	}
+
+	private JPanel createButtonPanel() {
+		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		JButton save = new JButton(settingsLabels.getString("save"));
+		save.addActionListener(new saveButtonListener(true));
+		buttonPanel.add(save);
+		JButton cancel = null;
+		if (firstStart) {
+			cancel = new JButton(settingsLabels.getString("exit"));
+			JButton undoButton = new JButton(settingsLabels.getString("undo"));
+			class undoButtonListener implements ActionListener {
+
+				public void actionPerformed(ActionEvent arg0) {
+					prenameField.setText(tbe.getUserPrename());
+					lastnameField.setText(tbe.getUserName());
+					mailField.setText(tbe.getUserEmail());
+					prenameField.setBorder(new LineBorder(Color.black, 1));
+					lastnameField.setBorder(new LineBorder(Color.black, 1));
+					mailField.setBorder(new LineBorder(Color.black, 1));
+					langBox.setSelectedItem(tbe.getLang());
+				}
+			}
+			undoButton.addActionListener(new undoButtonListener());
+			buttonPanel.add(undoButton);
+		} else {
+			cancel = new JButton(settingsLabels.getString("cancel"));
+		}
+
+		cancel.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				if (firstStart) {
+					System.exit(0);
+				} else {
+					dialog.dispose();
+				}
+			}
+		});
+
+		buttonPanel.add(cancel);
+		buttonPanel.setBackground(Color.WHITE);
+		return buttonPanel;
+
 	}
 
 	private JTabbedPane createTabbedPane() {
@@ -88,23 +124,21 @@ public class SettingsFrame {
 
 	class saveButtonListener implements ActionListener {
 
-		private boolean closeAfter;
-		private boolean isFirstStart;
+		private boolean closeAfter = false;
 
-		public saveButtonListener(boolean closeAfter, boolean isFirstStart) {
+		public saveButtonListener(boolean closeAfter) {
 			this.closeAfter = closeAfter;
-			this.isFirstStart = isFirstStart;
 		}
 
 		public void actionPerformed(ActionEvent arg0) {
-			if (isFirstStart) {
+			if (firstStart) {
 				if (checkUserInputs()) {
 					tbe.setUser(prenameField.getText(), lastnameField.getText(), mailField.getText());
 					tbe.setLang((String) langBox.getSelectedItem());
 					XMLHandler.saveTBESettings();
 					tbe.changeLang();
 					tbe.setView(new WelcomeView(tbe.getSports(), tbe.getLang()));
-					frame.dispose();
+					dialog.dispose();
 				}
 			} else {
 				if (tabs.getSelectedIndex() == 0) {
@@ -115,7 +149,7 @@ public class SettingsFrame {
 						tbe.changeLang();
 
 						if (closeAfter) {
-							frame.dispose();
+							dialog.dispose();
 						} else {
 							refresh();
 						}
@@ -134,7 +168,7 @@ public class SettingsFrame {
 						XMLHandler.saveTBESettings();
 
 						if (closeAfter) {
-							frame.dispose();
+							dialog.dispose();
 						} else {
 							refresh();
 							tabs.setSelectedIndex(1);
@@ -145,34 +179,12 @@ public class SettingsFrame {
 					FTPHandler.installSport(toInstall);
 					FTPHandler.deleteSport(toDelete);
 					if (closeAfter) {
-						frame.dispose();
+						dialog.dispose();
 					}
 				}
+
 			}
 		}
-	}
-
-	private JPanel createButtonPanel() {
-		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.setBackground(Color.WHITE);
-
-		JButton saveButton = new JButton(settingsLabels.getString("save"));
-		JButton cancelButton = new JButton(settingsLabels.getString("cancel"));
-
-		class cancelButtonListener implements ActionListener {
-
-			public void actionPerformed(ActionEvent arg0) {
-				frame.dispose();
-	      
-      }
-		}
-
-		saveButton.addActionListener(new saveButtonListener(true, false));
-		cancelButton.addActionListener(new cancelButtonListener());
-
-		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButton);
-		return buttonPanel;
 	}
 
 	private JPanel createGeneralPanel() {
@@ -220,37 +232,39 @@ public class SettingsFrame {
 		prenameField.setText(tbe.getUserPrename());
 		lastnameField.setText(tbe.getUserName());
 		mailField.setText(tbe.getUserEmail());
-
+		checkUserInputs();
 		constraints.gridx = 0;
 		constraints.gridy = 0;
 		westPanel.add(formPanel, constraints);
 
 		panel.add(westPanel, BorderLayout.WEST);
 
-		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.setBackground(Color.WHITE);
+		if (!firstStart) {
+			JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+			buttonPanel.setBackground(Color.WHITE);
 
-		JButton cancelButton = new JButton(settingsLabels.getString("undo"));
-		class cancelButtonListener implements ActionListener {
-			
-			public void actionPerformed(ActionEvent arg0) {
-				prenameField.setText(tbe.getUserPrename());
-				lastnameField.setText(tbe.getUserName());
-				mailField.setText(tbe.getUserEmail());
-				prenameField.setBorder(new LineBorder(Color.black, 1));
-				lastnameField.setBorder(new LineBorder(Color.black, 1));
-				mailField.setBorder(new LineBorder(Color.black, 1));
+			JButton cancelButton = new JButton(settingsLabels.getString("undo"));
+			class cancelButtonListener implements ActionListener {
+
+				public void actionPerformed(ActionEvent arg0) {
+					prenameField.setText(tbe.getUserPrename());
+					lastnameField.setText(tbe.getUserName());
+					mailField.setText(tbe.getUserEmail());
+					prenameField.setBorder(new LineBorder(Color.black, 1));
+					lastnameField.setBorder(new LineBorder(Color.black, 1));
+					mailField.setBorder(new LineBorder(Color.black, 1));
+				}
 			}
+			cancelButton.addActionListener(new cancelButtonListener());
+
+			JButton saveButton = new JButton(settingsLabels.getString("apply"));
+			saveButton.addActionListener(new saveButtonListener(false));
+
+			buttonPanel.add(saveButton);
+			buttonPanel.add(cancelButton);
+
+			panel.add(buttonPanel, BorderLayout.SOUTH);
 		}
-		cancelButton.addActionListener(new cancelButtonListener());
-
-		JButton saveButton = new JButton(settingsLabels.getString("apply"));
-		saveButton.addActionListener(new saveButtonListener(false, this.isFirstStart));
-
-		buttonPanel.add(saveButton);
-		buttonPanel.add(cancelButton);
-
-		panel.add(buttonPanel, BorderLayout.SOUTH);
 
 		return panel;
 	}
@@ -301,7 +315,7 @@ public class SettingsFrame {
 
 		JButton newFTPbutton = new JButton(settingsLabels.getString("new"));
 		class newServerListener implements ActionListener {
-			
+
 			public void actionPerformed(ActionEvent arg0) {
 				currentFTP = new FTPServer("", "", "", "");
 				refresh();
@@ -365,7 +379,7 @@ public class SettingsFrame {
 
 			JButton deleteButton = new JButton(settingsLabels.getString("delete"));
 			class deleteButtonListener implements ActionListener {
-				
+
 				public void actionPerformed(ActionEvent arg0) {
 					tbe.removeFTPServer(currentFTP.getName());
 					currentFTP = null;
@@ -377,7 +391,7 @@ public class SettingsFrame {
 
 			JButton cancelButton = new JButton(settingsLabels.getString("undo"));
 			class cancelButtonListener implements ActionListener {
-				
+
 				public void actionPerformed(ActionEvent arg0) {
 					if (currentFTP.getName().equals("")) {
 						currentFTP = null;
@@ -394,7 +408,7 @@ public class SettingsFrame {
 			cancelButton.addActionListener(new cancelButtonListener());
 
 			JButton saveButton = new JButton(settingsLabels.getString("apply"));
-			saveButton.addActionListener(new saveButtonListener(false, false));
+			saveButton.addActionListener(new saveButtonListener(false));
 
 			buttonPanel.add(deleteButton);
 			buttonPanel.add(saveButton);
@@ -419,10 +433,10 @@ public class SettingsFrame {
 		JPanel westPanel = new JPanel(gridbag);
 		westPanel.setBackground(Color.WHITE);
 
-		if (connected == false) {
+		if (!connected) {
 			JButton connectButton = new JButton(settingsLabels.getString("connect"));
 			class connectListener implements ActionListener {
-				
+
 				public void actionPerformed(ActionEvent arg0) {
 					connected = true;
 					refresh();
@@ -436,7 +450,7 @@ public class SettingsFrame {
 			constraints.gridy = 0;
 			westPanel.add(connectButton, constraints);
 		}
-		if (connected == true) {
+		if (connected) {
 			JPanel formPanel = new JPanel();
 			formPanel.setBackground(Color.WHITE);
 			formPanel.setBorder(new LineBorder(Color.black, 1));
@@ -447,9 +461,9 @@ public class SettingsFrame {
 
 			JPanel listPanel = new JPanel(gridBagForm);
 			listPanel.setBackground(Color.WHITE);
-
+			dialog.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 			ArrayList<String> sports = FTPHandler.getAllSports();
-
+			dialog.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			class checkBoxListener implements ChangeListener {
 				private String sport;
 
@@ -460,7 +474,6 @@ public class SettingsFrame {
 					this.sport = sport;
 				}
 
-				
 				public void stateChanged(ChangeEvent arg0) {
 					if (myBox.isSelected()) {
 						if (!installedSports.contains(sport)) {
@@ -511,17 +524,18 @@ public class SettingsFrame {
 
 		panel.add(westPanel, BorderLayout.WEST);
 
-		if (connected == true) {
+		if (connected) {
 			JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 			buttonPanel.setBackground(Color.WHITE);
 
 			JButton installButton = new JButton(settingsLabels.getString("install"));
-			installButton.addActionListener(new saveButtonListener(false, false));
+			installButton.addActionListener(new saveButtonListener(false));
 
 			buttonPanel.add(installButton);
 
 			panel.add(buttonPanel, BorderLayout.SOUTH);
 		}
+
 		return panel;
 	}
 
@@ -570,11 +584,12 @@ public class SettingsFrame {
 
 	public void refresh() {
 		settingsLabels = getResourceBundle(tbe.getLang());
-		frame.remove(tabs);
-		frame.remove(buttonPanel);
-		frame.add(createTabbedPane(), java.awt.BorderLayout.CENTER);
-		frame.add(createButtonPanel(), BorderLayout.SOUTH);
-		frame.validate();
+		dialog.remove(tabs);
+		dialog.remove(buttonPanel);
+		dialog.add(createTabbedPane(), BorderLayout.CENTER);
+		dialog.add(createButtonPanel(), BorderLayout.SOUTH);
+		dialog.validate();
+
 	}
 
 	private boolean checkUserInputs() {
