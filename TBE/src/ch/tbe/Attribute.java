@@ -1,5 +1,12 @@
 package ch.tbe;
 
+/**
+ * Attribute 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
 public class Attribute {
 
 	private String text;
@@ -10,18 +17,34 @@ public class Attribute {
 		this.title = title;
 	}
 
+	/**
+	 * sets the text of this attribute
+	 * @param text
+	 */
 	public void setText(String text) {
 		this.text = text;
 	}
 
+	/**
+	 * sets the title of this attribute
+	 * @param title
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
 
+	/**
+	 * gets the text of this attribute
+	 * @return text as String
+	 */
 	public String getText() {
 		return this.text;
 	}
 
+	/**
+	 * gets the title of this attribute
+	 * @return
+	 */
 	public String getTitle() {
 		return this.title;
 	}
