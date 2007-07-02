@@ -54,7 +54,7 @@ public class SettingsFrame {
 		if (firstStart) {
 			dialog = new JDialog(tbe.getFrame(), settingsLabels.getString("title1"), true);
 			dialog.setLayout(new BorderLayout());
-			dialog.add(createGeneralPanel(), java.awt.BorderLayout.CENTER);
+			dialog.add(createGeneralPanel(), BorderLayout.CENTER);
 			dialog.add(createButtonPanel(), BorderLayout.SOUTH);
 		} else {
 			dialog = new JDialog(tbe.getFrame(), settingsLabels.getString("title2"), true);
@@ -128,6 +128,7 @@ public class SettingsFrame {
 
 	private JTabbedPane createTabbedPane() {
 		tabs = new JTabbedPane();
+		tabs.setBackground(Color.WHITE);
 		tabs.addTab(settingsLabels.getString("general"), createGeneralPanel());
 		FTPPanel = createFTPPanel();
 		tabs.addTab(settingsLabels.getString("ftp"), FTPPanel);
