@@ -1,8 +1,6 @@
 package ch.tbe.gui;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -51,22 +49,23 @@ public class ShareFrame {
 	private ArrayList<String> localPaths = new ArrayList<String>();
 	private ArrayList<String> remotePaths = new ArrayList<String>();
 	private String folder = "";
+	private JButton connectButton;
 
 	/*
    * Convention: Directories have no points in the name and files do have a
    * point! ...
    */
 	public ShareFrame() {
-		frame = new JFrame();
+		
 		shareLabels = getResourceBundle(tbe.getLang());
-
+		frame = new JFrame(shareLabels.getString("title"));
 		contentPanel = createPanel();
 		frame.add(contentPanel);
 
 		// TODO: Disconnect bei Windows close
 
 		frame.setSize(800, 500);
-		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 	}
 
@@ -192,8 +191,15 @@ public class ShareFrame {
 		ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
 		class ftpBoxListener implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
+				if(ftpBox.getSelectedIndex()== 0){
+					connectButton.setEnabled(false);
+				}
+				else{
+					connectButton.setEnabled(true);
+				}
 				ArrayList<FTPServer> servers = tbe.getServers();
 				for (FTPServer s : servers) {
+					
 					if (s.getName().equals(ftpBox.getSelectedItem())) {
 						currentFTP = s;
 					}
@@ -201,21 +207,26 @@ public class ShareFrame {
 			}
 		}
 		ftpBox.addActionListener(new ftpBoxListener());
+		
 
 		JPanel connectPanel = new JPanel();
 		connectPanel.setBackground(Color.WHITE);
 		connectPanel.add(ftpBox);
 
-		JButton connectButton = new JButton(shareLabels.getString("connect"));
-		class connectListener extends MouseAdapter {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		connectButton = new JButton(shareLabels.getString("connect"));
+		connectButton.setEnabled(false);
+		class connectListener implements ActionListener {
+
+			public void actionPerformed(ActionEvent arg0) {
+				frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 				FTPHandler.connect(currentFTP);
 				connected = true;
+				frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				refresh();
-			}
+	      
+      }
 		}
-		connectButton.addMouseListener(new connectListener());
+		connectButton.addActionListener(new connectListener());
 
 		connectPanel.add(connectButton);
 

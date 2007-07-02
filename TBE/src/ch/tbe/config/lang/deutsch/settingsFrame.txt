@@ -1,6 +1,6 @@
 #Title
-title1 = TBE - Welcome
-title2 = TBE - Settings
+title1 = Willkommen
+title2 = Einstellungen
 
 # Tabs
 general = Allgemein

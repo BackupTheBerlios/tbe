@@ -45,7 +45,6 @@ public class Menu extends JMenuBar {
 
 	private void createMenu() {
 		this.add(createFileMenu());
-
 		this.add(createEditMenu());
 		this.add(createBoardMenu());
 		this.add(createViewMenu());
@@ -234,8 +233,8 @@ public class Menu extends JMenuBar {
 		} else {
 			fileSave.setEnabled(false);
 			fileSaveAs.setEnabled(false);
-			fileShare.setEnabled(false);
 			fileExport.setEnabled(false);
+			fileClose.setEnabled(false);
 			filePrint.setEnabled(false);
 			filePreview.setEnabled(false);
 		}
