@@ -15,14 +15,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
+import javax.swing.*;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
@@ -40,7 +33,7 @@ public class ShareFrame {
 	private ResourceBundle shareLabels;
 	private JPanel contentPanel;
 	private JComboBox ftpBox, driveBox;
-	private JFrame frame;
+	private JDialog dialog;
 	private FTPServer currentFTP = null;
 	private boolean connected = false;
 	private File[] roots = File.listRoots();
@@ -58,15 +51,16 @@ public class ShareFrame {
 	public ShareFrame() {
 		
 		shareLabels = getResourceBundle(tbe.getLang());
-		frame = new JFrame(shareLabels.getString("title"));
+		dialog = new JDialog(tbe.getFrame(), shareLabels.getString("title"), true);
 		contentPanel = createPanel();
-		frame.add(contentPanel);
+		dialog.add(contentPanel);
 
 		// TODO: Disconnect bei Windows close
 
-		frame.setSize(800, 500);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setVisible(true);
+		dialog.setSize(800, 500);
+		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		dialog.setLocationRelativeTo(null);
+		dialog.setVisible(true);
 	}
 
 	private JPanel createPanel() {
@@ -218,10 +212,10 @@ public class ShareFrame {
 		class connectListener implements ActionListener {
 
 			public void actionPerformed(ActionEvent arg0) {
-				frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+				dialog.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 				FTPHandler.connect(currentFTP);
 				connected = true;
-				frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				dialog.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				refresh();
 	      
       }
@@ -403,7 +397,7 @@ public class ShareFrame {
 
 	private void close() {
 		FTPHandler.disconnect();
-		frame.dispose();
+		dialog.dispose();
 	}
 
 	private void doDownload(ArrayList<String> remotes) {
@@ -517,10 +511,10 @@ public class ShareFrame {
 
 	public void refresh() {
 		shareLabels = getResourceBundle(tbe.getLang());
-		frame.remove(contentPanel);
-		frame.repaint();
+		dialog.remove(contentPanel);
+		dialog.repaint();
 		contentPanel = createPanel();
-		frame.add(contentPanel);
-		frame.validate();
+		dialog.add(contentPanel);
+		dialog.validate();
 	}
 }
