@@ -35,12 +35,23 @@ public class SettingsFrame {
 	private JDialog dialog;
 	private boolean firstStart = false;
 
+
 	public SettingsFrame(boolean isFirstStart) {
 		this.firstStart = isFirstStart;
+		init(0);
+	}
+	
+	public SettingsFrame(int tab) {
+		this.firstStart = false;
+		init(tab);	
 
-		settingsLabels = getResourceBundle(tbe.getLang());
+	}
 
-		if (isFirstStart) {
+
+	private void init(int tab) {
+	  settingsLabels = getResourceBundle(tbe.getLang());
+
+		if (firstStart) {
 			dialog = new JDialog(tbe.getFrame(), settingsLabels.getString("title1"), true);
 			dialog.setLayout(new BorderLayout());
 			dialog.add(createGeneralPanel(), java.awt.BorderLayout.CENTER);
@@ -49,6 +60,7 @@ public class SettingsFrame {
 			dialog = new JDialog(tbe.getFrame(), settingsLabels.getString("title2"), true);
 			dialog.setLayout(new BorderLayout());
 			dialog.add(createTabbedPane(), BorderLayout.CENTER);
+			tabs.setSelectedIndex(tab);
 			dialog.add(createButtonPanel(), BorderLayout.SOUTH);
 
 		}
@@ -67,7 +79,8 @@ public class SettingsFrame {
 		dialog.setLocationRelativeTo(null);
 		dialog.setBackground(Color.WHITE);
 		dialog.setVisible(true);
-	}
+  }
+
 
 	private JPanel createButtonPanel() {
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -156,7 +169,7 @@ public class SettingsFrame {
 					}
 				}
 				if (tabs.getSelectedIndex() == 1) {
-					if (checkFTPForm() == true) {
+					if (checkFTPForm()) {
 						String pw = new String(ftpPwField.getPassword());
 						// neuer Server hinzufügen
 						if (currentFTP.getName().equals("")) {
@@ -611,5 +624,9 @@ public class SettingsFrame {
 		}
 
 		return returnValue;
+	}
+
+	public void setSelectedIndex(int index) {
+		tabs.setSelectedIndex(index);
 	}
 }

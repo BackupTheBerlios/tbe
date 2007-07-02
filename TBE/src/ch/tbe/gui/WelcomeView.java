@@ -162,7 +162,6 @@ public class WelcomeView extends View {
 			pathPanel.add(onePath);
 		}
 
-		// TODO: Open-View öffnen
 		JPanel moreFilesPath = new JPanel();
 		moreFilesPath.setBackground(Color.WHITE);
 		moreFilesPath.setLayout(new GridLayout(1, 2, 0, 5));
@@ -217,18 +216,33 @@ public class WelcomeView extends View {
 			onePath.setLayout(new GridLayout(1, 2, 0, 5));
 			JLabel sportLabel = new JLabel(s.getName());
 			sportLabel.addMouseListener(new NewListener(s));
-
 			onePath.add(new JLabel(s.getIcon()));
 			onePath.add(sportLabel);
 			sportPanel.add(onePath);
 		}
 
-		// TODO: SportDownload öffnen
 		JPanel moreSportsPath = new JPanel();
 		moreSportsPath.setBackground(Color.WHITE);
 		moreSportsPath.setLayout(new GridLayout(1, 2, 0, 5));
 		JLabel moreSportsLabel = new JLabel(welcomeViewLabels.getString("more"));
-		moreSportsLabel.addMouseListener(new NewListener(new Sport("Unihockey")));
+		moreSportsLabel.addMouseListener(new MouseAdapter(){
+			
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				new SettingsFrame(2);
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				welcome.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				welcome.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+		
+	});
 		moreSportsPath.add(createIcon("../pics/folder.gif"));
 		moreSportsPath.add(moreSportsLabel);
 		sportPanel.add(moreSportsPath);

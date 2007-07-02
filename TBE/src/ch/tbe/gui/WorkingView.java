@@ -115,7 +115,6 @@ public class WorkingView extends View {
 		board.addMouseListener(listeners[1]);
 
 		// Legend
-		// TODO
 		legendBar = new LegendBar(board);
 		rightPanel.add(legendBar, BorderLayout.SOUTH);
 
