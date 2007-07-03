@@ -134,14 +134,16 @@ public class TBE implements Runnable {
 
 	public void saveAs() {
 		if (view instanceof WorkingView) {
-			// TODO: andere Möglichkeit für SaveAs, weil so Abbrechen nicht möglich
-			// ist.
+			String temp = ((WorkingView) view).getBoard().getPath();
 			((WorkingView) view).getBoard().setPath("");
 			saved = XMLHandler.saveBoard(((WorkingView) view).getBoard());
 			if (saved){
 				String path =((WorkingView) view).getBoard().getPath();
 				int value = path.lastIndexOf("\\");
 				frame.setTitle("TBE - Tactic Board Editor - "+((WorkingView) view).getBoard().getPath().substring(value+1));
+			}
+			else{
+				((WorkingView) view).getBoard().setPath(temp);
 			}
 		}
 	}
