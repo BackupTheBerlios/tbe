@@ -289,7 +289,7 @@ public class ShareFrame {
 	}
 
 	private JPanel createCenterPanel() {
-		JPanel panel = new JPanel(new GridLayout(0,1,10,10));
+		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0, Color.WHITE));
 

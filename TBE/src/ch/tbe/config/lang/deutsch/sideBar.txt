@@ -14,7 +14,8 @@ removeAttr = Wollen Sie das folgende Attribut wirklich löschen?
 # Buttons
 yes = Ja, löschen
 no = Nein, nicht löschen
-save = Speichern
+add = Hinzufügen
+save = Ändern
 cancel = Abbrechen
 
 # Errors

@@ -126,6 +126,7 @@ public class SideBar extends JToolBar {
 							currentAttribute = ((AttributeTreeNode) path.getLastPathComponent()).getA();
 							titleInputArea.setText(currentAttribute.getTitle());
 							textInputArea.setText(currentAttribute.getText());
+							saveButton.setText(sideBarLabels.getString("save"));
 						} else {
 
 							deleteAttribute(path);
@@ -135,6 +136,7 @@ public class SideBar extends JToolBar {
 						currentAttribute = null;
 						titleInputArea.setText("");
 						textInputArea.setText("");
+						saveButton.setText(sideBarLabels.getString("add"));
 					}
 				}
 			}
@@ -297,6 +299,7 @@ public class SideBar extends JToolBar {
 			titleInputArea.setText("");
 			textInputArea.setText("");
 			treeModel.nodeStructureChanged(root);
+			saveButton.setText(sideBarLabels.getString("add"));
 		}
 	}
 
@@ -320,7 +323,11 @@ public class SideBar extends JToolBar {
 		descriptionLabel.setText(sideBarLabels.getString("description"));
 		attribLabel.setText(sideBarLabels.getString("attr"));
 		title.setText(sideBarLabels.getString("title"));
-		saveButton.setText(sideBarLabels.getString("save"));
+		if (tree != null && tree.getSelectionCount() == 1) {
+			saveButton.setText(sideBarLabels.getString("save"));
+		} else {
+			saveButton.setText(sideBarLabels.getString("add"));
+		}
 		cancelButton.setText(sideBarLabels.getString("cancel"));
 	}
 

@@ -15,7 +15,8 @@ removeAttr = Do you really want to delete the following Attribute?
 yes = Yes, delete
 no = No, don't delete
 cancel = Cancel
-save = Save
+save = Modify
+add = Add
 
 # Errors
 noAttr = There is no Attribute choosen
