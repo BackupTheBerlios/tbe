@@ -157,25 +157,27 @@ public class PrintHandler implements Printable {
 
 		JScrollPane pane = new JScrollPane(p);
 		JFrame f = new JFrame();
-		
+		f.add(pane); // Without this the size of pane is null
+		f.pack();
 		if (visible) {
 			Object[] options = { rb.getString("print"), rb.getString("export"), rb.getString("cancel") };
 			Toolkit toolkit = Toolkit.getDefaultToolkit();
-			if (pane.getPreferredSize().height >= toolkit.getScreenSize().getHeight()) {
+			if (pane.getSize().height >= toolkit.getScreenSize().getHeight() - 200) {
 				pane.setPreferredSize(new Dimension((int) pane.getPreferredSize().getWidth() + 20, (int) toolkit.getScreenSize().getHeight() - 200));
+
 			}
 
 			switch (JOptionPane.showOptionDialog(null, pane, rb.getString("title"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1])) {
 			case 0:
 				new PrintHandler(p).print();
 				break;
-			case 1:	
-				f.add(pane);
+			case 1:
+				f.add(pane); // Without this the size of p is null
 				f.pack();
 				export(p);
 			}
 		} else {
-			f.add(pane);
+			f.add(pane); // Without this the size of p is null
 			f.pack();
 
 		}
