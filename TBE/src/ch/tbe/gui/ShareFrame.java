@@ -44,15 +44,15 @@ public class ShareFrame {
 	private ArrayList<String> localPaths = new ArrayList<String>();
 	private ArrayList<String> remotePaths = new ArrayList<String>();
 	private String folder = "";
-	private JButton connectButton;
-	private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
+	private JButton connectButton, uploadButton, downloadButton;
+	private int lastDriveIndex = 0;
 
 	/*
    * Convention: Directories have no points in the name and files do have a
    * point! ...
    */
 	public ShareFrame() {
-		
+
 		shareLabels = getResourceBundle(tbe.getLang());
 		dialog = new JDialog(tbe.getFrame(), shareLabels.getString("title"), true);
 		contentPanel = createPanel();
@@ -88,7 +88,7 @@ public class ShareFrame {
 	}
 
 	private JPanel createWestPanel() {
-		JPanel panel = new JPanel(new BorderLayout());
+		JPanel panel = new JPanel(new BorderLayout(5, 5));
 		panel.setPreferredSize(new Dimension(300, 500));
 
 		Vector<String> allRoots = new Vector<String>();
@@ -101,11 +101,14 @@ public class ShareFrame {
 		driveBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
 		class DriveListener implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
+
 				File root = roots[driveBox.getSelectedIndex() - 1];
 				currentRoot = new PathFile(root, root.getName());
 				localPaths.clear();
 				remotePaths.clear();
-				refresh();
+				if (lastDriveIndex != driveBox.getSelectedIndex())
+					refresh();
+
 			}
 		}
 		driveBox.addActionListener(new DriveListener());
@@ -156,6 +159,7 @@ public class ShareFrame {
 						localPaths.remove(toRemove);
 					}
 				}
+
 			}
 		}
 
@@ -163,7 +167,7 @@ public class ShareFrame {
 		localTree = new JTree();
 		localTree.setModel(model);
 		localTree.addTreeSelectionListener(new LocalTreeListener());
-		
+		localTree.setRootVisible(false);
 
 		// The JTree can get big, so allow it to scroll
 		JScrollPane scrollPane = new JScrollPane(localTree);
@@ -174,7 +178,7 @@ public class ShareFrame {
 
 	private JPanel createEastPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
-		panel.setPreferredSize(new Dimension(350, 500));
+		panel.setPreferredSize(new Dimension(300, 500));
 		panel.setBackground(Color.WHITE);
 
 		Vector<String> allFTP = new Vector<String>();
@@ -189,15 +193,14 @@ public class ShareFrame {
 		ftpBox.setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, Color.BLACK));
 		class ftpBoxListener implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
-				if(ftpBox.getSelectedIndex()== 0){
+				if (ftpBox.getSelectedIndex() == 0) {
 					connectButton.setEnabled(false);
-				}
-				else{
+				} else {
 					connectButton.setEnabled(true);
 				}
 				ArrayList<FTPServer> servers = tbe.getServers();
 				for (FTPServer s : servers) {
-					
+
 					if (s.getName().equals(ftpBox.getSelectedItem())) {
 						currentFTP = s;
 					}
@@ -205,7 +208,6 @@ public class ShareFrame {
 			}
 		}
 		ftpBox.addActionListener(new ftpBoxListener());
-		
 
 		JPanel connectPanel = new JPanel();
 		connectPanel.setBackground(Color.WHITE);
@@ -221,8 +223,8 @@ public class ShareFrame {
 				connected = true;
 				dialog.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				refresh();
-	      
-      }
+
+			}
 		}
 		connectButton.addActionListener(new connectListener());
 
@@ -261,6 +263,7 @@ public class ShareFrame {
 						remotePaths.remove(toRemove);
 					}
 				}
+
 			}
 		}
 
@@ -277,13 +280,21 @@ public class ShareFrame {
 			ftpTree = new JTree();
 			ftpTree.setModel(ftpModel);
 			ftpTree.addTreeSelectionListener(new RemoteTreeListener());
-	
+			ftpTree.setRootVisible(false);
+
 			// The JTree can get big, so allow it to scroll
 			JScrollPane ftpScrollPane = new JScrollPane(ftpTree);
-			ftpScrollPane.setPreferredSize(new Dimension(350, 500));
+			ftpScrollPane.setPreferredSize(new Dimension(300, 500));
 			ftpScrollPane.setBorder(new CompoundBorder(new LineBorder(Color.GRAY), new EmptyBorder(1, 3, 1, 1)));
 
 			panel.add(ftpScrollPane, BorderLayout.CENTER);
+		} else {
+			JPanel p = new JPanel();
+			p.setPreferredSize(new Dimension(300, 500));
+			p.setBackground(Color.WHITE);
+			p.setBorder(new CompoundBorder(new LineBorder(Color.GRAY), new EmptyBorder(1, 3, 1, 1)));
+			panel.add(p, BorderLayout.CENTER);
+
 		}
 		return panel;
 	}
@@ -293,59 +304,61 @@ public class ShareFrame {
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0, Color.WHITE));
 
-	
-			// uploadButton
-			JButton uploadButton = new JButton(shareLabels.getString("upload") + " >>");
-			class UploadListener implements ActionListener {
+		// uploadButton
+		uploadButton = new JButton(shareLabels.getString("upload") + " >>");
+		class UploadListener implements ActionListener {
 
-				public void actionPerformed(ActionEvent arg0) {
-					if (localPaths.size() == 0) {
-						JOptionPane.showMessageDialog(null, shareLabels.getString("noLocals"));
-					}
-					// genau 1 Pfad auf Server gewählt && muss ein Ordner
-					// sein!!
-					else if (remotePaths.size() != 1 || remotePaths.get(0).contains(".")) {
-						JOptionPane.showMessageDialog(null, shareLabels.getString("oneRemote"));
-					} else {
-						String path = localPaths.get(0);
-						folder = path.substring(path.lastIndexOf("/"), path.length());
-						if (currentFTP.getName().equals("Public"))
-							doPublicUpload(localPaths);
-						else
-							doCustomUpload(localPaths);
-					}
+			public void actionPerformed(ActionEvent arg0) {
+				if (localPaths.size() == 0) {
+					JOptionPane.showMessageDialog(null, shareLabels.getString("noLocals"));
+				}
+				// genau 1 Pfad auf Server gewählt && muss ein Ordner
+				// sein!!
+				else if (remotePaths.size() != 1 || remotePaths.get(0).contains(".")) {
+					JOptionPane.showMessageDialog(null, shareLabels.getString("oneRemote"));
+				} else {
+					String path = localPaths.get(0);
+					folder = path.substring(path.lastIndexOf("/"), path.length());
+					if (currentFTP.getName().equals("Public"))
+						doPublicUpload(localPaths);
+					else
+						doCustomUpload(localPaths);
 				}
 			}
-			uploadButton.addActionListener(new UploadListener());
-			// downloadButton
-			JButton downloadButton = new JButton("<< " + shareLabels.getString("download"));
-			class DownloadListener implements ActionListener {
+		}
+		uploadButton.addActionListener(new UploadListener());
+		// downloadButton
+		downloadButton = new JButton("<< " + shareLabels.getString("download"));
+		class DownloadListener implements ActionListener {
 
-				public void actionPerformed(ActionEvent arg0) {
-					if (remotePaths.size() == 0) {
-						JOptionPane.showMessageDialog(null, shareLabels.getString("noRemotes"));
-					}
-					// genau 1 Pfad auf Local gewählt, muss ein Ordner
-					// sein!!
-					else if (localPaths.size() != 1 || localPaths.get(0).contains(".")) {
-						JOptionPane.showMessageDialog(null, shareLabels.getString("oneLocal"));
-					} else {
-						String path = remotePaths.get(0);
-						folder = path.substring(path.lastIndexOf("/"), path.length());
-						doDownload(remotePaths);
-					}
+			public void actionPerformed(ActionEvent arg0) {
+				if (remotePaths.size() == 0) {
+					JOptionPane.showMessageDialog(null, shareLabels.getString("noRemotes"));
+				}
+				// genau 1 Pfad auf Local gewählt, muss ein Ordner
+				// sein!!
+				else if (localPaths.size() != 1 || localPaths.get(0).contains(".")) {
+					JOptionPane.showMessageDialog(null, shareLabels.getString("oneLocal"));
+				} else {
+					String path = remotePaths.get(0);
+					folder = path.substring(path.lastIndexOf("/"), path.length());
+					doDownload(remotePaths);
 				}
 			}
-			downloadButton.addActionListener(new DownloadListener());
+		}
+		downloadButton.addActionListener(new DownloadListener());
 
-			panel.add(uploadButton);
-			panel.add(downloadButton);
-		
-			if (!connected) {
-				uploadButton.setEnabled(false);
-				downloadButton.setEnabled(false);
-			}
-			
+		panel.add(uploadButton);
+		panel.add(downloadButton);
+
+		if (connected) {
+			downloadButton.setEnabled(true);
+			uploadButton.setEnabled(true);
+		} else {
+			downloadButton.setEnabled(false);
+			uploadButton.setEnabled(false);
+		}
+
 		return panel;
 	}
 
@@ -358,8 +371,8 @@ public class ShareFrame {
 
 			public void actionPerformed(ActionEvent arg0) {
 				close();
-	      
-      }
+
+			}
 		}
 		cancelButton.addActionListener(new CancelListener());
 		panel.add(cancelButton);
@@ -470,7 +483,7 @@ public class ShareFrame {
 		if (newPaths.size() != 0)
 			FTPHandler.upload(currentFTP, local, newPaths);
 	}
-	
+
 	// Lädt lokale Files inkl. OrdnerStruktur auf den Server, leere Ordner
 	// ausgenommen
 	private void doCustomUpload(ArrayList<String> locals) {
@@ -520,10 +533,16 @@ public class ShareFrame {
 	}
 
 	public void refresh() {
+		int ftpIndex = ftpBox.getSelectedIndex();
+		lastDriveIndex = driveBox.getSelectedIndex();
 		shareLabels = getResourceBundle(tbe.getLang());
 		dialog.remove(contentPanel);
 		contentPanel = createPanel();
 		dialog.add(contentPanel);
+		ftpBox.setSelectedIndex(ftpIndex);
 		dialog.validate();
+		driveBox.setSelectedIndex(lastDriveIndex);
+
 	}
+
 }
