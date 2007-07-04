@@ -3,8 +3,6 @@ package ch.tbe.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,8 +14,12 @@ import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.swing.*;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.tree.TreePath;
 
 import ch.tbe.Board;
@@ -43,6 +45,7 @@ public class ShareFrame {
 	private ArrayList<String> remotePaths = new ArrayList<String>();
 	private String folder = "";
 	private JButton connectButton;
+	private FileSystemView fileSystemView = FileSystemView.getFileSystemView();
 
 	/*
    * Convention: Directories have no points in the name and files do have a
@@ -160,10 +163,11 @@ public class ShareFrame {
 		localTree = new JTree();
 		localTree.setModel(model);
 		localTree.addTreeSelectionListener(new LocalTreeListener());
+		
 
 		// The JTree can get big, so allow it to scroll
 		JScrollPane scrollPane = new JScrollPane(localTree);
-		scrollPane.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, Color.WHITE));
+		scrollPane.setBorder(new CompoundBorder(new LineBorder(Color.GRAY), new EmptyBorder(1, 3, 1, 1)));
 		panel.add(scrollPane, BorderLayout.CENTER);
 		return panel;
 	}
@@ -273,11 +277,11 @@ public class ShareFrame {
 			ftpTree = new JTree();
 			ftpTree.setModel(ftpModel);
 			ftpTree.addTreeSelectionListener(new RemoteTreeListener());
-
+	
 			// The JTree can get big, so allow it to scroll
 			JScrollPane ftpScrollPane = new JScrollPane(ftpTree);
 			ftpScrollPane.setPreferredSize(new Dimension(350, 500));
-			ftpScrollPane.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, Color.WHITE));
+			ftpScrollPane.setBorder(new CompoundBorder(new LineBorder(Color.GRAY), new EmptyBorder(1, 3, 1, 1)));
 
 			panel.add(ftpScrollPane, BorderLayout.CENTER);
 		}
@@ -285,16 +289,16 @@ public class ShareFrame {
 	}
 
 	private JPanel createCenterPanel() {
-		JPanel panel = new JPanel();
+		JPanel panel = new JPanel(new GridLayout(0,1,10,10));
 		panel.setBackground(Color.WHITE);
 		panel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0, Color.WHITE));
 
-		if (connected) {
+	
 			// uploadButton
 			JButton uploadButton = new JButton(shareLabels.getString("upload") + " >>");
-			class UploadListener extends MouseAdapter {
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
+			class UploadListener implements ActionListener {
+
+				public void actionPerformed(ActionEvent arg0) {
 					if (localPaths.size() == 0) {
 						JOptionPane.showMessageDialog(null, shareLabels.getString("noLocals"));
 					}
@@ -312,12 +316,12 @@ public class ShareFrame {
 					}
 				}
 			}
-			uploadButton.addMouseListener(new UploadListener());
+			uploadButton.addActionListener(new UploadListener());
 			// downloadButton
 			JButton downloadButton = new JButton("<< " + shareLabels.getString("download"));
-			class DownloadListener extends MouseAdapter {
-				@Override
-				public void mouseReleased(MouseEvent arg0) {
+			class DownloadListener implements ActionListener {
+
+				public void actionPerformed(ActionEvent arg0) {
 					if (remotePaths.size() == 0) {
 						JOptionPane.showMessageDialog(null, shareLabels.getString("noRemotes"));
 					}
@@ -332,11 +336,16 @@ public class ShareFrame {
 					}
 				}
 			}
-			downloadButton.addMouseListener(new DownloadListener());
+			downloadButton.addActionListener(new DownloadListener());
 
 			panel.add(uploadButton);
 			panel.add(downloadButton);
-		}
+		
+			if (!connected) {
+				uploadButton.setEnabled(false);
+				downloadButton.setEnabled(false);
+			}
+			
 		return panel;
 	}
 
@@ -345,19 +354,20 @@ public class ShareFrame {
 		panel.setBackground(Color.WHITE);
 
 		JButton cancelButton = new JButton(shareLabels.getString("cancel"));
-		class CancelListener extends MouseAdapter {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		class CancelListener implements ActionListener {
+
+			public void actionPerformed(ActionEvent arg0) {
 				close();
-			}
+	      
+      }
 		}
-		cancelButton.addMouseListener(new CancelListener());
+		cancelButton.addActionListener(new CancelListener());
 		panel.add(cancelButton);
 
 		JButton openButton = new JButton(shareLabels.getString("open"));
-		class OpenListener extends MouseAdapter {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		class OpenListener implements ActionListener {
+
+			public void actionPerformed(ActionEvent arg0) {
 				String filePath = "";
 				// muss LOKAL 1 .tbe-File angewählt sein
 				if (localPaths.size() != 1) {
@@ -375,13 +385,13 @@ public class ShareFrame {
 				}
 			}
 		}
-		openButton.addMouseListener(new OpenListener());
+		openButton.addActionListener(new OpenListener());
 		panel.add(openButton);
 
 		JButton refreshButton = new JButton(shareLabels.getString("refresh"));
-		class RefreshListener extends MouseAdapter {
-			@Override
-			public void mouseReleased(MouseEvent arg0) {
+		class RefreshListener implements ActionListener {
+
+			public void actionPerformed(ActionEvent arg0) {
 				if (connected) {
 					FTPHandler.disconnect();
 					FTPHandler.connect(currentFTP);
@@ -389,7 +399,7 @@ public class ShareFrame {
 				refresh();
 			}
 		}
-		refreshButton.addMouseListener(new RefreshListener());
+		refreshButton.addActionListener(new RefreshListener());
 		panel.add(refreshButton);
 
 		return panel;
@@ -512,7 +522,6 @@ public class ShareFrame {
 	public void refresh() {
 		shareLabels = getResourceBundle(tbe.getLang());
 		dialog.remove(contentPanel);
-		dialog.repaint();
 		contentPanel = createPanel();
 		dialog.add(contentPanel);
 		dialog.validate();
