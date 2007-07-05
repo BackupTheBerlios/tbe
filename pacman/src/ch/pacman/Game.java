@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import jdsl.graph.ref.IncidenceListGraph;
+
 import ch.pacman.game.*;
 
 public class Game extends JPanel implements Runnable
@@ -26,6 +28,8 @@ public class Game extends JPanel implements Runnable
 	private int nrofGhosts;
 
 	private short[][] screendata;
+
+	private IncidenceListGraph graph;
 
 	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 
@@ -62,10 +66,12 @@ public class Game extends JPanel implements Runnable
 	private final int pacmananimcount = 4;
 
 	private boolean ingame = true; // TODO
-	
-	private int scaredcount ,scaredtime;
-	private  final	int	maxscaredtime=120;
-	private  final int     minscaredtime=20;
+
+	private int scaredcount, scaredtime;
+
+	private final int maxscaredtime = 120;
+
+	private final int minscaredtime = 20;
 
 	public Game()
 	{
@@ -84,7 +90,7 @@ public class Game extends JPanel implements Runnable
 	{
 		// pacsleft=3;
 		// score=0;
-		scaredtime=maxscaredtime;
+		scaredtime = maxscaredtime;
 
 		nrofGhosts = 3;
 		for (int i = 0; i <= nrofGhosts; i++)
@@ -92,7 +98,7 @@ public class Game extends JPanel implements Runnable
 			ghosts.add(new Ghost(0, 0, 3));
 		}
 		pacman = new PacMan(0, 0, 4);
-		scaredtime=maxscaredtime;
+		scaredtime = maxscaredtime;
 		this.LevelInit();
 	}
 
@@ -100,6 +106,7 @@ public class Game extends JPanel implements Runnable
 	{
 		level = new Level1();
 		screendata = level.getLeveldata().clone();
+		graph = level.getGraph();// TODO Clone??
 		LevelContinue();
 	}
 
@@ -454,8 +461,8 @@ public class Game extends JPanel implements Runnable
 			}
 			if ((ch & 32) != 0)
 			{
-				scared=true;
-				scaredcount=scaredtime;
+				scared = true;
+				scaredcount = scaredtime;
 				screendata[row][col] = (short) (ch & 15);
 				// score+=5;
 			}
@@ -596,31 +603,28 @@ public class Game extends JPanel implements Runnable
 		}
 
 	}
-	
-	 public void CheckScared()
-	  {
-	    scaredcount--;
-	    if (scaredcount<=0)
-	      scared=false;
 
-	    if (scared && scaredcount>=30)
-	      Level.mazecolor=new Color(192,32,255);
-	    else
-	    	Level.mazecolor=new Color(32,192,255);
+	public void CheckScared()
+	{
+		scaredcount--;
+		if (scaredcount <= 0)
+			scared = false;
 
-	    if (scared)
-	    {
-	      screendata[7][6]=11;
-	      screendata[7][8]=14;
-	    }
-	    else
-	    {
-	      screendata[7][6]=10;
-	      screendata[7][8]=10;
-	    }
-	  }
-	
-	
+		if (scared && scaredcount >= 30)
+			Level.mazecolor = new Color(192, 32, 255);
+		else
+			Level.mazecolor = new Color(32, 192, 255);
+
+		if (scared)
+		{
+			screendata[7][6] = 11;
+			screendata[7][8] = 14;
+		} else
+		{
+			screendata[7][6] = 10;
+			screendata[7][8] = 10;
+		}
+	}
 
 	public static void main(String[] args)
 	{
@@ -710,4 +714,14 @@ public class Game extends JPanel implements Runnable
 		return image;
 	}
 
+//	private void makeTree(int depht){
+//		JTree tree =  new JTree();
+//		IncidenceListGraph graphClone = graph.clone();// TODO clone
+//		
+//		
+//	
+//	}
+//	private void move(int depht, boolean pac, ){
+//		
+//	}
 }

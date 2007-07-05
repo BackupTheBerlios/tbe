@@ -39,7 +39,7 @@ public class ShareFrame {
 	private FTPServer currentFTP = null;
 	private boolean connected = false;
 	private File[] roots = File.listRoots();
-	private PathFile currentRoot = new PathFile(roots[0], roots[0].getName());
+	private PathFile currentRoot = new PathFile(null, "");
 	private JTree ftpTree, localTree;
 	private ArrayList<String> localPaths = new ArrayList<String>();
 	private ArrayList<String> remotePaths = new ArrayList<String>();
@@ -58,9 +58,8 @@ public class ShareFrame {
 		contentPanel = createPanel();
 		dialog.add(contentPanel);
 		dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-			public void windowClosing(WindowEvent winEvt) 
-			{
-				if(connected)
+			public void windowClosing(WindowEvent winEvt) {
+				if (connected)
 					FTPHandler.disconnect();
 			}
 		});
@@ -109,13 +108,16 @@ public class ShareFrame {
 				if (driveBox.getSelectedIndex() != 0) {
 					File root = roots[driveBox.getSelectedIndex() - 1];
 					currentRoot = new PathFile(root, root.getName());
-					localPaths.clear();
-					remotePaths.clear();
-					if (lastDriveIndex != driveBox.getSelectedIndex())
-						refresh();
+				} else {
+					currentRoot = new PathFile(null, "");
 				}
 
+				localPaths.clear();
+				remotePaths.clear();
+				if (lastDriveIndex != driveBox.getSelectedIndex())
+					refresh();
 			}
+
 		}
 		driveBox.addActionListener(new DriveListener());
 		panel.add(driveBox, BorderLayout.NORTH);
