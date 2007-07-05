@@ -3,6 +3,7 @@ package ch.tbe.gui;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -56,9 +57,13 @@ public class ShareFrame {
 		dialog = new JDialog(tbe.getFrame(), shareLabels.getString("title"), true);
 		contentPanel = createPanel();
 		dialog.add(contentPanel);
-
-		// TODO: Disconnect bei Windows close
-
+		dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(WindowEvent winEvt) 
+			{
+				if(connected)
+					FTPHandler.disconnect();
+			}
+		});
 		dialog.setSize(800, 500);
 		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dialog.setLocationRelativeTo(null);
