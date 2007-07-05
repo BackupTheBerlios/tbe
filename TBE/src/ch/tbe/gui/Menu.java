@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -526,14 +527,29 @@ public class Menu extends JMenuBar {
 				new AboutFrame(TBE.getInstance().getFrame());
 			}
 		}
-
+		
 		tbeAbout.addMouseListener(new tbeAboutListener());
-
+		
+		JMenuItem tbeHelp = new JMenuItem(menuLabels.getString("tbe3"));
+		class tbeHelpListener extends MouseAdapter {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				try {
+					String command = "rundll32 url.dll,FileProtocolHandler " + new File("src/ch/tbe/doc/helpfile.pdf").getAbsolutePath();
+	        Process p = Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+	        e.printStackTrace();
+        } 
+			}
+		}
+		tbeHelp.addMouseListener(new tbeHelpListener());
+		
 		tbeSettings.setIcon(new ImageIcon(TBE.class.getResource("../pics/settings.png")));
 		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
-
+		
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
+		tbemenu.add(tbeHelp);
 
 		return tbemenu;
 	}

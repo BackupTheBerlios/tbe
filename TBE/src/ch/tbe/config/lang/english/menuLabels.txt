@@ -40,3 +40,4 @@ view3=Legend
 # Menuitems TBEMenu
 tbe1=Settings
 tbe2=About
+tbe3=Help
