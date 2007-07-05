@@ -1,7 +1,5 @@
 package ch.pacman.game;
 
-import ch.pacman.Game;
-import ch.pacman.graph.PacVertex;
 
 public class PacMan implements Runnable{
 

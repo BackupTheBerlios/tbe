@@ -101,12 +101,14 @@ public class ShareFrame {
 		class DriveListener implements ActionListener {
 			public void actionPerformed(ActionEvent arg0) {
 
-				File root = roots[driveBox.getSelectedIndex() - 1];
-				currentRoot = new PathFile(root, root.getName());
-				localPaths.clear();
-				remotePaths.clear();
-				if (lastDriveIndex != driveBox.getSelectedIndex())
-					refresh();
+				if (driveBox.getSelectedIndex() != 0) {
+					File root = roots[driveBox.getSelectedIndex() - 1];
+					currentRoot = new PathFile(root, root.getName());
+					localPaths.clear();
+					remotePaths.clear();
+					if (lastDriveIndex != driveBox.getSelectedIndex())
+						refresh();
+				}
 
 			}
 		}
