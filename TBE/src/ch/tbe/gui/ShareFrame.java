@@ -66,6 +66,7 @@ public class ShareFrame {
 		dialog.setSize(800, 500);
 		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dialog.setLocationRelativeTo(null);
+		dialog.setResizable(false);
 		dialog.setVisible(true);
 	}
 
