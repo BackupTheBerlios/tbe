@@ -37,7 +37,7 @@ public class WorkingView extends View {
 	private Tool cursorTool;
 	private Tool currentTool;
 	private JButton currentButton, cursorButton, add, rem, rotate;
-	private JToolBar toolbar = new JToolBar();
+	private JToolBar toolbar = new JToolBar(); //TODO: zeilenumbruch wenn zuviele Tools
 	private JToolBar sideBar, rotatePanel;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private LegendBar legendBar;

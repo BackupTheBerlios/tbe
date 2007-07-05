@@ -313,7 +313,8 @@ public class ShareFrame {
 		panel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0, Color.WHITE));
 
 		// uploadButton
-		uploadButton = new JButton(shareLabels.getString("upload") + " >>");
+		uploadButton = new JButton(shareLabels.getString("upload") + " >>"); //TODO: Pfeil-Icon
+		uploadButton.setToolTipText(shareLabels.getString("upload"));
 		class UploadListener implements ActionListener {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -337,6 +338,7 @@ public class ShareFrame {
 		uploadButton.addActionListener(new UploadListener());
 		// downloadButton
 		downloadButton = new JButton("<< " + shareLabels.getString("download"));
+		downloadButton.setToolTipText(shareLabels.getString("download"));//TODO: Pfeil-Icon
 		class DownloadListener implements ActionListener {
 
 			public void actionPerformed(ActionEvent arg0) {
