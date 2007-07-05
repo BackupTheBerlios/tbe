@@ -101,7 +101,6 @@ public final class FTPHandler {
 
 	public static void disconnect() {
 		try {
-			System.out.println("quit");
 			if (client != null) {
 				client.quit();
 				client = null;
@@ -123,10 +122,7 @@ public final class FTPHandler {
 		client = new FTPClient();
 		try {
 			client.setRemoteHost(server.getHost());
-			System.out.println("Conecting with..." + server.toString());
 			client.connect();
-			System.out.println(client.toString());
-			System.out.println("login");
 			client.login(server.getUsername(), server.getPassword());
 		} catch (IOException e) {
 			System.out.println("connect IO");

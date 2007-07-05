@@ -229,7 +229,6 @@ public class ShareFrame {
 				connected = true;
 				dialog.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				refresh();
-
 			}
 		}
 		connectButton.addActionListener(new connectListener());
