@@ -56,5 +56,9 @@ public abstract class Level
 	{
 		return ghostStart;
 	}
+	
+	public IncidenceListGraph getGraph(){
+		return graph;
+	}
 
 }
