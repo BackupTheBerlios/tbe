@@ -38,7 +38,7 @@ public class WelcomeView extends View {
 	private ArrayList<String> paths;
 	private JPanel welcome;
 
-	public WelcomeView(ArrayList sports, String lang) {
+	public WelcomeView(ArrayList<Sport> sports, String lang) {
 		this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		welcomeViewLabels = getResourceBundle(lang);
 		createPanel();
@@ -155,8 +155,8 @@ public class WelcomeView extends View {
 			JPanel onePath = new JPanel();
 			onePath.setBackground(Color.WHITE);
 			onePath.setLayout(new GridLayout(1, 2, 0, 5));
-			if (name.length() > 18){
-				name = name.substring(0, 14) + "**.tbe";
+			if (name.length() > 16){
+				name = name.substring(0, 12) + "**.tbe";
 			}
 			JLabel pathLabel = new JLabel(name);
 			pathLabel.addMouseListener(new PathListener(file.getPath()));
