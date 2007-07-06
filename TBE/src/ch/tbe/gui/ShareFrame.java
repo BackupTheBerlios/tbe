@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
@@ -63,7 +64,7 @@ public class ShareFrame {
 					FTPHandler.disconnect();
 			}
 		});
-		dialog.setSize(800, 500);
+		dialog.setSize(700, 500);
 		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		dialog.setLocationRelativeTo(null);
 		dialog.setResizable(false);
@@ -313,7 +314,8 @@ public class ShareFrame {
 		panel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0, Color.WHITE));
 
 		// uploadButton
-		uploadButton = new JButton(shareLabels.getString("upload") + " >>"); //TODO: Pfeil-Icon
+		URL uploadIcon = ShareFrame.class.getResource("../pics/arrow_right.png");
+		uploadButton = new JButton(new ImageIcon(uploadIcon));
 		uploadButton.setToolTipText(shareLabels.getString("upload"));
 		class UploadListener implements ActionListener {
 
@@ -336,9 +338,10 @@ public class ShareFrame {
 			}
 		}
 		uploadButton.addActionListener(new UploadListener());
-		// downloadButton
-		downloadButton = new JButton("<< " + shareLabels.getString("download"));
-		downloadButton.setToolTipText(shareLabels.getString("download"));//TODO: Pfeil-Icon
+		
+		URL downloadIcon = ShareFrame.class.getResource("../pics/arrow_left.png");
+		downloadButton = new JButton(new ImageIcon(downloadIcon));
+		downloadButton.setToolTipText(shareLabels.getString("download"));
 		class DownloadListener implements ActionListener {
 
 			public void actionPerformed(ActionEvent arg0) {
