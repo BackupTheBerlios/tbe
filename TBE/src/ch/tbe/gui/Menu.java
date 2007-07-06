@@ -549,8 +549,8 @@ public class Menu extends JMenuBar {
 		tbeHelp.setIcon(new ImageIcon(TBE.class.getResource("../pics/help.png")));
 		
 		tbemenu.add(tbeSettings);
-		tbemenu.add(tbeAbout);
 		tbemenu.add(tbeHelp);
+		tbemenu.add(tbeAbout);
 
 		return tbemenu;
 	}
