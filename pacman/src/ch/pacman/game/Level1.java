@@ -35,16 +35,16 @@ public class Level1 extends Level
 				{ 25, 26, 26, 28, 3, 2, 2, 2, 2, 2, 6, 25, 26, 26, 28 } };
 
 		pathdata[0][0] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][1] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][2] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][3] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][4] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][5] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][6] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][7] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][8] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][9] = graph.insertVertex(new PacVertex(0, 0, true, false));
-		pathdata[0][10] = graph.insertVertex(new PacVertex(0, 0, true, false));
+		pathdata[0][1] = graph.insertVertex(new PacVertex(1, 0, true, false));
+		pathdata[0][2] = graph.insertVertex(new PacVertex(2, 0, true, false));
+		pathdata[0][3] = graph.insertVertex(new PacVertex(3, 0, true, false));
+		pathdata[0][4] = graph.insertVertex(new PacVertex(4, 0, true, false));
+		pathdata[0][5] = graph.insertVertex(new PacVertex(5, 0, true, false));
+		pathdata[0][6] = graph.insertVertex(new PacVertex(6, 0, true, false));
+		pathdata[0][7] = graph.insertVertex(new PacVertex(7, 0, true, false));
+		pathdata[0][8] = graph.insertVertex(new PacVertex(8, 0, true, false));
+		pathdata[0][9] = graph.insertVertex(new PacVertex(9, 0, true, false));
+		pathdata[0][10] = graph.insertVertex(new PacVertex(10, 0, true, false));
 		pathdata[0][11] = graph.insertVertex(new PacVertex(0, 0, true, false));
 		pathdata[0][12] = graph.insertVertex(new PacVertex(0, 0, true, false));
 		pathdata[0][13] = graph.insertVertex(new PacVertex(0, 0, true, false));

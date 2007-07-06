@@ -4,7 +4,12 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.Point;
 
+import ch.pacman.graph.PacVertex;
+
+import jdsl.graph.api.Edge;
+import jdsl.graph.api.EdgeIterator;
 import jdsl.graph.api.Vertex;
+import jdsl.graph.api.VertexIterator;
 import jdsl.graph.ref.IncidenceListGraph;
 
 public abstract class Level
@@ -56,9 +61,53 @@ public abstract class Level
 	{
 		return ghostStart;
 	}
-	
-	public IncidenceListGraph getGraph(){
+
+	public IncidenceListGraph getGraph()
+	{
 		return graph;
 	}
 
+	public IncidenceListGraph cloneGraph()
+	{
+		IncidenceListGraph cloneGraph = new IncidenceListGraph();
+		VertexIterator vi = graph.vertices();
+		while (vi.hasNext())
+		{
+			cloneGraph.insertVertex(((PacVertex) vi.nextVertex().element())
+					.clone());
+		}
+
+		EdgeIterator ei = graph.edges();
+		
+		while (ei.hasNext())
+		{
+			Edge e = ei.nextEdge();
+			Vertex[] verts = graph.endVertices(e);
+			Vertex dest = verts[0];
+			Vertex orig = verts[1];
+			boolean destfound = false;
+			boolean origfound = false;
+			Vertex cloneDest = null; 
+			Vertex cloneOrig = null;
+			VertexIterator vi2 = cloneGraph.vertices();
+			while(vi2.hasNext()){
+				Vertex cloneVert = vi2.nextVertex();
+				if(dest.element().equals(cloneVert.element())){
+					cloneDest = cloneVert;
+					destfound = true;
+				}
+				if(orig.element().equals(cloneVert.element())){
+					cloneOrig = cloneVert;
+					origfound = true;
+				}
+				
+				if (destfound && origfound) break;
+				
+			}
+			
+			cloneGraph.insertEdge(cloneOrig, cloneDest, "");//TODO: sting clonen;
+		}
+		return cloneGraph;
+
+	}
 }

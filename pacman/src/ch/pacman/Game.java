@@ -91,7 +91,6 @@ public class Game extends JPanel implements Runnable
 		// pacsleft=3;
 		// score=0;
 		scaredtime = maxscaredtime;
-
 		nrofGhosts = 3;
 		for (int i = 0; i <= nrofGhosts; i++)
 		{
@@ -106,7 +105,12 @@ public class Game extends JPanel implements Runnable
 	{
 		level = new Level1();
 		screendata = level.getLeveldata().clone();
-		graph = level.getGraph();// TODO Clone??
+		
+		IncidenceListGraph graph1 = level.getGraph();
+		System.out.println(graph1.numVertices()+":"+graph1.numEdges());
+		graph = level.cloneGraph();
+		System.out.println(graph.numVertices()+":"+graph.numEdges());
+		
 		LevelContinue();
 	}
 
@@ -714,14 +718,14 @@ public class Game extends JPanel implements Runnable
 		return image;
 	}
 
-//	private void makeTree(int depht){
+//	private void makeTree(){
 //		JTree tree =  new JTree();
-//		IncidenceListGraph graphClone = graph.clone();// TODO clone
+//		IncidenceListGraph graphClone = level.cloneGraph();
 //		
 //		
 //	
 //	}
-//	private void move(int depht, boolean pac, ){
-//		
-//	}
+
+	
+
 }
