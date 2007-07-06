@@ -107,8 +107,7 @@ public class WelcomeView extends View {
 		centerPanel.setBorder(BorderFactory.createMatteBorder(20, 20, 20, 20, Color.WHITE));
 
 		// recentlyUsedFiles
-		JPanel recentlyPanel = new JPanel();// TODO: doesn't work for long
-		// file-names
+		JPanel recentlyPanel = new JPanel();
 		recentlyPanel.setLayout(new BorderLayout());
 		TitledBorder recentlyTitle = BorderFactory.createTitledBorder(welcomeViewLabels.getString("open"));
 		recentlyPanel.setBorder(recentlyTitle);
@@ -152,10 +151,14 @@ public class WelcomeView extends View {
 		for (int i = paths.size() - 1; i >= 0; i--) {
 			String s = paths.get(i);
 			File file = new File(s);
+			String name = file.getName();
 			JPanel onePath = new JPanel();
 			onePath.setBackground(Color.WHITE);
 			onePath.setLayout(new GridLayout(1, 2, 0, 5));
-			JLabel pathLabel = new JLabel(file.getName());
+			if (name.length() > 18){
+				name = name.substring(0, 14) + "**.tbe";
+			}
+			JLabel pathLabel = new JLabel(name);
 			pathLabel.addMouseListener(new PathListener(file.getPath()));
 			onePath.add(createIcon("../pics/logo_little.jpg"));
 			onePath.add(pathLabel);

@@ -34,7 +34,7 @@ public final class FileSystemHandler {
 		String folderPath = "src/ch/tbe/config/lang";
 		File f1 = new File(folderPath);
 
-		// Get all the files and directory under your diretcory
+		// Get all the files and directory under your directory
 		File[] strFilesDirs = f1.listFiles();
 
 		for (int i = 0; i < strFilesDirs.length; i++) {

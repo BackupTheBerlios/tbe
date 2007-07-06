@@ -134,7 +134,7 @@ public class PrintHandler implements Printable {
 				encoder.encode(myImage);
 				out.close();
 			} catch (Exception e) {
-				// TODO exeption handling
+				// TODO Auto-generated catch block
 				System.err.println("Export-Error");
 			}
 		}

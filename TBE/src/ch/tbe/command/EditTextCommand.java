@@ -11,11 +11,11 @@ public class EditTextCommand extends Command {
 	}
 
 	public void redo() {
-		// TODO
+		// TODO Change Text Command
 	}
 
 	public void undo() {
-		// TODO
+		// TODO Change Text Command
 
 	}
 }

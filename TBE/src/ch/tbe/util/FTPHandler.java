@@ -274,6 +274,5 @@ public final class FTPHandler {
 			e.printStackTrace();
 		}
 	}
-	// TODO: Helper-Methode isLeaf() statt überprüfung wegen dem Punkt im
-	// Ordnernamen!
+	// TODO: Helper-Methode isLeaf() statt überprüfung wegen dem Punkt im Ordnernamen!
 }

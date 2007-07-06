@@ -413,10 +413,7 @@ public class Menu extends JMenuBar {
 		if (TBE.getInstance().getView() instanceof WorkingView) {
 			fieldMenu = createFieldMenu(((WorkingView) TBE.getInstance().getView()).getBoard().getSport().getFields());
 		} else {
-			// TODO: boardmenu.add(createFieldMenu(new ArrayList<Field>()))
 			fieldMenu = createFieldMenu(new ArrayList<Field>());
-			// fieldMenu =
-			// createFieldMenu(TBE.getInstance().getSports().get(0).getFields());
 		}
 
 		fieldMenu.setIcon(new ImageIcon(TBE.class.getResource("../pics/changeField.png")));

@@ -107,14 +107,18 @@ public class TBE implements Runnable {
 		frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		if (view != null) {
 			frame.remove(this.view);
-
 			this.view = newView;
 			menu.refresh();
 		}
 		this.view = newView;
+		
+		if (this.view instanceof WelcomeView) {
+			frame.setTitle("TBE - Tactic Board Editor");
+		}
 		frame.add(view);
 		frame.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		frame.validate();
+		
 	}
 
 	public View getView() {
