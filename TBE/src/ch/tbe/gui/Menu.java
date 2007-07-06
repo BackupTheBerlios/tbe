@@ -536,7 +536,7 @@ public class Menu extends JMenuBar {
 			public void mouseReleased(MouseEvent arg0) {
 				try {
 					String command = "rundll32 url.dll,FileProtocolHandler " + new File("src/ch/tbe/doc/helpfile.pdf").getAbsolutePath();
-	        Process p = Runtime.getRuntime().exec(command);
+	        Runtime.getRuntime().exec(command);
         } catch (IOException e) {
 	        e.printStackTrace();
         } 
@@ -546,6 +546,7 @@ public class Menu extends JMenuBar {
 		
 		tbeSettings.setIcon(new ImageIcon(TBE.class.getResource("../pics/settings.png")));
 		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
+		tbeHelp.setIcon(new ImageIcon(TBE.class.getResource("../pics/help.png")));
 		
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeAbout);
