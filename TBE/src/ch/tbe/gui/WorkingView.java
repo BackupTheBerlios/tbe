@@ -97,6 +97,7 @@ public class WorkingView extends View {
 				if (currentTool instanceof ArrowTool || currentTool instanceof TextBoxTool) {
 					setTool(cursorTool, cursorButton);
 				}
+				board.requestFocus();
 
 			}
 
