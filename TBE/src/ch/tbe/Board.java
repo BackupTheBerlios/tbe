@@ -7,15 +7,11 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
-
 import ch.tbe.command.MoveCommand;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.Command;
@@ -65,7 +61,7 @@ public class Board extends JGraph {
 								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
-									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+									p.setLocation(new Point2D.Double(p.getX() - 1, p.getY()));
 								}
 								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
 							} else {
@@ -82,7 +78,7 @@ public class Board extends JGraph {
 								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
-									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+									p.setLocation(new Point2D.Double(p.getX() + 1, p.getY()));
 								}
 								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
 							} else {
@@ -97,7 +93,7 @@ public class Board extends JGraph {
 								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
-									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+									p.setLocation(new Point2D.Double(p.getX(), p.getY() + 1));
 								}
 								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
 							} else {
@@ -112,7 +108,7 @@ public class Board extends JGraph {
 								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
-									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+									p.setLocation(new Point2D.Double(p.getX(), p.getY() - 1));
 								}
 								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
 							} else {
