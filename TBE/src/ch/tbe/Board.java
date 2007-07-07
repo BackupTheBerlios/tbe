@@ -1,16 +1,28 @@
 package ch.tbe;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
+import javax.swing.KeyStroke;
 
 import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
+
+import ch.tbe.command.MoveCommand;
+import ch.tbe.framework.ArrowItem;
+import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.TBEBasicGraphUI;
+import ch.tbe.jgraph.TBEGraphConstants;
 
 public class Board extends JGraph {
 
@@ -29,6 +41,106 @@ public class Board extends JGraph {
 		this.description = new Description();
 		this.setBackground(Color.GRAY);
 		this.setBackgroundImage((ImageIcon) this.field.getIcon());
+		addKeyListener();
+	}
+
+	private void addKeyListener() {
+		this.addKeyListener(new KeyListener() {
+			private MoveCommand mc;
+			private boolean keyDown = false;
+			private ItemComponent[] items;
+
+			public void keyPressed(KeyEvent e) {
+				if (Board.this.getSelectionCount() > 0) {
+					Object[] objects = Board.this.getSelectionCells();
+					if (!keyDown) {
+						items = Board.this.getSelectedItems();
+						mc = new MoveCommand(items);
+						keyDown = true;
+					}
+
+					if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+						for (Object o : objects) {
+							if (o instanceof ArrowItem) {
+								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								for (Object ob : points) {
+									Point2D p = ((Point2D) ob);
+									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+								}
+								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
+							} else {
+
+								Rectangle2D r = TBEGraphConstants.getBounds(((DefaultGraphCell) o).getAttributes());
+								TBEGraphConstants.setBounds(((DefaultGraphCell) o).getAttributes(), new Rectangle2D.Double(r.getX() - 1, r.getY(), r.getWidth(), r.getHeight()));
+							}
+						}
+
+					} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+
+						for (Object o : objects) {
+							if (o instanceof ArrowItem) {
+								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								for (Object ob : points) {
+									Point2D p = ((Point2D) ob);
+									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+								}
+								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
+							} else {
+								Rectangle2D r = TBEGraphConstants.getBounds(((DefaultGraphCell) o).getAttributes());
+								TBEGraphConstants.setBounds(((DefaultGraphCell) o).getAttributes(), new Rectangle2D.Double(r.getX() + 1, r.getY(), r.getWidth(), r.getHeight()));
+							}
+						}
+
+					} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+						for (Object o : objects) {
+							if (o instanceof ArrowItem) {
+								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								for (Object ob : points) {
+									Point2D p = ((Point2D) ob);
+									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+								}
+								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
+							} else {
+								Rectangle2D r = TBEGraphConstants.getBounds(((DefaultGraphCell) o).getAttributes());
+								TBEGraphConstants.setBounds(((DefaultGraphCell) o).getAttributes(), new Rectangle2D.Double(r.getX(), r.getY() + 1, r.getWidth(), r.getHeight()));
+							}
+						}
+
+					} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+						for (Object o : objects) {
+							if (o instanceof ArrowItem) {
+								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								for (Object ob : points) {
+									Point2D p = ((Point2D) ob);
+									p.setLocation(new Point2D.Double(p.getX(), p.getY()));
+								}
+								TBEGraphConstants.setPoints(((DefaultGraphCell) o).getAttributes(), points);
+							} else {
+								Rectangle2D r = TBEGraphConstants.getBounds(((DefaultGraphCell) o).getAttributes());
+								TBEGraphConstants.setBounds(((DefaultGraphCell) o).getAttributes(), new Rectangle2D.Double(r.getX(), r.getY() - 1, r.getWidth(), r.getHeight()));
+							}
+						}
+
+					}
+
+					Board.this.getGraphLayoutCache().insert(objects);
+				}
+			}
+
+			public void keyReleased(KeyEvent e) {
+				if (Board.this.getSelectionCount() > 0 && (e.getKeyCode() == KeyEvent.VK_UP || (e.getKeyCode() == KeyEvent.VK_DOWN) || (e.getKeyCode() == KeyEvent.VK_LEFT) || (e.getKeyCode() == KeyEvent.VK_RIGHT))) {
+					mc.setMoveEnd(items);
+					ArrayList<Command> actCommands = new ArrayList<Command>();
+					actCommands.add(mc);
+					TBE.getInstance().addCommands(actCommands);
+					keyDown = false;
+				}
+			}
+
+			public void keyTyped(KeyEvent arg0) {
+			}
+
+		});
 	}
 
 	public ItemComponent[] getItems() {
