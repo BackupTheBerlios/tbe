@@ -47,7 +47,7 @@ public class Board extends JGraph {
 			private ItemComponent[] items;
 
 			public void keyPressed(KeyEvent e) {
-				if (Board.this.getSelectionCount() > 0) {
+				if (Board.this.getSelectionCount() > 0 && (e.getKeyCode() == KeyEvent.VK_UP || (e.getKeyCode() == KeyEvent.VK_DOWN) || (e.getKeyCode() == KeyEvent.VK_LEFT) || (e.getKeyCode() == KeyEvent.VK_RIGHT))) {
 					Object[] objects = Board.this.getSelectionCells();
 					if (!keyDown) {
 						items = Board.this.getSelectedItems();
