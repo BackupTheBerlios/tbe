@@ -444,9 +444,9 @@ public class WorkingView extends View {
 
 		button.setMargin(new Insets(0, 0, 0, 0));
 
-		if (tool.getShapeType() != null) {
-			button.setIcon(tool.getShapeType().getIcon());
-			button.setToolTipText(tool.getShapeType().getDescription());
+		if (tool.getItemType() != null) {
+			button.setIcon(tool.getItemType().getIcon());
+			button.setToolTipText(tool.getItemType().getDescription());
 
 		} else {
 			button.setText("Tool"); // For Debugging
@@ -496,7 +496,7 @@ public class WorkingView extends View {
 		if (tool instanceof CursorTool || tool instanceof ArrowTool || tool instanceof TextBoxTool) {
 			board.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		} else {
-			board.setCursor(tool.getShapeType().getCursor());
+			board.setCursor(tool.getItemType().getCursor());
 		}
 	}
 
