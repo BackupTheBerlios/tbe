@@ -197,7 +197,7 @@ public class Menu extends JMenuBar {
 
 			}
 		}
-		fileClose.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.Event.CTRL_MASK));
+		fileClose.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_W, java.awt.Event.CTRL_MASK));
 		fileClose.addActionListener(new fileCloseListener());
 
 		JMenuItem fileQuit = new JMenuItem(menuLabels.getString("file9"));
