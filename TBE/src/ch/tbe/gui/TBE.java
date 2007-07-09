@@ -40,6 +40,12 @@ public class TBE implements Runnable {
 
 	private TBE() {
 	}
+	
+	//MAIN!
+	public static void main(String[] args) {
+		Thread tbe = new Thread(TBE.getInstance());
+		tbe.start();
+	}
 
 	@Override
 	public void run() {
@@ -277,12 +283,6 @@ public class TBE implements Runnable {
 		if (view != null) {
 			view.refresh();
 		}
-	}
-
-	// MAIN!
-	public static void main(String[] args) {
-		Thread tbe = new Thread(TBE.getInstance());
-		tbe.start();
 	}
 
 	public Clipboard getClipboard() {
