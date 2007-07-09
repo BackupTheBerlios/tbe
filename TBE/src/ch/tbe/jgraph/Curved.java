@@ -3,10 +3,15 @@ package ch.tbe.jgraph;
 import java.awt.geom.Point2D;
 
 /**
+ * Tactic Board Editor
+ * **********************
+ * Curved 
  * 
- * @author David Meier 10/05/2007
- * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
  */
+
 public class Curved {
 
 	private Point2D[] p;

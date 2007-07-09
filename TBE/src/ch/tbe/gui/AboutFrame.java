@@ -11,6 +11,16 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * AboutFrame 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class AboutFrame{
 	
 	public AboutFrame(Component frame){

@@ -7,6 +7,16 @@ import ch.tbe.ItemType;
 import ch.tbe.command.CreateCommand;
 import ch.tbe.gui.TBE;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * Tool 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public abstract class Tool {
 
 	protected ItemType itemType;

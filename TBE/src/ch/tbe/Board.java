@@ -20,6 +20,16 @@ import ch.tbe.gui.TBE;
 import ch.tbe.jgraph.TBEBasicGraphUI;
 import ch.tbe.jgraph.TBEGraphConstants;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * Board 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class Board extends JGraph {
 
 	private static final long serialVersionUID = 1L;

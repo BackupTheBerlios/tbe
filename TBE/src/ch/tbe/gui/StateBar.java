@@ -4,6 +4,16 @@ import javax.swing.BorderFactory;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * StateBar 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class StateBar extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JLabel strCoordinates = new JLabel("");

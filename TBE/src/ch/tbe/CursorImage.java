@@ -4,6 +4,16 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import javax.swing.*;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * CursorImage 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class CursorImage {
 
 	public static BufferedImage getMergedImage(Image icon, int MAX) {

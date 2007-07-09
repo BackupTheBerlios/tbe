@@ -18,6 +18,16 @@ import javax.swing.event.ChangeListener;
 import ch.tbe.FTPServer;
 import ch.tbe.util.*;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * SettingsFrame 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class SettingsFrame {
 	private TBE tbe = TBE.getInstance();
 	private ResourceBundle settingsLabels;

@@ -28,6 +28,16 @@ import javax.swing.UIManager;
 import org.jgraph.JGraph;
 import org.jgraph.graph.*;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * TBEVertexRenderer 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 
 /**
  * This renderer displays entries that implement the CellView interface and

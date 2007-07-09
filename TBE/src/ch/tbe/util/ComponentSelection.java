@@ -8,6 +8,16 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 
 import ch.tbe.framework.ItemComponent;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * ComponentSelection 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class ComponentSelection implements Transferable, ClipboardOwner {
 
 	static public DataFlavor itemFlavor;

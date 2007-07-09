@@ -1,6 +1,8 @@
 package ch.tbe;
 
 /**
+ * Tactic Board Editor
+ * **********************
  * Attribute 
  * 
  * @version 1.0 7/07

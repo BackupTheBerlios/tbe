@@ -16,6 +16,16 @@ import ch.tbe.Attribute;
 import ch.tbe.Board;
 import ch.tbe.util.AttributeTreeNode;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * SideBar 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class SideBar extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	private ResourceBundle sideBarLabels;

@@ -33,6 +33,16 @@ import org.jgraph.graph.Edge;
 import org.jgraph.graph.GraphModel;
 
 /**
+ * Tactic Board Editor
+ * **********************
+ * TBEGraphConstants 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
+/**
  * A collection of well known or common attribute keys and methods to apply to
  * an Map to get/set the properties in a typesafe manner. The following
  * attributes and methods need special attention: removeAttributes, removeAll
@@ -559,7 +569,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Overloaded method that passes arguments on as arrays
    */
-	public static Map createAttributes(Object[] cells, Object key, Object value) {
+	public static Map<Object, Map<Object, Object>> createAttributes(Object[] cells, Object key, Object value) {
 		return createAttributes(cells, new Object[] { key }, new Object[] { value });
 	}
 
@@ -570,7 +580,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * match in size.
    */
 	@SuppressWarnings("unchecked")
-	public static Map createAttributes(Object[] cells, Object[] keys, Object[] values) {
+	public static Map<Object, Map<Object, Object>> createAttributes(Object[] cells, Object[] keys, Object[] values) {
 		if (keys != null && values != null && keys.length != values.length)
 			throw new IllegalArgumentException("Keys and values must have same length");
 		Map nested = new Hashtable();

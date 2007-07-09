@@ -16,6 +16,16 @@ import ch.tbe.framework.ArrowItem;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.item.ShapeItem;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * LegendBar 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 @SuppressWarnings("serial")
 public class LegendBar extends JToolBar {
 	private Board board;

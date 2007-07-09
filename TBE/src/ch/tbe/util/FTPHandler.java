@@ -9,6 +9,16 @@ import ch.tbe.FTPServer;
 import com.enterprisedt.net.ftp.FTPClient;
 import com.enterprisedt.net.ftp.FTPException;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * FTPHandler 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public final class FTPHandler {
 	private final static String REMOTESPORTPATH = "sport";
 	private final static String LOCALSPORTPATH = "src/ch/tbe/config/sport";

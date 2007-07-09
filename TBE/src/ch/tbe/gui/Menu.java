@@ -25,6 +25,16 @@ import ch.tbe.framework.View;
 import ch.tbe.util.PrintHandler;
 import ch.tbe.gui.WorkingView;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * Menu 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class Menu extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 	private ResourceBundle menuLabels;

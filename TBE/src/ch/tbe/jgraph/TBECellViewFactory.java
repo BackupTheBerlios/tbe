@@ -4,8 +4,17 @@ import org.jgraph.graph.DefaultCellViewFactory;
 import org.jgraph.graph.Edge;
 import org.jgraph.graph.VertexView;
 
-public class TBECellViewFactory extends DefaultCellViewFactory {
+/**
+ * Tactic Board Editor
+ * **********************
+ * TBECellViewFactory 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
 
+public class TBECellViewFactory extends DefaultCellViewFactory {
 	private static final long serialVersionUID = 1L;
 
 	/**

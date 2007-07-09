@@ -10,21 +10,17 @@ import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
 import ch.tbe.framework.ArrowTool;
 import ch.tbe.gui.TBE;
-import ch.tbe.tool.BezierCurvedArrowTool;
-import ch.tbe.tool.BezierDashedArrowTool;
-import ch.tbe.tool.BezierDoubleArrowTool;
-import ch.tbe.tool.BezierSolidArrowTool;
-import ch.tbe.tool.CursorTool;
-import ch.tbe.tool.PolyCurvedArrowTool;
-import ch.tbe.tool.PolyCurvedBlockTool;
-import ch.tbe.tool.PolyDashedArrowTool;
-import ch.tbe.tool.PolyDashedBlockTool;
-import ch.tbe.tool.PolyDoubleArrowTool;
-import ch.tbe.tool.PolySolidArrowTool;
-import ch.tbe.tool.PolySolidBlockTool;
-import ch.tbe.tool.ShapeTool;
-import ch.tbe.tool.TextBoxTool;
+import ch.tbe.tool.*;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * ToolFactory 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
 public final class ToolFactory {
 
 	private ToolFactory() {

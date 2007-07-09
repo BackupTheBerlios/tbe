@@ -8,6 +8,16 @@ import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.jgraph.TBEGraphConstants;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * RotateCommand 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class RotateCommand  extends Command
 {
     private int rotation;

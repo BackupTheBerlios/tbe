@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 
 /**
+ * Tactic Board Editor
+ * **********************
  * Sport 
  * 
  * @version 1.0 7/07

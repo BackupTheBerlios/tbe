@@ -7,6 +7,16 @@ import org.jgraph.graph.DefaultGraphCell;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.jgraph.TBEGraphConstants;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * TextBoxItem 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BHF-TI, Team TBE
+ */
+
 public class TextBoxItem extends DefaultGraphCell implements ItemComponent {
 	private static final long serialVersionUID = 1L;
 
