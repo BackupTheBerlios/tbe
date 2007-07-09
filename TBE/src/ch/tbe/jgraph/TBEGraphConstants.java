@@ -562,7 +562,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Overloaded method that passes arguments on as arrays
    */
-	public static Map createAttributes(Object cell, Object key, Object value) {
+	public static Map<Object, Map<Object, Object>> createAttributes(Object cell, Object key, Object value) {
 		return createAttributes(new Object[] { cell }, new Object[] { key }, new Object[] { value });
 	}
 
@@ -711,7 +711,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * Returns the font for the specified attribute map. Uses default font if no
    * font is specified in the attribute map.
    */
-	public static Font getFont(Map map) {
+	public static Font getFont(Map<Object, Map<Object, Object>> map) {
 		Font font = (Font) map.get(FONT);
 		if (font == null)
 			font = DEFAULTFONT;
@@ -731,7 +731,8 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the attribute marked as for removal in the specified map.
    */
-	public static final Object[] getRemoveAttributes(Map map) {
+	@SuppressWarnings("unchecked")
+  public static final Object[] getRemoveAttributes(Map map) {
 		return (Object[]) map.get(REMOVEATTRIBUTES);
 	}
 
@@ -747,6 +748,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the moveableaxis attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getMoveableAxis(Map map) {
 		Integer intObj = (Integer) map.get(MOVEABLEAXIS);
 		if (intObj != null)
@@ -766,6 +768,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the sizeableAxis attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getSizeableAxis(Map map) {
 		Integer intObj = (Integer) map.get(SIZEABLEAXIS);
 		if (intObj != null)
@@ -793,6 +796,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the icon attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Image getIcon(Map map) {
 		return (Image) map.get(ICON);
 	}
@@ -808,6 +812,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the opaque attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isOpaque(Map map) {
 		Boolean bool = (Boolean) map.get(OPAQUE);
 		if (bool != null)
@@ -826,6 +831,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the opaque attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isGroupOpaque(Map map) {
 		Boolean bool = (Boolean) map.get(GROUPOPAQUE);
 		if (bool != null)
@@ -844,6 +850,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the border attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Border getBorder(Map map) {
 		return (Border) map.get(BORDER);
 	}
@@ -859,6 +866,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the linecolor attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Color getLineColor(Map map) {
 		return (Color) map.get(LINECOLOR);
 	}
@@ -874,6 +882,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the bordercolor attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Color getBorderColor(Map map) {
 		return (Color) map.get(BORDERCOLOR);
 	}
@@ -889,6 +898,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the linewidth attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final float getLineWidth(Map map) {
 		Float floatObj = (Float) map.get(LINEWIDTH);
 		if (floatObj != null)
@@ -907,6 +917,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the foreground attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Color getForeground(Map map) {
 		return (Color) map.get(FOREGROUND);
 	}
@@ -922,6 +933,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the background attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Color getBackground(Map map) {
 		return (Color) map.get(BACKGROUND);
 	}
@@ -938,6 +950,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the gradientcolor attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Color getGradientColor(Map map) {
 		return (Color) map.get(GRADIENTCOLOR);
 	}
@@ -955,6 +968,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the verticalalignment attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getVerticalAlignment(Map map) {
 		Integer intObj = (Integer) map.get(VERTICAL_ALIGNMENT);
 		if (intObj != null)
@@ -975,6 +989,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the horizontalalignment attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getHorizontalAlignment(Map map) {
 		Integer intObj = (Integer) map.get(HORIZONTAL_ALIGNMENT);
 		if (intObj != null)
@@ -994,6 +1009,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the verticaltextposition attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getVerticalTextPosition(Map map) {
 		Integer intObj = (Integer) map.get(VERTICAL_TEXT_POSITION);
 		if (intObj != null)
@@ -1013,6 +1029,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the horizontaltextposition attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getHorizontalTextPosition(Map map) {
 		Integer intObj = (Integer) map.get(HORIZONTAL_TEXT_POSITION);
 		if (intObj != null)
@@ -1031,6 +1048,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the dashpattern attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final float[] getDashPattern(Map map) {
 		return (float[]) map.get(DASHPATTERN);
 	}
@@ -1046,6 +1064,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the dashoffset attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final float getDashOffset(Map map) {
 		Float floatObj = (Float) map.get(DASHOFFSET);
 		if (floatObj != null)
@@ -1064,6 +1083,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the linestyle attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getLineStyle(Map map) {
 		Integer intObj = (Integer) map.get(LINESTYLE);
 		if (intObj != null)
@@ -1082,6 +1102,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the beginsize attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getBeginSize(Map map) {
 		Integer intObj = (Integer) map.get(BEGINSIZE);
 		if (intObj != null)
@@ -1100,6 +1121,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the endsize attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final int getEndSize(Map map) {
 		Integer intObj = (Integer) map.get(ENDSIZE);
 		if (intObj != null)
@@ -1140,6 +1162,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * @see #ARROW_DOUBLELINE
    * @see #ARROW_DIAMOND
    */
+	@SuppressWarnings("unchecked")
 	public static final int getLineBegin(Map map) {
 		Integer intObj = (Integer) map.get(LINEBEGIN);
 		if (intObj != null)
@@ -1180,6 +1203,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * @see #ARROW_DOUBLELINE
    * @see #ARROW_DIAMOND
    */
+	@SuppressWarnings("unchecked")
 	public static final int getLineEnd(Map map) {
 		Integer intObj = (Integer) map.get(LINEEND);
 		if (intObj != null)
@@ -1187,6 +1211,7 @@ public static final String ICONBOUNDS = "iconbounds";
 		return ARROW_NONE;
 	}
 
+	@SuppressWarnings("unchecked")
 	public static final int getRotation(Map map) {
 		Integer intObj = (Integer) map.get(ROTATION);
 		if (intObj != null)
@@ -1216,6 +1241,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * 
    * @see GraphModel#getValue(Object)
    */
+	@SuppressWarnings("unchecked")
 	public static final Object getValue(Map map) {
 		return map.get(VALUE);
 	}
@@ -1236,6 +1262,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * direction of the edge <br>
    * y coordinate: the absolute offset, orthogonally to the edge
    */
+	@SuppressWarnings("unchecked")
 	public static final Point2D getLabelPosition(Map map) {
 		return (Point2D) map.get(LABELPOSITION);
 	}
@@ -1254,6 +1281,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * Returns the additional label objects from the specified map.Extra labels
    * only work with edges currently.
    */
+	@SuppressWarnings("unchecked")
 	public static final Object[] getExtraLabels(Map map) {
 		return (Object[]) map.get(EXTRALABELS);
 	}
@@ -1275,6 +1303,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * Returns the extralabelpositions attribute from the specified map. Extra
    * labels only work with edges currently.
    */
+	@SuppressWarnings("unchecked")
 	public static final Point2D[] getExtraLabelPositions(Map map) {
 		return (Point2D[]) map.get(EXTRALABELPOSITIONS);
 	}
@@ -1291,6 +1320,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * Returns the true if the label should be painted along the edge. Defaults to
    * false.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isLabelAlongEdge(Map map) {
 		Boolean bool = (Boolean) map.get(LABELALONGEDGE);
 		if (bool != null)
@@ -1309,6 +1339,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the editable attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isEditable(Map map) {
 		Boolean bool = (Boolean) map.get(EDITABLE);
 		if (bool != null)
@@ -1327,6 +1358,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the moveable attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isMoveable(Map map) {
 		Boolean bool = (Boolean) map.get(MOVEABLE);
 		if (bool != null)
@@ -1345,6 +1377,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the sizeable attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isSizeable(Map map) {
 		Boolean bool = (Boolean) map.get(SIZEABLE);
 		if (bool != null)
@@ -1363,6 +1396,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the autosize attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isAutoSize(Map map) {
 		Boolean bool = (Boolean) map.get(AUTOSIZE);
 		if (bool != null)
@@ -1381,6 +1415,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the resize attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isResize(Map map) {
 		Boolean bool = (Boolean) map.get(RESIZE);
 		if (bool != null)
@@ -1399,6 +1434,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the constrained attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isConstrained(Map map) {
 		Boolean bool = (Boolean) map.get(CONSTRAINED);
 		if (bool != null)
@@ -1421,6 +1457,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * 
    * @see #setSelectable(Map, boolean)
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isSelectable(Map map) {
 		Boolean bool = (Boolean) map.get(SELECTABLE);
 		if (bool != null)
@@ -1440,6 +1477,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the childrenselectable attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isChildrenSelectable(Map map) {
 		Boolean bool = (Boolean) map.get(CHILDRENSELECTABLE);
 		if (bool != null)
@@ -1458,6 +1496,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the bendable attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isBendable(Map map) {
 		Boolean bool = (Boolean) map.get(BENDABLE);
 		if (bool != null)
@@ -1476,6 +1515,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the connectable attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isConnectable(Map map) {
 		Boolean bool = (Boolean) map.get(CONNECTABLE);
 		if (bool != null)
@@ -1495,6 +1535,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the disconnectable attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isDisconnectable(Map map) {
 		Boolean bool = (Boolean) map.get(DISCONNECTABLE);
 		if (bool != null)
@@ -1520,7 +1561,8 @@ public static final String ICONBOUNDS = "iconbounds";
    * 
    * @see #setPoints(Map, java.util.List)
    */
-	public static final java.util.List getPoints(Map map) {
+	@SuppressWarnings("unchecked")
+  public static final java.util.List getPoints(Map map) {
 		return (java.util.List) map.get(POINTS);
 	}
 
@@ -1535,6 +1577,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the routing attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Edge.Routing getRouting(Map map) {
 		Edge.Routing routing = (Edge.Routing) map.get(ROUTING);
 		if (routing == null)
@@ -1554,6 +1597,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * Returns the bounds attribute from the specified map. Note: The CellView
    * interface offers a getBounds method!
    */
+	@SuppressWarnings("unchecked")
 	public static final Rectangle2D getBounds(Map map) {
 		return (Rectangle2D) map.get(BOUNDS);
 	}
@@ -1570,6 +1614,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * Returns the inset attribute from the specified map. Note: The CellView
    * interface offers a getBounds method!
    */
+	@SuppressWarnings("unchecked")
 	public static final int getInset(Map map) {
 		Integer intObj = (Integer) map.get(INSET);
 		if (intObj != null)
@@ -1588,6 +1633,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the size attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final Dimension getSize(Map map) {
 		return (Dimension) map.get(SIZE);
 	}
@@ -1607,6 +1653,7 @@ public static final String ICONBOUNDS = "iconbounds";
    * position of a port relative to its origin, note this attribute is only for
    * ports.
    */
+	@SuppressWarnings("unchecked")
 	public static final Point2D getOffset(Map map) {
 		return (Point2D) map.get(OFFSET);
 	}
@@ -1622,6 +1669,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the beginfill attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isBeginFill(Map map) {
 		Boolean bool = (Boolean) map.get(BEGINFILL);
 		if (bool != null)
@@ -1640,6 +1688,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the endfill attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isEndFill(Map map) {
 		Boolean bool = (Boolean) map.get(ENDFILL);
 		if (bool != null)
@@ -1650,6 +1699,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Sets the absolute attributes in the specified map to the specified value.
    */
+	@SuppressWarnings("unchecked")
 	public static final void setAbsolute(Map map, boolean flag) {
 		setAbsoluteX(map, flag);
 		setAbsoluteY(map, flag);
@@ -1666,6 +1716,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the absolutey attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isAbsoluteY(Map map) {
 		Boolean bool = (Boolean) map.get(ABSOLUTEY);
 		if (bool != null)
@@ -1684,6 +1735,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the absolutex attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isAbsoluteX(Map map) {
 		Boolean bool = (Boolean) map.get(ABSOLUTEX);
 		if (bool != null)
@@ -1702,6 +1754,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the removeall attribute from the specified map.
    */
+	@SuppressWarnings("unchecked")
 	public static final boolean isRemoveAll(Map map) {
 		Boolean bool = (Boolean) map.get(REMOVEALL);
 		if (bool != null)
@@ -1739,6 +1792,7 @@ public static final String ICONBOUNDS = "iconbounds";
 	/**
    * Returns the link for the specified attribute map.
    */
+	@SuppressWarnings("unchecked")
 	public static String getLink(Map map) {
 		String link = (String) map.get(LINK);
 		return link;

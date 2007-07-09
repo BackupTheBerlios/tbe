@@ -59,7 +59,7 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer, Image
 
   private static final long serialVersionUID = 1L;
 
-	Map map;
+  Map<?, ?> map;
 
 	JGraph graph;
 
