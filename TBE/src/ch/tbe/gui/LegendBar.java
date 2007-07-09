@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
@@ -60,7 +62,7 @@ public class LegendBar extends JToolBar {
 		header.add(new JLabel("Legende:"));
 		this.add(header, BorderLayout.NORTH);
 
-		ItemComponent[] items = board.getItems();
+		ItemComponent[] items = sortLegendByDescription(board.getItems());
 		if (items.length != 0) {
 			for (ItemComponent item : items) {
 				if (item != null) {
@@ -81,7 +83,7 @@ public class LegendBar extends JToolBar {
 				}// IF
 			}// FOR
 
-			items = board.getItems();
+			//items = board.getItems();
 			for (ItemComponent item : items) {
 				if (item != null) {
 					if (item instanceof ArrowItem) {
@@ -107,6 +109,36 @@ public class LegendBar extends JToolBar {
 		legendPanel.add(arrowGridPanel, BorderLayout.SOUTH);
 
 		return legendPanel;
+	}
+	
+	private ItemComponent[] sortLegendByDescription(ItemComponent[] items){
+		ItemComponent[] sortedArray = new ItemComponent[items.length];
+		ArrayList<String> desc = new ArrayList<String>();
+		
+		for (ItemComponent item: items){
+			if (item instanceof ArrowItem){
+				desc.add(((ArrowItem) item).getItemType().getDescription());
+			}else if (item instanceof ShapeItem){
+				desc.add(item.getType());
+			}
+		}
+		Collections.sort(desc);
+		
+		for (int i=0; i< desc.size();i++){
+			for (ItemComponent item: items){
+				if (item instanceof ArrowItem){
+					if (((ArrowItem) item).getItemType().getDescription().equals(desc.get(i))){
+						sortedArray[i] = item;
+					}
+				}else if (item instanceof ShapeItem){
+					if (item.getType().equals(desc.get(i))){
+						sortedArray[i] = item;
+					}
+				}
+			}
+		}
+		
+		return sortedArray;
 	}
 
 	public void refresh() {
