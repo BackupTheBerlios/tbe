@@ -59,7 +59,7 @@ public class WelcomeView extends View {
 	}
 
 	private JLabel createIcon(String path) {
-		URL folderURL = WelcomeView.class.getResource(path);
+		URL folderURL = ClassLoader.getSystemResource(path);
 		ImageIcon folderIcon = new ImageIcon(folderURL);
 		JLabel folderLabel = new JLabel(folderIcon);
 		return folderLabel;
@@ -160,7 +160,7 @@ public class WelcomeView extends View {
 			}
 			JLabel pathLabel = new JLabel(name);
 			pathLabel.addMouseListener(new PathListener(file.getPath()));
-			onePath.add(createIcon("../pics/logo_little.jpg"));
+			onePath.add(createIcon("ch/tbe/pics/logo_little.jpg"));
 			onePath.add(pathLabel);
 			pathPanel.add(onePath);
 		}
@@ -170,7 +170,7 @@ public class WelcomeView extends View {
 		moreFilesPath.setLayout(new GridLayout(1, 2, 0, 5));
 		JLabel moreFilesLabel = new JLabel(welcomeViewLabels.getString("more"));
 		moreFilesLabel.addMouseListener(new PathListener("more"));
-		moreFilesPath.add(createIcon("../pics/folder.gif"));
+		moreFilesPath.add(createIcon("ch/tbe/pics/folder.gif"));
 		moreFilesPath.add(moreFilesLabel);
 		pathPanel.add(moreFilesPath);
 
@@ -246,7 +246,7 @@ public class WelcomeView extends View {
 			}
 		
 	});
-		moreSportsPath.add(createIcon("../pics/folder.gif"));
+		moreSportsPath.add(createIcon("ch/tbe/pics/folder.gif"));
 		moreSportsPath.add(moreSportsLabel);
 		sportPanel.add(moreSportsPath);
 

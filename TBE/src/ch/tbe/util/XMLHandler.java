@@ -296,7 +296,7 @@ public final class XMLHandler {
 					actSport = new Sport(atts.getValue("name"));
 					actSport.setVersion(atts.getValue("version"));
 					actSport.setLcVersion(atts.getValue("lastCompatibleVersion"));
-					actSport.setIcon(new ImageIcon("src/ch/tbe/config/sport/" + actSport.getName() + "/" + atts.getValue("picture")));
+					actSport.setIcon(new ImageIcon(ClassLoader.getSystemResource("").getPath()+"ch/tbe/config/sport/" + actSport.getName() + "/" + atts.getValue("picture")));
 				}
 
 				if (actSport != null) {

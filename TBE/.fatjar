@@ -1,14 +1,14 @@
 #Fat Jar Configuration File
-#Mon Jul 09 15:47:25 CEST 2007
+#Mon Jul 09 17:00:59 CEST 2007
 onejar.license.required=true
 manifest.classpath=.
 manifest.removesigners=true
 onejar.checkbox=false
-jarname=TBE_fat.jar
+jarname=TacticBoardEditor\\TBE.jar
 manifest.mergeall=true
 manifest.mainclass=ch.tbe.gui.TBE
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=
-excludes=<po|TBE>~CVS/;<po|TBE>~ch/~tbe/~config/~sport/;<po|TBE>~ch/~tbe/~config/~lang/
+excludes=<po|TBE>~CVS/;<po|TBE>~ch/~tbe/~config/
 includes=
