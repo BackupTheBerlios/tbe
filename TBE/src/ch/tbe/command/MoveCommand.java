@@ -27,7 +27,7 @@ public class MoveCommand extends Command {
 
 		for (int i = 0; i < items.length; i++) {
 			if (items[i] instanceof ArrowItem) {
-				List p = TBEGraphConstants.getPoints(((DefaultGraphCell) startItems[i]).getAttributes());
+				List<?> p = TBEGraphConstants.getPoints(((DefaultGraphCell) startItems[i]).getAttributes());
 				TBEGraphConstants.setPoints(((DefaultGraphCell) items[i]).getAttributes(), p);
 			} else {
 				Rectangle2D r = TBEGraphConstants.getBounds(((DefaultGraphCell) startItems[i]).getAttributes());
@@ -43,7 +43,7 @@ public class MoveCommand extends Command {
 		for (int i = 0; i < items.length; i++) {
 
 			if (items[i] instanceof ArrowItem) {
-				List p = TBEGraphConstants.getPoints(((DefaultGraphCell) endItems[i]).getAttributes());
+				List<?> p = TBEGraphConstants.getPoints(((DefaultGraphCell) endItems[i]).getAttributes());
 				TBEGraphConstants.setPoints(((DefaultGraphCell) items[i]).getAttributes(), p);
 
 			} else {

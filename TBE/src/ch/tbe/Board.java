@@ -58,7 +58,7 @@ public class Board extends JGraph {
 					if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 						for (Object o : objects) {
 							if (o instanceof ArrowItem) {
-								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								List<?> points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
 									p.setLocation(new Point2D.Double(p.getX() - 1, p.getY()));
@@ -75,7 +75,7 @@ public class Board extends JGraph {
 
 						for (Object o : objects) {
 							if (o instanceof ArrowItem) {
-								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								List<?> points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
 									p.setLocation(new Point2D.Double(p.getX() + 1, p.getY()));
@@ -90,7 +90,7 @@ public class Board extends JGraph {
 					} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 						for (Object o : objects) {
 							if (o instanceof ArrowItem) {
-								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								List<?> points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
 									p.setLocation(new Point2D.Double(p.getX(), p.getY() + 1));
@@ -105,7 +105,7 @@ public class Board extends JGraph {
 					} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 						for (Object o : objects) {
 							if (o instanceof ArrowItem) {
-								List points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
+								List<?> points = TBEGraphConstants.getPoints(((DefaultGraphCell) o).getAttributes());
 								for (Object ob : points) {
 									Point2D p = ((Point2D) ob);
 									p.setLocation(new Point2D.Double(p.getX(), p.getY() - 1));
