@@ -219,16 +219,16 @@ public class Menu extends JMenuBar {
 		}
 		fileQuit.addMouseListener(new fileQuitListener());
 
-		fileNew.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
-		fileOpen.setIcon(new ImageIcon(TBE.class.getResource("../pics/open.png")));
-		fileShare.setIcon(new ImageIcon(TBE.class.getResource("../pics/share.png")));
-		fileExport.setIcon(new ImageIcon(TBE.class.getResource("../pics/export.png")));
-		fileSave.setIcon(new ImageIcon(TBE.class.getResource("../pics/save.png")));
-		fileSaveAs.setIcon(new ImageIcon(TBE.class.getResource("../pics/saveas.png")));
-		filePrint.setIcon(new ImageIcon(TBE.class.getResource("../pics/print.png")));
-		filePreview.setIcon(new ImageIcon(TBE.class.getResource("../pics/printview.png")));
-		fileClose.setIcon(new ImageIcon(TBE.class.getResource("../pics/close.png")));
-		fileQuit.setIcon(new ImageIcon(TBE.class.getResource("../pics/exit.png")));
+		fileNew.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/new.png")));
+		fileOpen.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/open.png")));
+		fileShare.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/share.png")));
+		fileExport.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/export.png")));
+		fileSave.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/save.png")));
+		fileSaveAs.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/saveas.png")));
+		filePrint.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/print.png")));
+		filePreview.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/printview.png")));
+		fileClose.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/close.png")));
+		fileQuit.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/exit.png")));
 
 		if (TBE.getInstance().getView() instanceof WorkingView) {
 		} else {
@@ -365,16 +365,16 @@ public class Menu extends JMenuBar {
 		editSelectAll.addActionListener(new editSelectAllListener());
 		editSelectAll.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 
-		editCopy.setIcon(new ImageIcon(TBE.class.getResource("../pics/copy.png")));
-		editDelete.setIcon(new ImageIcon(TBE.class.getResource("../pics/delete.png")));
-		editInsert.setIcon(new ImageIcon(TBE.class.getResource("../pics/paste.png")));
-		editCut.setIcon(new ImageIcon(TBE.class.getResource("../pics/cut.png")));
-		editInsert.setIcon(new ImageIcon(TBE.class.getResource("../pics/new.png")));
-		editSelectAll.setIcon(new ImageIcon(TBE.class.getResource("../pics/select.png")));
-		editUndo.setIcon(new ImageIcon(TBE.class.getResource("../pics/undo.png")));
-		editRedo.setIcon(new ImageIcon(TBE.class.getResource("../pics/redo.png")));
-		editAddPoint.setIcon(new ImageIcon(TBE.class.getResource("../pics/add.png")));
-		editRemovePoint.setIcon(new ImageIcon(TBE.class.getResource("../pics/remove.png")));
+		editCopy.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/copy.png")));
+		editDelete.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/delete.png")));
+		editInsert.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/paste.png")));
+		editCut.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/cut.png")));
+		editInsert.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/new.png")));
+		editSelectAll.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/select.png")));
+		editUndo.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/undo.png")));
+		editRedo.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/redo.png")));
+		editAddPoint.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/add.png")));
+		editRemovePoint.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/remove.png")));
 
 		editmenu.add(editDelete);
 		editmenu.add(editCut);
@@ -416,8 +416,8 @@ public class Menu extends JMenuBar {
 			fieldMenu = createFieldMenu(new ArrayList<Field>());
 		}
 
-		fieldMenu.setIcon(new ImageIcon(TBE.class.getResource("../pics/changeField.png")));
-		boardClear.setIcon(new ImageIcon(TBE.class.getResource("../pics/delete.png")));
+		fieldMenu.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/changeField.png")));
+		boardClear.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/delete.png")));
 		boardmenu.add(fieldMenu);
 		boardmenu.add(boardClear);
 
@@ -541,9 +541,9 @@ public class Menu extends JMenuBar {
 		}
 		tbeHelp.addMouseListener(new tbeHelpListener());
 		
-		tbeSettings.setIcon(new ImageIcon(TBE.class.getResource("../pics/settings.png")));
-		tbeAbout.setIcon(new ImageIcon(TBE.class.getResource("../pics/about.png")));
-		tbeHelp.setIcon(new ImageIcon(TBE.class.getResource("../pics/help.png")));
+		tbeSettings.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/settings.png")));
+		tbeAbout.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/about.png")));
+		tbeHelp.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/help.png")));
 		
 		tbemenu.add(tbeSettings);
 		tbemenu.add(tbeHelp);
@@ -584,25 +584,25 @@ public class Menu extends JMenuBar {
 
 	public void setVisibleToolbar(boolean b) {
 		if (!b) {
-			viewToolbar.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+			viewToolbar.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/visible.png")));
 		} else {
-			viewToolbar.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+			viewToolbar.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/notVisible.png")));
 		}
 	}
 
 	public void setVisibleSidebar(boolean b) {
 		if (!b) {
-			viewSidebar.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+			viewSidebar.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/visible.png")));
 		} else {
-			viewSidebar.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+			viewSidebar.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/notVisible.png")));
 		}
 	}
 
 	public void setVisibleLegend(boolean b) {
 		if (!b) {
-			viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/visible.png")));
+			viewLegend.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/visible.png")));
 		} else {
-			viewLegend.setIcon(new ImageIcon(TBE.class.getResource("../pics/notVisible.png")));
+			viewLegend.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/notVisible.png")));
 		}
 	}
 }

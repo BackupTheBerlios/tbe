@@ -69,7 +69,7 @@ public final class XMLHandler {
 				try {
 					// Start reading File
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse(new File(XMLHandler.class.getResource("../config/tbe.config").getPath()), handler);
+					saxParser.parse(new File(ClassLoader.getSystemResource("").getPath()+"ch/tbe/config/tbe.config"), handler);
 				} catch (Throwable t) {
 					t.printStackTrace();
 				}
@@ -284,7 +284,7 @@ public final class XMLHandler {
 
 				try {
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					String filePath = XMLHandler.class.getResource("../config/sport/" + sport + "/sport.config").getPath();
+					String filePath = ClassLoader.getSystemResource("ch/tbe/config/sport/" + sport + "/sport.config").getPath();
 					saxParser.parse(new File(filePath), handler);
 				} catch (Throwable t) {
 					t.printStackTrace();
@@ -301,15 +301,15 @@ public final class XMLHandler {
 
 				if (actSport != null) {
 					if (qName.equals("shape")) {
-						URL imgURL = TBE.class.getResource("../config/sport/" + actSport.getName() + "/" + atts.getValue("icon"));
+						URL imgURL = ClassLoader.getSystemResource("ch/tbe/config/sport/" + actSport.getName() + "/" + atts.getValue("icon"));
 						Icon actIcon = new ImageIcon(imgURL);
-						imgURL = TBE.class.getResource("../config/sport/" + actSport.getName() + "/" + atts.getValue("picture"));
+						imgURL = ClassLoader.getSystemResource("ch/tbe/config/sport/" + actSport.getName() + "/" + atts.getValue("picture"));
 						Icon actPicture = new ImageIcon(imgURL);
 						shapes.add(new ItemType(atts.getValue("name"), atts.getValue("description"), actIcon, actPicture, Integer.parseInt(atts.getValue("maxSideWidth"))));
 					}
 
 					if (qName.equals("arrow")) {
-						URL imgURL = TBE.class.getResource("../config/sport/" + atts.getValue("picture"));
+						URL imgURL = ClassLoader.getSystemResource("ch/tbe/config/sport/" + atts.getValue("picture"));
 						if (imgURL != null) {
 							Icon actIcon = new ImageIcon(imgURL);
 							arrows.add(new ItemType(atts.getValue("name"), atts.getValue("description"), actIcon));
@@ -317,7 +317,7 @@ public final class XMLHandler {
 					}
 
 					if (qName.equals("field")) {
-						URL imgURL = TBE.class.getResource("../config/sport/" + actSport.getName() + "/" + atts.getValue("picture"));
+						URL imgURL = ClassLoader.getSystemResource("ch/tbe/config/sport/" + actSport.getName() + "/" + atts.getValue("picture"));
 						Icon actIcon = null;
 						try {
 							actIcon = new ImageIcon(imgURL);
@@ -542,7 +542,7 @@ public final class XMLHandler {
 			Format format = Format.getPrettyFormat();
 			format.setEncoding("iso-8859-1");
 			XMLOutputter out = new XMLOutputter(format);
-			java.io.FileWriter writer = new java.io.FileWriter(XMLHandler.class.getResource("../config/tbe.config").getPath());
+			java.io.FileWriter writer = new java.io.FileWriter(ClassLoader.getSystemResource("").getPath()+"ch/tbe/config/tbe.config");
 			out.output(document, writer);
 			writer.flush();
 			writer.close();

@@ -19,7 +19,7 @@ public class SplashScreen extends JWindow{
 	private ImageIcon imageIcon;
 
 	public SplashScreen() {
-		final URL url = TBE.class.getResource("../pics/logo_anim.gif");
+		final URL url = ClassLoader.getSystemResource("ch/tbe/pics/logo_anim.gif"); 
 		imageIcon = new ImageIcon(url);
 		try {
 			jbInit();

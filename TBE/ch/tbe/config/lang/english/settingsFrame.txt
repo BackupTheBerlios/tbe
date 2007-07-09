@@ -1,0 +1,35 @@
+#Title
+title1 = Welcome
+title2 = Settings
+
+# Tabs
+general = General
+ftp = FTP
+sport = Sport
+
+# General Settings
+prename = Firstname
+lastname = Lastname
+mail = Mailaddress
+lang = Language
+
+# FTP Settings
+FTPname = Name
+FTPhost = Host
+FTPport = Port
+FTPuser = Username
+FTPpw = Password
+
+# Buttons
+delete = Delete
+cancel = Cancel
+save = Save
+new = New
+connect = Connect
+install = Install
+undo = Undo
+apply = Apply
+exit = Exit
+
+# Demands
+chooseServer = Choose Server

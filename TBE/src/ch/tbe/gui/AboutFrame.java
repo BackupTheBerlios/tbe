@@ -62,7 +62,7 @@ public class AboutFrame{
 		eastPanel.add(teamPanel);
 		eastWrapperPanel.add(eastPanel);
 		
-		contentPanel.add(new JLabel(new ImageIcon(TBE.class.getResource("../pics/logo_anim.gif"))), BorderLayout.WEST);
+		contentPanel.add(new JLabel(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/logo_anim.gif"))), BorderLayout.WEST);
 		contentPanel.add(eastWrapperPanel, BorderLayout.EAST);
 		
 		JLabel txtCopyRight = new JLabel("© 2007 by TBE development group");

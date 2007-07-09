@@ -1,0 +1,22 @@
+# Title Attribute
+attr = Eigenschaften
+description = Board Titel
+
+# Add / Change Attribute
+title = Titel
+text = Text
+
+# Demands
+titleInput = Geben Sie einen Titel ein
+textInput = Geben Sie einen Text ein
+removeAttr = Wollen Sie das folgende Attribut wirklich löschen?
+
+# Buttons
+yes = Ja, löschen
+no = Nein, nicht löschen
+add = Hinzufügen
+save = Ändern
+cancel = Abbrechen
+
+# Errors
+noAttr = Es ist kein Attribut ausgewählt

@@ -11,10 +11,13 @@ public final class FileSystemHandler {
 		ArrayList<String> sports = new ArrayList<String>();
 
 		// Create a file object for your root directory
-		String folderPath = "src/ch/tbe/config/sport";
-		File f1 = new File(folderPath);
+		String folderPath = "ch/tbe/config/sport";
+		
+		//File f1 = new File(ClassLoader.getSystemResource(folderPath).getPath());
+		File f1 = new File(ClassLoader.getSystemResource("").getPath()+folderPath);
 
 		// Get all the files and directory under your diretcory
+		
 		File[] strFilesDirs = f1.listFiles();
 
 		for (int i = 0; i < strFilesDirs.length; i++) {
@@ -31,8 +34,8 @@ public final class FileSystemHandler {
 		ArrayList<String> langs = new ArrayList<String>();
 
 		// Create a file object for your root directory
-		String folderPath = "src/ch/tbe/config/lang";
-		File f1 = new File(folderPath);
+		String folderPath = "ch/tbe/config/lang";
+		File f1 = new File(ClassLoader.getSystemResource("").getPath()+folderPath);
 
 		// Get all the files and directory under your directory
 		File[] strFilesDirs = f1.listFiles();

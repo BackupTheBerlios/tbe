@@ -93,7 +93,7 @@ public class WelcomeView extends View {
 		topPanel.add(titleLabel);
 
 		// Logo
-		URL imgURL = WelcomeView.class.getResource("../pics/logo.jpg");
+		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/logo.jpg");
 		ImageIcon logoIcon = new ImageIcon(imgURL);
 		JLabel iconLabel = new JLabel(logoIcon);
 		topPanel.add(iconLabel);

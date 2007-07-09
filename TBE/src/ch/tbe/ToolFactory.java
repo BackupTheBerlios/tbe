@@ -31,7 +31,7 @@ public final class ToolFactory {
 	};
 
 	public static CursorTool getCursorTool() {
-		URL imgURL = ToolFactory.class.getResource("pics/cursoricon.gif");
+		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/cursoricon.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
 		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
 		return new CursorTool(new ItemType(rb.getString("cursor"), rb.getString("cursor"), icon));
@@ -78,7 +78,7 @@ public final class ToolFactory {
 	}
 
 	public static TextBoxTool getTextBoxTool() {
-		URL imgURL = ToolFactory.class.getResource("pics/text.gif");
+		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/text.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
 		ResourceBundle rb = getResourceBundle(TBE.getInstance().getLang());
 		return new TextBoxTool(new ItemType(rb.getString("textbox"), rb.getString("textbox"), icon));

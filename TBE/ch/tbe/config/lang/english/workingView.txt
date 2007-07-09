@@ -1,0 +1,4 @@
+# Buttons
+plus=Add Point (Strg-I)
+minus=Remove Point (Strg-R)
+rotate=Rotate Image

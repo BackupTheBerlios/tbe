@@ -185,9 +185,9 @@ public class WorkingView extends View {
 	}
 
 	private void installAddRemovePointButtons() {
-		URL imgURL = WorkingView.class.getResource("../pics/plus.gif");
+		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/plus.gif");
 		ImageIcon plus = new ImageIcon(imgURL);
-		imgURL = WorkingView.class.getResource("../pics/minus.gif");
+		imgURL = ClassLoader.getSystemResource("ch/tbe/pics/minus.gif");
 		ImageIcon minus = new ImageIcon(imgURL);
 		add = new JButton(plus);
 		rem = new JButton(minus);
@@ -213,7 +213,7 @@ public class WorkingView extends View {
 	}
 
 	private void installRotateButton() {
-		URL imgURL = WorkingView.class.getResource("../pics/rotate.gif");
+		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/rotate.gif");
 		ImageIcon rotateIcon = new ImageIcon(imgURL);
 		rotate = new JButton(rotateIcon);
 		rotate.setEnabled(false);

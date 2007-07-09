@@ -59,7 +59,7 @@ public class PrintView extends View {
 		path.setLineWrap(true);
 
 		// Logo Icon
-		URL imgURL = PrintView.class.getResource("../pics/logo_middle.jpg");
+		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/logo_middle.jpg");
 		ImageIcon logoIcon = new ImageIcon(imgURL);
 		JLabel logo = new JLabel(logoIcon);
 		path.setPreferredSize(new Dimension(board.getBackgroundImage().getIconWidth() - (logoIcon.getIconWidth() + 30), 30)); // that's

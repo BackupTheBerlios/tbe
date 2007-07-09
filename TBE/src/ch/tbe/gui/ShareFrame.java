@@ -314,7 +314,7 @@ public class ShareFrame {
 		panel.setBorder(BorderFactory.createMatteBorder(150, 0, 0, 0, Color.WHITE));
 
 		// uploadButton
-		URL uploadIcon = ShareFrame.class.getResource("../pics/arrow_right.png");
+		URL uploadIcon = ClassLoader.getSystemResource("ch/tbe/pics/arrow_right.png");
 		uploadButton = new JButton(new ImageIcon(uploadIcon));
 		uploadButton.setToolTipText(shareLabels.getString("upload"));
 		class UploadListener implements ActionListener {
@@ -339,7 +339,7 @@ public class ShareFrame {
 		}
 		uploadButton.addActionListener(new UploadListener());
 		
-		URL downloadIcon = ShareFrame.class.getResource("../pics/arrow_left.png");
+		URL downloadIcon = ClassLoader.getSystemResource("ch/tbe/pics/arrow_left.png");
 		downloadButton = new JButton(new ImageIcon(downloadIcon));
 		downloadButton.setToolTipText(shareLabels.getString("download"));
 		class DownloadListener implements ActionListener {
