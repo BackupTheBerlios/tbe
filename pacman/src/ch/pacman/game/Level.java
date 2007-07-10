@@ -110,4 +110,9 @@ public abstract class Level
 		return cloneGraph;
 
 	}
+
+	public Vertex[][] getPathdata()
+	{
+		return pathdata;
+	}
 }

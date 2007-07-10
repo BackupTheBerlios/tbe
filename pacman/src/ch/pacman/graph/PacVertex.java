@@ -16,18 +16,28 @@ public class PacVertex
 	boolean point = false;
 	boolean supreme = false;
 	boolean pacMan;
+	short type;
 	
 	int ghost;
 
-	public PacVertex(int x, int y, boolean fruit, boolean supreme)
+	public PacVertex(int x, int y, short type)
 	{
 		super();
 		this.x = x;
 		this.y = y;
-		this.fruit = fruit;
-		this.supreme = supreme;
-		this.point = (!supreme && !fruit);
+		this.type = type;
+//		this.fruit = fruit;
+//		this.supreme = supreme;
 
+
+	}
+	
+	public short getType(){
+		return type;
+	}
+	
+	public void setType(short type){
+		this.type = type;
 	}
 	
 	public PacVertex getEast()
@@ -72,7 +82,7 @@ public class PacVertex
 	
 	public PacVertex clone()
 	{
-		return new PacVertex(x, y, fruit, supreme);
+		return new PacVertex(x, y, type);
 	}
 
 	@Override

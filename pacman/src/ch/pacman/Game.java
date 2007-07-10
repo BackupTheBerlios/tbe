@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
+import jdsl.graph.api.Vertex;
 import jdsl.graph.ref.IncidenceListGraph;
 
 import ch.pacman.game.*;
+import ch.pacman.graph.PacVertex;
 
 public class Game extends JPanel implements Runnable {
 
@@ -26,7 +28,7 @@ public class Game extends JPanel implements Runnable {
 
 	private int nrofGhosts;
 
-	private short[][] screendata;
+	private Vertex[][] screendata;
 
 	private IncidenceListGraph graph;
 
@@ -99,7 +101,7 @@ public class Game extends JPanel implements Runnable {
 
 	public void LevelInit() {
 		level = new Level1();
-		screendata = level.getLeveldata().clone();
+		screendata = level.getPathdata();
 
 		IncidenceListGraph graph1 = level.getGraph();
 		System.out.println(graph1.numVertices() + ":" + graph1.numEdges());
@@ -126,8 +128,8 @@ public class Game extends JPanel implements Runnable {
 			// random=currentspeed;
 			// ghostspeed[i]=validspeeds[random];
 		}
-		screendata[7][6] = 10;
-		screendata[7][8] = 10;
+		((PacVertex) screendata[7][6].element()).setType((short) 10);
+		((PacVertex) screendata[7][8].element()).setType((short) 10);
 		pacman.setActX(level.getPacManStart().x);
 		pacman.setActY(level.getPacManStart().y);
 
@@ -151,10 +153,7 @@ public class Game extends JPanel implements Runnable {
 		DrawMaze();
 		DoAnim();
 
-		if (ingame)
-			PlayGame();
-		// else
-		// PlayDemo();
+		PlayGame();
 
 		g.drawImage(ii, 0, 0, this);
 	}
@@ -235,25 +234,25 @@ public class Game extends JPanel implements Runnable {
 			for (x = 0; x < Level.scrsize; x += Level.blocksize) {
 				goff.setColor(Level.mazecolor);
 
-				if ((screendata[i][j] & 1) != 0) {
+				if ((((PacVertex) screendata[i][j].element()).getType() & 1) != 0) {
 					goff.drawLine(x, y, x, y + Level.blocksize - 1);
 				}
-				if ((screendata[i][j] & 2) != 0) {
+				if ((((PacVertex) screendata[i][j].element()).getType() & 2) != 0) {
 					goff.drawLine(x, y, x + Level.blocksize - 1, y);
 				}
-				if ((screendata[i][j] & 4) != 0) {
+				if ((((PacVertex) screendata[i][j].element()).getType() & 4) != 0) {
 					goff.drawLine(x + Level.blocksize - 1, y, x
 							+ Level.blocksize - 1, y + Level.blocksize - 1);
 				}
-				if ((screendata[i][j] & 8) != 0) {
+				if ((((PacVertex) screendata[i][j].element()).getType() & 8) != 0) {
 					goff.drawLine(x, y + Level.blocksize - 1, x
 							+ Level.blocksize - 1, y + Level.blocksize - 1);
 				}
-				if ((screendata[i][j] & 16) != 0) {
+				if ((((PacVertex) screendata[i][j].element()).getType() & 16) != 0) {
 					goff.setColor(Level.dotcolor);
 					goff.fillRect(x + 11, y + 11, 2, 2);
 				}
-				if ((screendata[i][j] & 32) != 0) {
+				if ((((PacVertex) screendata[i][j].element()).getType() & 32) != 0) {
 					goff.setColor(new Color(224, 224 - Level.bigdotcolor,
 							Level.bigdotcolor));
 					goff.fillRect(x + 8, y + 8, 8, 8);
@@ -288,28 +287,28 @@ public class Game extends JPanel implements Runnable {
 				row = g.getActY() / Level.blocksize;
 
 				count = 0;
-				if ((screendata[row][col] & 1) == 0 && g.getDestX() != 1) {
+				if ((((PacVertex) screendata[row][col].element()).getType() & 1) == 0 && g.getDestX() != 1) {
 					dx[count] = -1;
 					dy[count] = 0;
 					count++;
 				}
-				if ((screendata[row][col] & 2) == 0 && g.getDestY() != 1) {
+				if ((((PacVertex) screendata[row][col].element()).getType() & 2) == 0 && g.getDestY() != 1) {
 					dx[count] = 0;
 					dy[count] = -1;
 					count++;
 				}
-				if ((screendata[row][col] & 4) == 0 && g.getDestX() != -1) {
+				if ((((PacVertex) screendata[row][col].element()).getType() & 4) == 0 && g.getDestX() != -1) {
 					dx[count] = 1;
 					dy[count] = 0;
 					count++;
 				}
-				if ((screendata[row][col] & 8) == 0 && g.getDestY() != -1) {
+				if ((((PacVertex) screendata[row][col].element()).getType() & 8) == 0 && g.getDestY() != -1) {
 					dx[count] = 0;
 					dy[count] = 1;
 					count++;
 				}
 				if (count == 0) {
-					if ((screendata[row][col] & 15) == 15) {
+					if ((((PacVertex) screendata[row][col].element()).getType() & 15) == 15) {
 						g.setDestX(0);
 						g.setDestY(0);
 					} else {
@@ -359,28 +358,29 @@ public class Game extends JPanel implements Runnable {
 			row = pacman.getActY() / Level.blocksize;
 
 			count = 0;
-			if ((screendata[row][col] & 1) == 0 && pacman.getDestX() != 1) {
+			
+			if ((((PacVertex) screendata[row][col].element()).getType() & 1) == 0 && pacman.getDestX() != 1) {
 				dx[count] = -1;
 				dy[count] = 0;
 				count++;
 			}
-			if ((screendata[row][col] & 2) == 0 && pacman.getDestY() != 1) {
+			if ((((PacVertex) screendata[row][col].element()).getType() & 2) == 0 && pacman.getDestY() != 1) {
 				dx[count] = 0;
 				dy[count] = -1;
 				count++;
 			}
-			if ((screendata[row][col] & 4) == 0 && pacman.getDestX() != -1) {
+			if ((((PacVertex) screendata[row][col].element()).getType() & 4) == 0 && pacman.getDestX() != -1) {
 				dx[count] = 1;
 				dy[count] = 0;
 				count++;
 			}
-			if ((screendata[row][col] & 8) == 0 && pacman.getDestY() != -1) {
+			if ((((PacVertex) screendata[row][col].element()).getType() & 8) == 0 && pacman.getDestY() != -1) {
 				dx[count] = 0;
 				dy[count] = 1;
 				count++;
 			}
 			if (count == 0) {
-				if ((screendata[row][col] & 15) == 15) {
+				if ((((PacVertex) screendata[row][col].element()).getType() & 15) == 15) {
 					pacman.setDestX(0);
 					pacman.setDestY(0);
 				} else {
@@ -407,15 +407,15 @@ public class Game extends JPanel implements Runnable {
 			col = pacman.getActX() / Level.blocksize;
 			row = pacman.getActY() / Level.blocksize;
 
-			ch = screendata[row][col];
+			ch = ((PacVertex) screendata[row][col].element()).getType();
 			if ((ch & 16) != 0) {
-				screendata[row][col] = (short) (ch & 15);
+				((PacVertex) screendata[row][col].element()).setType((short)(ch & 15));
 				// score++;
 			}
 			if ((ch & 32) != 0) {
 				scared = true;
 				scaredcount = scaredtime;
-				screendata[row][col] = (short) (ch & 15);
+				((PacVertex) screendata[row][col].element()).setType((short)(ch & 15));;
 				// score+=5;
 			}
 
@@ -554,11 +554,12 @@ public class Game extends JPanel implements Runnable {
 			Level.mazecolor = new Color(32, 192, 255);
 
 		if (scared) {
-			screendata[7][6] = 11;
-			screendata[7][8] = 14;
+			((PacVertex) screendata[7][6].element()).setType((short)11);
+			((PacVertex) screendata[7][8].element()).setType((short)14);
+
 		} else {
-			screendata[7][6] = 10;
-			screendata[7][8] = 10;
+			((PacVertex) screendata[7][6].element()).setType((short)10);
+			((PacVertex) screendata[7][8].element()).setType((short)10);
 		}
 	}
 
