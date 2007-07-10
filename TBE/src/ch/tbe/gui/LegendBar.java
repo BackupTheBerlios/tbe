@@ -74,19 +74,7 @@ public class LegendBar extends JToolBar {
 						sPanel.add(new JLabel(actType));
 						sPanel.setBackground(Color.white);
 						shapeGridPanel.add(sPanel);
-					}
-
-					for (int i = 0; i < items.length; i++)
-						if (items[i] != null)
-							if (items[i].getType() == actType)
-								items[i] = null;
-				}// IF
-			}// FOR
-
-			//items = board.getItems();
-			for (ItemComponent item : items) {
-				if (item != null) {
-					if (item instanceof ArrowItem) {
+					}else if (item instanceof ArrowItem) {
 						actType = ((ArrowItem) item).getItemType().getDescription();
 						actIcon = ((ArrowItem) item).getIcon();
 						JPanel aPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -95,12 +83,6 @@ public class LegendBar extends JToolBar {
 						aPanel.setBackground(Color.white);
 						arrowGridPanel.add(aPanel);
 					}
-
-					actType = item.getType();
-					for (int i = 0; i < items.length; i++)
-						if (items[i] != null)
-							if (items[i].getType() == actType)
-								items[i] = null;
 				}// IF
 			}// FOR
 		}
