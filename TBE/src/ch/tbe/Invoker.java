@@ -38,6 +38,10 @@ public class Invoker {
 		for (int i = 0; i < actCommands.size() - 1; i++) {
 			actCommands.get(i).redo();
 		}
+		
+		if (doneCommands.size() == 1){
+			TBE.getInstance().getMenu().refreshInvokerVisibility();
+		}
 	}
 
 	public void undo() {
@@ -73,6 +77,7 @@ public class Invoker {
 	public void clear() {
 		doneCommands.clear();
 		undoneCommands.clear();
+		TBE.getInstance().getMenu().refreshInvokerVisibility();
 	}
 
 }
