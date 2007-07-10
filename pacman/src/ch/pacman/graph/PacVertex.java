@@ -1,23 +1,12 @@
 package ch.pacman.graph;
 
-
 public class PacVertex
 {
 
 	int x = 0;
 	int y = 0;
-
-	PacVertex north;
-	PacVertex south;
-	PacVertex west;
-	PacVertex east;
-	
-	boolean fruit = false;
-	boolean point = false;
-	boolean supreme = false;
-	boolean pacMan;
 	short type;
-	
+	boolean pacMan;
 	int ghost;
 
 	public PacVertex(int x, int y, short type)
@@ -26,60 +15,37 @@ public class PacVertex
 		this.x = x;
 		this.y = y;
 		this.type = type;
-//		this.fruit = fruit;
-//		this.supreme = supreme;
-
 
 	}
 	
-	public short getType(){
+	public PacVertex(short type)
+	{
+		super();
+		this.x = 0;
+		this.y = 0;
+		this.type = type;
+
+	}
+	
+	public PacVertex(int type)
+	{
+		super();
+		this.x = 0;
+		this.y = 0;
+		this.type = (short) type;
+
+	}
+
+	public short getType()
+	{
 		return type;
 	}
-	
-	public void setType(short type){
+
+	public void setType(short type)
+	{
 		this.type = type;
 	}
-	
-	public PacVertex getEast()
-	{
-		return east;
-	}
-	
-	public void setEast(PacVertex east)
-	{
-		this.east = east;
-	}
-	
-	public PacVertex getNorth()
-	{
-		return north;
-	}
-	
-	public void setNorth(PacVertex north)
-	{
-		this.north = north;
-	}
-	
-	public PacVertex getSouth()
-	{
-		return south;
-	}
-	
-	public void setSouth(PacVertex south)
-	{
-		this.south = south;
-	}
-	
-	public PacVertex getWest()
-	{
-		return west;
-	}
-	
-	public void setWest(PacVertex west)
-	{
-		this.west = west;
-	}
-	
+
 	public PacVertex clone()
 	{
 		return new PacVertex(x, y, type);
@@ -90,13 +56,11 @@ public class PacVertex
 	{
 		final int PRIME = 31;
 		int result = 1;
-		result = PRIME * result + (supreme ? 1231 : 1237);
-		result = PRIME * result + ((west == null) ? 0 : west.hashCode());
 		result = PRIME * result + x;
 		result = PRIME * result + y;
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -107,18 +71,59 @@ public class PacVertex
 		if (getClass() != obj.getClass())
 			return false;
 		final PacVertex other = (PacVertex) obj;
-		if (supreme != other.supreme)
-			return false;
-		if (west == null)
-		{
-			if (other.west != null)
-				return false;
-		} else if (!west.equals(other.west))
-			return false;
 		if (x != other.x)
 			return false;
 		if (y != other.y)
 			return false;
 		return true;
 	}
+
+	public int getGhost()
+	{
+		return ghost;
+	}
+
+	public void setGhost(int ghost)
+	{
+		this.ghost = ghost;
+	}
+
+	public boolean isPacMan()
+	{
+		return pacMan;
+	}
+
+	public void setPacMan(boolean pacMan)
+	{
+		this.pacMan = pacMan;
+	}
+
+	public int getX()
+	{
+		return x;
+	}
+
+	public void setX(int x)
+	{
+		this.x = x;
+	}
+
+	public int getY()
+	{
+		return y;
+	}
+
+	public void setY(int y)
+	{
+		this.y = y;
+	}
+	
+	public boolean hasBigDot(){
+		return (type & 32) != 0;
+	}
+	
+	public boolean hasLittleDot(){
+		return (type & 16) != 0;
+	}
+
 }

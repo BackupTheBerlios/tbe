@@ -12,7 +12,8 @@ import jdsl.graph.ref.IncidenceListGraph;
 import ch.pacman.game.*;
 import ch.pacman.graph.PacVertex;
 
-public class Game extends JPanel implements Runnable {
+public class Game extends JPanel implements Runnable
+{
 
 	private Level level;
 
@@ -20,7 +21,7 @@ public class Game extends JPanel implements Runnable {
 
 	private boolean scared = false;
 
-	private Dimension d = new Dimension(400, 400);
+	private Dimension d = new Dimension(Level.blocksize*Level.nrofblocks, Level.blocksize*Level.nrofblocks);
 
 	private int deathcounter;
 
@@ -74,7 +75,8 @@ public class Game extends JPanel implements Runnable {
 
 	private final int minscaredtime = 20;
 
-	public Game() {
+	public Game()
+	{
 
 		this.setSize(d);
 		this.setBackground(Color.black);
@@ -86,12 +88,14 @@ public class Game extends JPanel implements Runnable {
 
 	}
 
-	public void GameInit() {
+	public void GameInit()
+	{
 		// pacsleft=3;
 		// score=0;
 		scaredtime = maxscaredtime;
 		nrofGhosts = 3;
-		for (int i = 0; i <= nrofGhosts; i++) {
+		for (int i = 0; i <= nrofGhosts; i++)
+		{
 			ghosts.add(new Ghost(0, 0, 3));
 		}
 		pacman = new PacMan(0, 0, 4);
@@ -99,7 +103,8 @@ public class Game extends JPanel implements Runnable {
 		this.LevelInit();
 	}
 
-	public void LevelInit() {
+	public void LevelInit()
+	{
 		level = new Level1();
 		screendata = level.getPathdata();
 
@@ -111,12 +116,14 @@ public class Game extends JPanel implements Runnable {
 		LevelContinue();
 	}
 
-	public void LevelContinue() {
+	public void LevelContinue()
+	{
 
 		int dx = 1;
 		int random;
 
-		for (Ghost g : ghosts) {
+		for (Ghost g : ghosts)
+		{
 			g.setActX(level.getGhostStart().x);
 			g.setActY(level.getGhostStart().y);
 
@@ -138,9 +145,11 @@ public class Game extends JPanel implements Runnable {
 	}
 
 	@Override
-	public void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g)
+	{
 		super.paintComponent(g);
-		if (goff == null && d.width > 0 && d.height > 0) {
+		if (goff == null && d.width > 0 && d.height > 0)
+		{
 			ii = createImage(d.width, d.height);
 			goff = ii.getGraphics();
 		}
@@ -158,16 +167,19 @@ public class Game extends JPanel implements Runnable {
 		g.drawImage(ii, 0, 0, this);
 	}
 
-	public void DoAnim() {
+	public void DoAnim()
+	{
 		animcount--;
-		if (animcount <= 0) {
+		if (animcount <= 0)
+		{
 			animcount = animdelay;
 			ghostanimpos++;
 			if (ghostanimpos >= ghostanimcount)
 				ghostanimpos = 0;
 		}
 		pacanimcount--;
-		if (pacanimcount <= 0) {
+		if (pacanimcount <= 0)
+		{
 			pacanimcount = pacanimdelay;
 			pacmananimpos = pacmananimpos + pacanimdir;
 			if (pacmananimpos == (pacmananimcount - 1) || pacmananimpos == 0)
@@ -175,7 +187,8 @@ public class Game extends JPanel implements Runnable {
 		}
 	}
 
-	public void PlayGame() {
+	public void PlayGame()
+	{
 		// if (dying)
 		// {
 		// Death();
@@ -189,7 +202,8 @@ public class Game extends JPanel implements Runnable {
 		// }
 	}
 
-	public void CheckMaze() {
+	public void CheckMaze()
+	{
 		// short i=0;
 		// boolean finished=true;
 		//
@@ -221,101 +235,134 @@ public class Game extends JPanel implements Runnable {
 		// }
 	}
 
-	public void DrawMaze() {
-		short i = 0;
-		int x, y;
+	public void DrawMaze()
+	{
+		// short i = 0;
 
 		Level.bigdotcolor = Level.bigdotcolor + Level.dbigdotcolor;
 		if (Level.bigdotcolor <= 64 || Level.bigdotcolor >= 192)
 			Level.dbigdotcolor = -Level.dbigdotcolor;
 
-		for (y = 0; y < Level.scrsize; y += Level.blocksize) {
-			int j = 0;
-			for (x = 0; x < Level.scrsize; x += Level.blocksize) {
-				goff.setColor(Level.mazecolor);
+		for (int i = 0; i < Level.nrofblocks; i++)
+		{
 
-				if ((((PacVertex) screendata[i][j].element()).getType() & 1) != 0) {
+			for (int j = 0; j < Level.nrofblocks; j++)
+			{
+				goff.setColor(Level.mazecolor);
+				PacVertex vertex = (PacVertex) screendata[i][j].element();
+				
+				int x = vertex.getX();
+				int y = vertex.getY();
+
+				if ((vertex.getType() & 1) != 0)
+				{
 					goff.drawLine(x, y, x, y + Level.blocksize - 1);
 				}
-				if ((((PacVertex) screendata[i][j].element()).getType() & 2) != 0) {
+				if ((vertex.getType() & 2) != 0)
+				{
 					goff.drawLine(x, y, x + Level.blocksize - 1, y);
 				}
-				if ((((PacVertex) screendata[i][j].element()).getType() & 4) != 0) {
+				if ((vertex.getType() & 4) != 0)
+				{
 					goff.drawLine(x + Level.blocksize - 1, y, x
 							+ Level.blocksize - 1, y + Level.blocksize - 1);
 				}
-				if ((((PacVertex) screendata[i][j].element()).getType() & 8) != 0) {
+				if ((vertex.getType() & 8) != 0)
+				{
 					goff.drawLine(x, y + Level.blocksize - 1, x
 							+ Level.blocksize - 1, y + Level.blocksize - 1);
 				}
-				if ((((PacVertex) screendata[i][j].element()).getType() & 16) != 0) {
+				if ((vertex.hasLittleDot()))
+				{
 					goff.setColor(Level.dotcolor);
 					goff.fillRect(x + 11, y + 11, 2, 2);
 				}
-				if ((((PacVertex) screendata[i][j].element()).getType() & 32) != 0) {
+				if ((vertex.hasBigDot()))
+				{
 					goff.setColor(new Color(224, 224 - Level.bigdotcolor,
 							Level.bigdotcolor));
 					goff.fillRect(x + 8, y + 8, 8, 8);
 				}
-				j++;
+
 			}
-			i++;
 		}
+
 	}
 
-	public void DrawGhost(int x, int y) {
-		if (ghostanimpos == 0 && !scared) {
+	public void DrawGhost(int x, int y)
+	{
+		if (ghostanimpos == 0 && !scared)
+		{
 			goff.drawImage(ghost1, x, y, this);
-		} else if (ghostanimpos == 1 && !scared) {
+		} else if (ghostanimpos == 1 && !scared)
+		{
 			goff.drawImage(ghost2, x, y, this);
-		} else if (ghostanimpos == 0 && scared) {
+		} else if (ghostanimpos == 0 && scared)
+		{
 			goff.drawImage(ghostscared1, x, y, this);
-		} else if (ghostanimpos == 1 && scared) {
+		} else if (ghostanimpos == 1 && scared)
+		{
 			goff.drawImage(ghostscared2, x, y, this);
 		}
 	}
 
-	public void MoveGhosts() {
+	public void MoveGhosts()
+	{
 		int row;
 		int col;
 		int count;
 
-		for (Ghost g : ghosts) {
+		for (Ghost g : ghosts)
+		{
 			if (g.getActX() % Level.blocksize == 0
-					&& g.getActY() % Level.blocksize == 0) {
+					&& g.getActY() % Level.blocksize == 0)
+			{
 				col = g.getActX() / Level.blocksize;
 				row = g.getActY() / Level.blocksize;
 
 				count = 0;
-				if ((((PacVertex) screendata[row][col].element()).getType() & 1) == 0 && g.getDestX() != 1) {
+				PacVertex vertex = (PacVertex) screendata[row][col].element();
+				if ((vertex.getType() & 1) == 0
+						&& g.getDestX() != 1)
+				{
 					dx[count] = -1;
 					dy[count] = 0;
 					count++;
 				}
-				if ((((PacVertex) screendata[row][col].element()).getType() & 2) == 0 && g.getDestY() != 1) {
+				if ((vertex.getType() & 2) == 0
+						&& g.getDestY() != 1)
+				{
 					dx[count] = 0;
 					dy[count] = -1;
 					count++;
 				}
-				if ((((PacVertex) screendata[row][col].element()).getType() & 4) == 0 && g.getDestX() != -1) {
+				if ((vertex.getType() & 4) == 0
+						&& g.getDestX() != -1)
+				{
 					dx[count] = 1;
 					dy[count] = 0;
 					count++;
 				}
-				if ((((PacVertex) screendata[row][col].element()).getType() & 8) == 0 && g.getDestY() != -1) {
+				if ((vertex.getType() & 8) == 0
+						&& g.getDestY() != -1)
+				{
 					dx[count] = 0;
 					dy[count] = 1;
 					count++;
 				}
-				if (count == 0) {
-					if ((((PacVertex) screendata[row][col].element()).getType() & 15) == 15) {
+				if (count == 0)
+				{
+					if ((vertex.getType() & 15) == 15)
+					{
 						g.setDestX(0);
 						g.setDestY(0);
-					} else {
+					} else
+					{
 						g.setDestX(-g.getDestX());
 						g.setDestY(-g.getDestY());
 					}
-				} else {
+				} else
+				{
 					count = (int) (Math.random() * count);
 					if (count > 3)
 						count = 3;
@@ -346,48 +393,62 @@ public class Game extends JPanel implements Runnable {
 
 	}
 
-	public void MovePacMan() {
+	public void MovePacMan()
+	{
 
 		int row;
 		int col;
 		int count;
 
 		if (pacman.getActX() % Level.blocksize == 0
-				&& pacman.getActY() % Level.blocksize == 0) {
+				&& pacman.getActY() % Level.blocksize == 0)
+		{
 			col = pacman.getActX() / Level.blocksize;
 			row = pacman.getActY() / Level.blocksize;
 
 			count = 0;
-			
-			if ((((PacVertex) screendata[row][col].element()).getType() & 1) == 0 && pacman.getDestX() != 1) {
+			PacVertex vertex = (PacVertex) screendata[row][col].element();
+			if ((vertex.getType() & 1) == 0
+					&& pacman.getDestX() != 1)
+			{
 				dx[count] = -1;
 				dy[count] = 0;
 				count++;
 			}
-			if ((((PacVertex) screendata[row][col].element()).getType() & 2) == 0 && pacman.getDestY() != 1) {
+			if ((vertex.getType() & 2) == 0
+					&& pacman.getDestY() != 1)
+			{
 				dx[count] = 0;
 				dy[count] = -1;
 				count++;
 			}
-			if ((((PacVertex) screendata[row][col].element()).getType() & 4) == 0 && pacman.getDestX() != -1) {
+			if ((vertex.getType() & 4) == 0
+					&& pacman.getDestX() != -1)
+			{
 				dx[count] = 1;
 				dy[count] = 0;
 				count++;
 			}
-			if ((((PacVertex) screendata[row][col].element()).getType() & 8) == 0 && pacman.getDestY() != -1) {
+			if ((vertex.getType() & 8) == 0
+					&& pacman.getDestY() != -1)
+			{
 				dx[count] = 0;
 				dy[count] = 1;
 				count++;
 			}
-			if (count == 0) {
-				if ((((PacVertex) screendata[row][col].element()).getType() & 15) == 15) {
+			if (count == 0)
+			{
+				if ((vertex.getType() & 15) == 15)
+				{
 					pacman.setDestX(0);
 					pacman.setDestY(0);
-				} else {
+				} else
+				{
 					pacman.setDestX(-pacman.getDestX());
 					pacman.setDestY(-pacman.getDestY());
 				}
-			} else {
+			} else
+			{
 				count = (int) (Math.random() * count);
 				if (count > 3)
 					count = 3;
@@ -403,19 +464,25 @@ public class Game extends JPanel implements Runnable {
 		int ch;
 
 		if (pacman.getActX() % Level.blocksize == 0
-				&& pacman.getActY() % Level.blocksize == 0) {
+				&& pacman.getActY() % Level.blocksize == 0)
+		{
 			col = pacman.getActX() / Level.blocksize;
 			row = pacman.getActY() / Level.blocksize;
 
 			ch = ((PacVertex) screendata[row][col].element()).getType();
-			if ((ch & 16) != 0) {
-				((PacVertex) screendata[row][col].element()).setType((short)(ch & 15));
+			if ((ch & 16) != 0)
+			{
+				((PacVertex) screendata[row][col].element())
+						.setType((short) (ch & 15));
 				// score++;
 			}
-			if ((ch & 32) != 0) {
+			if ((ch & 32) != 0)
+			{
 				scared = true;
 				scaredcount = scaredtime;
-				((PacVertex) screendata[row][col].element()).setType((short)(ch & 15));;
+				((PacVertex) screendata[row][col].element())
+						.setType((short) (ch & 15));
+				;
 				// score+=5;
 			}
 
@@ -435,7 +502,8 @@ public class Game extends JPanel implements Runnable {
 		DrawPacMan();
 	}
 
-	public void DrawPacMan() {
+	public void DrawPacMan()
+	{
 		if (pacman.getDestX() == -1)
 			DrawPacManLeft();
 		else if (pacman.getDestX() == 1)
@@ -446,8 +514,10 @@ public class Game extends JPanel implements Runnable {
 			DrawPacManDown();
 	}
 
-	public void DrawPacManUp() {
-		switch (pacmananimpos) {
+	public void DrawPacManUp()
+	{
+		switch (pacmananimpos)
+		{
 		case 1:
 			goff.drawImage(pacman2up, pacman.getActX() + 1,
 					pacman.getActY() + 1, this);
@@ -467,8 +537,10 @@ public class Game extends JPanel implements Runnable {
 		}
 	}
 
-	public void DrawPacManDown() {
-		switch (pacmananimpos) {
+	public void DrawPacManDown()
+	{
+		switch (pacmananimpos)
+		{
 		case 1:
 			goff.drawImage(pacman2down, pacman.getActX() + 1,
 					pacman.getActY() + 1, this);
@@ -488,8 +560,10 @@ public class Game extends JPanel implements Runnable {
 		}
 	}
 
-	public void DrawPacManLeft() {
-		switch (pacmananimpos) {
+	public void DrawPacManLeft()
+	{
+		switch (pacmananimpos)
+		{
 		case 1:
 			goff.drawImage(pacman2left, pacman.getActX() + 1,
 					pacman.getActY() + 1, this);
@@ -509,8 +583,10 @@ public class Game extends JPanel implements Runnable {
 		}
 	}
 
-	public void DrawPacManRight() {
-		switch (pacmananimpos) {
+	public void DrawPacManRight()
+	{
+		switch (pacmananimpos)
+		{
 		case 1:
 			goff.drawImage(pacman2right, pacman.getActX() + 1,
 					pacman.getActY() + 1, this);
@@ -530,12 +606,16 @@ public class Game extends JPanel implements Runnable {
 		}
 	}
 
-	public void run() {
-		while (true) {
+	public void run()
+	{
+		while (true)
+		{
 			this.repaint();
-			try {
+			try
+			{
 				Thread.currentThread().sleep(50);
-			} catch (InterruptedException e) {
+			} catch (InterruptedException e)
+			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -543,7 +623,8 @@ public class Game extends JPanel implements Runnable {
 
 	}
 
-	public void CheckScared() {
+	public void CheckScared()
+	{
 		scaredcount--;
 		if (scaredcount <= 0)
 			scared = false;
@@ -553,17 +634,20 @@ public class Game extends JPanel implements Runnable {
 		else
 			Level.mazecolor = new Color(32, 192, 255);
 
-		if (scared) {
-			((PacVertex) screendata[7][6].element()).setType((short)11);
-			((PacVertex) screendata[7][8].element()).setType((short)14);
+		if (scared)
+		{
+			((PacVertex) screendata[7][6].element()).setType((short) 11);
+			((PacVertex) screendata[7][8].element()).setType((short) 14);
 
-		} else {
-			((PacVertex) screendata[7][6].element()).setType((short)10);
-			((PacVertex) screendata[7][8].element()).setType((short)10);
+		} else
+		{
+			((PacVertex) screendata[7][6].element()).setType((short) 10);
+			((PacVertex) screendata[7][8].element()).setType((short) 10);
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		JFrame f = new JFrame("PacMan");
 		f.setSize(400, 400);
 		f.setBackground(Color.BLACK);
@@ -576,19 +660,23 @@ public class Game extends JPanel implements Runnable {
 		t.start();
 	}
 
-	public void setVisited(int x, int y) {
+	public void setVisited(int x, int y)
+	{
 
 	}
 
-	public void setSupreme() {
+	public void setSupreme()
+	{
 
 	}
 
-	public void getSupreme() {
+	public void getSupreme()
+	{
 
 	}
 
-	public void GetImages() {
+	public void GetImages()
+	{
 		thetracker = new MediaTracker(this);
 
 		ghost1 = createImage("../../pacpix/Ghost1.gif");
@@ -630,14 +718,17 @@ public class Game extends JPanel implements Runnable {
 		pacman4right = createImage("../../pacpix/PacMan4right.gif");
 		thetracker.addImage(pacman4right, 0);
 
-		try {
+		try
+		{
 			thetracker.waitForAll();
-		} catch (InterruptedException e) {
+		} catch (InterruptedException e)
+		{
 			return;
 		}
 	}
 
-	private Image createImage(String path) {
+	private Image createImage(String path)
+	{
 		URL folderURL = Game.class.getResource(path);
 		Image image = (new ImageIcon(folderURL)).getImage();
 		return image;
