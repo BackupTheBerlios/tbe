@@ -18,18 +18,35 @@ public class Field {
 	private String description;
 	private Icon icon;
 
+	/**
+	 * Returns the Field-Description (Menu-Text)
+	 * @return description as String
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Retuns the Field-Icon
+	 * @return icon
+	 */
 	public Icon getIcon() {
 		return icon;
 	}
 
+	/**
+	 * Returns the name of the Field
+	 * @return name as String
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name Sting
+	 * @param description Sting (Menu-Text)
+	 * @param icon Icon
+	 */
 	public Field(String name, String description, Icon icon) {
 		this.name = name;
 		this.description = description;

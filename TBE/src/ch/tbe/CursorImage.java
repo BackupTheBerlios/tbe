@@ -16,6 +16,12 @@ import javax.swing.*;
 
 public class CursorImage {
 
+	/**
+	 * Returns a scaled Cursor-Image
+	 * @param icon as Icon to set as Cursor
+	 * @param maximum side-length MAX as int 
+	 * @return scaled image as Image for the Cursor
+	 */
 	public static BufferedImage getMergedImage(Image icon, int MAX) {
 
 		int scaledH = icon.getHeight(null);
@@ -43,7 +49,6 @@ public class CursorImage {
 		Graphics2D g2 = image.createGraphics();
 		int x = (w - lo.getWidth(null)) / 2;
 		int y = (h - lo.getHeight(null)) / 2;
-		// g2.drawImage(lo, x, y, null);
 		x = (w - hi.getWidth(null)) / 2;
 		y = (h - hi.getHeight(null)) / 2;
 		g2.drawImage(hi, x, y, null);
