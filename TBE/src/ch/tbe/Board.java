@@ -39,6 +39,12 @@ public class Board extends JGraph {
 	private Sport sport;
 	private TBE tbe = TBE.getInstance();
 
+	/**
+	 * Creats a new Board
+	 * @param model GraphModel
+	 * @param view GraphLayoutCache
+	 * @param sport Sport
+	 */
 	public Board(GraphModel model, GraphLayoutCache view, Sport sport) {
 		super(model, view);
 		this.setUI(new TBEBasicGraphUI());
@@ -50,21 +56,28 @@ public class Board extends JGraph {
 		addKeyListener();
 	}
 
+	/**
+	 * Adds the KeyListener to move the Items with the Arrow-Keys
+	 *
+	 */
 	private void addKeyListener() {
 		this.addKeyListener(new KeyListener() {
-			private MoveCommand mc;
+			private MoveCommand mc = null;
 			private boolean keyDown = false;
 			private ItemComponent[] items;
 
 			public void keyPressed(KeyEvent e) {
+				//Fires only if at leas one Item is selected and an Arrow-Key is pressed
 				if (Board.this.getSelectionCount() > 0 && (e.getKeyCode() == KeyEvent.VK_UP || (e.getKeyCode() == KeyEvent.VK_DOWN) || (e.getKeyCode() == KeyEvent.VK_LEFT) || (e.getKeyCode() == KeyEvent.VK_RIGHT))) {
 					Object[] objects = Board.this.getSelectionCells();
+					//Fires only if the Arroy-Key is pressed down and not always if key is hold down
 					if (!keyDown) {
 						items = Board.this.getSelectedItems();
 						mc = new MoveCommand(items);
 						keyDown = true;
 					}
 
+					//Moves the selected Items 1 Pixel to left
 					if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 						for (Object o : objects) {
 							if (o instanceof ArrowItem) {
@@ -81,6 +94,7 @@ public class Board extends JGraph {
 							}
 						}
 
+						//Moves the selected Items 1 Pixel to right
 					} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 
 						for (Object o : objects) {
@@ -97,6 +111,7 @@ public class Board extends JGraph {
 							}
 						}
 
+						//Moves the selected Items 1 Pixel down
 					} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 						for (Object o : objects) {
 							if (o instanceof ArrowItem) {
@@ -112,6 +127,7 @@ public class Board extends JGraph {
 							}
 						}
 
+						//Moves the selected Items 1 Pixel up
 					} else if (e.getKeyCode() == KeyEvent.VK_UP) {
 						for (Object o : objects) {
 							if (o instanceof ArrowItem) {
@@ -128,13 +144,14 @@ public class Board extends JGraph {
 						}
 
 					}
-
+					//Adds the moved Items to the Board (easy way to repanit the Bord)
 					Board.this.getGraphLayoutCache().insert(objects);
 				}
 			}
 
 			public void keyReleased(KeyEvent e) {
-				if (Board.this.getSelectionCount() > 0 && (e.getKeyCode() == KeyEvent.VK_UP || (e.getKeyCode() == KeyEvent.VK_DOWN) || (e.getKeyCode() == KeyEvent.VK_LEFT) || (e.getKeyCode() == KeyEvent.VK_RIGHT))) {
+				//Adds the MoveCommand to the Invoker
+				if (mc != null) {
 					mc.setMoveEnd(items);
 					ArrayList<Command> actCommands = new ArrayList<Command>();
 					actCommands.add(mc);
@@ -149,6 +166,10 @@ public class Board extends JGraph {
 		});
 	}
 
+	/**
+	 * Retuns an ItemComponent-Array containing all Items of the Board
+	 * @return ItemComponent[] 
+	 */
 	public ItemComponent[] getItems() {
 
 		Object[] objects = this.getGraphLayoutCache().getCells(true, true, true, true);
@@ -160,6 +181,10 @@ public class Board extends JGraph {
 
 	}
 
+	/**
+	 * Retuns an ItemComponent-Array containing all selected Icons
+	 * @return ItemComponent[] 
+	 */
 	public ItemComponent[] getSelectedItems() {
 		Object[] objects = this.getSelectionCells();
 		ItemComponent[] comps = new ItemComponent[objects.length];
@@ -169,16 +194,28 @@ public class Board extends JGraph {
 		return comps;
 	}
 
+	/**
+	 * Adds ItemComponents to the Board
+	 * @param i ItemComponent-Array to add
+	 */
 	public void addItem(ItemComponent[] i) {
 		this.getGraphLayoutCache().insert(i);
 		this.refresh();
 	}
 
+	/**
+	 * Adds one ItemComponent to the Board
+	 * @param item ItemComponent to add
+	 */
 	public void addItem(ItemComponent item) {
 		this.getGraphLayoutCache().insert(item);
 		this.refresh();
 	}
 
+	/**
+	 * Removes ItemComponents from to Board
+	 * @param i ItemComponent-Array to remove
+	 */
 	public void removeItem(ItemComponent[] i) {
 		for (ItemComponent ic : i) {
 			this.removeSelectionCell(ic);
@@ -187,51 +224,94 @@ public class Board extends JGraph {
 		this.refresh();
 	}
 
+	/**
+	 * Sets the SaveFile-Path
+	 * @param path String of the Filepath
+	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
 
+	/**
+	 * Returns the SaveFile-Path
+	 * @return path String of the Filepath
+	 */
 	public String getPath() {
 		return this.path;
 	}
 
+	/**
+	 * Sets the Field of the Board
+	 * @param field
+	 */
 	public void setField(Field field) {
 		this.field = field;
 		this.refresh();
 	}
 
+	/**
+	 * Adds an Attribute to the Board
+	 * @param title String Attribute-Title
+	 * @param text String Attribute-Text
+	 */
 	public void addAttribute(String title, String text) {
 		this.description.addAttribute(new Attribute(title, text));
 	}
 
+	/**
+	 * Removes an Attribute from the Board
+	 * @param attribute to remove
+	 */
 	public void removeAttribute(Attribute attribute) {
 		this.description.removeAttribute(attribute);
 	}
 
+	/**
+	 * Retuns the Description of the Board
+	 * @return description as Description
+	 */
 	public Description getDescription() {
 		return this.description;
 	}
 
+	/**
+	 * Returns the Sport of the Board
+	 * @return sport as Sport
+	 */
 	public Sport getSport() {
 		return this.sport;
 	}
 
+	/**
+	 * Returns the Field of the Board
+	 * @return field as Field
+	 */
 	public Field getField() {
 		return this.field;
 	}
 
+	/**
+	 * Sets the BackGroundImage and refreshs the Board and the current View 
+	 */
 	public void refresh() {
 		// Board
 		this.setBackgroundImage((ImageIcon) this.field.getIcon());
-		this.repaint();
+		this.validate();
 		tbe.getMenu().refreshInvokerVisibility();
 		TBE.getInstance().getView().refresh();
 	}
 
+	/**
+	 * Clones an Array of ItemComponents. This method demand an Object[] because
+	 * the JGraph methods often returning Object[].
+	 * @param cArray Object[] items to clone
+	 * @return ItemComponent[] cloned items
+	 */
 	public ItemComponent[] cloneItems(Object[] cArray) {
 		ItemComponent[] rArray = new ItemComponent[cArray.length];
 		for (int i = 0; i < cArray.length; i++) {
-			rArray[i] = (ItemComponent) ((DefaultGraphCell) cArray[i]).clone();
+			if (cArray[i] instanceof ItemComponent){
+			rArray[i] = (ItemComponent) ((DefaultGraphCell) cArray[i]).clone();}
 		}
 		return rArray;
 	}
