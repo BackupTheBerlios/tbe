@@ -27,12 +27,19 @@ public class MoveCommand extends Command {
 	private ItemComponent[] endItems;
 	private ItemComponent[] startItems;
 
+	/**
+	 * Command to undo/redo the moving of ItemComponents
+	 * @param items ItemComponents
+	 */
 	public MoveCommand(ItemComponent[] items) {
 		super(items);
 		this.view = (WorkingView) TBE.getInstance().getView();
 		this.startItems = view.getBoard().cloneItems(items);
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#undo()
+	 */
 	public void undo() {
 
 		for (int i = 0; i < items.length; i++) {
@@ -48,6 +55,9 @@ public class MoveCommand extends Command {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#redo()
+	 */
 	public void redo() {
 
 		for (int i = 0; i < items.length; i++) {
@@ -65,6 +75,10 @@ public class MoveCommand extends Command {
 
 	}
 
+	/**
+	 * Sets the end Position of the ItemComponents
+	 * @param endItems
+	 */
 	public void setMoveEnd(ItemComponent[] endItems) {
 		this.endItems = view.getBoard().cloneItems(endItems);
 	}

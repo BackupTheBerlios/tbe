@@ -15,15 +15,26 @@ import ch.tbe.framework.ItemComponent;
 
 public class EditTextCommand extends Command {
 
+	/**
+	 * Command to undo/redo the editing of a TextBox
+	 * @param text
+	 * @param items
+	 */
 	public EditTextCommand(String text, ItemComponent[] items) {
 		super(items);
 		// TODO Change Text Command
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#redo()
+	 */
 	public void redo() {
 		// TODO Change Text Command
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#undo()
+	 */
 	public void undo() {
 		// TODO Change Text Command
 
