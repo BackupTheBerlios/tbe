@@ -46,11 +46,18 @@ public class SettingsFrame {
 	private boolean firstStart = false;
 
 
+	/**
+	 * @param isFirstStart, true if Firststart
+	 */
 	public SettingsFrame(boolean isFirstStart) {
 		this.firstStart = isFirstStart;
 		init(0);
 	}
 	
+	/**
+	 * Creates a Settingsframe sets the activated Tab
+	 * @param tab, activated Tab
+	 */
 	public SettingsFrame(int tab) {
 		this.firstStart = false;
 		init(tab);	
@@ -58,6 +65,10 @@ public class SettingsFrame {
 	}
 
 
+	/**
+	 * Creates the SettingsFrame
+	 * @param tab activatd Tab
+	 */
 	private void init(int tab) {
 	  settingsLabels = getResourceBundle(tbe.getLang());
 
@@ -92,6 +103,10 @@ public class SettingsFrame {
   }
 
 
+	/**
+	 * Creates Button Panel. This Buttons are not in the Tabs, but always visible
+	 * @return JPanel with Buttons (save, exit/cancel)
+	 */
 	private JPanel createButtonPanel() {
 		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JButton save = new JButton(settingsLabels.getString("save"));
@@ -136,6 +151,10 @@ public class SettingsFrame {
 
 	}
 
+	/**
+	 * Creates Tabs
+	 * @return tabs as JTabbedPane
+	 */
 	private JTabbedPane createTabbedPane() {
 		tabs = new JTabbedPane();
 		tabs.setBackground(Color.WHITE);
@@ -211,6 +230,10 @@ public class SettingsFrame {
 		}
 	}
 
+	/**
+	 * Creates Panel for tab with User settings and language
+	 * @return JPanel
+	 */
 	private JPanel createGeneralPanel() {
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -293,6 +316,10 @@ public class SettingsFrame {
 		return panel;
 	}
 
+	/**
+	 * Creates Panel for tab with FTP settings
+	 * @return JPanel
+	 */
 	private JPanel createFTPPanel() {
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -443,6 +470,10 @@ public class SettingsFrame {
 		return panel;
 	}
 
+	/**
+	 * Creates Panel for tab with sport installing
+	 * @return
+	 */
 	private JPanel createSportPanel() {
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraints = new GridBagConstraints();
@@ -563,6 +594,10 @@ public class SettingsFrame {
 		return panel;
 	}
 
+	/**
+	 * Checks the FTP forms for correct inputs
+	 * @return boolean, true if inputs are correct
+	 */
 	private boolean checkFTPForm() {
 		boolean returnValue = true;
 
@@ -592,6 +627,11 @@ public class SettingsFrame {
 		return returnValue;
 	}
 
+	/**
+	 * Returns a RessourceBundle for de desired language
+	 * @param lang language as String
+	 * @return RessourceBundle
+	 */
 	private ResourceBundle getResourceBundle(String lang) {
 		InputStream settingsStream;
 		ResourceBundle labels = null;
@@ -606,6 +646,9 @@ public class SettingsFrame {
 		return labels;
 	}
 
+	/**
+	 * Refreshs the Menu (for ex. to change the language)
+	 */
 	public void refresh() {
 		settingsLabels = getResourceBundle(tbe.getLang());
 		dialog.remove(tabs);
@@ -616,6 +659,10 @@ public class SettingsFrame {
 
 	}
 
+	/**
+	 * Checks the User forms for correct inputs
+	 * @return boolean, true if inputs are correct
+	 */
 	private boolean checkUserInputs() {
 		boolean returnValue = true;
 
@@ -635,9 +682,5 @@ public class SettingsFrame {
 		}
 
 		return returnValue;
-	}
-
-	public void setSelectedIndex(int index) {
-		tabs.setSelectedIndex(index);
 	}
 }

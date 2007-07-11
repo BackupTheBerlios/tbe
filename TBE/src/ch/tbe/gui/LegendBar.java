@@ -32,6 +32,9 @@ import ch.tbe.item.ShapeItem;
 public class LegendBar extends JToolBar {
 	private Board board;
 
+	/**
+	 * @param board as Board
+	 */
 	public LegendBar(Board board) {
 		this.board = board;
 		this.setLayout(new BorderLayout());
@@ -41,11 +44,18 @@ public class LegendBar extends JToolBar {
 		showLegend();
 	}
 
+	/**
+	 * Adds the legend to the Toolbar
+	 */
 	private void showLegend() {
 
 		this.add(getLegend());
 	}
 
+	/**
+	 * Creates and returns the legend
+	 * @return legend as JPanel
+	 */
 	public JPanel getLegend() {
 		JPanel legendPanel = new JPanel(new BorderLayout());
 		GridLayout gridLayout = new GridLayout(0, 4);
@@ -111,6 +121,11 @@ public class LegendBar extends JToolBar {
 		return legendPanel;
 	}
 	
+	/**
+	 * Sorts the Array alphabetic by the description
+	 * @param items ItemComponent[]
+	 * @return sorted Items as ItemComponent[]
+	 */
 	private ItemComponent[] sortLegendByDescription(ItemComponent[] items){
 		ItemComponent[] sortedArray = new ItemComponent[items.length];
 		ArrayList<String> desc = new ArrayList<String>();
@@ -141,9 +156,11 @@ public class LegendBar extends JToolBar {
 		return sortedArray;
 	}
 
+	/**
+	 * Refreshs the legend (for ex. for language change)
+	 */
 	public void refresh() {
 		showLegend();
-		this.setVisible(false);
-		this.setVisible(true);
+		this.validate();
 	}
 }

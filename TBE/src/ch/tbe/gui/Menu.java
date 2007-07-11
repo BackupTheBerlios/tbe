@@ -49,11 +49,17 @@ public class Menu extends JMenuBar {
 	private JMenuItem viewLegend;
 	private JMenu fieldMenu;
 
+	/**
+	 * @param lang Language as String
+	 */
 	public Menu(String lang) {
 		menuLabels = getResourceBundle(lang);
 		createMenu();
 	}
 
+	/**
+	 * 
+	 */
 	private void createMenu() {
 		this.add(createFileMenu());
 		this.add(createEditMenu());
@@ -62,6 +68,11 @@ public class Menu extends JMenuBar {
 		this.add(createTBEMenu());
 	}
 
+	/**
+	 * Returns a RessourceBundle in the desired language
+	 * @param lang as String
+	 * @return RessourceBundle
+	 */
 	private ResourceBundle getResourceBundle(String lang) {
 		ResourceBundle labels = null;
 		InputStream menuLabelStream;
@@ -76,6 +87,9 @@ public class Menu extends JMenuBar {
 		return labels;
 	}
 
+	/**
+	 * @return entrys of the Filemenu as JMenu
+	 */
 	private JMenu createFileMenu() {
 		JMenu filemenu = new JMenu(menuLabels.getString("title1"));
 
@@ -264,6 +278,9 @@ public class Menu extends JMenuBar {
 		return filemenu;
 	}
 
+	/**
+	 * @return entrys of the Editmenu as JMenu
+	 */
 	private JMenu createEditMenu() {
 		JMenu editmenu = new JMenu(menuLabels.getString("title2"));
 
@@ -400,6 +417,9 @@ public class Menu extends JMenuBar {
 		return editmenu;
 	}
 
+	/**
+	 * @return entrys of the Bordmenu as JMenu
+	 */
 	private JMenu createBoardMenu() {
 		JMenu boardmenu = new JMenu(menuLabels.getString("title3"));
 
@@ -434,6 +454,9 @@ public class Menu extends JMenuBar {
 		return boardmenu;
 	}
 
+	/**
+	 * @return entrys of the Viewmenu as JMenu
+	 */
 	private JMenu createViewMenu() {
 		JMenu viewMenu = new JMenu(menuLabels.getString("title5"));
 
@@ -488,6 +511,10 @@ public class Menu extends JMenuBar {
 		return viewMenu;
 	}
 
+	/**
+	 * @param fields Fields
+	 * @return entrys of the Fieldsubmenu as JMenu
+	 */
 	private JMenu createFieldMenu(ArrayList<Field> fields) {
 		JMenu boardChangeField = new JMenu(menuLabels.getString("board1"));
 		JMenuItem fieldMenu;
@@ -515,6 +542,9 @@ public class Menu extends JMenuBar {
 		return boardChangeField;
 	}
 
+	/**
+	 * @return TBE menu as JMenu
+	 */
 	private JMenu createTBEMenu() {
 		JMenu tbemenu = new JMenu(menuLabels.getString("title4"));
 
@@ -531,7 +561,7 @@ public class Menu extends JMenuBar {
 		class tbeAboutListener extends MouseAdapter {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				new AboutFrame(TBE.getInstance().getFrame());
+				new AboutFrame();
 			}
 		}
 		
@@ -562,6 +592,9 @@ public class Menu extends JMenuBar {
 		return tbemenu;
 	}
 
+	/**
+	 * Activates/Deactivates the undo/redo menu entry 
+	 */
 	public void refreshInvokerVisibility() {
 		if (this.invoker.canRedo()) {
 			editRedo.setEnabled(true);
@@ -576,11 +609,18 @@ public class Menu extends JMenuBar {
 		}
 	}
 
+	/**
+	 * Activates/Deactivates the Add/Remove Point menu entry
+	 * @param b true for activate
+	 */
 	public void activatePoints(boolean b) {
 		editAddPoint.setEnabled(b);
 		editRemovePoint.setEnabled(b);
 	}
 
+	/**
+	 * Refreshs the Menu (for ex. to change the language)
+	 */
 	public void refresh() {
 		Component[] components = this.getComponents();
 		for (int i = 0; i < components.length; i++) {
@@ -592,6 +632,10 @@ public class Menu extends JMenuBar {
 		this.createMenu();
 	}
 
+	/**
+	 * Shows/Hides the Toolbar
+	 * @param b for show
+	 */
 	public void setVisibleToolbar(boolean b) {
 		if (!b) {
 			viewToolbar.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/visible.png")));
@@ -600,6 +644,10 @@ public class Menu extends JMenuBar {
 		}
 	}
 
+	/**
+	 * Shows/Hides the Sidebar
+	 * @param b true for show
+	 */
 	public void setVisibleSidebar(boolean b) {
 		if (!b) {
 			viewSidebar.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/visible.png")));
@@ -608,6 +656,10 @@ public class Menu extends JMenuBar {
 		}
 	}
 
+	/**
+	 * Shows/Hides the Legend
+	 * @param b true for show
+	 */
 	public void setVisibleLegend(boolean b) {
 		if (!b) {
 			viewLegend.setIcon(new ImageIcon(ClassLoader.getSystemResource("ch/tbe/pics/visible.png")));

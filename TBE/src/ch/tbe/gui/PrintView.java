@@ -41,6 +41,9 @@ public class PrintView extends View {
 	private final Board board;
 	private TBE tbe = TBE.getInstance();
 
+	/**
+	 * @param board Board
+	 */
 	public PrintView(Board board) {
 
 		this.board = board;
@@ -49,6 +52,9 @@ public class PrintView extends View {
 		this.createView();
 	}
 
+	/**
+	 * Creates the Printview
+	 */
 	private void createView() {
 		// headerPanel
 		JPanel headerPanel = new JPanel();
@@ -179,6 +185,9 @@ public class PrintView extends View {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.View#refresh()
+	 */
 	@Override
 	public void refresh() {
 		// Nothing
