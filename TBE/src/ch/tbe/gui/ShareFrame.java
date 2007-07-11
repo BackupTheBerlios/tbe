@@ -1,5 +1,12 @@
 package ch.tbe.gui;
 
+import ch.tbe.Board;
+import ch.tbe.FTPServer;
+import ch.tbe.util.FTPFileTreeModel;
+import ch.tbe.util.FTPHandler;
+import ch.tbe.util.FileTreeModel;
+import ch.tbe.util.PathFile;
+import ch.tbe.util.XMLHandler;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,12 +16,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-
 import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -22,14 +27,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreePath;
-
-import ch.tbe.Board;
-import ch.tbe.FTPServer;
-import ch.tbe.util.FTPFileTreeModel;
-import ch.tbe.util.FTPHandler;
-import ch.tbe.util.FileTreeModel;
-import ch.tbe.util.PathFile;
-import ch.tbe.util.XMLHandler;
 
 /**
  * Tactic Board Editor
@@ -45,17 +42,21 @@ public class ShareFrame {
 	private TBE tbe = TBE.getInstance();
 	private ResourceBundle shareLabels;
 	private JPanel contentPanel;
-	private JComboBox ftpBox, driveBox;
+	private JComboBox ftpBox;
+	private JComboBox driveBox;
 	private JDialog dialog;
 	private FTPServer currentFTP = null;
 	private boolean connected = false;
 	private File[] roots = File.listRoots();
 	private PathFile currentRoot = new PathFile(null, "");
-	private JTree ftpTree, localTree;
+	private JTree ftpTree;
+	private JTree localTree;
 	private ArrayList<String> localPaths = new ArrayList<String>();
 	private ArrayList<String> remotePaths = new ArrayList<String>();
 	private String folder = "";
-	private JButton connectButton, uploadButton, downloadButton;
+	private JButton connectButton;
+	private JButton uploadButton;
+	private JButton downloadButton;
 	private int lastDriveIndex = 0;
 
 	/*

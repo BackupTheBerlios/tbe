@@ -1,8 +1,8 @@
 package ch.tbe.gui;
 
-import javax.swing.BorderFactory;
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
+import javax.swing.BorderFactory;
 
 /**
  * Tactic Board Editor

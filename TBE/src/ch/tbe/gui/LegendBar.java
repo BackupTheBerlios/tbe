@@ -1,22 +1,20 @@
 package ch.tbe.gui;
 
+import ch.tbe.Board;
+import ch.tbe.framework.ArrowItem;
+import ch.tbe.framework.ItemComponent;
+import ch.tbe.item.ShapeItem;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.Collections;
-
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
-
-import ch.tbe.Board;
-import ch.tbe.framework.ArrowItem;
-import ch.tbe.framework.ItemComponent;
-import ch.tbe.item.ShapeItem;
 
 /**
  * Tactic Board Editor

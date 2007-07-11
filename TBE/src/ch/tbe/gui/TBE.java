@@ -1,5 +1,9 @@
 package ch.tbe.gui;
 
+import ch.tbe.*;
+import ch.tbe.framework.Command;
+import ch.tbe.framework.View;
+import ch.tbe.util.XMLHandler;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.event.WindowEvent;
@@ -8,13 +12,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-import ch.tbe.*;
-import ch.tbe.framework.Command;
-import ch.tbe.framework.View;
-import ch.tbe.util.XMLHandler;
-import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

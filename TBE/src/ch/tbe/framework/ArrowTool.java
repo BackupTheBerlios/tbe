@@ -1,7 +1,7 @@
 package ch.tbe.framework;
 
-import java.awt.event.MouseEvent;
 import ch.tbe.ItemType;
+import java.awt.event.MouseEvent;
 
 /**
  * Tactic Board Editor

@@ -1,11 +1,10 @@
 package ch.tbe.item;
 
-import java.awt.geom.Point2D;
-import java.util.List;
-
 import ch.tbe.ItemType;
 import ch.tbe.framework.ArrowItem;
 import ch.tbe.jgraph.TBEGraphConstants;
+import java.awt.geom.Point2D;
+import java.util.List;
 
 /**
  * Tactic Board Editor

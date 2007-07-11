@@ -1,14 +1,11 @@
 package ch.tbe.util;
 
-import java.awt.*;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import ch.tbe.Board;
 import ch.tbe.gui.PrintView;
 import ch.tbe.gui.TBE;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.print.*;
 import java.io.File;
@@ -19,6 +16,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 
 /**
  * Tactic Board Editor

@@ -1,5 +1,9 @@
 package ch.tbe.gui;
 
+import ch.tbe.Board;
+import ch.tbe.Sport;
+import ch.tbe.framework.View;
+import ch.tbe.util.XMLHandler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -14,22 +18,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-
-import java.net.URL;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.border.TitledBorder;
-
-import ch.tbe.Board;
-import ch.tbe.Sport;
-import ch.tbe.framework.View;
-import ch.tbe.util.XMLHandler;
 
 /**
  * Tactic Board Editor

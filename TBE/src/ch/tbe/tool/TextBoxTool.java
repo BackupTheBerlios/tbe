@@ -1,14 +1,13 @@
 package ch.tbe.tool;
 
-import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
-
 import ch.tbe.ItemType;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.framework.Tool;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.item.TextBoxItem;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 
 public class TextBoxTool extends Tool {
 

@@ -1,5 +1,9 @@
 package ch.tbe.gui;
 
+import ch.tbe.Attribute;
+import ch.tbe.Board;
+import ch.tbe.framework.View;
+import ch.tbe.jgraph.TBECellViewFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,7 +14,6 @@ import java.awt.event.MouseMotionListener;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -20,11 +23,6 @@ import javax.swing.JTextArea;
 import org.jgraph.graph.DefaultGraphModel;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
-
-import ch.tbe.Attribute;
-import ch.tbe.Board;
-import ch.tbe.framework.View;
-import ch.tbe.jgraph.TBECellViewFactory;
 
 /**
  * Tactic Board Editor

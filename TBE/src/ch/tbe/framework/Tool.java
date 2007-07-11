@@ -1,11 +1,10 @@
 package ch.tbe.framework;
 
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-
 import ch.tbe.ItemType;
 import ch.tbe.command.CreateCommand;
 import ch.tbe.gui.TBE;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 /**
  * Tactic Board Editor

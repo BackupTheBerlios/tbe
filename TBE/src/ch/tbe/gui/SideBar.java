@@ -1,5 +1,8 @@
 package ch.tbe.gui;
 
+import ch.tbe.Attribute;
+import ch.tbe.Board;
+import ch.tbe.util.AttributeTreeNode;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
@@ -12,9 +15,6 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.tree.*;
-import ch.tbe.Attribute;
-import ch.tbe.Board;
-import ch.tbe.util.AttributeTreeNode;
 
 /**
  * Tactic Board Editor

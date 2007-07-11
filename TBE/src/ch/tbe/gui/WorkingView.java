@@ -1,6 +1,7 @@
 package ch.tbe.gui;
 
 import ch.tbe.*;
+import ch.tbe.Sport;
 import ch.tbe.command.CutCommand;
 import ch.tbe.command.DeleteCommand;
 import ch.tbe.command.MoveCommand;
@@ -22,12 +23,10 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
-
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import org.jgraph.graph.*;
-import ch.tbe.Sport;
 
 /**
  * Tactic Board Editor
@@ -46,9 +45,14 @@ public class WorkingView extends View {
 	private Sport sport;
 	private Tool cursorTool;
 	private Tool currentTool;
-	private JButton currentButton, cursorButton, add, rem, rotate;
+	private JButton currentButton;
+	private JButton cursorButton;
+	private JButton add;
+	private JButton rem;
+	private JButton rotate;
 	private JToolBar toolbar = new JToolBar(); //TODO: zeilenumbruch wenn zuviele Tools
-	private JToolBar sideBar, rotatePanel;
+	private JToolBar sideBar;
+	private JToolBar rotatePanel;
 	private List<JButton> toolButtons = new ArrayList<JButton>();
 	private LegendBar legendBar;
 	private MouseListener[] listeners = new MouseListener[2];

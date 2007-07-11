@@ -1,14 +1,12 @@
 package ch.tbe.command;
 
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.ClipboardOwner;
-import java.awt.datatransfer.Transferable;
-
 import ch.tbe.framework.Command;
-
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Transferable;
 
 /**
  * Tactic Board Editor

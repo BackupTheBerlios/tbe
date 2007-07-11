@@ -1,9 +1,9 @@
 package ch.tbe;
 
-import java.util.List;
-import java.util.Stack;
 import ch.tbe.framework.*;
 import ch.tbe.gui.TBE;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * Tactic Board Editor

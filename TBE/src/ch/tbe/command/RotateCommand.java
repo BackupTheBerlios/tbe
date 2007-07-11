@@ -1,12 +1,11 @@
 package ch.tbe.command;
 
-import org.jgraph.graph.DefaultGraphCell;
-
 import ch.tbe.framework.Command;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.jgraph.TBEGraphConstants;
+import org.jgraph.graph.DefaultGraphCell;
 
 /**
  * Tactic Board Editor

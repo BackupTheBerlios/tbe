@@ -1,16 +1,13 @@
 package ch.tbe.item;
 
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-
-import javax.swing.Icon;
-
-import org.jgraph.graph.AttributeMap;
-import org.jgraph.graph.DefaultGraphCell;
-
 import ch.tbe.ItemType;
 import ch.tbe.framework.ItemComponent;
 import ch.tbe.jgraph.TBEGraphConstants;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
+import javax.swing.Icon;
+import org.jgraph.graph.AttributeMap;
+import org.jgraph.graph.DefaultGraphCell;
 
 /**
  * Tactic Board Editor

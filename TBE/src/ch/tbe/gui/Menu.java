@@ -1,5 +1,10 @@
 package ch.tbe.gui;
 
+import ch.tbe.Field;
+import ch.tbe.Invoker;
+import ch.tbe.framework.View;
+import ch.tbe.gui.WorkingView;
+import ch.tbe.util.PrintHandler;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,18 +17,11 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
-
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
-
-import ch.tbe.Field;
-import ch.tbe.Invoker;
-import ch.tbe.framework.View;
-import ch.tbe.util.PrintHandler;
-import ch.tbe.gui.WorkingView;
 
 /**
  * Tactic Board Editor

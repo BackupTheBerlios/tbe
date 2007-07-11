@@ -1,8 +1,7 @@
 package ch.tbe.util;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-
 import ch.tbe.Attribute;
+import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
  * Tactic Board Editor

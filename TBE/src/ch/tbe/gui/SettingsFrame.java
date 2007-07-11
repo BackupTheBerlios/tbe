@@ -1,5 +1,7 @@
 package ch.tbe.gui;
 
+import ch.tbe.FTPServer;
+import ch.tbe.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
@@ -9,14 +11,10 @@ import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Vector;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
-import ch.tbe.FTPServer;
-import ch.tbe.util.*;
 
 /**
  * Tactic Board Editor
@@ -31,13 +29,19 @@ import ch.tbe.util.*;
 public class SettingsFrame {
 	private TBE tbe = TBE.getInstance();
 	private ResourceBundle settingsLabels;
-	private JTextField prenameField, lastnameField, mailField;
-	private JTextField ftpNameField, ftpHostField, ftpUserField;
+	private JTextField prenameField;
+	private JTextField lastnameField;
+	private JTextField mailField;
+	private JTextField ftpNameField;
+	private JTextField ftpHostField;
+	private JTextField ftpUserField;
 	private JPasswordField ftpPwField;
-	private JComboBox langBox, ftpBox;
+	private JComboBox langBox;
+	private JComboBox ftpBox;
 	private JTabbedPane tabs;
 	private FTPServer currentFTP = null;
-	private JPanel FTPPanel, buttonPanel;
+	private JPanel FTPPanel;
+	private JPanel buttonPanel;
 	private boolean connected = false;
 	private ArrayList<String> toInstall = new ArrayList<String>();
 	private ArrayList<String> toDelete = new ArrayList<String>();

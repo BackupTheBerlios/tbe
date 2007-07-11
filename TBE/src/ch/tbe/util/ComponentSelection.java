@@ -1,12 +1,11 @@
 package ch.tbe.util;
 
+import ch.tbe.framework.ItemComponent;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
-
-import ch.tbe.framework.ItemComponent;
 
 /**
  * Tactic Board Editor

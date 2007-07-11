@@ -1,5 +1,12 @@
 package ch.tbe;
 
+import ch.tbe.command.MoveCommand;
+import ch.tbe.framework.ArrowItem;
+import ch.tbe.framework.Command;
+import ch.tbe.framework.ItemComponent;
+import ch.tbe.gui.TBE;
+import ch.tbe.jgraph.TBEBasicGraphUI;
+import ch.tbe.jgraph.TBEGraphConstants;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -12,13 +19,6 @@ import org.jgraph.JGraph;
 import org.jgraph.graph.DefaultGraphCell;
 import org.jgraph.graph.GraphLayoutCache;
 import org.jgraph.graph.GraphModel;
-import ch.tbe.command.MoveCommand;
-import ch.tbe.framework.ArrowItem;
-import ch.tbe.framework.Command;
-import ch.tbe.framework.ItemComponent;
-import ch.tbe.gui.TBE;
-import ch.tbe.jgraph.TBEBasicGraphUI;
-import ch.tbe.jgraph.TBEGraphConstants;
 
 /**
  * Tactic Board Editor
