@@ -31,6 +31,10 @@ public class Invoker {
 		return instance;
 	}
 
+	/**
+	 * Executes a List of Commands
+	 * @param actCommands Commands to execute
+	 */
 	public void execute(List<Command> actCommands) {
 		doneCommands.push(actCommands);
 		TBE.getInstance().setSaved(false);
@@ -44,6 +48,9 @@ public class Invoker {
 		}
 	}
 
+	/**
+	 * Undoes the last Command
+	 */
 	public void undo() {
 		if (this.canUndo()) {
 			actCommands = doneCommands.pop();
@@ -55,6 +62,9 @@ public class Invoker {
 		}
 	}
 
+	/**
+	 * Restore the last Command
+	 */
 	public void redo() {
 		if (this.canRedo()) {
 			actCommands = undoneCommands.pop();
@@ -66,14 +76,25 @@ public class Invoker {
 		}
 	}
 
+	/**
+	 * Returns true if there is a Command to undo
+	 * @return boolean
+	 */
 	public boolean canUndo() {
 		return !doneCommands.isEmpty();
 	}
 
+	/**
+	 *  Returns true if there is a Command to restore
+	 * @return boolean
+	 */
 	public boolean canRedo() {
 		return !undoneCommands.isEmpty();
 	}
 
+	/**
+	 * Clears the Command-List
+	 */
 	public void clear() {
 		doneCommands.clear();
 		undoneCommands.clear();
