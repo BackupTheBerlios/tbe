@@ -1,6 +1,7 @@
 package ch.tbe.util;
 
 import java.io.*;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 /**
@@ -24,14 +25,14 @@ public final class FileSystemHandler {
 		String folderPath = "ch/tbe/config/sport";
 		
 		//File f1 = new File(ClassLoader.getSystemResource(folderPath).getPath());
-		File f1 = new File(ClassLoader.getSystemResource("").getPath()+folderPath);
+		File f1 = new File(URLDecoder.decode(ClassLoader.getSystemResource("").getPath())+folderPath);
 
 		// Get all the files and directory under your diretcory
 		
 		File[] strFilesDirs = f1.listFiles();
 
 		for (int i = 0; i < strFilesDirs.length; i++) {
-			File f2 = new File(strFilesDirs[i].getPath() + "\\sport.config");
+			File f2 = new File(URLDecoder.decode(strFilesDirs[i].getPath()) + "\\sport.config");
 			if (strFilesDirs[i].isDirectory() && f2.exists()) {
 
 				sports.add(strFilesDirs[i].getName());
@@ -45,14 +46,14 @@ public final class FileSystemHandler {
 
 		// Create a file object for your root directory
 		String folderPath = "ch/tbe/config/lang";
-		File f1 = new File(ClassLoader.getSystemResource("").getPath()+folderPath);
+		File f1 = new File(URLDecoder.decode(ClassLoader.getSystemResource("").getPath())+folderPath);
 
 		// Get all the files and directory under your directory
 		File[] strFilesDirs = f1.listFiles();
 
 		for (int i = 0; i < strFilesDirs.length; i++) {
 			// TODO: sinnvollere überprüfung...
-			File f2 = new File(strFilesDirs[i].getPath() + "\\menuLabels.txt");
+			File f2 = new File(URLDecoder.decode(strFilesDirs[i].getPath()) + "\\menuLabels.txt");
 			if (strFilesDirs[i].isDirectory() && f2.exists()) {
 
 				langs.add(strFilesDirs[i].getName());

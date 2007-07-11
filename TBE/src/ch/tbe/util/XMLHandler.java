@@ -2,6 +2,7 @@ package ch.tbe.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.net.URLDecoder;
 
 import ch.tbe.*;
 import ch.tbe.framework.*;
@@ -73,7 +74,7 @@ public final class XMLHandler {
 				try {
 					// Start reading File
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
-					saxParser.parse(new File(ClassLoader.getSystemResource("").getPath()+"ch/tbe/config/tbe.config"), handler);
+					saxParser.parse(new File(URLDecoder.decode(ClassLoader.getSystemResource("").getPath())+"ch/tbe/config/tbe.config"), handler);
 				} catch (Throwable t) {
 					t.printStackTrace();
 				}
@@ -143,7 +144,7 @@ public final class XMLHandler {
 				DefaultHandler handler = new SaxHandler();
 
 				try {
-					File file = new File(path);
+					File file = new File(URLDecoder.decode(path));
 					if (file.exists()) {
 						SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 						saxParser.parse(file, handler);
@@ -289,7 +290,7 @@ public final class XMLHandler {
 				try {
 					SAXParser saxParser = SAXParserFactory.newInstance().newSAXParser();
 					String filePath = ClassLoader.getSystemResource("ch/tbe/config/sport/" + sport + "/sport.config").getPath();
-					saxParser.parse(new File(filePath), handler);
+					saxParser.parse(new File(URLDecoder.decode(filePath)), handler);
 				} catch (Throwable t) {
 					t.printStackTrace();
 				}
@@ -300,7 +301,7 @@ public final class XMLHandler {
 					actSport = new Sport(atts.getValue("name"));
 					actSport.setVersion(atts.getValue("version"));
 					actSport.setLcVersion(atts.getValue("lastCompatibleVersion"));
-					actSport.setIcon(new ImageIcon(ClassLoader.getSystemResource("").getPath()+"ch/tbe/config/sport/" + actSport.getName() + "/" + atts.getValue("picture")));
+					actSport.setIcon(new ImageIcon(URLDecoder.decode(ClassLoader.getSystemResource("").getPath())+"ch/tbe/config/sport/" + actSport.getName() + "/" + atts.getValue("picture")));
 				}
 
 				if (actSport != null) {
@@ -546,7 +547,7 @@ public final class XMLHandler {
 			Format format = Format.getPrettyFormat();
 			format.setEncoding("iso-8859-1");
 			XMLOutputter out = new XMLOutputter(format);
-			java.io.FileWriter writer = new java.io.FileWriter(ClassLoader.getSystemResource("").getPath()+"ch/tbe/config/tbe.config");
+			java.io.FileWriter writer = new java.io.FileWriter(URLDecoder.decode(ClassLoader.getSystemResource("").getPath())+"ch/tbe/config/tbe.config");
 			out.output(document, writer);
 			writer.flush();
 			writer.close();
