@@ -22,6 +22,9 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent {
 
 	protected final int DEFAULTLENGTH = 20;
 
+	/**
+	 * @param itemType ItemType
+	 */
 	protected ArrowItem(ItemType itemType) {
 		this.itemType = itemType;
 		TBEGraphConstants.setLineEnd(this.getAttributes(), TBEGraphConstants.ARROW_CLASSIC);
@@ -29,15 +32,26 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent {
 
 	}
 
+	/**
+	 * Sets the Points of the Arrow
+	 * @param points List of Points2D
+	 */
 	public void setPoints(List<Point2D> points) {
 		TBEGraphConstants.setPoints(this.getAttributes(), points);
 	}
 
+	/**
+	 * Returns a list containing all Points of the Arrow
+	 * @return List of Points2D
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Point2D> getPoints() {
 		return TBEGraphConstants.getPoints(this.getAttributes());
 	}
 
+	/**
+	 * Adds a Point at the end of the Arrow
+	 */
 	@SuppressWarnings("unchecked")
 	public void addPoint() {
 		int size = TBEGraphConstants.getPoints(this.getAttributes()).size();
@@ -48,6 +62,9 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent {
 		TBEGraphConstants.getPoints(this.getAttributes()).add(point);
 	}
 
+	/**
+	 * Removes the last Point of the Arrow if there are more than two
+	 */
 	public void removePoint() {
 		if (TBEGraphConstants.getPoints(this.getAttributes()).size() > 2) {
 			int size = TBEGraphConstants.getPoints(this.getAttributes()).size();
@@ -57,20 +74,36 @@ public abstract class ArrowItem extends DefaultEdge implements ItemComponent {
 		}
 	}
 
+	/**
+	 * Retruns the Icon of the ItemType
+	 * @return Icon
+	 */
 	public Icon getIcon() {
 		return itemType.getIcon();
 	}
 
+	/**
+	 * Retruns the ItemType
+	 * @return ItemType
+	 */
 	public ItemType getItemType() {
 		return itemType;
 	}
 
+	/**
+	 * Returns Text of the attached TextBox
+	 * @return String
+	 */
 	public String getText() {
 		if (super.getUserObject() == null)
 			return null;
 		return super.getUserObject().toString();
 	}
 
+	/**
+	 * Sets Text of the attached TextBox
+	 * @param s as String
+	 */
 	public void setText(String s) {
 		super.setUserObject(s);
 	}

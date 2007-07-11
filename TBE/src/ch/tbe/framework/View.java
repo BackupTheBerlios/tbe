@@ -13,5 +13,8 @@ import javax.swing.JPanel;
  */
 
 public abstract class View extends JPanel {
+	/**
+	 * Refresh the view (for ex. to change the language)
+	 */
 	public abstract void refresh();
 }

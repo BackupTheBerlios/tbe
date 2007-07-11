@@ -16,13 +16,22 @@ public abstract class Command {
 	protected ItemComponent[] items;
 	protected TBE tbe = TBE.getInstance();
 
+	/**
+	 * @param items as Itemcomponent[]
+	 */
 	public Command(ItemComponent[] items) {
 		this.items = items;
 	}
 
+	/**
+	 * Undo the last Command
+	 */
 	public void undo() {
 	}
 
+	/**
+	 * Redo the last Command
+	 */
 	public void redo() {
 	}
 

@@ -11,5 +11,9 @@ package ch.tbe.framework;
  */
 
 public interface ItemComponent {
+	/**
+	 * Returns the Type as String
+	 * @return type as String
+	 */
 	public String getType();
 }

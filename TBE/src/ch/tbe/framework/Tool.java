@@ -86,10 +86,18 @@ public abstract class Tool {
    */
 	public abstract void mouseOver(int x, int y, MouseEvent e);
 
+	/**
+	 * Returns the ItemType
+	 * @return ItemType
+	 */
 	public ItemType getItemType() {
 		return this.itemType;
 	}
 
+	/**
+	 * Creates a createCommand and adds it to the Invoker
+	 * @param items as ItemComponent[]
+	 */
 	public void createCommand(ItemComponent[] items) {
 		ArrayList<Command> actCommands = new ArrayList<Command>();
 		actCommands.add(new CreateCommand(items));
