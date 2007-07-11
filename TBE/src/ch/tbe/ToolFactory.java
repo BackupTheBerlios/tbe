@@ -23,9 +23,10 @@ import ch.tbe.tool.*;
  */
 public final class ToolFactory {
 
-	private ToolFactory() {
-	};
-
+	/**
+	 * Creates and returns the CurserTool
+	 * @return CursorTool
+	 */
 	public static CursorTool getCursorTool() {
 		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/cursoricon.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
@@ -33,6 +34,11 @@ public final class ToolFactory {
 		return new CursorTool(new ItemType(rb.getString("cursor"), rb.getString("cursor"), icon));
 	}
 
+	/**
+	 * Creates and returns a List with all ShapeTools to a desired Sport
+	 * @param sport as Sport
+	 * @return ArrayList of ShapeTools
+	 */
 	public static ArrayList<ShapeTool> getShapeTools(Sport sport) {
 		ArrayList<ShapeTool> shapeTools = new ArrayList<ShapeTool>();
 		for (ItemType types : sport.getShapeTypes()) {
@@ -41,6 +47,11 @@ public final class ToolFactory {
 		return shapeTools;
 	}
 
+	/**
+	 * Creates and returns a List with all ArrowTools to a desired Sport
+	 * @param sport as Sport
+	 * @return ArrayList of ArrowTools
+	 */
 	public static ArrayList<ArrowTool> getArrowTools(Sport sport) {
 		ArrayList<ArrowTool> arrowTools = new ArrayList<ArrowTool>();
 
@@ -73,6 +84,10 @@ public final class ToolFactory {
 		return arrowTools;
 	}
 
+	/**
+	 * Creates and Returns a TextBoxTool
+	 * @return TextBoxTool
+	 */
 	public static TextBoxTool getTextBoxTool() {
 		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/text.gif");
 		ImageIcon icon = new ImageIcon(imgURL);
@@ -80,6 +95,11 @@ public final class ToolFactory {
 		return new TextBoxTool(new ItemType(rb.getString("textbox"), rb.getString("textbox"), icon));
 	}
 
+	/**
+	 * Retuns a RessourceBundle in the desired language
+	 * @param lang Language as Sting
+	 * @return ResourceBoundle
+	 */
 	private static ResourceBundle getResourceBundle(String lang) {
 		InputStream toolFactoryStream;
 		ResourceBundle labels = null;

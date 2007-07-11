@@ -26,6 +26,13 @@ public class ItemType {
 	private Cursor cursor;
 	private Image cursorImage;
 
+	/**
+	 * @param name as String
+	 * @param description as String
+	 * @param icon as Icon
+	 * @param picture as Icon
+	 * @param maxSideLength as int
+	 */
 	public ItemType(String name, String description, Icon icon, Icon picture, int maxSideLength) {
 		this.name = name;
 		this.icon = icon;
@@ -60,6 +67,11 @@ public class ItemType {
 		this.maxSideLength = maxSideLength;
 	}
 
+	/**
+	 * @param name as String
+	 * @param description as String
+	 * @param icon as Icon
+	 */
 	public ItemType(String name, String description, Icon icon) {
 		this.name = name;
 		this.icon = icon;
@@ -67,47 +79,91 @@ public class ItemType {
 		this.picture = icon;
 	}
 
+	/**
+	 * @param name as String
+	 * @param description as String
+	 */
 	public ItemType(String name, String description) {
 		this.name = name;
 		this.description = description;
 	}
 
+	/**
+	 * Returns the description, which will be displayed in the legend and as ToolTip. 
+	 * @return Icon
+	 */
 	public String getDescription() {
 		return description;
 	}
 
+	/**
+	 * Sets the description, which will be displayed in the legend and as ToolTip. 
+	 * @param description as String
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	/**
+	 * Returns the Icon, which will be displayed in the toolbar
+	 * @return Icon
+	 */
 	public Icon getIcon() {
 		return icon;
 	}
 
+	/**
+	 * Sets the Icon, which will be displayed in the toolbar
+	 * @param icon as Icon
+	 */
 	public void setIcon(Icon icon) {
 		this.icon = icon;
 	}
 
+	/**
+	 * Returns the name of the ItemType
+	 * @return name as String
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Sets the name of the ItemType
+	 * @param name as String
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the Picture, which will be painted on the Board
+	 * @return 
+	 */
 	public Icon getPicture() {
 		return picture;
 	}
 
+	/**
+	 * Return the maximum side length of the Icon and Picture. Used to set the Cursor and Picture to the same size.
+	 * @return maxSideLength as int
+	 */
 	public int getMaxSideWidth() {
 		return this.maxSideLength;
 	}
 
+	/**
+	 * Returns the Cursor, which will be set if the Toll is selected.
+	 * @return Cursor
+	 */
 	public Cursor getCursor() {
 		return this.cursor;
 	}
 
+	/**
+	 * Sets the Picture, which will be painted on the Board
+	 * @param picture
+	 */
 	public void setPicture(Icon picture) {
 		this.picture = picture;
 	}
