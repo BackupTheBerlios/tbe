@@ -1,12 +1,5 @@
 package ch.tbe.jgraph;
 
-/*
- * @(#)VertexRenderer.java	1.0 03-JUL-04
- * 
- * Copyright (c) 2001-2004 Gaudenz Alder
- *  
- */
-
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -39,7 +32,7 @@ import org.jgraph.graph.*;
  */
 
 
-/**
+/*
  * This renderer displays entries that implement the CellView interface and
  * supports the following attributes. If the cell view is not a leaf, this
  * object is only visible if it is selected.
@@ -52,6 +45,8 @@ import org.jgraph.graph.*;
  * 
  * @version 1.0 1/1/02
  * @author Gaudenz Alder
+ * 
+ * Modified by David Meier
  */
 
 
@@ -217,6 +212,11 @@ public class TBEVertexRenderer extends JLabel implements CellViewRenderer, Image
 		}
 	}
 
+	/**
+	 * Computes the Bounds after the rotation
+	 * @return bounds Rectangle2D
+	 */
+	//Inserted by David Meier
 	private Rectangle2D computePoints() {
 		Rectangle2D r = TBEGraphConstants.getBounds(map);
 

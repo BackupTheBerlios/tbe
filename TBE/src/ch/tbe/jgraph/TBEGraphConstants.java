@@ -1,11 +1,5 @@
 package ch.tbe.jgraph;
 
-/*
- * @(#)GraphConstants.java 1.0 03-JUL-04
- *
- * Copyright (c) 2001-2004 Gaudenz Alder
- *
- */
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -42,7 +36,7 @@ import org.jgraph.graph.GraphModel;
  * @copyright by BFH-TI, Team TBE
  */
 
-/**
+/*
  * A collection of well known or common attribute keys and methods to apply to
  * an Map to get/set the properties in a typesafe manner. The following
  * attributes and methods need special attention: removeAttributes, removeAll
@@ -54,6 +48,9 @@ import org.jgraph.graph.GraphModel;
  * 
  * @version 1.0 1/1/02
  * @author Gaudenz Alder
+ * 
+ * 
+ * Modified by David Meier
  */
 public class TBEGraphConstants {
 

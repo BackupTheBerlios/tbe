@@ -22,11 +22,14 @@ public class TBEEdgeView extends EdgeView {
 
 	}
 
-	public TBEEdgeView(Object arg0) {
+  public TBEEdgeView(Object arg0) {
 		super(arg0);
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jgraph.graph.EdgeView#getRenderer()
+	 */
 	public CellViewRenderer getRenderer() {
 		return renderer;
 	}

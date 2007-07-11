@@ -18,6 +18,7 @@ public class TBEVertexView extends VertexView
   private static final long serialVersionUID = 1L;
 	public static transient TBEVertexRenderer renderer = new TBEVertexRenderer();
 	
+
 	public TBEVertexView()
 	{
 		super();
@@ -28,6 +29,9 @@ public class TBEVertexView extends VertexView
 		super(arg0);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jgraph.graph.VertexView#getRenderer()
+	 */
 	@Override
 	public CellViewRenderer getRenderer()
 	{
