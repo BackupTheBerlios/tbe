@@ -14,6 +14,10 @@ public class Attribute {
 	private String text;
 	private String title;
 
+	/**
+	 * @param text, Text of the Attribute as String
+	 * @param title, Title of the Attribute as String
+	 */
 	public Attribute(String text, String title) {
 		this.text = text;
 		this.title = title;

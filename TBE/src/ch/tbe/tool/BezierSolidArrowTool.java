@@ -12,13 +12,28 @@ import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.item.BezierSolidArrowItem;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * BezierSolidArrowTool 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BFH-TI, Team TBE
+ */
 public class BezierSolidArrowTool extends ArrowTool {
 
+	/**
+	 * @param shapeType
+	 */
 	public BezierSolidArrowTool(ItemType shapeType) {
 		super(shapeType);
 
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.ArrowTool#mouseDown(int, int, java.awt.event.MouseEvent)
+	 */
 	public void mouseDown(int x, int y, MouseEvent e) {
 
 		List<Point2D> points = new ArrayList<Point2D>();

@@ -12,13 +12,28 @@ import ch.tbe.gui.TBE;
 import ch.tbe.gui.WorkingView;
 import ch.tbe.item.PolyDashedBlockItem;
 
+/**
+ * Tactic Board Editor
+ * **********************
+ * PolyDashedBlockTool 
+ * 
+ * @version 1.0 7/07
+ * @author Meied4@bfh.ch, Schnl1@bfh.ch, WyssR5@bfh.ch, Zumsr1@bfh.ch
+ * @copyright by BFH-TI, Team TBE
+ */
 public class PolyDashedBlockTool extends ArrowTool {
 
+	/**
+	 * @param shapeType
+	 */
 	public PolyDashedBlockTool(ItemType shapeType) {
 		super(shapeType);
 
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.ArrowTool#mouseDown(int, int, java.awt.event.MouseEvent)
+	 */
 	public void mouseDown(int x, int y, MouseEvent e) {
 
 		List<Point2D> points = new ArrayList<Point2D>();
