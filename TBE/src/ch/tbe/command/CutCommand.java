@@ -24,21 +24,34 @@ public class CutCommand extends Command implements ClipboardOwner {
 
 	private WorkingView view;
 
+	/**
+	 * Command to undo/redo the cuting of ItemComponents
+	 * @param items ItemComponents
+	 */
 	public CutCommand(ItemComponent[] items) {
 		super(items);
 		this.view = ((WorkingView) TBE.getInstance().getView());
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#redo()
+	 */
 	public void redo() {
 
 		view.cut();
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#undo()
+	 */
 	public void undo() {
 
 		view.getBoard().addItem(items);
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.datatransfer.ClipboardOwner#lostOwnership(java.awt.datatransfer.Clipboard, java.awt.datatransfer.Transferable)
+	 */
 	public void lostOwnership(Clipboard arg0, Transferable arg1) {
 
 	}

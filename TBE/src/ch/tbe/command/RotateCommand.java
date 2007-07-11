@@ -22,12 +22,19 @@ public class RotateCommand  extends Command
 {
     private int rotation;
 
+  	/**
+  	 * Command to undo/redo the rotation of ItemComponents
+  	 * @param items ItemComponents
+  	 */
 	public RotateCommand(ItemComponent[] items) {
 		super(items);
 		this.rotation =  TBEGraphConstants.getRotation(((DefaultGraphCell)items[0]).getAttributes());
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#redo()
+	 */
 	public void redo()
 	{
 	    int temp =  TBEGraphConstants.getRotation(((DefaultGraphCell)items[0]).getAttributes());
@@ -37,6 +44,9 @@ public class RotateCommand  extends Command
 	    this.rotation = temp;
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.Command#undo()
+	 */
 	public void undo()
 	{
 	    int temp =   TBEGraphConstants.getRotation(((DefaultGraphCell)items[0]).getAttributes());
@@ -46,6 +56,10 @@ public class RotateCommand  extends Command
 	    this.rotation = temp;
 	}
 
+	/**
+	 * Sets the rotation. 
+	 * @param rotation
+	 */
 	public void setRotation(int rotation) {
   	this.rotation = rotation;
   }
