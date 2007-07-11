@@ -20,6 +20,10 @@ import ch.tbe.jgraph.TBEGraphConstants;
 public class PolyCurvedBlockItem extends ArrowItem {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @param points as List of Point2D
+	 * @param itemType ItemType
+	 */
 	public PolyCurvedBlockItem(List<Point2D> points, ItemType itemType) {
 		super(itemType);
 
@@ -29,6 +33,9 @@ public class PolyCurvedBlockItem extends ArrowItem {
 		setPoints(points);
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.ItemComponent#getType()
+	 */
 	public String getType() {
 		return "PolyCurvedBlockTool";
 	}

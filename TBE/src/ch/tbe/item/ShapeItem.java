@@ -26,7 +26,11 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent {
 	private static final long serialVersionUID = 1L;
 	private ItemType itemType;
 
-	public ShapeItem(ItemType itemType, Point2D p) {
+	/**
+	 * @param itemType as ItemType
+	 * @param point as Point
+	 */
+	public ShapeItem(ItemType itemType, Point2D point) {
 
 		this.itemType = itemType;
 		double maxSideWidth = this.itemType.getMaxSideWidth();
@@ -35,16 +39,23 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent {
 		if (maxSideWidth > max) {
 			maxSideWidth = max;
 		}
-		TBEGraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(p.getX(), p.getY(), maxSideWidth, maxSideWidth));
+		TBEGraphConstants.setBounds(this.getAttributes(), new Rectangle2D.Double(point.getX(), point.getY(), maxSideWidth, maxSideWidth));
 		TBEGraphConstants.setIcon(this.getAttributes(), itemType.getPicture());
 		TBEGraphConstants.setEditable(this.getAttributes(), false);
 
 	}
 
+	/**
+	 * Returns the Icon
+	 * @return Icon
+	 */
 	public Icon getIcon() {
 		return itemType.getIcon();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.jgraph.graph.DefaultGraphCell#clone()
+	 */
 	public ShapeItem clone() {
 		ShapeItem s = (ShapeItem) super.clone();
 		s.attributes = (AttributeMap) attributes.clone();
@@ -52,14 +63,25 @@ public class ShapeItem extends DefaultGraphCell implements ItemComponent {
 		return s;
 	}
 
+	/**
+	 * Sets the rotation in degree
+	 * @param degree as int
+	 */
 	public void setRotation(int degree) {
 		TBEGraphConstants.setRotation(this.getAttributes(), degree);
 	}
 
+	/**
+	 * Returns the rotation in degree
+	 * @return rotation as int
+	 */
 	public int getRotation() {
 		return TBEGraphConstants.getRotation(this.getAttributes());
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.ItemComponent#getType()
+	 */
 	public String getType() {
 		return itemType.getName();
 	}

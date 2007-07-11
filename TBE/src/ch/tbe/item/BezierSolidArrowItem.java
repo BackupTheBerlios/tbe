@@ -20,6 +20,10 @@ import ch.tbe.jgraph.TBEGraphConstants;
 public class BezierSolidArrowItem extends ArrowItem {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * @param points as List of Point2D
+	 * @param itemType ItemType
+	 */
 	public BezierSolidArrowItem(List<Point2D> points, ItemType itemType) {
 		super(itemType);
 		TBEGraphConstants.setLineStyle(this.getAttributes(), TBEGraphConstants.STYLE_BEZIER);
@@ -27,6 +31,9 @@ public class BezierSolidArrowItem extends ArrowItem {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.ItemComponent#getType()
+	 */
 	public String getType() {
 		return "BezierSolidArrowTool";
 	}

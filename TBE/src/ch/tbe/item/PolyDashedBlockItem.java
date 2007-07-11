@@ -22,6 +22,10 @@ public class PolyDashedBlockItem extends ArrowItem {
 
 	private final float[] DASH = new float[] { 6, 6 };
 
+	/**
+	 * @param points as List of Point2D
+	 * @param itemType as ItemType
+	 */
 	public PolyDashedBlockItem(List<Point2D> points, ItemType itemType) {
 		super(itemType);
 
@@ -31,6 +35,9 @@ public class PolyDashedBlockItem extends ArrowItem {
 		setPoints(points);
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.ItemComponent#getType()
+	 */
 	public String getType() {
 		return "PolyDashedBlockTool";
 	}
