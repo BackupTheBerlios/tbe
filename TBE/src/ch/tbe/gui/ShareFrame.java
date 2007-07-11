@@ -81,6 +81,10 @@ public class ShareFrame {
 		dialog.setVisible(true);
 	}
 
+	/**
+	 * Creates and returns ShareFramePanel. This is the main container in the JDialog
+	 * @return JPanel
+	 */
 	private JPanel createPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setBackground(Color.WHITE);
@@ -102,6 +106,10 @@ public class ShareFrame {
 		return panel;
 	}
 
+	/**
+	 * Creates and returns the Panel with the local file-tree
+	 * @return JPanel
+	 */
 	private JPanel createWestPanel() {
 		JPanel panel = new JPanel(new BorderLayout(5, 5));
 		panel.setPreferredSize(new Dimension(300, 500));
@@ -196,6 +204,10 @@ public class ShareFrame {
 		return panel;
 	}
 
+	/**
+	 * Creates and returns Panel with the remote/ftp file-tree
+	 * @return JPanel
+	 */
 	private JPanel createEastPanel() {
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.setPreferredSize(new Dimension(300, 500));
@@ -318,6 +330,10 @@ public class ShareFrame {
 		return panel;
 	}
 
+	/**
+	 * Creates and returns the JPanel with the up- and download Buttons
+	 * @return JPanel
+	 */
 	private JPanel createCenterPanel() {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -385,6 +401,10 @@ public class ShareFrame {
 		return panel;
 	}
 
+	/**
+	 * Creates and returns the Button Panel (open, refresh, cancel)
+	 * @return JPanel
+	 */
 	private JPanel createBorderPanel() {
 		JPanel panel = new JPanel();
 		panel.setBackground(Color.WHITE);
@@ -441,11 +461,18 @@ public class ShareFrame {
 		return panel;
 	}
 
+	/**
+	 * Disconnects the FTP-Server and closes the Dialog
+	 */
 	private void close() {
 		FTPHandler.disconnect();
 		dialog.dispose();
 	}
 
+	/**
+	 * Downloads the selected files from the FTP-Server
+	 * @param remotes ArrayList of Strings
+	 */
 	private void doDownload(ArrayList<String> remotes) {
 		// neue List, sonst ConcurrentModifiedException...
 		ArrayList<String> remoteFiles = remotes;
@@ -479,6 +506,10 @@ public class ShareFrame {
 	}
 
 	// Lädt lokale Files ohne Ordnerstruktur auf den Server
+	/**
+	 * Uploads local files to the Public FTP-Server
+	 * @param locals ArrayList of Strings
+	 */
 	private void doPublicUpload(ArrayList<String> locals) {
 		ArrayList<String> local = locals;
 
@@ -509,6 +540,10 @@ public class ShareFrame {
 
 	// Lädt lokale Files inkl. OrdnerStruktur auf den Server, leere Ordner
 	// ausgenommen
+	/**
+	 * Uploads local files to a custom FTP-Server
+	 * @param locals
+	 */
 	private void doCustomUpload(ArrayList<String> locals) {
 		ArrayList<String> local = locals;
 
@@ -541,6 +576,11 @@ public class ShareFrame {
 		}
 	}
 
+	/**
+	 * Returns a ResourceBundle in the desired language
+	 * @param lang, language as String
+	 * @return RessourceBundle
+	 */
 	private ResourceBundle getResourceBundle(String lang) {
 		InputStream shareStream;
 		ResourceBundle labels = null;
@@ -555,6 +595,9 @@ public class ShareFrame {
 		return labels;
 	}
 
+	/**
+	 * Refreshs the Menu (for ex. to change the language or refresh the tree-view after a download
+	 */
 	public void refresh() {
 		int ftpIndex = ftpBox.getSelectedIndex();
 		lastDriveIndex = driveBox.getSelectedIndex();

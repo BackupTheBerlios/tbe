@@ -46,15 +46,28 @@ public class StateBar extends JPanel {
 		this.add(strZoom);
 	}
 
+	/**
+	 * Sets the zoom
+	 * @param z, zoom as int
+	 */
 	public void setZoom(int z) {
 		strZoom.setText("Zoom: " + z + "%");
 
 	}
 
-	public void setState(String z) {
-		strMessage.setText(z);
+	/**
+	 * Sets the State
+	 * @param s. State as String
+	 */
+	public void setState(String s) {
+		strMessage.setText(s);
 	}
 
+	/**
+	 * Sets the coordinates
+	 * @param x as int
+	 * @param y as int
+	 */
 	public void setCoordinates(int x, int y) {
 		strCoordinates.setText("x: " + x + " y: " + y);
 	}

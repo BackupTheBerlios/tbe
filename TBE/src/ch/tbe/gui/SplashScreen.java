@@ -28,19 +28,24 @@ public class SplashScreen extends JWindow{
 	private JProgressBar progressBar = new JProgressBar();
 	private ImageIcon imageIcon;
 
+	/**
+	 * Generates a Splashscreen with Progressbar
+	 */
 	public SplashScreen() {
 		final URL url = ClassLoader.getSystemResource("ch/tbe/pics/logo_anim.gif"); 
 		imageIcon = new ImageIcon(url);
 		try {
-			jbInit();
+			init();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
-
-	// note - this class created with JBuilder
-	void jbInit() throws Exception {
+	/**
+	 * Initialize the Splashscreen (set position, and layout)
+	 * @throws Exception
+	 */
+	void init() throws Exception {
 		imageLabel.setIcon(imageIcon);
 		this.setLayout(new BorderLayout());
 		southPanel.setLayout(southPanelFlowLayout);
@@ -55,6 +60,10 @@ public class SplashScreen extends JWindow{
 		progressBar.setMaximum(maxProgress);
 	}
 
+	/**
+	 * Sets the progress of the progressbar
+	 * @param progress as int
+	 */
 	public void setProgress(int progress) {
 		final int theProgress = progress;
 		SwingUtilities.invokeLater(new Runnable() {
@@ -64,6 +73,11 @@ public class SplashScreen extends JWindow{
 		});
 	}
 
+	/**
+	 * Sets the progress and a String in the Progressbar
+	 * @param message to display in the Progressbar as String
+	 * @param progress as int
+	 */
 	public void setProgress(String message, int progress) {
 		final int theProgress = progress;
 		final String theMessage = message;
@@ -76,6 +90,10 @@ public class SplashScreen extends JWindow{
 		});
 	}
 
+	/**
+	 * Show/Hide the Splashscreen
+	 * @param b boolean, true for show
+	 */
 	public void setScreenVisible(boolean b) {
 		if(!b) Thread.currentThread().interrupt();
 		final boolean boo = b;
@@ -86,6 +104,10 @@ public class SplashScreen extends JWindow{
 		});
 	}
 
+	/**
+	 * Sets the Message in the Progressbar
+	 * @param message to display in the Progressbar as String
+	 */
 	private void setMessage(String message) {
 		if (message == null) {
 			message = "";

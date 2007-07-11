@@ -45,6 +45,9 @@ public class SideBar extends JToolBar {
 	private JButton cancelButton = new JButton();
 	private final int TREESTRINGLENGTH = 30;
 
+	/**
+	 * @param board Board
+	 */
 	public SideBar(Board board) {
 		this.board = board;
 		this.setLanguage();
@@ -57,6 +60,9 @@ public class SideBar extends JToolBar {
 		this.setPreferredSize(d);
 	}
 
+	/**
+	 * creates the main panel and adds it to the toolbar
+	 */
 	private void createPanel() {
 
 		sidePanel = new JPanel();
@@ -108,6 +114,9 @@ public class SideBar extends JToolBar {
 		this.add(sidePanel);
 	}
 
+	/**
+	 * Creates the attribute-tree
+	 */
 	private void createTree() {
 		AttributeTreeNode child, subchild;
 
@@ -171,6 +180,11 @@ public class SideBar extends JToolBar {
 		});
 	}
 
+	/**
+	 * Cuts off the ent of the Strings in the tree if they are longer as the specified TREESTRINGLENGTH
+	 * @param s String to cut
+	 * @return cutted string
+	 */
 	private String makeSubstring(String s) {
 		if (s.length() > TREESTRINGLENGTH + 3) {
 			s = s.substring(0, TREESTRINGLENGTH) + "...";
@@ -179,6 +193,10 @@ public class SideBar extends JToolBar {
 		return s;
 	}
 
+	/**
+	 * Creates and returns the Panel with the input fields (title, text)
+	 * @return JPanel
+	 */
 	private JPanel createInputPanel() {
 
 		JPanel inputPanel = new JPanel(new BorderLayout());
@@ -222,6 +240,10 @@ public class SideBar extends JToolBar {
 		return inputPanel;
 	}
 
+	/**
+	 * Creates and returns the Button Panel (cancel, add/change)
+	 * @return JPanel
+	 */
 	private JPanel createButtonPanel() {
 		JPanel buttonPanel = new JPanel(new GridLayout(2, 2));
 		class cancelButtonListener implements ActionListener {
@@ -289,6 +311,10 @@ public class SideBar extends JToolBar {
 		return buttonPanel;
 	}
 
+	/**
+	 * Deletes an attribute of the Board and removes it from the tree
+	 * @param path
+	 */
 	private void deleteAttribute(TreePath path) {
 		if (path == null)
 			return;
@@ -313,6 +339,11 @@ public class SideBar extends JToolBar {
 		}
 	}
 
+	/**
+	 * Returns a ResourceBundle in the desired language
+	 * @param lang, language as String
+	 * @return RessourceBundle
+	 */
 	private ResourceBundle getResourceBundle(String lang) {
 		InputStream sideBarStream;
 		ResourceBundle labels = null;
@@ -327,6 +358,9 @@ public class SideBar extends JToolBar {
 		return labels;
 	}
 
+	/**
+	 * Sets the language
+	 */
 	private void setLanguage() {
 		sideBarLabels = getResourceBundle(TBE.getInstance().getLang());
 
@@ -341,6 +375,9 @@ public class SideBar extends JToolBar {
 		cancelButton.setText(sideBarLabels.getString("cancel"));
 	}
 
+	/**
+	 * 
+	 */
 	public void refresh() {
 		setLanguage();
 	}

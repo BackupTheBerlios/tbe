@@ -48,15 +48,22 @@ public class TBE implements Runnable {
 	private StateBar stateBar = StateBar.getInstance();
 	private boolean saved = true;
 
+
 	private TBE() {
 	}
 	
-	//MAIN!
+	/**
+	 * Main method to start the TBE
+	 * @param args, No args needed
+	 */
 	public static void main(String[] args) {
 		Thread tbe = new Thread(TBE.getInstance());
 		tbe.start();
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
 		SplashScreen splashScreen = new SplashScreen();
@@ -115,10 +122,18 @@ public class TBE implements Runnable {
 		splashScreen.setScreenVisible(false);
 	}
 
+	/**
+	 * Returns an Instance of the TBE
+	 * @return TBE
+	 */
 	public static TBE getInstance() {
 		return instance;
 	}
 
+	/**
+	 * Sets the View and validates the Frame
+	 * @param newView View
+	 */
 	public void setView(View newView) {
 		frame.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		if (view != null) {
@@ -137,21 +152,33 @@ public class TBE implements Runnable {
 		
 	}
 
+	/**
+	 * Returns the current View
+	 * @return View
+	 */
 	public View getView() {
 		return this.view;
 	}
 
+	/**
+	 * Returns the installed sports
+	 * @return sports as ArrayList of Sports
+	 */
 	public ArrayList<Sport> getSports() {
 		return sports;
 	}
 
+	/**
+	 * Returns recently saved files
+	 * @return paths as ArrayList of Strings
+	 */
 	public ArrayList<String> getRecently() {
 		return paths;
 	}
 
-	public void createBoard(Sport sport) {
-	}
-
+	/**
+	 * Saves the Board on a desired place
+	 */
 	public void saveAs() {
 		if (view instanceof WorkingView) {
 			String temp = ((WorkingView) view).getBoard().getPath();
@@ -168,6 +195,9 @@ public class TBE implements Runnable {
 		}
 	}
 
+	/**
+	 * Saves the Board
+	 */
 	public void save() {
 		if (view instanceof WorkingView) {
 			saved = XMLHandler.saveBoard(((WorkingView) view).getBoard());
@@ -180,6 +210,9 @@ public class TBE implements Runnable {
 
 	}
 
+	/**
+	 * Opens a TBE-File
+	 */
 	public void load() {
 		JFileChooser chooser = new JFileChooser();
 
@@ -205,33 +238,55 @@ public class TBE implements Runnable {
 		}
 	}
 
-	public void share() {
-	}
-
+	/**
+	 * Undo a Command
+	 */
 	public void undo() {
 		this.invoker.undo();
 	}
 
+	/**
+	 * Redo a Command
+	 */
 	public void redo() {
 		this.invoker.redo();
 	}
 
-	public void openSettings() {
-	}
-
+	/**
+	 * Retruns the FTP-Servers
+	 * @return servers as ArrayList of FTPServer
+	 */
 	public ArrayList<FTPServer> getServers() {
 		return this.servers;
 	}
 
+	/**
+	 * Adds a FTP-Server
+	 * @param name, Servername as String
+	 * @param host, Host address/path as String
+	 * @param username as String
+	 * @param password as String
+	 */
 	public void addFTPServer(String name, String host, String username, String password) {
 		servers.add(new FTPServer(name, host, username, password));
 	}
 
+	/**
+	 * Edits a FTP-Server
+	 * @param name, Servername as String
+	 * @param host, Host address/path as String
+	 * @param username as String
+	 * @param password as String
+	 */
 	public void editFTPServer(String name, String host, String username, String password) {
 		removeFTPServer(name);
 		addFTPServer(name, host, username, password);
 	}
 
+	/**
+	 * Deletes a FTP-Server
+	 * @param name, Servername as String
+	 */
 	public void removeFTPServer(String name) {
 		for (FTPServer ftp : servers) {
 			if (ftp.getName().equals(name)) {
@@ -242,52 +297,101 @@ public class TBE implements Runnable {
 		}
 	}
 
+	/**
+	 * Sets the TBE-User
+	 * @param prename as String
+	 * @param lastname as String
+	 * @param email as String
+	 */
 	public void setUser(String prename, String lastname, String email) {
 		this.UserName = lastname;
 		this.UserPrename = prename;
 		this.UserEmail = email;
 	}
 
+	/**
+	 * Returns the Language
+	 * @return language as Sting
+	 */
 	public String getLang() {
 		return lang;
 	}
 
+	/**
+	 * Sets the paths of the recently saved files
+	 * @param paths, ArrayList of Strings
+	 */
 	public void setPaths(ArrayList<String> paths) {
 		this.paths = paths;
 	}
 
+	/**
+	 * Sets the language
+	 * @param lang as String
+	 */
 	public void setLang(String lang) {
 		this.lang = lang;
 	}
 
+	/**
+	 * Sets the installed Sports
+	 * @param sports, ArrayList of Sports
+	 */
 	public void setSports(ArrayList<Sport> sports) {
 		this.sports = sports;
 	}
 
+	/**
+	 * Returns Prename of the TBE-User
+	 * @return String
+	 */
 	public String getUserPrename() {
 		return this.UserPrename;
 	}
 
+	/**
+	 * Returns Name of the TBE-User
+	 * @return String
+	 */
 	public String getUserName() {
 		return this.UserName;
 	}
 
+	/**
+	 * Returns Email of the TBE-User
+	 * @return String
+	 */
 	public String getUserEmail() {
 		return this.UserEmail;
 	}
 
+	/**
+	 * Returns the Menu
+	 * @return Menu
+	 */
 	public Menu getMenu() {
 		return this.menu;
 	}
 
+	/**
+	 * Sets the FTP-Servers
+	 * @param servers, ArrayList of FTPServer
+	 */
 	public void setFTPServers(ArrayList<FTPServer> servers) {
 		this.servers = servers;
 	}
 
+	/**
+	 * Adds commands to the Invoker
+	 * @param actCommands, commands to add as List of Commands
+	 */
 	public void addCommands(List<Command> actCommands) {
 		this.invoker.execute(actCommands);
 	}
 
+	/**
+	 * Changes/refreshs the language
+	 */
 	public void changeLang() {
 		menu.refresh();
 		if (view != null) {
@@ -295,14 +399,26 @@ public class TBE implements Runnable {
 		}
 	}
 
+	/**
+	 * Returns the Clipboard
+	 * @return Clipboard
+	 */
 	public Clipboard getClipboard() {
 		return clipboard;
 	}
 
+	/**
+	 * Returns the TBE-Version
+	 * @return version as String
+	 */
 	public String getVersion() {
 		return "1.0";
 	}
 
+	/**
+	 * Adds a recently saved file
+	 * @param path of the file as String
+	 */
 	public void addRecently(String path) {
 		if (!paths.contains(path)) {
 			paths.remove(path);
@@ -315,14 +431,26 @@ public class TBE implements Runnable {
 		}
 	}
 
+	/**
+	 * Returns the StateBar
+	 * @return StateBar
+	 */
 	public StateBar getStateBar() {
 		return this.stateBar;
 	}
 
+	/**
+	 * Returns the main Frame
+	 * @return JFrame
+	 */
 	public JFrame getFrame() {
 		return frame;
 	}
 
+	/**
+	 * Returns a ResourceBundle
+	 * @return
+	 */
 	private ResourceBundle getResourceBundle() {
 		InputStream tbeStream;
 		ResourceBundle labels = null;
@@ -337,14 +465,25 @@ public class TBE implements Runnable {
 		return labels;
 	}
 
+	/**
+	 * @return boolean, true if Board is saved
+	 */
 	public boolean isSaved() {
 		return saved;
 	}
 
-	public void setSaved(boolean saveState) {
-		this.saved = saveState;
+	/**
+	 * Sets the save state
+	 * @param saved boolean, true if saved
+	 */
+	public void setSaved(boolean saved) {
+		this.saved = saved;
 	}
 
+	/**
+	 * Shows a Question-Dialog if the Board is not saved (save, no save, cancel)
+	 * @return int, 0 = save, 1 = no save, 3 = cancel, -1 = no Board is open or already saved 
+	 */
 	public int checkSave() {
 		if (view instanceof WorkingView && !saved) {
 			ResourceBundle tbeLabels = TBE.this.getResourceBundle();
