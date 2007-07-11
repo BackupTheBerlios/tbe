@@ -14,4 +14,7 @@ recently = Recently Used Files
 sport = Choose Sport
 
 # more
-more = Browse
+more = More
+
+# browse
+browse = Browse

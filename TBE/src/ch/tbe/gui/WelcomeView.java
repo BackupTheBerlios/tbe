@@ -178,7 +178,7 @@ public class WelcomeView extends View {
 		JPanel moreFilesPath = new JPanel();
 		moreFilesPath.setBackground(Color.WHITE);
 		moreFilesPath.setLayout(new GridLayout(1, 2, 0, 5));
-		JLabel moreFilesLabel = new JLabel(welcomeViewLabels.getString("more"));
+		JLabel moreFilesLabel = new JLabel(welcomeViewLabels.getString("browse"));
 		moreFilesLabel.addMouseListener(new PathListener("more"));
 		moreFilesPath.add(createIcon("ch/tbe/pics/folder.gif"));
 		moreFilesPath.add(moreFilesLabel);

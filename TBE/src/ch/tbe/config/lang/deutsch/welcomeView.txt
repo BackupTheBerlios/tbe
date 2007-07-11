@@ -14,4 +14,7 @@ recently = Zuletzt geöffnete Dateien
 sport = Sport auswählen
 
 # more
-more = Durchsuchen
+more = Mehr
+
+# browse
+browse = Durchsuchen
