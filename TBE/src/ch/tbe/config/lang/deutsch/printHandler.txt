@@ -1,5 +1,0 @@
-# Labels
-title=Druckvorschau
-print=Drucken
-export=Exportieren
-cancel=Abbrechen

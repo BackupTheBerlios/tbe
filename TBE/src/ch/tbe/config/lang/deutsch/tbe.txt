@@ -1,8 +1,0 @@
-
-# Demands
-saveBoard = Wollen Sie das die Änderungen speichern?
-
-# Buttons
-save = Speichern
-cancel = Abbrechen
-nosave = Nicht speichern

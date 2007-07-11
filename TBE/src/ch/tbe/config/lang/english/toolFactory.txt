@@ -1,5 +1,0 @@
-# Cursor
-cursor = Selection Tool
-
-# Textfield
-textbox = Textfield

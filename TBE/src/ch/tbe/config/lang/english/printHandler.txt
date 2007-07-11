@@ -1,5 +1,0 @@
-# Labels
-title=Print Preview
-print=Print
-export=Export
-cancel=Cancel

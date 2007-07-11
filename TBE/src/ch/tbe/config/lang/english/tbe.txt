@@ -1,8 +1,0 @@
-
-# Demands
-saveBoard = Do you want to save the changes?
-
-# Buttons
-cancel = Cancel
-save = Save
-nosave = Don't save
