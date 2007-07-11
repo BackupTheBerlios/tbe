@@ -28,11 +28,13 @@ import ch.tbe.gui.WorkingView;
  * @copyright by BFH-TI, Team TBE
  */
 
-/**
+/*
  * The basic L&F for a graph data structure.
  * 
  * @version 1.0 1/1/02
  * @author Gaudenz Alder
+ * 
+ * Modified by David Meier
  */
 
 public class TBEBasicGraphUI extends BasicGraphUI {
