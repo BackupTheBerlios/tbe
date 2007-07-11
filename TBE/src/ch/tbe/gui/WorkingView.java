@@ -62,6 +62,10 @@ public class WorkingView extends View {
 	private JTextField sliderValue = new JTextField();
 	private boolean showRotate = false;
 
+	/**
+	 * Constructor for a new Board
+	 * @param sport
+	 */
 	public WorkingView(Sport sport) {
 		this.sport = sport;
 		GraphModel model = new DefaultGraphModel();
@@ -73,6 +77,10 @@ public class WorkingView extends View {
 
 	}
 
+	/**
+	 * Constructor for open a Board
+	 * @param board
+	 */
 	public WorkingView(Board board) {
 		this.sport = board.getSport();
 		this.board = board;
@@ -83,6 +91,10 @@ public class WorkingView extends View {
 		createWorkingView();
 	}
 
+	/**
+	 * Creates the WorkingView
+	 *
+	 */
 	private void createWorkingView() {
 		workingViewLabels = getResourceBundle(tbe.getLang());
 		this.setLayout(new BorderLayout());
@@ -142,6 +154,10 @@ public class WorkingView extends View {
 
 	}
 
+	/**
+	 * Installs Shape and Arrow Tools into the toolbar
+	 *
+	 */
 	private void initSportTools() {
 		for (ShapeTool s : ToolFactory.getShapeTools(sport)) {
 			this.installToolInToolBar(toolbar, s);
@@ -152,6 +168,10 @@ public class WorkingView extends View {
 		}
 	}
 
+	/**
+	 * Installs default Tools (Cursor, Add and Remove Point, Rotate, TextBox) into the toolbar
+	 *
+	 */
 	private void initDefaultTools() {
 		cursorTool = currentTool = ToolFactory.getCursorTool();
 		this.installToolInToolBar(toolbar, currentTool);
@@ -167,12 +187,20 @@ public class WorkingView extends View {
 		toolbar.addSeparator();
 	}
 
+	/**
+	 * Activate/Deactivate Add and Remove Buttons
+	 * @param b boolean, true = activate, false = deactivate
+	 */
 	public void activatePoints(boolean b) {
 		tbe.getMenu().activatePoints(b);
 		rem.setEnabled(b);
 		add.setEnabled(b);
 	}
 
+	/**
+	 * Checks if the Rotate, Add and Remove Buttons should be activated or not.
+	 * Add and Remove only if Arrow, Rotate only if Shape
+	 */
 	public void checkDefaultButtonVisibility() {
 		if (board.getSelectionCount() == 1 && board.getSelectionCell() instanceof ArrowItem) {
 			this.activatePoints(true);
@@ -186,6 +214,10 @@ public class WorkingView extends View {
 		}
 	}
 
+	/**
+	 * Activate/Deactivate Rotate-Button
+	 * @param b
+	 */
 	public void activateRotation(boolean b) {
 
 		if (showRotate && b) {
@@ -198,6 +230,10 @@ public class WorkingView extends View {
 		rotate.setEnabled(b);
 	}
 
+	/**
+	 * Install Add and Remove Buttons into the toolbar
+	 *
+	 */
 	private void installAddRemovePointButtons() {
 		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/plus.gif");
 		ImageIcon plus = new ImageIcon(imgURL);
@@ -226,6 +262,10 @@ public class WorkingView extends View {
 		toolbar.add(rem);
 	}
 
+	/**
+	 * Install the Rotate-Button into the toolbar
+	 *
+	 */
 	private void installRotateButton() {
 		URL imgURL = ClassLoader.getSystemResource("ch/tbe/pics/rotate.gif");
 		ImageIcon rotateIcon = new ImageIcon(imgURL);
@@ -337,10 +377,18 @@ public class WorkingView extends View {
 
 	}
 
-	public void setRotateValue(int value) {
-		rotateSlider.setValue(value);
+	/**
+	 * Sets the value of the rotate Slider
+	 * @param degree as int
+	 */
+	public void setRotateValue(int degree) {
+		rotateSlider.setValue(degree);
 	}
 
+	/**
+	 * Add/Remove a Point to/from an Arrow
+	 * @param b boolean, true = add, false = remove
+	 */
 	public void addRemovePoint(boolean b) {
 		if (board.getSelectionCount() == 1 && board.getSelectionCell() instanceof ArrowItem) {
 			MoveCommand mc = new MoveCommand(board.getSelectedItems());
@@ -362,10 +410,18 @@ public class WorkingView extends View {
 
 	}
 
+	/**
+	 * Returns the current Board
+	 * @return Board
+	 */
 	public Board getBoard() {
 		return this.board;
 	}
 
+	/**
+	 * Deletes all Items on the Board
+	 *
+	 */
 	public void clear() {
 
 		ItemComponent[] items = board.getItems();
@@ -376,6 +432,10 @@ public class WorkingView extends View {
 		board.removeItem(items);
 	}
 
+	/**
+	 * Cuts selected Iems of the Board and put it into the ClipBoard 
+	 *
+	 */
 	public void cut() {
 
 		ItemComponent[] items = board.getSelectedItems();
@@ -388,24 +448,22 @@ public class WorkingView extends View {
 		board.removeItem(items);
 	}
 
+	/**
+	 * Copy selected Items from the Board into the Clipboard
+	 *
+	 */
 	public void copy() {
 		ItemComponent[] items = board.getSelectedItems();
-		CutCommand cut = new CutCommand(items);
-		ArrayList<Command> actCommands = new ArrayList<Command>();
-		actCommands.add(cut);
-		tbe.addCommands(actCommands);
 		ComponentSelection contents = new ComponentSelection(this.getBoard().cloneItems(items));
-		tbe.getClipboard().setContents(contents, cut);
+		tbe.getClipboard().setContents(contents, tbe);
 
 	}
 
-	public void paste() {
-
-		ItemComponent[] items = board.getSelectedItems();
-		PasteCommand del = new PasteCommand(items);
-		ArrayList<Command> actCommands = new ArrayList<Command>();
-		actCommands.add(del);
-		tbe.addCommands(actCommands);
+	/**
+	 * Pastes Items from the Clipboard on the Board
+	 *
+	 */
+	public void paste() {	
 
 		ComponentSelection clipboardContent = (ComponentSelection) tbe.getClipboard().getContents(this);
 
@@ -413,21 +471,36 @@ public class WorkingView extends View {
 
 			Object[] tempItems = null;
 			try {
-				tempItems = clipboardContent.getTransferData(ComponentSelection.itemFlavor);
+				tempItems = board.cloneItems(clipboardContent.getTransferData(ComponentSelection.itemFlavor));
 			} catch (UnsupportedFlavorException e1) {
 
 				e1.printStackTrace();
 			}
-
-			board.addItem(this.getBoard().cloneItems(tempItems));
+			ItemComponent[] items = new ItemComponent[tempItems.length];
+			for(int i = 0; i < tempItems.length; i++){
+				items[i] = (ItemComponent) tempItems[i];
+			}
+			PasteCommand del = new PasteCommand(items);
+			ArrayList<Command> actCommands = new ArrayList<Command>();
+			actCommands.add(del);
+			tbe.addCommands(actCommands);
+			board.addItem(items);
 
 		}
 	}
 
+	/**
+	 * Selects all Items of the Board 
+	 *
+	 */
 	public void selectAllItems() {
 		board.setSelectionCells(board.getItems());
 	}
 
+	/**
+	 * Deletes the selected Item of the Board and creates a DeleteCommand
+	 *
+	 */
 	public void delete() {
 
 		ItemComponent[] items = board.getSelectedItems();
@@ -438,10 +511,19 @@ public class WorkingView extends View {
 		board.removeItem(items);
 	}
 
+	/**
+	 * Sets the Board
+	 * @param board
+	 */
 	public void setBoard(Board board) {
 		this.board = board;
 	}
 
+	/**
+	 * Installs a Tool in the Toolbar
+	 * @param toolbar as JToolbar
+	 * @param tool, Tool to install
+	 */
 	public void installToolInToolBar(JToolBar toolbar, final Tool tool) {
 		final JButton button;
 		button = new JButton();
@@ -476,6 +558,11 @@ public class WorkingView extends View {
 
 	}
 
+	/**
+	 * Sets the current Tool, the right listeners and the Cursor
+	 * @param tool, Tool to set as current
+	 * @param button, JButton to set as current
+	 */
 	public void setTool(Tool tool, JButton button) {
 		// IF NO CURSORTOOL
 		if (this.currentTool instanceof CursorTool && !(tool instanceof CursorTool)) {
@@ -504,25 +591,46 @@ public class WorkingView extends View {
 		}
 	}
 
+	/**
+	 * Returns the current Tool
+	 * @return currentTool as Tool
+	 */
 	public Tool getTool() {
 		return this.currentTool;
 	}
 
+	/**
+	 * Shows/Hide Sidebar
+	 *
+	 */
 	public void hideSidebar() {
 		sideBar.setVisible(!this.sideBar.isVisible());
 		tbe.getMenu().setVisibleSidebar(!this.sideBar.isVisible());
 	}
 
+	/**
+	 * Shows/Hide Legend
+	 *
+	 */
 	public void hideLegend() {
 		legendBar.setVisible(!this.legendBar.isVisible());
 		tbe.getMenu().setVisibleLegend(!this.legendBar.isVisible());
 	}
 
+	/**
+	 * Shows/Hide Toolbar
+	 *
+	 */
 	public void hideToolbar() {
 		toolbar.setVisible(!this.toolbar.isVisible());
 		tbe.getMenu().setVisibleToolbar(!this.toolbar.isVisible());
 	}
 
+	/**
+	 * Returns a RessourceBundle in the desired language
+	 * @param lang as String
+	 * @return RessourceBundle
+	 */
 	private ResourceBundle getResourceBundle(String lang) {
 		InputStream workingViewStream;
 		ResourceBundle labels = null;
@@ -537,6 +645,9 @@ public class WorkingView extends View {
 		return labels;
 	}
 
+	/* (non-Javadoc)
+	 * @see ch.tbe.framework.View#refresh()
+	 */
 	@Override
 	public void refresh() {
 		legendBar.refresh();

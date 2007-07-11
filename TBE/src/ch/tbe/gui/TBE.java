@@ -6,6 +6,8 @@ import ch.tbe.framework.View;
 import ch.tbe.util.XMLHandler;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.ClipboardOwner;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,7 +32,7 @@ import javax.swing.filechooser.FileFilter;
  * @copyright by BFH-TI, Team TBE
  */
 
-public class TBE implements Runnable {
+public class TBE implements Runnable, ClipboardOwner {
 	private static TBE instance = new TBE();
 
 	private ArrayList<Sport> sports = new ArrayList<Sport>();
@@ -492,6 +494,15 @@ public class TBE implements Runnable {
 			return JOptionPane.showOptionDialog(null, question, "", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 		}
 		return -1;
+	}
+
+	/**
+	 * Action if TBE loses the Ownership or an Item in the ClipBoard
+	 * @param arg0
+	 * @param arg1
+	 */
+	public void lostOwnership(Clipboard arg0, Transferable arg1) {
+		//Nothing
 	}
 
 }

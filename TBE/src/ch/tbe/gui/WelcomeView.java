@@ -46,12 +46,21 @@ public class WelcomeView extends View {
 	private ArrayList<String> paths;
 	private JPanel welcome;
 
+	/**
+	 * @param sports, ArrayList of Sports
+	 * @param lang, Language as String
+	 */
 	public WelcomeView(ArrayList<Sport> sports, String lang) {
 		this.setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		welcomeViewLabels = getResourceBundle(lang);
 		createPanel();
 	}
 
+	/**
+	 * Returns a RessourceBundle in the desired language
+	 * @param lang, Language as String
+	 * @return RessourceBundle
+	 */
 	private ResourceBundle getResourceBundle(String lang) {
 		InputStream welcomeViewStream;
 		ResourceBundle labels = null;
@@ -66,6 +75,11 @@ public class WelcomeView extends View {
 		return labels;
 	}
 
+	/**
+	 * Creates an Icon
+	 * @param path, File-Path of the Icon-File
+	 * @return JLabel with Icon
+	 */
 	private JLabel createIcon(String path) {
 		URL folderURL = ClassLoader.getSystemResource(path);
 		ImageIcon folderIcon = new ImageIcon(folderURL);
@@ -73,6 +87,10 @@ public class WelcomeView extends View {
 		return folderLabel;
 	}
 
+	/**
+	 * 
+	 * Creates the Main Panel and adds it to the WelcomeView
+	 */
 	private void createPanel() {
 		GridBagLayout globalGridbag = new GridBagLayout();
 		GridBagConstraints globalConstraints = new GridBagConstraints();
@@ -268,6 +286,9 @@ public class WelcomeView extends View {
 		this.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 
+	/**
+	 * Refreshs the WelcomeView (for ex. to change the language)
+	 */
 	public void refresh() {
 		welcomeViewLabels = getResourceBundle(tbe.getLang());
 		this.remove(welcome);

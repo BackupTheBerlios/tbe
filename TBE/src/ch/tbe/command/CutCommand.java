@@ -36,7 +36,7 @@ public class CutCommand extends Command implements ClipboardOwner {
 	 */
 	public void redo() {
 
-		view.cut();
+		view.getBoard().removeItem(items);
 	}
 
 	/* (non-Javadoc)

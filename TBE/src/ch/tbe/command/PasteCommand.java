@@ -36,7 +36,7 @@ public class PasteCommand extends Command implements ClipboardOwner {
 	 */
 	public void redo() {
 
-		view.paste();
+		view.getBoard().addItem(items);
 
 	}
 
