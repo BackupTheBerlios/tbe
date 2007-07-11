@@ -18,6 +18,13 @@ import ch.tbe.item.*;
 public final class ItemFactory {
 	private ItemFactory() {};
 
+	/**
+	 * Creates and returns an ArrowItem
+	 * @param sport as Sport
+	 * @param itemName as itemName. Name of the Arrow
+	 * @param points as List of Point2D. Points to paint the Arrow on the Board
+	 * @return ArrowItem
+	 */
 	public static ArrowItem getArrowItem(Sport sport, String itemName, List<Point2D> points) {
 		ArrowItem item = null;
 
@@ -50,6 +57,13 @@ public final class ItemFactory {
 		return item;
 	}
 
+	/**
+	 * Creats and retruns a ShapeItem
+	 * @param sport as Sport 
+	 * @param itemName as Sting. Name of the Item
+	 * @param point as Point2D. Point to paint item on the Board
+	 * @return ShapeItem
+	 */
 	public static ShapeItem getShapeItem(Sport sport, String itemName, Point2D point) {
 
 		ShapeItem item = null;
