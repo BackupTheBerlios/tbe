@@ -1,0 +1,20 @@
+# Title Welcome
+welcome = Welcome
+
+# Recently Files Open
+open = Open File
+
+# New Board
+new = New File
+
+# Choose recently used File
+recently = Recently Used Files
+
+# Choose Sport
+sport = Choose Sport
+
+# more
+more = More
+
+# browse
+browse = Browse

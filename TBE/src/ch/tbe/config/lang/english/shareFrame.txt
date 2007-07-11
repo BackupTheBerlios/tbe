@@ -1,0 +1,27 @@
+#title
+title = Share Board
+
+# Headers
+local = Local Files
+remote = Files on the choosen FTP-Server
+
+# Buttons
+cancel = Cancel
+open = Open
+connect = Connect
+upload = Upload
+download = Download
+refresh = Refresh
+
+# Demands
+chooseServer = Choose Server
+chooseDrive = Choose Drive
+
+# Error
+noServer = There is no Server choosen
+noLocals = You haven't choosen any local Files
+oneRemote = Choose exactly one Forlder on the Server
+noRemotes = You haven't choosen any Files on the Server
+oneLocalFolder = Choose exactly one local Folder
+oneLocalFile = Choose exactly one local File
+notTBEFile = Choose a .tbe - File
