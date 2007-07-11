@@ -27,6 +27,9 @@ public class AttributeTreeNode extends DefaultMutableTreeNode {
 		this.a = a;
 	}
 
+	/**
+	 * @return Attribute
+	 */
 	public Attribute getA() {
 		return a;
 	}

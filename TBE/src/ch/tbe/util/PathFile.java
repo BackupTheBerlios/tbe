@@ -17,12 +17,18 @@ public class PathFile extends File {
 		super(arg0, arg1);
 	}
 
-	public PathFile(String arg0) {
-		super(arg0);
+	/**
+	 * @param path
+	 */
+	public PathFile(String path) {
+		super(path);
 	}
 
 	private static final long serialVersionUID = 1L;
 
+	/* (non-Javadoc)
+	 * @see java.io.File#toString()
+	 */
 	@Override
 	public String toString() {
 		String path = super.toString();

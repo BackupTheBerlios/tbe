@@ -36,6 +36,10 @@ public class PrintHandler implements Printable {
 
 	private static Board b;
 
+	/**
+	 * Prints the Bord
+	 * @param b, Board to Print
+	 */
 	public static void printBoard(Board b) {
 		PrintHandler.b = b;
 		PrintHandler.createLayout(false);
@@ -43,20 +47,34 @@ public class PrintHandler implements Printable {
 
 	}
 
+	/**
+	 * Prints the Component
+	 * @param c, Component to Print
+	 */
 	public static void printComponent(Component c) {
 		new PrintHandler(c).print();
 	}
 
+	/**
+	 * @param componentToBePrinted
+	 */
 	public PrintHandler(Component componentToBePrinted) {
 		this.componentToBePrinted = componentToBePrinted;
 	}
 
+	/**
+	 * Shows the Preview of a Board
+	 * @param b Board for Preview
+	 */
 	public static void showPreview(Board b) {
 		PrintHandler.b = b;
 		PrintHandler.createLayout(true);
 
 	}
 
+	/**
+	 * Print
+	 */
 	public void print() {
 		PrinterJob printJob = PrinterJob.getPrinterJob();
 		printJob.setPrintable(this);
@@ -69,6 +87,9 @@ public class PrintHandler implements Printable {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.print.Printable#print(java.awt.Graphics, java.awt.print.PageFormat, int)
+	 */
 	public int print(Graphics g, PageFormat pf, int pageIndex) {
 		int response = NO_SUCH_PAGE;
 		Graphics2D g2 = (Graphics2D) g;
@@ -96,16 +117,28 @@ public class PrintHandler implements Printable {
 		return response;
 	}
 
+	/**
+	 * Disables the Double Buffering
+	 * @param c Component
+	 */
 	public static void disableDoubleBuffering(Component c) {
 		RepaintManager currentManager = RepaintManager.currentManager(c);
 		currentManager.setDoubleBufferingEnabled(false);
 	}
 
+	/**
+	 * Enables the Double Buffering
+	 * @param c Component
+	 */
 	public static void enableDoubleBuffering(Component c) {
 		RepaintManager currentManager = RepaintManager.currentManager(c);
 		currentManager.setDoubleBufferingEnabled(true);
 	}
 
+	/**
+	 * Exports a Board to a JPG file
+	 * @param b Board for export
+	 */
 	public static void exportBoard(Board b) {
 		PrintHandler.b = b;
 
@@ -114,6 +147,10 @@ public class PrintHandler implements Printable {
 
 	}
 
+	/**
+	 * Exports a Board to a JPG file
+	 * @param comp Component for export
+	 */
 	private static void export(Component comp) {
 		JFileChooser chooser = new JFileChooser();
 
@@ -149,6 +186,10 @@ public class PrintHandler implements Printable {
 		}
 	}
 
+	/**
+	 * Creates the Preview-Dialog and the Layout
+	 * @param visible boolean, true if Preview visible = true
+	 */
 	private static void createLayout(boolean visible) {
 
 		InputStream printHandlerStream;

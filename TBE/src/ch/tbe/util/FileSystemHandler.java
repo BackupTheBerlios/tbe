@@ -18,7 +18,12 @@ public final class FileSystemHandler {
 	private FileSystemHandler() {
 	}
 
-	public static ArrayList<String> getInstalledSports() {
+	/**
+	 * Returns installed Sports
+	 * @return sports, ArrayList of Strings
+	 */
+	@SuppressWarnings("deprecation")
+  public static ArrayList<String> getInstalledSports() {
 		ArrayList<String> sports = new ArrayList<String>();
 
 		// Create a file object for your root directory
@@ -41,7 +46,12 @@ public final class FileSystemHandler {
 		return sports;
 	}
 
-	public static ArrayList<String> getInstalledLanguages() {
+	/**
+	 * Returns installed Languages
+	 * @return langs, ArrayList of Strings
+	 */
+	@SuppressWarnings("deprecation")
+  public static ArrayList<String> getInstalledLanguages() {
 		ArrayList<String> langs = new ArrayList<String>();
 
 		// Create a file object for your root directory

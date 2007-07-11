@@ -27,6 +27,10 @@ public final class FTPHandler {
 	private static ArrayList<String> localPaths = new ArrayList<String>();
 	private static FTPClient client = null;
 
+	/**
+	 * Returns all Sport aviable on the Public FTP-Server
+	 * @return sports, ArrayList of Strings
+	 */
 	public static ArrayList<String> getAllSports() {
 		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
 
@@ -44,6 +48,10 @@ public final class FTPHandler {
 		return sports;
 	}
 
+	/**
+	 * Installs the Sports
+	 * @param sports, ArrayList of Sports to install
+	 */
 	public static void installSport(ArrayList<String> sports) {
 		FTPServer server = new FTPServer("Public", PUBLICHOST, "tbe_admin", "4quabwej");
 		connect(server);
@@ -61,6 +69,10 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Returns the SubDirectories of a Directory on the remote Server
+	 * @param dir String, Directory
+	 */
 	private static void getRemoteSubDirs(String dir) {
 		ArrayList<String> dirs = getDir(dir);
 
@@ -75,6 +87,10 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Returns the SubDirectories of a local Directory
+	 * @param dir String, Directory
+	 */
 	private static void getLocalSubDirs(String dir) {
 		ArrayList<String> dirs = new ArrayList<String>();
 		String[] subDir = new File(dir).list();
@@ -94,6 +110,10 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Deletes Sports
+	 * @param sports, ArrayList of Sports to delete
+	 */
 	public static void deleteSport(ArrayList<String> sports) {
 		for (int i = 0; i < sports.size(); i++) {
 			String sportToDelete = LOCALSPORTPATH + "/" + sports.get(i);
@@ -109,6 +129,9 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Disconnects from a FTP-Server
+	 */
 	public static void disconnect() {
 		try {
 			if (client != null) {
@@ -126,6 +149,10 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Connects to a FTP-Server
+	 * @param server FTPServer to connect
+	 */
 	public static void connect(FTPServer server) {
 		if (client != null)
 			disconnect();
@@ -144,6 +171,11 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Returns the Directories of a FTP-Server
+	 * @param dir Stirng Directory
+	 * @return content, ArrayList of Strings
+	 */
 	public static ArrayList<String> getDir(String dir) {
 		String[] s = new String[] {};
 
@@ -165,6 +197,12 @@ public final class FTPHandler {
 		return content;
 	}
 
+	/**
+	 * Upload a file
+	 * @param server FTPServer
+	 * @param localPath String
+	 * @param remotePath String
+	 */
 	public static void upload(FTPServer server, String localPath, String remotePath) {
 		if (client == null) {
 			connect(server);
@@ -182,6 +220,12 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Download a file
+	 * @param server FTPServer
+	 * @param localPath String
+	 * @param remotePath String
+	 */
 	public static void download(FTPServer server, String localPath, String remotePath) {
 		if (client == null) {
 			connect(server);
@@ -206,6 +250,12 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Upload files
+	 * @param server FTPServer
+	 * @param localPaths ArrayList of String
+	 * @param remotePaths ArrayList of String
+	 */
 	public static void upload(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths) {
 		if (client == null) {
 			connect(server);
@@ -253,6 +303,12 @@ public final class FTPHandler {
 		}
 	}
 
+	/**
+	 * Download files
+	 * @param server FTPServer
+	 * @param localPaths ArrayList of String
+	 * @param remotePaths ArrayList of String
+	 */
 	public static void download(FTPServer server, ArrayList<String> localPaths, ArrayList<String> remotePaths) {
 		if (client == null) {
 			connect(server);

@@ -54,7 +54,7 @@ public final class XMLHandler {
 	}
 
 	/**
-   * Liest die Datei tbe.config und konfiguriert den TBE
+   * Reads the file tbe.config and configure the TBE
    */
 	public static void loadTBESettings() {
 		/**
@@ -68,7 +68,8 @@ public final class XMLHandler {
 			/**
        * Starte das Abarbeiten von tbe.config
        */
-			public void loadTBESettings() {
+			@SuppressWarnings("deprecation")
+      public void loadTBESettings() {
 				DefaultHandler handler = new SaxHandler();
 
 				try {
@@ -126,8 +127,8 @@ public final class XMLHandler {
 	}
 
 	/**
-   * @param Path
-   *          to the xml-document
+	 * Open and return Board
+   * @param path, Path to the xml-document
    * @return the opened board
    */
 	public static Board openXML(String path) {
@@ -140,7 +141,8 @@ public final class XMLHandler {
 			Point2D actLabelPosition;
 			String actText;
 
-			public void loadFile(String path) {
+			@SuppressWarnings("deprecation")
+      public void loadFile(String path) {
 				DefaultHandler handler = new SaxHandler();
 
 				try {
@@ -277,6 +279,10 @@ public final class XMLHandler {
 		return sports;
 	}
 
+	/**
+	 * Open Sport
+	 * @param sport
+	 */
 	private static void openSport(String sport) {
 		class SaxHandler extends DefaultHandler {
 			private ArrayList<ItemType> shapes = new ArrayList<ItemType>();
@@ -284,7 +290,8 @@ public final class XMLHandler {
 			private ArrayList<Field> fields = new ArrayList<Field>();
 			private Sport actSport;
 
-			public void loadSport(String sport) {
+			@SuppressWarnings("deprecation")
+      public void loadSport(String sport) {
 				DefaultHandler handler = new SaxHandler();
 
 				try {
@@ -296,7 +303,8 @@ public final class XMLHandler {
 				}
 			}
 
-			public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
+			@SuppressWarnings("deprecation")
+      public void startElement(String name, String localName, String qName, Attributes atts) throws SAXException {
 				if (qName.equals("sport")) {
 					actSport = new Sport(atts.getValue("name"));
 					actSport.setVersion(atts.getValue("version"));
@@ -351,8 +359,8 @@ public final class XMLHandler {
 	}
 
 	/**
-   * Diese Funktion wird zur Kommunikation zwischen dem SaxHandler und der
-   * Funktion readXML gebraucht.
+   * These function is needed for the communication between the SaxHandler and the
+   * function readXML.
    * 
    * @param myBoard
    */
@@ -360,6 +368,11 @@ public final class XMLHandler {
 		board = myBoard;
 	}
 
+	/**
+	 * Saves the Board in an XML-File
+	 * @param board, Board to save
+	 * @return boolean, true if save is ok
+	 */
 	public static boolean saveBoard(Board board) {
 
 		int answer = 0;
@@ -503,7 +516,12 @@ public final class XMLHandler {
 		return answer == 0;
 	}
 
-	public static void saveTBESettings() {
+	/**
+	 * Saves the TBE-Settings in a XML-File
+	 *
+	 */
+	@SuppressWarnings({ "deprecation" })
+  public static void saveTBESettings() {
 		TBE tbe = TBE.getInstance();
 		try {
 			Element eTbe = new Element("TBE");
