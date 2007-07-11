@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>TBE</name>
-	<comment>@key 3230303730363239205442452F44756465 </comment>
+	<comment></comment>
 	<projects>
 	</projects>
 	<buildSpec>
@@ -10,14 +10,8 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-		<buildCommand>
-			<name>com.omondo.uml.std.Builder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
-		<nature>com.omondo.uml.std.Nature</nature>
 	</natures>
 </projectDescription>
