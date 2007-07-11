@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -570,7 +572,7 @@ public class Menu extends JMenuBar {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				try {
-					String command = "rundll32 url.dll,FileProtocolHandler " + new File("src/ch/tbe/doc/helpfile.pdf").getAbsolutePath();
+					String command = "rundll32 url.dll,FileProtocolHandler " + new File(URLDecoder.decode(ClassLoader.getSystemResource("").getPath())+"ch/tbe/doc/helpfile.pdf");
 	        Runtime.getRuntime().exec(command);
         } catch (IOException e) {
 	        e.printStackTrace();
