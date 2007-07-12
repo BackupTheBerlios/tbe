@@ -8,7 +8,7 @@ import jdsl.graph.ref.IncidenceListGraph;
 import ch.pacman.game.*;
 import ch.pacman.graph.PacVertex;
 
-@SuppressWarnings("serial")
+
 public class Game extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = 1L;
@@ -26,8 +26,6 @@ public class Game extends JPanel implements Runnable
 	private int nrofGhosts;
 
 	private Vertex[][] screendata;
-
-	private IncidenceListGraph graph;
 
 	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 

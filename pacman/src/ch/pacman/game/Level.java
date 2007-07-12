@@ -28,7 +28,9 @@ public abstract class Level
 
 	public static final int nrofblocks = 15;
 
-	public static final int scrsize = nrofblocks * blocksize;
+	public static final int screensize = nrofblocks * blocksize;
+	
+	public static  int scaredtime = 120;
 
 	public static Image ghost1, ghost2, ghostscared1, ghostscared2;
 
