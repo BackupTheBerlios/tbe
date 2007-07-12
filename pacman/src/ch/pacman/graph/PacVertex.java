@@ -87,6 +87,17 @@ public class PacVertex
 	{
 		this.ghost = ghost;
 	}
+	
+	public void ghostIncrement(){
+		this.ghost++;
+	}
+	
+	public void ghostDecrement(){
+		this.ghost--;
+		if(ghost < 0){
+			System.out.println("less than 0 ghosts");
+		}
+	}
 
 	public boolean isPacMan()
 	{
