@@ -191,10 +191,12 @@ public class Ghost
 			{
 				((PacVertex) screendata[currentRow][currentCol + 1].element())
 						.ghostIncrement();
+				currentVertex = screendata[currentRow][currentCol + 1];
 			} else
 			{
 				((PacVertex) screendata[currentRow][currentCol - 1].element())
 						.ghostIncrement();
+				currentVertex = screendata[currentRow][currentCol - 1];
 			}
 
 		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
@@ -206,10 +208,12 @@ public class Ghost
 			{
 				((PacVertex) screendata[currentRow + 1][currentCol].element())
 						.ghostIncrement();
+				currentVertex = screendata[currentRow + 1][currentCol];
 			} else
 			{
 				((PacVertex) screendata[currentRow - 1][currentCol].element())
 						.ghostIncrement();
+				currentVertex = screendata[currentRow - 1][currentCol];
 			}
 		}
 
