@@ -23,22 +23,28 @@ public class PacMan
 
 	private int speed = 0;
 
+	private int currentRow, currentCol;
+
 	private int[] dx = new int[4];
 
 	private int[] dy = new int[4];
 
-	private Vertex current = null;
+	private Vertex currentVertex = null;
 
 	private Game game;
+
 	private MediaTracker thetracker = null;
+
 	private Image pacman1, pacman2up, pacman2left, pacman2right, pacman2down;
 
 	private Image pacman3up, pacman3down, pacman3left, pacman3right;
 
 	private Image pacman4up, pacman4down, pacman4left, pacman4right;
+
 	private final int pacanimdelay = 2;
 
 	private int pacmananimpos = 0;
+
 	private int pacanimdir = 1;
 
 	private final int pacmananimcount = 4;
@@ -107,37 +113,47 @@ public class PacMan
 
 	public Vertex getCurrentVertex()
 	{
-		return current;
+		return currentVertex;
 	}
 
 	public void setCurrentVertex(Vertex current)
 	{
-		this.current = current;
-	}
-
-	public void changeVertex(Vertex newVertex)
-	{
-		((PacVertex) current.element()).setPacMan(false);
-		((PacVertex) newVertex.element()).setPacMan(true);
-		current = newVertex;
+		this.currentVertex = current;
 	}
 
 	public void move(Vertex[][] screendata)
 	{
-		int row;
-		int col;
-		int count;
 
+		int count;
 		if (this.getActX() % Level.blocksize == 0
 				&& this.getActY() % Level.blocksize == 0)
 		{
 
-			col = this.getActX() / Level.blocksize;
-			row = this.getActY() / Level.blocksize;
-
+			currentCol = this.getActX() / Level.blocksize;
+			currentRow = this.getActY() / Level.blocksize;
+			currentVertex = screendata[currentRow][currentCol];
 			count = 0;
-			PacVertex vertex = (PacVertex) screendata[row][col].element();
+			PacVertex vertex = (PacVertex) currentVertex.element();
 
+			// checks for small/bigBoint
+			int ch = vertex.getType();
+			if ((ch & 16) != 0)
+			{
+				((PacVertex) screendata[currentRow][currentCol].element())
+						.setType((short) (ch & 15));
+
+			}
+			if ((ch & 32) != 0)
+			{
+				game.setScared(true);
+
+				((PacVertex) screendata[currentRow][currentCol].element())
+						.setType((short) (ch & 15));
+				;
+
+			}
+
+			// chooses direction
 			if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
 			{
 				dx[count] = -1;
@@ -185,31 +201,34 @@ public class PacMan
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
-		int ch;
-
-		if (this.getActX() % Level.blocksize == 0
-				&& this.getActY() % Level.blocksize == 0)
+		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
-			col = this.getActX() / Level.blocksize;
-			row = this.getActY() / Level.blocksize;
 
-			ch = ((PacVertex) screendata[row][col].element()).getType();
-			if ((ch & 16) != 0)
+			((PacVertex) currentVertex.element()).setPacMan(false);
+			if (this.getDestX() >= 0)
 			{
-				((PacVertex) screendata[row][col].element())
-						.setType((short) (ch & 15));
-				// score++;
-			}
-			if ((ch & 32) != 0)
+				((PacVertex) screendata[currentRow][currentCol + 1].element())
+						.setPacMan(true);
+			} else
 			{
-				game.setScared(true);
-				// scaredcount = Level.scaredtime;
-				((PacVertex) screendata[row][col].element())
-						.setType((short) (ch & 15));
-				;
-				// score+=5;
+				((PacVertex) screendata[currentRow][currentCol - 1].element())
+						.setPacMan(true);
 			}
 
+		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
+		{
+
+			((PacVertex) currentVertex.element()).setPacMan(false);
+
+			if (this.getDestY() >= 0)
+			{
+				((PacVertex) screendata[currentRow + 1][currentCol].element())
+						.setPacMan(true);
+			} else
+			{
+				((PacVertex) screendata[currentRow - 1][currentCol].element())
+						.setPacMan(true);
+			}
 		}
 	}
 
@@ -242,8 +261,8 @@ public class PacMan
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1, this.getActY() + 1,
-					game);
+			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+					this.getActY() + 1, game);
 			break;
 		}
 	}
@@ -265,8 +284,8 @@ public class PacMan
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1, this.getActY() + 1,
-					game);
+			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+					this.getActY() + 1, game);
 			break;
 		}
 	}
@@ -288,8 +307,8 @@ public class PacMan
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1, this.getActY() + 1,
-					game);
+			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+					this.getActY() + 1, game);
 			break;
 		}
 	}
@@ -311,12 +330,12 @@ public class PacMan
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1, this.getActY() + 1,
-					game);
+			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+					this.getActY() + 1, game);
 			break;
 		}
 	}
-	
+
 	private void GetImages()
 	{
 		thetracker = new MediaTracker(game);
@@ -365,8 +384,9 @@ public class PacMan
 		Image image = (new ImageIcon(folderURL)).getImage();
 		return image;
 	}
-	
-	public void anim(){
+
+	public void anim()
+	{
 		pacanimcount--;
 		if (pacanimcount <= 0)
 		{

@@ -23,7 +23,9 @@ public class Ghost
 
 	private int speed = 0;
 
-	private Vertex current = null;
+	private Vertex currentVertex = null;
+
+	private int currentRow, currentCol;
 
 	private Game game;
 
@@ -55,19 +57,19 @@ public class Ghost
 
 	public Vertex getCurrentVertex()
 	{
-		return current;
+		return currentVertex;
 	}
 
 	public void setCurrentVertex(Vertex current)
 	{
-		this.current = current;
+		this.currentVertex = current;
 	}
 
 	public void changeVertex(Vertex newVertex)
 	{
-		((PacVertex) current.element()).setPacMan(false);
+		((PacVertex) currentVertex.element()).setPacMan(false);
 		((PacVertex) newVertex.element()).setPacMan(true);
-		current = newVertex;
+		currentVertex = newVertex;
 	}
 
 	public int getSpeed()
@@ -122,18 +124,17 @@ public class Ghost
 
 	public void move(Vertex[][] screendata)
 	{
-		int row;
-		int col;
 		int count;
 
 		if (this.getActX() % Level.blocksize == 0
 				&& this.getActY() % Level.blocksize == 0)
 		{
-			col = this.getActX() / Level.blocksize;
-			row = this.getActY() / Level.blocksize;
-
+			currentCol = this.getActX() / Level.blocksize;
+			currentRow = this.getActY() / Level.blocksize;
+			currentVertex = screendata[currentRow][currentCol];
 			count = 0;
-			PacVertex vertex = (PacVertex) screendata[row][col].element();
+			PacVertex vertex = (PacVertex) screendata[currentRow][currentCol]
+					.element();
 			if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
 			{
 				dx[count] = -1;
@@ -180,6 +181,36 @@ public class Ghost
 		}
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
+
+		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
+		{
+
+			((PacVertex) currentVertex.element()).setPacMan(false);
+			if (this.getDestX() >= 0)
+			{
+				((PacVertex) screendata[currentRow][currentCol + 1].element())
+						.setPacMan(true);
+			} else
+			{
+				((PacVertex) screendata[currentRow][currentCol - 1].element())
+						.setPacMan(true);
+			}
+
+		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
+		{
+
+			((PacVertex) currentVertex.element()).setPacMan(false);
+
+			if (this.getDestY() >= 0)
+			{
+				((PacVertex) screendata[currentRow + 1][currentCol].element())
+						.setPacMan(true);
+			} else
+			{
+				((PacVertex) screendata[currentRow - 1][currentCol].element())
+						.setPacMan(true);
+			}
+		}
 
 	}
 

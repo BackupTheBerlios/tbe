@@ -4,7 +4,6 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import jdsl.graph.api.Vertex;
-import jdsl.graph.ref.IncidenceListGraph;
 import ch.pacman.game.*;
 import ch.pacman.graph.PacVertex;
 
@@ -78,7 +77,6 @@ public class Game extends JPanel implements Runnable
 		((PacVertex) screendata[7][8].element()).setType((short) 10);
 		pacman.setActX(level.getPacManStart().x);
 		pacman.setActY(level.getPacManStart().y);
-
 		scared = false;
 	}
 
