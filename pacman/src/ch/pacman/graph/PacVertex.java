@@ -1,38 +1,45 @@
 package ch.pacman.graph;
 
+import jdsl.graph.ref.IncidenceListGraph;
+
 public class PacVertex
 {
 
-	int x = 0;
-	int y = 0;
-	short type;
-	boolean pacMan;
-	int ghost;
+	private int x = 0;
+	private int y = 0;
+	private short type;
+	private boolean pacMan;
+	private int ghost;
+	private IncidenceListGraph graph;
+	
 
-	public PacVertex(int x, int y, short type)
+	public PacVertex(int x, int y, short type, IncidenceListGraph graph)
 	{
 		super();
 		this.x = x;
 		this.y = y;
 		this.type = type;
+		this.graph = graph;
 
 	}
 	
-	public PacVertex(short type)
+	public PacVertex(short type, IncidenceListGraph graph)
 	{
 		super();
 		this.x = 0;
 		this.y = 0;
 		this.type = type;
+		this.graph = graph;
 
 	}
 	
-	public PacVertex(int type)
+	public PacVertex(int type, IncidenceListGraph graph)
 	{
 		super();
 		this.x = 0;
 		this.y = 0;
 		this.type = (short) type;
+		this.graph = graph;
 
 	}
 
@@ -48,7 +55,12 @@ public class PacVertex
 
 	public PacVertex clone()
 	{
-		return new PacVertex(x, y, type);
+		return new PacVertex(x, y, type, new IncidenceListGraph());
+	}
+	
+	public PacVertex clone(IncidenceListGraph graph)
+	{
+		return new PacVertex(x, y, type, graph);
 	}
 
 	@Override
@@ -136,6 +148,16 @@ public class PacVertex
 	
 	public boolean hasLittleDot(){
 		return (type & 16) != 0;
+	}
+
+	public IncidenceListGraph getGraph()
+	{
+		return graph;
+	}
+
+	public void setGraph(IncidenceListGraph graph)
+	{
+		this.graph = graph;
 	}
 
 }

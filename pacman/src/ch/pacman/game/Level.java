@@ -68,15 +68,19 @@ public abstract class Level
 	{
 		return graph;
 	}
+	public IncidenceListGraph getClonedGraph(){
+		return this.cloneGraph(graph);
+	}
+	
 
-	public IncidenceListGraph cloneGraph()
+	public IncidenceListGraph cloneGraph(IncidenceListGraph graph)
 	{
 		IncidenceListGraph cloneGraph = new IncidenceListGraph();
 		VertexIterator vi = graph.vertices();
 		while (vi.hasNext())
 		{
 			cloneGraph.insertVertex(((PacVertex) vi.nextVertex().element())
-					.clone());
+					.clone(cloneGraph));
 		}
 
 		EdgeIterator ei = graph.edges();
@@ -117,4 +121,56 @@ public abstract class Level
 	{
 		return pathdata;
 	}
+	
+	public Vertex[][] getClonedPathdata(){
+		return this.clonePathdata(pathdata);
+	}
+	
+	public Vertex[][] clonePathdata( Vertex[][] pathdata)
+	{
+		IncidenceListGraph cloneGraph = new IncidenceListGraph();
+		Vertex[][] cloneVertex = new Vertex[nrofblocks][nrofblocks];
+		for (int i = 0; i < nrofblocks; i++) {
+			
+			for (int j = 0; j < nrofblocks; j++) {
+				cloneVertex[i][j] = cloneGraph.insertVertex(((PacVertex) pathdata[i][j].element()).clone(cloneGraph));
+				
+			}
+			
+			
+		}
+		IncidenceListGraph graph = ((PacVertex) pathdata[0][0].element()).getGraph();
+		EdgeIterator ei = graph.edges();
+		
+		while (ei.hasNext())
+		{
+			Edge e = ei.nextEdge();
+			Vertex[] verts = graph.endVertices(e);
+			Vertex dest = verts[0];
+			Vertex orig = verts[1];
+			boolean destfound = false;
+			boolean origfound = false;
+			Vertex cloneDest = null; 
+			Vertex cloneOrig = null;
+			VertexIterator vi2 = cloneGraph.vertices();
+			while(vi2.hasNext()){
+				Vertex cloneVert = vi2.nextVertex();
+				if(dest.element().equals(cloneVert.element())){
+					cloneDest = cloneVert;
+					destfound = true;
+				}
+				if(orig.element().equals(cloneVert.element())){
+					cloneOrig = cloneVert;
+					origfound = true;
+				}
+				
+				if (destfound && origfound) break;
+				
+			}
+			
+			cloneGraph.insertEdge(cloneOrig, cloneDest, "");//TODO: sting clonen;
+		}
+		return cloneVertex;
+	}
+
 }

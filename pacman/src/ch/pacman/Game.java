@@ -54,7 +54,7 @@ public class Game extends JPanel implements Runnable
 	public void LevelInit()
 	{
 		level = new Level1();
-		screendata = level.getPathdata().clone();
+		screendata = level.getClonedPathdata();
 		LevelContinue();
 	}
 
@@ -183,7 +183,6 @@ public class Game extends JPanel implements Runnable
 				Thread.currentThread().sleep(50);
 			} catch (InterruptedException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
