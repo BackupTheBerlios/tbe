@@ -96,6 +96,7 @@ public class PacVertex
 		this.ghost--;
 		if(ghost < 0){
 			System.out.println("less than 0 ghosts");
+			ghost = 0;
 		}
 	}
 

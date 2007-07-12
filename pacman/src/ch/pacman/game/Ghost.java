@@ -182,33 +182,34 @@ public class Ghost
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
+		// sets ghost-int
 		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).setPacMan(false);
+			((PacVertex) currentVertex.element()).ghostDecrement();
 			if (this.getDestX() >= 0)
 			{
 				((PacVertex) screendata[currentRow][currentCol + 1].element())
-						.setPacMan(true);
+						.ghostIncrement();
 			} else
 			{
 				((PacVertex) screendata[currentRow][currentCol - 1].element())
-						.setPacMan(true);
+						.ghostIncrement();
 			}
 
 		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).setPacMan(false);
+			((PacVertex) currentVertex.element()).ghostDecrement();
 
 			if (this.getDestY() >= 0)
 			{
 				((PacVertex) screendata[currentRow + 1][currentCol].element())
-						.setPacMan(true);
+						.ghostIncrement();
 			} else
 			{
 				((PacVertex) screendata[currentRow - 1][currentCol].element())
-						.setPacMan(true);
+						.ghostIncrement();
 			}
 		}
 

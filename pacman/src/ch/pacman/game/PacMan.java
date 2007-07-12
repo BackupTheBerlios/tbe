@@ -201,6 +201,7 @@ public class PacMan
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
+		//sets pacman-boolean
 		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
 
