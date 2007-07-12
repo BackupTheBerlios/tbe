@@ -159,6 +159,7 @@ public class LegendBar extends JToolBar {
 	 */
 	public void refresh() {
 		showLegend();
-		this.validate();
+		this.setVisible(false);
+		this.setVisible(true);
 	}
 }

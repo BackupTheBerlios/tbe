@@ -253,6 +253,7 @@ public class SideBar extends JToolBar {
 				titleInputArea.setText("");
 				textInputArea.setText("");
 				tree.clearSelection();
+				saveButton.setText(sideBarLabels.getString("add"));
 
 			}
 		}
