@@ -401,4 +401,7 @@ public class PacMan
 				pacanimdir = -pacanimdir;
 		}
 	}
+	public PacMan clone(){
+		return new PacMan(actX,actY,speed,game);
+	}
 }

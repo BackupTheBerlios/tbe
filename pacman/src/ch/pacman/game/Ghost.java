@@ -276,5 +276,8 @@ public class Ghost
 		}
 
 	}
+	public Ghost clone(){
+		return new Ghost(actX,actY,speed,game);
+	}
 
 }

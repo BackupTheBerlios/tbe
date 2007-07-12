@@ -73,7 +73,7 @@ public abstract class Level
 	}
 	
 
-	public IncidenceListGraph cloneGraph(IncidenceListGraph graph)
+	public static IncidenceListGraph cloneGraph(IncidenceListGraph graph)
 	{
 		IncidenceListGraph cloneGraph = new IncidenceListGraph();
 		VertexIterator vi = graph.vertices();

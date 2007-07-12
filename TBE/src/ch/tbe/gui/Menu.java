@@ -15,7 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
@@ -569,7 +568,8 @@ public class Menu extends JMenuBar {
 		
 		JMenuItem tbeHelp = new JMenuItem(menuLabels.getString("tbe3"));
 		class tbeHelpListener extends MouseAdapter {
-			@Override
+			@SuppressWarnings("deprecation")
+      @Override
 			public void mouseReleased(MouseEvent arg0) {
 				try {
 					String command = "rundll32 url.dll,FileProtocolHandler " + new File(URLDecoder.decode(ClassLoader.getSystemResource("").getPath())+"ch/tbe/doc/helpfile.pdf");
