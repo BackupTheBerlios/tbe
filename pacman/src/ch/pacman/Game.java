@@ -7,7 +7,6 @@ import jdsl.graph.api.Vertex;
 import ch.pacman.game.*;
 import ch.pacman.graph.PacVertex;
 
-
 public class Game extends JPanel implements Runnable
 {
 	private static final long serialVersionUID = 1L;
@@ -118,6 +117,7 @@ public class Game extends JPanel implements Runnable
 			g.move(screendata);
 			g.draw(g.getActX() + 1, (g.getActY() + 1));
 		}
+		this.debug(); //TODO: remove debug
 	}
 
 	public void DrawMaze()
@@ -244,6 +244,34 @@ public class Game extends JPanel implements Runnable
 	public Graphics getGoff()
 	{
 		return goff;
+	}
+
+	public void debug()
+	{
+		System.out.println();
+		for (int i = 0; i < Level.nrofblocks; i++)
+		{
+
+			for (int j = 0; j < Level.nrofblocks; j++)
+			{
+				int numghosts = ((PacVertex) screendata[i][j].element()).getGhost();
+				boolean pacman = ((PacVertex) screendata[i][j].element()).isPacMan();
+				if(numghosts == 0 && !pacman){
+					System.out.print("[  ]");
+				}else if(pacman && numghosts > 0){
+					System.out.print("[P"+numghosts+"]");
+							
+				}else if(pacman){
+					System.out.print("[P ]");
+				}				
+				else{
+					System.out.print("[0"+numghosts+"]");
+				}
+
+			}
+			System.out.println();
+		}
+		System.out.println();
 	}
 
 }
