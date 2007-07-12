@@ -126,7 +126,7 @@ public abstract class Level
 		return this.clonePathdata(pathdata);
 	}
 	
-	public Vertex[][] clonePathdata( Vertex[][] pathdata)
+	public static Vertex[][] clonePathdata( Vertex[][] pathdata)
 	{
 		IncidenceListGraph cloneGraph = new IncidenceListGraph();
 		Vertex[][] cloneVertex = new Vertex[nrofblocks][nrofblocks];
