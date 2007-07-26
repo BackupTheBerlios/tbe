@@ -1,5 +1,9 @@
 package ch.pacman.graph;
 
+import java.util.ArrayList;
+
+import ch.pacman.game.Ghost;
+import ch.pacman.game.PacMan;
 import jdsl.graph.ref.IncidenceListGraph;
 
 public class PacVertex
@@ -8,8 +12,8 @@ public class PacVertex
 	private int x = 0;
 	private int y = 0;
 	private short type;
-	private boolean pacMan;
-	private int ghost;
+	private PacMan pacMan;
+	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 	private IncidenceListGraph graph;
 	
 
@@ -90,34 +94,35 @@ public class PacVertex
 		return true;
 	}
 
-	public int getGhost()
+	public int getGhostCount()
 	{
-		return ghost;
-	}
-
-	public void setGhost(int ghost)
-	{
-		this.ghost = ghost;
+		return ghosts.size();
 	}
 	
-	public void ghostIncrement(){
-		this.ghost++;
+	public ArrayList<Ghost> getGhosts()
+	{
+		return ghosts;
 	}
 	
-	public void ghostDecrement(){
-		this.ghost--;
-		if(ghost < 0){
-			System.out.println("less than 0 ghosts");
-			ghost = 0;
-		}
+	public void ghostIncrement(Ghost ghost){
+		this.ghosts.add(ghost);
+	}
+	
+	public void ghostDecrement(Ghost ghost){
+		this.ghosts.remove(ghost);
 	}
 
 	public boolean isPacMan()
 	{
-		return pacMan;
+		return pacMan!=null;
 	}
 
-	public void setPacMan(boolean pacMan)
+	public PacMan getPacMan()
+	{
+		return pacMan;
+	}
+	
+	public void setPacMan(PacMan pacMan)
 	{
 		this.pacMan = pacMan;
 	}

@@ -123,7 +123,7 @@ public abstract class Level
 	}
 	
 	public Vertex[][] getClonedPathdata(){
-		return this.clonePathdata(pathdata);
+		return Level.clonePathdata(pathdata);
 	}
 	
 	public static Vertex[][] clonePathdata( Vertex[][] pathdata)

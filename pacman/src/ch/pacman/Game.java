@@ -253,7 +253,7 @@ public class Game extends JPanel implements Runnable
 
 			for (int j = 0; j < Level.nrofblocks; j++)
 			{
-				int numghosts = ((PacVertex) screendata[i][j].element()).getGhost();
+				int numghosts = ((PacVertex) screendata[i][j].element()).getGhostCount();
 				boolean pacman = ((PacVertex) screendata[i][j].element()).isPacMan();
 				if(numghosts == 0 && !pacman){
 					System.out.print("[  ]");

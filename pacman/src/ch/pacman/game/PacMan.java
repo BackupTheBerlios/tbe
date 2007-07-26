@@ -205,33 +205,32 @@ public class PacMan
 		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).setPacMan(false);
+			((PacVertex) currentVertex.element()).setPacMan(this);
 			if (this.getDestX() >= 0)
 			{
 				((PacVertex) screendata[currentRow][currentCol + 1].element())
-						.setPacMan(true);
+						.setPacMan(this);
 				currentVertex = screendata[currentRow][currentCol + 1];
 			} else
 			{
-				((PacVertex) screendata[currentRow][currentCol - 1].element())
-						.setPacMan(true);
+				((PacVertex) screendata[currentRow][currentCol - 1].element()).setPacMan(this);
 				currentVertex = screendata[currentRow][currentCol - 1];
 			}
 
 		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).setPacMan(false);
+			((PacVertex) currentVertex.element()).setPacMan(this);
 
 			if (this.getDestY() >= 0)
 			{
 				((PacVertex) screendata[currentRow + 1][currentCol].element())
-						.setPacMan(true);
+						.setPacMan(this);
 				currentVertex = screendata[currentRow + 1][currentCol];
 			} else
 			{
 				((PacVertex) screendata[currentRow - 1][currentCol].element())
-						.setPacMan(true);
+						.setPacMan(this);
 				currentVertex = screendata[currentRow - 1][currentCol];
 			}
 		}

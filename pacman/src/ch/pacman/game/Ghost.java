@@ -67,8 +67,8 @@ public class Ghost
 
 	public void changeVertex(Vertex newVertex)
 	{
-		((PacVertex) currentVertex.element()).setPacMan(false);
-		((PacVertex) newVertex.element()).setPacMan(true);
+		((PacVertex) currentVertex.element()).ghostDecrement(this);
+		((PacVertex) newVertex.element()).ghostIncrement(this);
 		currentVertex = newVertex;
 	}
 
@@ -186,33 +186,29 @@ public class Ghost
 		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).ghostDecrement();
+			((PacVertex) currentVertex.element()).ghostDecrement(this);
 			if (this.getDestX() >= 0)
 			{
-				((PacVertex) screendata[currentRow][currentCol + 1].element())
-						.ghostIncrement();
+				((PacVertex) screendata[currentRow][currentCol + 1].element()).ghostIncrement(this);
 				currentVertex = screendata[currentRow][currentCol + 1];
 			} else
 			{
-				((PacVertex) screendata[currentRow][currentCol - 1].element())
-						.ghostIncrement();
+				((PacVertex) screendata[currentRow][currentCol - 1].element()).ghostIncrement(this);
 				currentVertex = screendata[currentRow][currentCol - 1];
 			}
 
 		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).ghostDecrement();
+			((PacVertex) currentVertex.element()).ghostDecrement(this);
 
 			if (this.getDestY() >= 0)
 			{
-				((PacVertex) screendata[currentRow + 1][currentCol].element())
-						.ghostIncrement();
+				((PacVertex) screendata[currentRow + 1][currentCol].element()).ghostIncrement(this);
 				currentVertex = screendata[currentRow + 1][currentCol];
 			} else
 			{
-				((PacVertex) screendata[currentRow - 1][currentCol].element())
-						.ghostIncrement();
+				((PacVertex) screendata[currentRow - 1][currentCol].element()).ghostIncrement(this);
 				currentVertex = screendata[currentRow - 1][currentCol];
 			}
 		}

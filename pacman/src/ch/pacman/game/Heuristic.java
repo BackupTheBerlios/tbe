@@ -4,11 +4,8 @@ import java.util.ArrayList;
 
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
 
 import ch.pacman.graph.PacVertex;
-
-import jdsl.graph.algo.DFS;
 import jdsl.graph.api.Vertex;
 import jdsl.graph.api.VertexIterator;
 import jdsl.graph.ref.IncidenceListGraph;
@@ -16,21 +13,39 @@ import jdsl.graph.ref.IncidenceListGraph;
 public class Heuristic
 {
 	private static int DEPTH = 5;
-
 	private static JTree tree;
 
-	public static Vertex getBestMove(Vertex[][] screendata)
+	public static Vertex getBestMove(Vertex[][] screendata, boolean pac)
 	{
-		TreeNode root = new DefaultMutableTreeNode();
-		tree = new JTree(root);
+		//create root node and its children
+		DefaultMutableTreeNode node = new DefaultMutableTreeNode();
+		Vertex vertex = null;
+		PacMan tempPac = null;
 		Vertex[][] pathdata = Level.clonePathdata(screendata);
-		IncidenceListGraph graph = ((PacVertex) pathdata[0][0].element())
-				.getGraph();
-
+		ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+		
+		for(Vertex[] vs : pathdata){
+			for(Vertex v : vs){
+				PacVertex pv = (PacVertex)v;
+				if(pv.isPacMan()){
+					vertex = v;
+					tempPac = pv.getPacMan();
+				}else if(pv.getGhostCount() > 0){
+					ghosts.addAll(pv.getGhosts());
+				}
+			}
+		}
+		
+		Ghost[] tempGhosts = (Ghost[]) ghosts.toArray();
+		IncidenceListGraph igraph = ((PacVertex) pathdata[0][0].element()).getGraph();
+		Heuristic.makeTree(node, vertex, Heuristic.DEPTH, pac, igraph, tempPac, tempGhosts);
+		
+		//create java tree from root node
+		tree = new JTree(node);
 		return null;
 	}
 
-	private void makeStep(DefaultMutableTreeNode node, Vertex vertex,
+	private static void makeTree(DefaultMutableTreeNode node, Vertex vertex,
 			int depth, boolean pac, IncidenceListGraph igraph, PacMan tempPac,
 			Ghost[] tempGhosts)
 	{
@@ -52,7 +67,7 @@ public class Heuristic
 					DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 					node.add(child);
 					// TODO: child set element
-					makeStep(child, vi.nextVertex(), depth - 1, true, graph,
+					makeTree(child, vi.nextVertex(), depth - 1, true, graph,
 							pacman, ghosts);
 				}
 			} else
