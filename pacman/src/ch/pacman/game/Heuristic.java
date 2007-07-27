@@ -42,6 +42,8 @@ public class Heuristic
 		
 		//create java tree from root node
 		tree = new JTree(node);
+		
+		//evalute the tree
 		return null;
 	}
 
