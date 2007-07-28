@@ -201,11 +201,11 @@ public class PacMan
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
-		// sets pacman-boolean
+		// sets pacman
 		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).setPacMan(this);
+			((PacVertex) currentVertex.element()).setPacMan(null);
 			if (this.getDestX() >= 0)
 			{
 				((PacVertex) screendata[currentRow][currentCol + 1].element())
@@ -220,7 +220,7 @@ public class PacMan
 		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
 		{
 
-			((PacVertex) currentVertex.element()).setPacMan(this);
+			((PacVertex) currentVertex.element()).setPacMan(null);
 
 			if (this.getDestY() >= 0)
 			{
