@@ -41,8 +41,8 @@ public class Game extends JPanel implements Runnable
 
 	public void GameInit()
 	{
-		nrofGhosts = 3;
-		for (int i = 0; i <= nrofGhosts; i++)
+		nrofGhosts = 4;
+		for (int i = 0; i < nrofGhosts; i++)
 		{
 			ghosts.add(new Ghost(0, 0, 3, this));
 		}
@@ -117,7 +117,7 @@ public class Game extends JPanel implements Runnable
 			g.move(screendata);
 			g.draw(g.getActX() + 1, (g.getActY() + 1));
 		}
-		this.debug(); //TODO: remove debug
+		//this.debug(); //TODO: remove debug
 	}
 
 	public void DrawMaze()
@@ -271,6 +271,11 @@ public class Game extends JPanel implements Runnable
 			System.out.println();
 		}
 		System.out.println();
+	}
+
+	public PacMan getPacman()
+	{
+		return pacman;
 	}
 
 }
