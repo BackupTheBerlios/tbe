@@ -3,12 +3,11 @@ package ch.pacman.game;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.net.URL;
-
 import javax.swing.ImageIcon;
-
 import ch.pacman.Game;
 import ch.pacman.graph.PacVertex;
 import jdsl.graph.api.Vertex;
+
 
 public class PacMan
 {
@@ -123,8 +122,6 @@ public class PacMan
 
 	public void move(Vertex[][] screendata)
 	{
-
-		int count;
 		if (this.getActX() % Level.blocksize == 0
 				&& this.getActY() % Level.blocksize == 0)
 		{
@@ -132,9 +129,8 @@ public class PacMan
 			currentCol = this.getActX() / Level.blocksize;
 			currentRow = this.getActY() / Level.blocksize;
 			currentVertex = screendata[currentRow][currentCol];
-			count = 0;
 			PacVertex vertex = (PacVertex) currentVertex.element();
-
+			this.setRandomDirection();
 			// checks for small/bigBoint
 			int ch = vertex.getType();
 			if ((ch & 16) != 0)
@@ -152,51 +148,6 @@ public class PacMan
 				;
 
 			}
-
-			// chooses direction
-			if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
-			{
-				dx[count] = -1;
-				dy[count] = 0;
-				count++;
-			}
-			if ((vertex.getType() & 2) == 0 && this.getDestY() != 1)
-			{
-				dx[count] = 0;
-				dy[count] = -1;
-				count++;
-			}
-			if ((vertex.getType() & 4) == 0 && this.getDestX() != -1)
-			{
-				dx[count] = 1;
-				dy[count] = 0;
-				count++;
-			}
-			if ((vertex.getType() & 8) == 0 && this.getDestY() != -1)
-			{
-				dx[count] = 0;
-				dy[count] = 1;
-				count++;
-			}
-			if (count == 0)
-			{
-				if ((vertex.getType() & 15) == 15)
-				{
-					this.setDestX(0);
-					this.setDestY(0);
-				} else
-				{
-					this.setDestX(-this.getDestX());
-					this.setDestY(-this.getDestY());
-				}
-			} else
-			{
-				count = (int) (Math.random() * count);
-				if (count > 3)
-					count = 3;
-				this.setDestX(dx[count]);
-				this.setDestY(dy[count]);
-			}
 		}
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
@@ -213,7 +164,8 @@ public class PacMan
 				currentVertex = screendata[currentRow][currentCol + 1];
 			} else
 			{
-				((PacVertex) screendata[currentRow][currentCol - 1].element()).setPacMan(this);
+				((PacVertex) screendata[currentRow][currentCol - 1].element())
+						.setPacMan(this);
 				currentVertex = screendata[currentRow][currentCol - 1];
 			}
 
@@ -233,6 +185,56 @@ public class PacMan
 						.setPacMan(this);
 				currentVertex = screendata[currentRow - 1][currentCol];
 			}
+		}
+	}
+
+	private void setRandomDirection()
+	{
+		// System.out.println("random");
+		int count = 0;
+		PacVertex vertex = (PacVertex) currentVertex.element();
+		if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
+		{
+			dx[count] = -1;
+			dy[count] = 0;
+			count++;
+		}
+		if ((vertex.getType() & 2) == 0 && this.getDestY() != 1)
+		{
+			dx[count] = 0;
+			dy[count] = -1;
+			count++;
+		}
+		if ((vertex.getType() & 4) == 0 && this.getDestX() != -1)
+		{
+			dx[count] = 1;
+			dy[count] = 0;
+			count++;
+		}
+		if ((vertex.getType() & 8) == 0 && this.getDestY() != -1)
+		{
+			dx[count] = 0;
+			dy[count] = 1;
+			count++;
+		}
+		if (count == 0)
+		{
+			if ((vertex.getType() & 15) == 15)
+			{
+				this.setDestX(0);
+				this.setDestY(0);
+			} else
+			{
+				this.setDestX(-this.getDestX());
+				this.setDestY(-this.getDestY());
+			}
+		} else
+		{
+			count = (int) (Math.random() * count);
+			if (count > 3)
+				count = 3;
+			this.setDestX(dx[count]);
+			this.setDestY(dy[count]);
 		}
 	}
 
@@ -400,7 +402,9 @@ public class PacMan
 				pacanimdir = -pacanimdir;
 		}
 	}
-	public PacMan clone(){
-		return new PacMan(actX,actY,speed,game);
+
+	public PacMan clone()
+	{
+		return new PacMan(actX, actY, speed, game);
 	}
 }

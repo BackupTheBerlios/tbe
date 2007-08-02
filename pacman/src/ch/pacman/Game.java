@@ -278,4 +278,9 @@ public class Game extends JPanel implements Runnable
 		return pacman;
 	}
 
+	public ArrayList<Ghost> getGhosts()
+	{
+		return ghosts;
+	}
+
 }
