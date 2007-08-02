@@ -1,8 +1,12 @@
 package ch.pacman;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.*;
+
 import jdsl.graph.api.Vertex;
 import ch.pacman.game.*;
 import ch.pacman.graph.PacVertex;
@@ -15,13 +19,19 @@ public class Game extends JPanel implements Runnable
 
 	private Graphics goff;
 
+	private boolean ingame = true;
+
 	private boolean scared = false;
+
+	private boolean human = true;
 
 	private Dimension d = new Dimension(Level.screensize, Level.screensize);
 
 	private Image ii;
 
 	private int nrofGhosts;
+
+	private int reqdx, reqdy;
 
 	private Vertex[][] screendata;
 
@@ -31,10 +41,63 @@ public class Game extends JPanel implements Runnable
 
 	private int scaredcount;
 
-	public Game()
+	public Game(JFrame f)
 	{
 		this.setSize(d);
 		this.setBackground(Color.black);
+		Object[] options = { "Human", "Computer" };
+		String question = "Human or Computer Player?";
+		int answer = JOptionPane.showOptionDialog(null, question, "",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+				options, options[1]);
+		if (answer == 0)
+		{
+			human = true;
+		} else
+		{
+			human = false;
+		}
+		f.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+
+				if (ingame && human)
+				{
+
+					if (e.getKeyCode() == KeyEvent.VK_LEFT)
+					{
+						reqdx = -1;
+						reqdy = 0;
+					} else if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+					{
+						reqdx = 1;
+						reqdy = 0;
+					} else if (e.getKeyCode() == KeyEvent.VK_UP)
+					{
+						reqdx = 0;
+						reqdy = -1;
+					} else if (e.getKeyCode() == KeyEvent.VK_DOWN)
+					{
+						reqdx = 0;
+						reqdy = 1;
+					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+					{
+						ingame = false;
+					}
+				}
+				// else
+				// {
+				// if (key == 's' || key == 'S')
+				// {
+				// ingame=true;
+				// GameInit();
+				// }
+				// }
+
+			}
+
+		});
 		GameInit();
 
 	}
@@ -46,9 +109,19 @@ public class Game extends JPanel implements Runnable
 		{
 			ghosts.add(new Ghost(0, 0, 3, this));
 		}
-		pacman = new PacMan(0, 0, 4, this);
+		pacman = new PacMan(human, 0, 0, 4, this);
 
 		this.LevelInit();
+	}
+
+	public int getReqdx()
+	{
+		return reqdx;
+	}
+
+	public int getReqdy()
+	{
+		return reqdy;
 	}
 
 	public void LevelInit()
@@ -117,7 +190,7 @@ public class Game extends JPanel implements Runnable
 			g.move(screendata);
 			g.draw(g.getActX() + 1, (g.getActY() + 1));
 		}
-		//this.debug(); //TODO: remove debug
+		// this.debug(); //TODO: remove debug
 	}
 
 	public void DrawMaze()
@@ -219,7 +292,7 @@ public class Game extends JPanel implements Runnable
 		f.setBackground(Color.BLACK);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		Game pacman = new Game();
+		Game pacman = new Game(f);
 		f.add(pacman);
 		Thread t = new Thread(pacman);
 		f.setVisible(true);
@@ -253,18 +326,23 @@ public class Game extends JPanel implements Runnable
 
 			for (int j = 0; j < Level.nrofblocks; j++)
 			{
-				int numghosts = ((PacVertex) screendata[i][j].element()).getGhostCount();
-				boolean pacman = ((PacVertex) screendata[i][j].element()).isPacMan();
-				if(numghosts == 0 && !pacman){
+				int numghosts = ((PacVertex) screendata[i][j].element())
+						.getGhostCount();
+				boolean pacman = ((PacVertex) screendata[i][j].element())
+						.isPacMan();
+				if (numghosts == 0 && !pacman)
+				{
 					System.out.print("[  ]");
-				}else if(pacman && numghosts > 0){
-					System.out.print("[P"+numghosts+"]");
-							
-				}else if(pacman){
+				} else if (pacman && numghosts > 0)
+				{
+					System.out.print("[P" + numghosts + "]");
+
+				} else if (pacman)
+				{
 					System.out.print("[P ]");
-				}				
-				else{
-					System.out.print("[0"+numghosts+"]");
+				} else
+				{
+					System.out.print("[0" + numghosts + "]");
 				}
 
 			}

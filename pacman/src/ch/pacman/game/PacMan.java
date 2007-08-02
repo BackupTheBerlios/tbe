@@ -8,7 +8,6 @@ import ch.pacman.Game;
 import ch.pacman.graph.PacVertex;
 import jdsl.graph.api.Vertex;
 
-
 public class PacMan
 {
 
@@ -21,6 +20,8 @@ public class PacMan
 	private int destY = 0;
 
 	private int speed = 0;
+
+	private boolean human;
 
 	private int currentRow, currentCol;
 
@@ -50,13 +51,14 @@ public class PacMan
 
 	private int pacanimcount = pacanimdelay;
 
-	public PacMan(int actX, int actY, int speed, Game game)
+	public PacMan(boolean human, int actX, int actY, int speed, Game game)
 	{
 		super();
 		this.actX = actX;
 		this.actY = actY;
 		this.speed = speed;
 		this.game = game;
+		this.human = human;
 		this.GetImages();
 	}
 
@@ -122,7 +124,10 @@ public class PacMan
 
 	public void move(Vertex[][] screendata)
 	{
-		if (this.getActX() % Level.blocksize == 0
+		if (human)
+		{
+			this.setHumanMove(screendata);
+		} else if (this.getActX() % Level.blocksize == 0
 				&& this.getActY() % Level.blocksize == 0)
 		{
 
@@ -186,6 +191,73 @@ public class PacMan
 				currentVertex = screendata[currentRow - 1][currentCol];
 			}
 		}
+	}
+
+	private void setHumanMove(Vertex[][] screendata)
+	{
+		short ch;
+
+		if (game.getReqdx() == -this.destX && game.getReqdy() == -this.destY)
+		{
+			this.destX = game.getReqdx();
+			this.destX = game.getReqdx();
+			// viewdx=pacmandx;
+			// viewdy=pacmandy;
+		}
+		if (this.getActX() % Level.blocksize == 0
+				&& this.actY % Level.blocksize == 0)
+		{
+
+			currentCol = this.getActX() / Level.blocksize;
+			currentRow = this.getActY() / Level.blocksize;
+			currentVertex = screendata[currentRow][currentCol];
+			PacVertex vertex = (PacVertex) currentVertex.element();
+
+			// checks for small/bigBoint
+			ch = vertex.getType();
+
+			if ((ch & 16) != 0)
+			{
+				((PacVertex) screendata[currentRow][currentCol].element())
+						.setType((short) (ch & 15));
+
+			}
+			if ((ch & 32) != 0)
+			{
+				game.setScared(true);
+
+				((PacVertex) screendata[currentRow][currentCol].element())
+						.setType((short) (ch & 15));
+				;
+
+			}
+
+			if (game.getReqdx() != 0 || game.getReqdy() != 0)
+			{
+				if (!((game.getReqdx() == -1 && game.getReqdy() == 0 && (ch & 1) != 0)
+						|| (game.getReqdx() == 1 && game.getReqdy() == 0 && (ch & 4) != 0)
+						|| (game.getReqdx() == 0 && game.getReqdy() == -1 && (ch & 2) != 0) || (game
+						.getReqdx() == 0
+						&& game.getReqdy() == 1 && (ch & 8) != 0)))
+				{
+					this.destX = game.getReqdx();
+					this.destY = game.getReqdy();
+					// viewdx=pacmandx;
+					// viewdy=pacmandy;
+				}
+			}
+
+			// Check for standstill
+			if ((this.destX == -1 && this.destY == 0 && (ch & 1) != 0)
+					|| (this.destX == 1 && this.destY == 0 && (ch & 4) != 0)
+					|| (this.destX == 0 && this.destY == -1 && (ch & 2) != 0)
+					|| (this.destX == 0 && this.destY == 1 && (ch & 8) != 0))
+			{
+				this.destX = 0;
+				this.destY = 0;
+			}
+		}
+
 	}
 
 	private void setRandomDirection()
@@ -405,6 +477,6 @@ public class PacMan
 
 	public PacMan clone()
 	{
-		return new PacMan(actX, actY, speed, game);
+		return new PacMan(human, actX, actY, speed, game);
 	}
 }
