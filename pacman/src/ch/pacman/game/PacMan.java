@@ -142,6 +142,7 @@ public class PacMan
 			{
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
+				game.setScore(game.getScore()+1);
 
 			}
 			if ((ch & 32) != 0)
@@ -150,7 +151,7 @@ public class PacMan
 
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
-				;
+				game.setScore(game.getScore()+5);
 
 			}
 		}
@@ -220,7 +221,7 @@ public class PacMan
 			{
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
-
+				game.setScore(game.getScore()+1);
 			}
 			if ((ch & 32) != 0)
 			{
@@ -228,7 +229,7 @@ public class PacMan
 
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
-				;
+				game.setScore(game.getScore()+5);
 
 			}
 
@@ -478,5 +479,10 @@ public class PacMan
 	public PacMan clone()
 	{
 		return new PacMan(human, actX, actY, speed, game);
+	}
+
+	public Image getPacman3left()
+	{
+		return pacman3left;
 	}
 }

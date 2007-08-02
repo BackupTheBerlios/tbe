@@ -3,10 +3,8 @@ package ch.pacman;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import javax.swing.*;
-
 import jdsl.graph.api.Vertex;
 import ch.pacman.game.*;
 import ch.pacman.graph.PacVertex;
@@ -17,22 +15,22 @@ public class Game extends JPanel implements Runnable
 
 	private Level level;
 
-	private Graphics goff;
+	private Graphics graphics;
 
 	private boolean ingame = true;
 
 	private boolean scared = false;
 
-	private boolean human = true;
+	private boolean human;
 
-	private Dimension d = new Dimension(Level.screensize, Level.screensize);
+	private Dimension d = new Dimension(Level.screensize, Level.screensize + 100);
 
 	private Image ii;
 
 	private int nrofGhosts;
 
 	private int reqdx, reqdy;
-
+	private int		pacsleft,score;
 	private Vertex[][] screendata;
 
 	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
@@ -40,6 +38,7 @@ public class Game extends JPanel implements Runnable
 	private PacMan pacman;
 
 	private int scaredcount;
+	
 
 	public Game(JFrame f)
 	{
@@ -110,7 +109,8 @@ public class Game extends JPanel implements Runnable
 			ghosts.add(new Ghost(0, 0, 3, this));
 		}
 		pacman = new PacMan(human, 0, 0, 4, this);
-
+		pacsleft = 3;
+		score = 0;
 		this.LevelInit();
 	}
 
@@ -156,18 +156,19 @@ public class Game extends JPanel implements Runnable
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		if (goff == null && d.width > 0 && d.height > 0)
+		if (graphics == null && d.width > 0 && d.height > 0)
 		{
 			ii = createImage(d.width, d.height);
-			goff = ii.getGraphics();
+			graphics = ii.getGraphics();
 		}
-		if (goff == null || ii == null)
+		if (graphics == null || ii == null)
 			return;
 
-		goff.setColor(Color.black);
-		goff.fillRect(0, 0, d.width, d.height);
+		graphics.setColor(Color.black);
+		graphics.fillRect(0, 0, d.width, d.height);
 
 		DrawMaze();
+		DrawScore();
 		for (Ghost gs : ghosts)
 		{
 			gs.anim();
@@ -205,7 +206,7 @@ public class Game extends JPanel implements Runnable
 
 			for (int j = 0; j < Level.nrofblocks; j++)
 			{
-				goff.setColor(Level.mazecolor);
+				graphics.setColor(Level.mazecolor);
 				PacVertex vertex = (PacVertex) screendata[i][j].element();
 
 				int x = vertex.getX();
@@ -213,38 +214,52 @@ public class Game extends JPanel implements Runnable
 
 				if ((vertex.getType() & 1) != 0)
 				{
-					goff.drawLine(x, y, x, y + Level.blocksize - 1);
+					graphics.drawLine(x, y, x, y + Level.blocksize - 1);
 				}
 				if ((vertex.getType() & 2) != 0)
 				{
-					goff.drawLine(x, y, x + Level.blocksize - 1, y);
+					graphics.drawLine(x, y, x + Level.blocksize - 1, y);
 				}
 				if ((vertex.getType() & 4) != 0)
 				{
-					goff.drawLine(x + Level.blocksize - 1, y, x
+					graphics.drawLine(x + Level.blocksize - 1, y, x
 							+ Level.blocksize - 1, y + Level.blocksize - 1);
 				}
 				if ((vertex.getType() & 8) != 0)
 				{
-					goff.drawLine(x, y + Level.blocksize - 1, x
+					graphics.drawLine(x, y + Level.blocksize - 1, x
 							+ Level.blocksize - 1, y + Level.blocksize - 1);
 				}
 				if ((vertex.hasLittleDot()))
 				{
-					goff.setColor(Level.dotcolor);
-					goff.fillRect(x + 11, y + 11, 2, 2);
+					graphics.setColor(Level.dotcolor);
+					graphics.fillRect(x + 11, y + 11, 2, 2);
 				}
 				if ((vertex.hasBigDot()))
 				{
-					goff.setColor(new Color(224, 224 - Level.bigdotcolor,
+					graphics.setColor(new Color(224, 224 - Level.bigdotcolor,
 							Level.bigdotcolor));
-					goff.fillRect(x + 8, y + 8, 8, 8);
+					graphics.fillRect(x + 8, y + 8, 8, 8);
 				}
 
 			}
 		}
 
 	}
+	
+	  public void DrawScore()
+	  {
+	    int i;
+	    String s;
+	    graphics.setFont(new Font("Helvetica", Font.BOLD, 14));
+	    graphics.setColor(new Color(96,128,255));
+	    s="Score: "+score;
+	    graphics.drawString(s,Level.screensize/2+96,Level.screensize+16);
+	    for (i=0; i<pacsleft; i++)
+	    {
+	      graphics.drawImage(pacman.getPacman3left(),i*28+8,Level.screensize+1,this);
+	    }
+	  }
 
 	public void run()
 	{
@@ -288,10 +303,10 @@ public class Game extends JPanel implements Runnable
 	public static void main(String[] args)
 	{
 		JFrame f = new JFrame("PacMan");
-		f.setSize(400, 400);
+		f.setSize(367, 420);
 		f.setBackground(Color.BLACK);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		f.setResizable(false);
 		Game pacman = new Game(f);
 		f.add(pacman);
 		Thread t = new Thread(pacman);
@@ -315,7 +330,7 @@ public class Game extends JPanel implements Runnable
 
 	public Graphics getGoff()
 	{
-		return goff;
+		return graphics;
 	}
 
 	public void debug()
@@ -359,6 +374,16 @@ public class Game extends JPanel implements Runnable
 	public ArrayList<Ghost> getGhosts()
 	{
 		return ghosts;
+	}
+
+	public void setScore(int score)
+	{
+		this.score = score;
+	}
+
+	public int getScore()
+	{
+		return score;
 	}
 
 }
