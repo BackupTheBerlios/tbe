@@ -373,6 +373,7 @@ public class Game extends JPanel implements Runnable
 		Game pacman = new Game(f);
 		f.add(pacman);
 		Thread t = new Thread(pacman);
+		f.setLocationRelativeTo(null);
 		f.setVisible(true);
 		t.start();
 	}
