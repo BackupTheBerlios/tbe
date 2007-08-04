@@ -328,19 +328,19 @@ public class PacMan
 		switch (pacmananimpos)
 		{
 		case 1:
-			game.getGoff().drawImage(pacman2up, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman2up, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 2:
-			game.getGoff().drawImage(pacman3up, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman3up, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 3:
-			game.getGoff().drawImage(pacman4up, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman4up, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman1, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		}
@@ -351,19 +351,19 @@ public class PacMan
 		switch (pacmananimpos)
 		{
 		case 1:
-			game.getGoff().drawImage(pacman2down, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman2down, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 2:
-			game.getGoff().drawImage(pacman3down, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman3down, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 3:
-			game.getGoff().drawImage(pacman4down, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman4down, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman1, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		}
@@ -374,19 +374,19 @@ public class PacMan
 		switch (pacmananimpos)
 		{
 		case 1:
-			game.getGoff().drawImage(pacman2left, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman2left, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 2:
-			game.getGoff().drawImage(pacman3left, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman3left, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 3:
-			game.getGoff().drawImage(pacman4left, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman4left, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman1, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		}
@@ -397,19 +397,19 @@ public class PacMan
 		switch (pacmananimpos)
 		{
 		case 1:
-			game.getGoff().drawImage(pacman2right, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman2right, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 2:
-			game.getGoff().drawImage(pacman3right, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman3right, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		case 3:
-			game.getGoff().drawImage(pacman4right, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman4right, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		default:
-			game.getGoff().drawImage(pacman1, this.getActX() + 1,
+			game.getGraphic().drawImage(pacman1, this.getActX() + 1,
 					this.getActY() + 1, game);
 			break;
 		}
@@ -474,6 +474,23 @@ public class PacMan
 			if (pacmananimpos == (pacmananimcount - 1) || pacmananimpos == 0)
 				pacanimdir = -pacanimdir;
 		}
+	}
+	
+	public void dead(int i){
+		switch(i)
+	    {
+	      case 0:
+	        game.getGraphic().drawImage(pacman4up,actX+1,actY+1,game);
+	        break;
+	      case 1:
+	    	  game.getGraphic().drawImage(pacman4right,actX+1,actY+1,game);
+	        break;
+	      case 2:
+	    	  game.getGraphic().drawImage(pacman4down,actX+1,actY+1,game);
+	        break;
+	      default:
+	    	  game.getGraphic().drawImage(pacman4left,actX+1,actY+1,game);
+	    }
 	}
 
 	public PacMan clone()

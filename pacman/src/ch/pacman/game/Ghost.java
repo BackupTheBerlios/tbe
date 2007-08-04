@@ -92,7 +92,7 @@ public class Ghost
 		return actX;
 	}
 
-	public void setActX(int actX)
+	public synchronized void setActX(int actX)
 	{
 		this.actX = actX;
 	}
@@ -102,7 +102,7 @@ public class Ghost
 		return actY;
 	}
 
-	public void setActY(int actY)
+	public synchronized void setActY(int actY)
 	{
 		this.actY = actY;
 	}
@@ -279,16 +279,16 @@ public class Ghost
 	{
 		if (ghostanimpos == 0 && !game.isScared())
 		{
-			game.getGoff().drawImage(ghostRight, x, y, game);
+			game.getGraphic().drawImage(ghostRight, x, y, game);
 		} else if (ghostanimpos == 1 && !game.isScared())
 		{
-			game.getGoff().drawImage(ghostLeft, x, y, game);
+			game.getGraphic().drawImage(ghostLeft, x, y, game);
 		} else if (ghostanimpos == 0 && game.isScared())
 		{
-			game.getGoff().drawImage(ghostscared1, x, y, game);
+			game.getGraphic().drawImage(ghostscared1, x, y, game);
 		} else if (ghostanimpos == 1 && game.isScared())
 		{
-			game.getGoff().drawImage(ghostscared2, x, y, game);
+			game.getGraphic().drawImage(ghostscared2, x, y, game);
 		}
 	}
 
@@ -387,4 +387,6 @@ public class Ghost
 			this.setDestY(dy[count]);
 		}
 	}
+	
+
 }

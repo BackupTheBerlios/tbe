@@ -17,20 +17,30 @@ public class Game extends JPanel implements Runnable
 
 	private Graphics graphics;
 
-	private boolean ingame = true;
+	private boolean showtitle = true;
 
 	private boolean scared = false;
 
-	private boolean human;
+	private boolean human, dead, ingame;
 
-	private Dimension d = new Dimension(Level.screensize, Level.screensize + 100);
+	private Dimension d = new Dimension(Level.screensize,
+			Level.screensize + 100);
 
 	private Image ii;
 
+	private final int screendelay = 120;
+
+	private int count = screendelay;
+
 	private int nrofGhosts;
 
+	private int deadCounter;
+
 	private int reqdx, reqdy;
-	private int		pacsleft,score;
+
+	private int pacsleft, score;
+	private int dx = 1;
+
 	private Vertex[][] screendata;
 
 	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
@@ -38,24 +48,16 @@ public class Game extends JPanel implements Runnable
 	private PacMan pacman;
 
 	private int scaredcount;
-	
+
+	private Font largefont = new Font("Helvetica", Font.BOLD, 24);
+
+	private Font smallfont = new Font("Helvetica", Font.BOLD, 14);
 
 	public Game(JFrame f)
 	{
 		this.setSize(d);
 		this.setBackground(Color.black);
-		Object[] options = { "Human", "Computer" };
-		String question = "Human or Computer Player?";
-		int answer = JOptionPane.showOptionDialog(null, question, "",
-				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-				options, options[1]);
-		if (answer == 0)
-		{
-			human = true;
-		} else
-		{
-			human = false;
-		}
+
 		f.addKeyListener(new KeyAdapter()
 		{
 			public void keyPressed(KeyEvent e)
@@ -83,16 +85,30 @@ public class Game extends JPanel implements Runnable
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 					{
 						ingame = false;
+						System.out.println("sdf");
+					}
+				} else if (ingame && !human)
+				{
+					if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+					{
+						ingame = false;
+
+					}
+				} else
+
+				{
+					if (e.getKeyCode() == KeyEvent.VK_H)
+					{
+						ingame = true;
+						human = true;
+						GameInit();
+					} else if (e.getKeyCode() == KeyEvent.VK_C)
+					{
+						ingame = true;
+						human = false;
+						GameInit();
 					}
 				}
-				// else
-				// {
-				// if (key == 's' || key == 'S')
-				// {
-				// ingame=true;
-				// GameInit();
-				// }
-				// }
 
 			}
 
@@ -134,8 +150,11 @@ public class Game extends JPanel implements Runnable
 	public void LevelContinue()
 	{
 
-		int dx = 1;
-
+		
+		pacman.setDestX(0);
+		pacman.setDestY(0);
+		reqdx = 0;
+		reqdy = 0;
 		for (Ghost g : ghosts)
 		{
 			g.setActX(level.getGhostStart().x);
@@ -150,6 +169,7 @@ public class Game extends JPanel implements Runnable
 		pacman.setActX(level.getPacManStart().x);
 		pacman.setActY(level.getPacManStart().y);
 		scared = false;
+		dead = false;
 	}
 
 	@Override
@@ -174,24 +194,60 @@ public class Game extends JPanel implements Runnable
 			gs.anim();
 		}
 		pacman.anim();
-		PlayGame();
+		if (ingame)
+		{
+			PlayGame();
+		} else
+		{
+			CheckScared();
+			ShowIntroScreen();
+		}
 
 		g.drawImage(ii, 0, 0, this);
 	}
 
 	public void PlayGame()
 	{
-
-		CheckScared();
-		pacman.move(screendata);
-		pacman.draw();
-
-		for (Ghost g : ghosts)
+		if (dead)
 		{
-			g.move(screendata);
-			g.draw(g.getActX() + 1, (g.getActY() + 1));
+			Death();
+		} else
+		{
+			CheckScared();
+			pacman.move(screendata);
+			pacman.draw();
+
+			for (Ghost g : ghosts)
+			{
+				g.move(screendata);
+				g.draw(g.getActX() + 1, (g.getActY() + 1));
+				checkDead(g);
+			}
+			// this.debug(); //TODO: remove debug
 		}
-		// this.debug(); //TODO: remove debug
+	}
+
+	public void checkDead(Ghost g)
+	{
+		if (pacman.getActX() > (g.getActX() - 12)
+				&& pacman.getActX() < (g.getActX() + 12)
+				&& pacman.getActY() > (g.getActY() - 12)
+				&& pacman.getActY() < (g.getActY() + 12) && ingame)
+		{
+			if (scared)
+			{
+				score += 10;
+				g.setActX(level.getGhostStart().x);
+				g.setActY(level.getGhostStart().y);
+				g.setDestY(0);
+				g.setDestX(dx);
+				dx = -dx;
+			} else
+			{
+				dead = true;
+				deadCounter = 64;
+			}
+		}
 	}
 
 	public void DrawMaze()
@@ -246,20 +302,22 @@ public class Game extends JPanel implements Runnable
 		}
 
 	}
-	
-	  public void DrawScore()
-	  {
-	    int i;
-	    String s;
-	    graphics.setFont(new Font("Helvetica", Font.BOLD, 14));
-	    graphics.setColor(new Color(96,128,255));
-	    s="Score: "+score;
-	    graphics.drawString(s,Level.screensize/2+96,Level.screensize+16);
-	    for (i=0; i<pacsleft; i++)
-	    {
-	      graphics.drawImage(pacman.getPacman3left(),i*28+8,Level.screensize+1,this);
-	    }
-	  }
+
+	public void DrawScore()
+	{
+		int i;
+		String s;
+		graphics.setFont(smallfont);
+		graphics.setColor(new Color(96, 128, 255));
+		s = "Score: " + score;
+		graphics
+				.drawString(s, Level.screensize / 2 + 96, Level.screensize + 16);
+		for (i = 0; i < pacsleft; i++)
+		{
+			graphics.drawImage(pacman.getPacman3left(), i * 28 + 8,
+					Level.screensize + 1, this);
+		}
+	}
 
 	public void run()
 	{
@@ -328,7 +386,24 @@ public class Game extends JPanel implements Runnable
 		}
 	}
 
-	public Graphics getGoff()
+	public void Death()
+	{
+		int i;
+
+		deadCounter--;
+		i = (deadCounter & 15) / 4;
+		pacman.dead(i);
+		
+		if (deadCounter == 0)
+		{
+			pacsleft--;
+			if (pacsleft == 0)
+				ingame = false;
+			LevelContinue();
+		}
+	}
+
+	public Graphics getGraphic()
 	{
 		return graphics;
 	}
@@ -369,6 +444,66 @@ public class Game extends JPanel implements Runnable
 	public PacMan getPacman()
 	{
 		return pacman;
+	}
+
+	public void ShowIntroScreen()
+	{
+		String s;
+
+		graphics.setFont(largefont);
+
+		graphics.setColor(new Color(0, 32, 48));
+		graphics.fillRect(16, Level.screensize / 2 - 40, Level.screensize - 32,
+				80);
+		graphics.setColor(Color.white);
+		graphics.drawRect(16, Level.screensize / 2 - 40, Level.screensize - 32,
+				80);
+
+		if (showtitle)
+		{
+			s = "PacMan";
+			scared = false;
+
+			graphics.setColor(Color.white);
+			FontMetrics fmlarge = graphics.getFontMetrics();
+			graphics.drawString(s,
+					(Level.screensize - fmlarge.stringWidth(s)) / 2 + 2,
+					Level.screensize / 2 - 20 + 2);
+			graphics.setColor(new Color(96, 128, 255));
+			graphics.drawString(s,
+					(Level.screensize - fmlarge.stringWidth(s)) / 2,
+					Level.screensize / 2 - 20);
+
+			s = "by David Meier and Lars Schnyder";
+			graphics.setFont(smallfont);
+			graphics.setColor(new Color(255, 160, 64));
+			FontMetrics fmsmall = graphics.getFontMetrics();
+			graphics.drawString(s,
+					(Level.screensize - fmsmall.stringWidth(s)) / 2,
+					Level.screensize / 2 + 10);
+
+		} else
+		{
+			graphics.setFont(smallfont);
+			graphics.setColor(new Color(96, 128, 255));
+			s = "'H' for Human-Player or 'C' for Computer";
+			FontMetrics fmsmall = graphics.getFontMetrics();
+			graphics.drawString(s,
+					(Level.screensize - fmsmall.stringWidth(s)) / 2,
+					Level.screensize / 2 - 10);
+			graphics.setColor(new Color(255, 160, 64));
+			s = "Use cursor keys to move";
+			graphics.drawString(s,
+					(Level.screensize - fmsmall.stringWidth(s)) / 2,
+					Level.screensize / 2 + 20);
+			scared = true;
+		}
+		count--;
+		if (count <= 0)
+		{
+			count = screendelay;
+			showtitle = !showtitle;
+		}
 	}
 
 	public ArrayList<Ghost> getGhosts()
