@@ -39,6 +39,7 @@ public class Game extends JPanel implements Runnable
 	private int reqdx, reqdy;
 
 	private int pacsleft, score;
+
 	private int dx = 1;
 
 	private Vertex[][] screendata;
@@ -57,6 +58,8 @@ public class Game extends JPanel implements Runnable
 	{
 		this.setSize(d);
 		this.setBackground(Color.black);
+		level = new Level1();
+		screendata = level.getClonedPathdata();
 
 		f.addKeyListener(new KeyAdapter()
 		{
@@ -85,7 +88,7 @@ public class Game extends JPanel implements Runnable
 					} else if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
 					{
 						ingame = false;
-						System.out.println("sdf");
+
 					}
 				} else if (ingame && !human)
 				{
@@ -113,7 +116,6 @@ public class Game extends JPanel implements Runnable
 			}
 
 		});
-		GameInit();
 
 	}
 
@@ -150,7 +152,6 @@ public class Game extends JPanel implements Runnable
 	public void LevelContinue()
 	{
 
-		
 		pacman.setDestX(0);
 		pacman.setDestY(0);
 		reqdx = 0;
@@ -193,9 +194,10 @@ public class Game extends JPanel implements Runnable
 		{
 			gs.anim();
 		}
-		pacman.anim();
+
 		if (ingame)
 		{
+			pacman.anim();
 			PlayGame();
 		} else
 		{
@@ -237,6 +239,9 @@ public class Game extends JPanel implements Runnable
 			if (scared)
 			{
 				score += 10;
+				g.changeVertex(screendata[level.getGhostStart().x
+						/ Level.blocksize][level.getGhostStart().y
+						/ Level.blocksize]);
 				g.setActX(level.getGhostStart().x);
 				g.setActY(level.getGhostStart().y);
 				g.setDestY(0);
@@ -393,7 +398,7 @@ public class Game extends JPanel implements Runnable
 		deadCounter--;
 		i = (deadCounter & 15) / 4;
 		pacman.dead(i);
-		
+
 		if (deadCounter == 0)
 		{
 			pacsleft--;
