@@ -145,6 +145,7 @@ public class Ghost
 		{
 			currentCol = this.getActX() / Level.blocksize;
 			currentRow = this.getActY() / Level.blocksize;
+			currentVertex = screendata[currentRow][currentCol];
 		}
 		// currentVertex = screendata[currentRow][currentCol];
 		// PacVertex vertex = (PacVertex) screendata[currentRow][currentCol]

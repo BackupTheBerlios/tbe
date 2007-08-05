@@ -53,6 +53,8 @@ public class Game extends JPanel implements Runnable
 	private Font largefont = new Font("Helvetica", Font.BOLD, 24);
 
 	private Font smallfont = new Font("Helvetica", Font.BOLD, 14);
+	
+	private DecisionResult res = null;
 
 	public Game(JFrame f)
 	{
@@ -211,7 +213,6 @@ public class Game extends JPanel implements Runnable
 
 	public void PlayGame()
 	{
-		DecisionResult res = null;
 		
 		if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0)
 			res = Heuristic.getBestMove(screendata);
@@ -237,19 +238,22 @@ public class Game extends JPanel implements Runnable
 				
 				if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0){
 					for(Ghost search : res.getGhostObject().getGhosts()){
-						if(search.getGhostId() == g.getGhostId()){
+						if(search != null && search.getGhostId() == g.getGhostId()){
 							found = search;
+							g.setDestX(found.getDestX());
+							g.setDestY(found.getDestY());
+
 							break;
 						}
 					}
-					g.setDestX(found.getDestX());
-					g.setDestY(found.getDestY());
+
 				}
 
 				g.move(screendata);
 				g.draw(g.getActX() + 1, (g.getActY() + 1));
 				checkDead(g);
 			}
+
 			// this.debug(); //TODO: remove debug
 		}
 	}
