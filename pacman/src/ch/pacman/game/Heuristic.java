@@ -1,10 +1,9 @@
 package ch.pacman.game;
 
 import java.util.ArrayList;
-
-import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import ch.pacman.Game;
 import ch.pacman.graph.PacVertex;
 import jdsl.graph.api.Edge;
 import jdsl.graph.api.EdgeIterator;
@@ -14,49 +13,42 @@ import jdsl.graph.ref.IncidenceListGraph;
 
 public class Heuristic
 {
+	private static DecisionResult endResult = new DecisionResult();
 	private static int DEPTH = 5;
 
-	private static JTree tree;
 
-	public static DecisionObject getBestMove(Vertex[][] screendata)
+	public static DecisionResult getBestMove(Vertex[][] screendata)
 	{
 		// create root node and its children
 		DefaultMutableTreeNode node = new DefaultMutableTreeNode();
-		Vertex vertex = null;
-		PacMan tempPac = null;
+		PacMan tempPac = Game.getPacman();
 		Vertex[][] pathdata = Level.clonePathdata(screendata);
 		ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
-
-		for (Vertex[] vs : pathdata)
-		{
-			for (Vertex v : vs)
-			{
-				PacVertex pv = (PacVertex) v;
-				if (pv.isPacMan())
-				{
-					tempPac = pv.getPacMan();
-				} else if (pv.getGhostCount() > 0)
-				{
-					ghosts.addAll(pv.getGhosts());
-				}
-			}
-		}
-
+		ghosts = Game.getGhosts();
+		
 		node.setUserObject(new DecisionObject());
-		Ghost[] tempGhosts = (Ghost[]) ghosts.toArray();
+		Ghost[] tempGhosts = new Ghost[ghosts.size()];
+		int i = 0;
+		for(Ghost g: ghosts){
+			tempGhosts[i] = g;
+			i++;
+		}
 		IncidenceListGraph igraph = ((PacVertex) pathdata[0][0].element())
 				.getGraph();
 		return Heuristic.makeTree(node, Heuristic.DEPTH, true, igraph, tempPac,
 				tempGhosts);
 	}
 
-	private static DecisionObject makeTree(DefaultMutableTreeNode node,
+	private static DecisionResult makeTree(DefaultMutableTreeNode node,
 			int depth, boolean pac, IncidenceListGraph igraph, PacMan tempPac,
 			Ghost[] tempGhosts)
 	{
 		IncidenceListGraph graph = Level.cloneGraph(igraph);
 		PacMan pacman = tempPac.clone();
 		Ghost[] ghosts = new Ghost[tempGhosts.length];
+		DecisionResult pacResult = null;
+		DecisionResult ghostResult = null;
+		
 		for (int i = 0; i < tempGhosts.length; i++)
 		{
 			ghosts[i] = tempGhosts[i].clone();
@@ -66,8 +58,20 @@ public class Heuristic
 		{
 			if (pac)
 			{
-				VertexIterator vi = graph.adjacentVertices(pacman
-						.getCurrentVertex());
+				Vertex newVertex = null;
+				Vertex oldVertex = pacman.getCurrentVertex();
+				PacVertex oldPacVertex = (PacVertex)oldVertex.element();
+				VertexIterator findVi = graph.vertices();
+				while(findVi.hasNext()){
+					Vertex findVertex = findVi.nextVertex();
+					PacVertex findPacVertex = (PacVertex)findVertex.element();
+					if(findPacVertex.getX() == oldPacVertex.getX() && findPacVertex.getY() == oldPacVertex.getX()){
+						newVertex = findVertex;
+						break;
+					}
+				}
+				
+				VertexIterator vi = graph.adjacentVertices(newVertex);
 				while (vi.hasNext())
 				{
 
@@ -118,7 +122,7 @@ public class Heuristic
 						child.setUserObject(dobj);
 
 						node.add(child);
-						makeTree(child, depth - 1, false, graph, pacman, ghosts);
+						pacResult  = makeTree(child, depth - 1, false, graph, pacman, ghosts);
 					}
 
 				}
@@ -210,50 +214,18 @@ public class Heuristic
 					i++;
 				}
 	
-					if(decision.size() > 0){
-					for (int q= 0; q < blub[0].size(); q++)
+				if(decision.size() > 0){
+				for (int q= 0; q < blub[0].size(); q++)
+				{
+					if(decision.size() > 1){
+					for (int w= 0; w < blub[1].size(); w++)
 					{
-						if(decision.size() > 1){
-						for (int w= 0; w < blub[1].size(); w++)
+						if(decision.size() > 2){
+						for (int e= 0; e < blub[2].size(); e++)
 						{
-							if(decision.size() > 2){
-							for (int e= 0; e < blub[2].size(); e++)
-							{
-								if(decision.size() > 3){
-									for (int r= 0; r < blub[3].size(); r++)
-									{
-										decision.get(0).changeVertex(blub[0].get(q));
-										decision.get(0).setActX(((PacVertex)blub[0].get(q).element()).getX());
-										decision.get(0).setActY(((PacVertex)blub[0].get(q).element()).getY());
-										decision.get(1).changeVertex(blub[1].get(w));
-										decision.get(1).setActX(((PacVertex)blub[1].get(w).element()).getX());
-										decision.get(1).setActY(((PacVertex)blub[1].get(w).element()).getY());
-										decision.get(2).changeVertex(blub[2].get(e));
-										decision.get(2).setActX(((PacVertex)blub[2].get(e).element()).getX());
-										decision.get(2).setActY(((PacVertex)blub[2].get(e).element()).getY());
-										decision.get(3).changeVertex(blub[3].get(r));
-										decision.get(3).setActX(((PacVertex)blub[3].get(r).element()).getX());
-										decision.get(3).setActY(((PacVertex)blub[3].get(r).element()).getY());
-										DefaultMutableTreeNode child = new DefaultMutableTreeNode();
-
-										if(dobj.getGhostsSize() < 1){
-											DecisionObject newDobj = new DecisionObject();
-											newDobj.setPacman(dobj.getPacman());
-											for(Ghost ndg : nonDecision){
-												dobj.addGhost(ndg);
-											}
-											for(Ghost dg : decision){
-												dobj.addGhost(dg);
-											}
-											child.setUserObject(newDobj);
-										}else{
-											child.setUserObject(dobj);
-										}
-										
-										node.add(child);
-										makeTree(child, depth - 1, true, graph, pacman, ghosts);
-									}
-								}else{
+							if(decision.size() > 3){
+								for (int r= 0; r < blub[3].size(); r++)
+								{
 									decision.get(0).changeVertex(blub[0].get(q));
 									decision.get(0).setActX(((PacVertex)blub[0].get(q).element()).getX());
 									decision.get(0).setActY(((PacVertex)blub[0].get(q).element()).getY());
@@ -263,8 +235,11 @@ public class Heuristic
 									decision.get(2).changeVertex(blub[2].get(e));
 									decision.get(2).setActX(((PacVertex)blub[2].get(e).element()).getX());
 									decision.get(2).setActY(((PacVertex)blub[2].get(e).element()).getY());
+									decision.get(3).changeVertex(blub[3].get(r));
+									decision.get(3).setActX(((PacVertex)blub[3].get(r).element()).getX());
+									decision.get(3).setActY(((PacVertex)blub[3].get(r).element()).getY());
 									DefaultMutableTreeNode child = new DefaultMutableTreeNode();
-									
+
 									if(dobj.getGhostsSize() < 1){
 										DecisionObject newDobj = new DecisionObject();
 										newDobj.setPacman(dobj.getPacman());
@@ -280,8 +255,7 @@ public class Heuristic
 									}
 									
 									node.add(child);
-									makeTree(child, depth - 1, true, graph, pacman, ghosts);
-									}
+									ghostResult = makeTree(child, depth - 1, true, graph, pacman, ghosts);
 								}
 							}else{
 								decision.get(0).changeVertex(blub[0].get(q));
@@ -290,8 +264,11 @@ public class Heuristic
 								decision.get(1).changeVertex(blub[1].get(w));
 								decision.get(1).setActX(((PacVertex)blub[1].get(w).element()).getX());
 								decision.get(1).setActY(((PacVertex)blub[1].get(w).element()).getY());
+								decision.get(2).changeVertex(blub[2].get(e));
+								decision.get(2).setActX(((PacVertex)blub[2].get(e).element()).getX());
+								decision.get(2).setActY(((PacVertex)blub[2].get(e).element()).getY());
 								DefaultMutableTreeNode child = new DefaultMutableTreeNode();
-
+								
 								if(dobj.getGhostsSize() < 1){
 									DecisionObject newDobj = new DecisionObject();
 									newDobj.setPacman(dobj.getPacman());
@@ -307,13 +284,16 @@ public class Heuristic
 								}
 								
 								node.add(child);
-								makeTree(child, depth - 1, true, graph, pacman, ghosts);
+								ghostResult = makeTree(child, depth - 1, true, graph, pacman, ghosts);
 								}
 							}
 						}else{
 							decision.get(0).changeVertex(blub[0].get(q));
 							decision.get(0).setActX(((PacVertex)blub[0].get(q).element()).getX());
 							decision.get(0).setActY(((PacVertex)blub[0].get(q).element()).getY());
+							decision.get(1).changeVertex(blub[1].get(w));
+							decision.get(1).setActX(((PacVertex)blub[1].get(w).element()).getX());
+							decision.get(1).setActY(((PacVertex)blub[1].get(w).element()).getY());
 							DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
 							if(dobj.getGhostsSize() < 1){
@@ -331,10 +311,13 @@ public class Heuristic
 							}
 							
 							node.add(child);
-							makeTree(child, depth - 1, true, graph, pacman, ghosts);
+							ghostResult = makeTree(child, depth - 1, true, graph, pacman, ghosts);
 							}
 						}
 					}else{
+						decision.get(0).changeVertex(blub[0].get(q));
+						decision.get(0).setActX(((PacVertex)blub[0].get(q).element()).getX());
+						decision.get(0).setActY(((PacVertex)blub[0].get(q).element()).getY());
 						DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
 						if(dobj.getGhostsSize() < 1){
@@ -352,12 +335,23 @@ public class Heuristic
 						}
 						
 						node.add(child);
-						makeTree(child, depth - 1, true, graph, pacman, ghosts);
+						ghostResult = makeTree(child, depth - 1, true, graph, pacman, ghosts);
 						}
-					
 					}
-			
+				}
+			}	
+		}else{
+			endResult.setPacObject(pacResult.getPacObject());
+			endResult.setPacDepht(depth);
+			endResult.setGhostObject(ghostResult.getGhostObject());
+			endResult.setGhostDepht(depth);
 		}
-		return null;
+		
+		if(!pac && depth < endResult.getGhostDepht()){
+			endResult.setGhostDepht(depth);
+			endResult.setGhostObject(ghostResult.getGhostObject());
+		}
+		
+		return endResult;
 	}
 }

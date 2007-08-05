@@ -44,9 +44,9 @@ public class Game extends JPanel implements Runnable
 
 	private Vertex[][] screendata;
 
-	private ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+	private static ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
 
-	private PacMan pacman;
+	private static PacMan pacman;
 
 	private int scaredcount;
 
@@ -124,7 +124,7 @@ public class Game extends JPanel implements Runnable
 		nrofGhosts = 4;
 		for (int i = 0; i < nrofGhosts; i++)
 		{
-			ghosts.add(new Ghost(0, 0, 3, this));
+			ghosts.add(new Ghost(0, 0, 4, this, i));
 		}
 		pacman = new PacMan(human, 0, 0, 4, this);
 		pacsleft = 3;
@@ -169,6 +169,7 @@ public class Game extends JPanel implements Runnable
 		((PacVertex) screendata[7][8].element()).setType((short) 10);
 		pacman.setActX(level.getPacManStart().x);
 		pacman.setActY(level.getPacManStart().y);
+		pacman.setCurrentVertex(screendata[level.getPacManStart().x / Level.blocksize][level.getPacManStart().y / Level.blocksize]);
 		scared = false;
 		dead = false;
 	}
@@ -210,17 +211,41 @@ public class Game extends JPanel implements Runnable
 
 	public void PlayGame()
 	{
+		DecisionResult res = null;
+		
+		if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0)
+			res = Heuristic.getBestMove(screendata);
+		
 		if (dead)
 		{
 			Death();
 		} else
 		{
 			CheckScared();
+			
+			if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0){
+				pacman.setDestX(res.getPacObject().getPacman().getDestX());
+				pacman.setDestY(res.getPacObject().getPacman().getDestY());
+			}
+
 			pacman.move(screendata);
 			pacman.draw();
 
 			for (Ghost g : ghosts)
 			{
+				Ghost found = null;
+				
+				if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0){
+					for(Ghost search : res.getGhostObject().getGhosts()){
+						if(search.getGhostId() == g.getGhostId()){
+							found = search;
+							break;
+						}
+					}
+					g.setDestX(found.getDestX());
+					g.setDestY(found.getDestY());
+				}
+
 				g.move(screendata);
 				g.draw(g.getActX() + 1, (g.getActY() + 1));
 				checkDead(g);
@@ -447,7 +472,7 @@ public class Game extends JPanel implements Runnable
 		System.out.println();
 	}
 
-	public PacMan getPacman()
+	public static PacMan getPacman()
 	{
 		return pacman;
 	}
@@ -512,7 +537,7 @@ public class Game extends JPanel implements Runnable
 		}
 	}
 
-	public ArrayList<Ghost> getGhosts()
+	public static ArrayList<Ghost> getGhosts()
 	{
 		return ghosts;
 	}

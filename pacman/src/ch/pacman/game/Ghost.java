@@ -18,6 +18,8 @@ import jdsl.graph.ref.IncidenceListGraph;
 public class Ghost
 {
 
+	private int ghostId;
+	
 	private int actX = 0;
 
 	private int actY = 0;
@@ -51,13 +53,14 @@ public class Ghost
 
 	private int animcount = animdelay;
 
-	public Ghost(int actX, int actY, int speed, Game game)
+	public Ghost(int actX, int actY, int speed, Game game, int ghostId)
 	{
 		super();
 		this.actX = actX;
 		this.actY = actY;
 		this.speed = speed;
 		this.game = game;
+		this.ghostId = ghostId;
 		this.GetImages();
 	}
 
@@ -135,108 +138,106 @@ public class Ghost
 	public void move(Vertex[][] screendata)
 	{
 
-		if (this.getActX() % Level.blocksize == 0
-				&& this.getActY() % Level.blocksize == 0)
-		{
-			count = 0;
-			currentCol = this.getActX() / Level.blocksize;
-			currentRow = this.getActY() / Level.blocksize;
-			currentVertex = screendata[currentRow][currentCol];
-			PacVertex vertex = (PacVertex) screendata[currentRow][currentCol]
-					.element();
-			if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
-			{
-				count++;
-			}
-			if ((vertex.getType() & 2) == 0 && this.getDestY() != 1)
-			{
-				count++;
-			}
-			if ((vertex.getType() & 4) == 0 && this.getDestX() != -1)
-			{
-				count++;
-			}
-			if ((vertex.getType() & 8) == 0 && this.getDestY() != -1)
-			{
-				count++;
-			}
 
-			IntegerDijkstraPathfinder dfs = new Pathfinder();
-			IncidenceListGraph graph = ((PacVertex) currentVertex.element())
-					.getGraph();
-			dfs.execute(graph, currentVertex, game.getPacman()
-					.getCurrentVertex());
-			PacVertex current = (PacVertex) screendata[currentRow][currentCol]
-					.element();
-
-			if (count < 2)
-			{
-				this.setRandomDirection();
-			} else if (dfs.pathExists())
-			{
-
-				EdgeIterator ei = dfs.reportPath();
-
-				PacVertex next = (PacVertex) graph.opposite(currentVertex,
-						ei.nextEdge()).element();
-				// in 90% he takes the right way
-				Random r = new Random();
-				int rand = r.nextInt(9);
-				if (current.getX() == next.getX())
-				{
-
-					this.destX = 0;
-				} else if (current.getX() < next.getX() && this.destX != -1)
-				{
-					if (rand == 0)
-					{
-						this.setRandomDirection();
-					} else
-					{
-						this.destX = 1;
-					}
-				} else if (current.getX() > next.getX() && this.destX != 1)
-				{
-					if (rand == 0)
-					{
-						this.setRandomDirection();
-					} else
-					{
-						this.destX = -1;
-					}
-				} else
-				{
-					this.setRandomDirection();
-				}
-				if (current.getY() == next.getY())
-				{
-					this.destY = 0;
-				} else if (current.getY() < next.getY() && this.destY != -1)
-				{
-					if (rand == 0)
-					{
-						this.setRandomDirection();
-					} else
-					{
-						this.destY = 1;
-					}
-				} else if (current.getY() > next.getY() && this.destY != 1)
-				{
-					if (rand == 0)
-					{
-						this.setRandomDirection();
-					} else
-					{
-						this.destY = -1;
-					}
-				} else
-				{
-					this.setRandomDirection();
-				}
-
-			}
-
-		}
+//			count = 0;
+//			currentCol = this.getActX() / Level.blocksize;
+//			currentRow = this.getActY() / Level.blocksize;
+//			currentVertex = screendata[currentRow][currentCol];
+//			PacVertex vertex = (PacVertex) screendata[currentRow][currentCol]
+//					.element();
+//			if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
+//			{
+//				count++;
+//			}
+//			if ((vertex.getType() & 2) == 0 && this.getDestY() != 1)
+//			{
+//				count++;
+//			}
+//			if ((vertex.getType() & 4) == 0 && this.getDestX() != -1)
+//			{
+//				count++;
+//			}
+//			if ((vertex.getType() & 8) == 0 && this.getDestY() != -1)
+//			{
+//				count++;
+//			}
+//
+//			IntegerDijkstraPathfinder dfs = new Pathfinder();
+//			IncidenceListGraph graph = ((PacVertex) currentVertex.element())
+//					.getGraph();
+//			dfs.execute(graph, currentVertex, game.getPacman()
+//					.getCurrentVertex());
+//			PacVertex current = (PacVertex) screendata[currentRow][currentCol]
+//					.element();
+//
+//			if (count < 2)
+//			{
+//				this.setRandomDirection();
+//			} else if (dfs.pathExists())
+//			{
+//
+//				EdgeIterator ei = dfs.reportPath();
+//
+//				PacVertex next = (PacVertex) graph.opposite(currentVertex,
+//						ei.nextEdge()).element();
+//				// in 90% he takes the right way
+//				Random r = new Random();
+//				int rand = r.nextInt(9);
+//				if (current.getX() == next.getX())
+//				{
+//
+//					this.destX = 0;
+//				} else if (current.getX() < next.getX() && this.destX != -1)
+//				{
+//					if (rand == 0)
+//					{
+//						this.setRandomDirection();
+//					} else
+//					{
+//						this.destX = 1;
+//					}
+//				} else if (current.getX() > next.getX() && this.destX != 1)
+//				{
+//					if (rand == 0)
+//					{
+//						this.setRandomDirection();
+//					} else
+//					{
+//						this.destX = -1;
+//					}
+//				} else
+//				{
+//					this.setRandomDirection();
+//				}
+//				if (current.getY() == next.getY())
+//				{
+//					this.destY = 0;
+//				} else if (current.getY() < next.getY() && this.destY != -1)
+//				{
+//					if (rand == 0)
+//					{
+//						this.setRandomDirection();
+//					} else
+//					{
+//						this.destY = 1;
+//					}
+//				} else if (current.getY() > next.getY() && this.destY != 1)
+//				{
+//					if (rand == 0)
+//					{
+//						this.setRandomDirection();
+//					} else
+//					{
+//						this.destY = -1;
+//					}
+//				} else
+//				{
+//					this.setRandomDirection();
+//				}
+//
+//			}
+//
+//		}
 
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
@@ -338,7 +339,12 @@ public class Ghost
 
 	public Ghost clone()
 	{
-		return new Ghost(actX, actY, speed, game);
+		Ghost newGhost = new Ghost(actX, actY, speed, game, ghostId);
+		newGhost.setDestX(destX);
+		newGhost.setDestY(destX);
+		newGhost.setCurrentVertex(this.currentVertex);
+		newGhost.setOldVertex(oldVertex);
+		return newGhost;
 	}
 
 	private void setRandomDirection()
@@ -399,6 +405,16 @@ public class Ghost
 	public void setOldVertex(Vertex oldVertex)
 	{
 		this.oldVertex = oldVertex;
+	}
+
+	public int getGhostId()
+	{
+		return ghostId;
+	}
+
+	public void setGhostId(int ghostId)
+	{
+		this.ghostId = ghostId;
 	}
 	
 

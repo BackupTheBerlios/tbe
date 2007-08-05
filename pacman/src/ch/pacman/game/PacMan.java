@@ -127,34 +127,35 @@ public class PacMan
 		if (human)
 		{
 			this.setHumanMove(screendata);
-		} else if (this.getActX() % Level.blocksize == 0
-				&& this.getActY() % Level.blocksize == 0)
-		{
-
-			currentCol = this.getActX() / Level.blocksize;
-			currentRow = this.getActY() / Level.blocksize;
-			currentVertex = screendata[currentRow][currentCol];
-			PacVertex vertex = (PacVertex) currentVertex.element();
-			this.setRandomDirection();
-			// checks for small/bigBoint
-			int ch = vertex.getType();
-			if ((ch & 16) != 0)
-			{
-				((PacVertex) screendata[currentRow][currentCol].element())
-						.setType((short) (ch & 15));
-				game.setScore(game.getScore()+1);
-
-			}
-			if ((ch & 32) != 0)
-			{
-				game.setScared(true);
-
-				((PacVertex) screendata[currentRow][currentCol].element())
-						.setType((short) (ch & 15));
-				game.setScore(game.getScore()+5);
-
-			}
 		}
+//		else if (this.getActX() % Level.blocksize == 0
+//				&& this.getActY() % Level.blocksize == 0)
+//		{
+//
+//			currentCol = this.getActX() / Level.blocksize;
+//			currentRow = this.getActY() / Level.blocksize;
+//			currentVertex = screendata[currentRow][currentCol];
+//			PacVertex vertex = (PacVertex) currentVertex.element();
+//			this.setRandomDirection();
+//			// checks for small/bigBoint
+//			int ch = vertex.getType();
+//			if ((ch & 16) != 0)
+//			{
+//				((PacVertex) screendata[currentRow][currentCol].element())
+//						.setType((short) (ch & 15));
+//				game.setScore(game.getScore()+1);
+//
+//			}
+//			if ((ch & 32) != 0)
+//			{
+//				game.setScared(true);
+//
+//				((PacVertex) screendata[currentRow][currentCol].element())
+//						.setType((short) (ch & 15));
+//				game.setScore(game.getScore()+5);
+//
+//			}
+//		}
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
@@ -495,7 +496,11 @@ public class PacMan
 
 	public PacMan clone()
 	{
-		return new PacMan(human, actX, actY, speed, game);
+		PacMan newPacMan = new PacMan(human, actX, actY, speed, game);
+		newPacMan.setCurrentVertex(currentVertex);
+		newPacMan.setDestX(destX);
+		newPacMan.setDestY(destY);
+		return newPacMan;
 	}
 
 	public Image getPacman3left()
