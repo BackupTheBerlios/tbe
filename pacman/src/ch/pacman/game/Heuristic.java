@@ -85,8 +85,11 @@ public class Heuristic
 						DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 						DefaultMutableTreeNode n = (DefaultMutableTreeNode) node
 								.getParent();
-						DecisionObject dobj = (DecisionObject) n
-								.getUserObject();
+						if(n == null){
+							DecisionObject dobj = (DecisionObject) node
+							.getUserObject();
+						}
+						
 
 						if (current.getX() == next.getX())
 						{

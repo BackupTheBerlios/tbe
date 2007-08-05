@@ -169,7 +169,7 @@ public class Game extends JPanel implements Runnable
 		((PacVertex) screendata[7][8].element()).setType((short) 10);
 		pacman.setActX(level.getPacManStart().x);
 		pacman.setActY(level.getPacManStart().y);
-		pacman.setCurrentVertex(screendata[level.getPacManStart().x / Level.blocksize][level.getPacManStart().y / Level.blocksize]);
+		pacman.setCurrentVertex(screendata[level.getPacManStart().y / Level.blocksize][level.getPacManStart().x / Level.blocksize]);
 		scared = false;
 		dead = false;
 	}
