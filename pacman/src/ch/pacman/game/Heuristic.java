@@ -252,14 +252,18 @@ public class Heuristic
 									DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 									
 									if(dobj.getGhostsSize() > 1){
+										DecisionObject newDobj = new DecisionObject();
+										newDobj.setPacman(dobj.getPacman());
 										for(Ghost ndg : nonDecision){
 											dobj.addGhost(ndg);
 										}
 										for(Ghost dg : decision){
 											dobj.addGhost(dg);
 										}
+										child.setUserObject(newDobj);
+									}else{
+										child.setUserObject(dobj);
 									}
-									child.setUserObject(dobj);
 									
 									node.add(child);
 									makeTree(child, depth - 1, true, graph, pacman, ghosts);
@@ -273,16 +277,19 @@ public class Heuristic
 								decision.get(1).setActY(((PacVertex)blub[1].get(w).element()).getY());
 								DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
-
 								if(dobj.getGhostsSize() > 1){
+									DecisionObject newDobj = new DecisionObject();
+									newDobj.setPacman(dobj.getPacman());
 									for(Ghost ndg : nonDecision){
 										dobj.addGhost(ndg);
 									}
 									for(Ghost dg : decision){
 										dobj.addGhost(dg);
 									}
+									child.setUserObject(newDobj);
+								}else{
+									child.setUserObject(dobj);
 								}
-								child.setUserObject(dobj);
 								
 								node.add(child);
 								makeTree(child, depth - 1, true, graph, pacman, ghosts);
