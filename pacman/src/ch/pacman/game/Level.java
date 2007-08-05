@@ -104,10 +104,12 @@ public abstract class Level
 				if(destPacVertex.getX() == clonePacVertex.getX() && destPacVertex.getY() == clonePacVertex.getY()){
 					cloneDest = cloneVert;
 					destfound = true;
+					System.out.println("dest");
 				}
 				if(origPacVertex.getX() == clonePacVertex.getX() && destPacVertex.getY() == clonePacVertex.getY()){
 					cloneOrig = cloneVert;
 					origfound = true;
+					System.out.println("dest");
 				}
 				
 				if (destfound && origfound) break;
