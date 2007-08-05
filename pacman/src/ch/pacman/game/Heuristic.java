@@ -24,9 +24,11 @@ public class Heuristic
 		PacMan tempPac = Game.getPacman();
 		Vertex[][] pathdata = Level.clonePathdata(screendata);
 		ArrayList<Ghost> ghosts = new ArrayList<Ghost>();
+		PacMan pacman;
 		ghosts = Game.getGhosts();
+		pacman = Game.getPacman();
 		
-		node.setUserObject(new DecisionObject());
+		node.setUserObject(new DecisionObject(pacman, ghosts));
 		Ghost[] tempGhosts = new Ghost[ghosts.size()];
 		int i = 0;
 		for(Ghost g: ghosts){
@@ -46,6 +48,12 @@ public class Heuristic
 		IncidenceListGraph graph = Level.cloneGraph(igraph);
 		PacMan pacman = tempPac.clone();
 		Ghost[] ghosts = new Ghost[tempGhosts.length];
+		
+		ArrayList<Ghost> ghostArrayList = new ArrayList<Ghost>();
+		for(Ghost g : ghosts){
+			ghostArrayList.add(g);
+		}
+		
 		DecisionResult pacResult = null;
 		DecisionResult ghostResult = null;
 		
@@ -85,8 +93,12 @@ public class Heuristic
 						DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 						DefaultMutableTreeNode n = (DefaultMutableTreeNode) node
 								.getParent();
+						DecisionObject dobj;
 						if(n == null){
-							DecisionObject dobj = (DecisionObject) node
+							dobj = (DecisionObject) node
+							.getUserObject();
+						}else{
+							dobj = (DecisionObject) n
 							.getUserObject();
 						}
 						
@@ -125,7 +137,7 @@ public class Heuristic
 						child.setUserObject(dobj);
 
 						node.add(child);
-						pacResult  = makeTree(child, depth - 1, false, graph, pacman, ghosts);
+						pacResult = makeTree(child, depth - 1, false, graph, pacman, ghosts);
 					}
 
 				}
@@ -140,12 +152,14 @@ public class Heuristic
 
 				for (int i = 0; i < tempGhosts.length; i++)
 				{
-					if (igraph.degree(tempGhosts[i].getCurrentVertex()) > 2)
-					{
-						decision.add(tempGhosts[i]);
-					} else
-					{
-						nonDecision.add(tempGhosts[i]);
+					if (tempGhosts[i].getCurrentVertex() != null){
+						if (igraph.degree(tempGhosts[i].getCurrentVertex()) > 2)
+						{
+							decision.add(tempGhosts[i]);
+						} else
+						{
+							nonDecision.add(tempGhosts[i]);
+						}
 					}
 				}
 				for (int i = 0; i < decision.size(); i++)
@@ -244,7 +258,7 @@ public class Heuristic
 									DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
 									if(dobj.getGhostsSize() < 1){
-										DecisionObject newDobj = new DecisionObject();
+										DecisionObject newDobj = new DecisionObject(pacman, ghostArrayList);
 										newDobj.setPacman(dobj.getPacman());
 										for(Ghost ndg : nonDecision){
 											dobj.addGhost(ndg);
@@ -273,7 +287,7 @@ public class Heuristic
 								DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 								
 								if(dobj.getGhostsSize() < 1){
-									DecisionObject newDobj = new DecisionObject();
+									DecisionObject newDobj = new DecisionObject(pacman, ghostArrayList);
 									newDobj.setPacman(dobj.getPacman());
 									for(Ghost ndg : nonDecision){
 										dobj.addGhost(ndg);
@@ -300,7 +314,7 @@ public class Heuristic
 							DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
 							if(dobj.getGhostsSize() < 1){
-								DecisionObject newDobj = new DecisionObject();
+								DecisionObject newDobj = new DecisionObject(pacman, ghostArrayList);
 								newDobj.setPacman(dobj.getPacman());
 								for(Ghost ndg : nonDecision){
 									dobj.addGhost(ndg);
@@ -324,7 +338,7 @@ public class Heuristic
 						DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
 						if(dobj.getGhostsSize() < 1){
-							DecisionObject newDobj = new DecisionObject();
+							DecisionObject newDobj = new DecisionObject(pacman, ghostArrayList);
 							newDobj.setPacman(dobj.getPacman());
 							for(Ghost ndg : nonDecision){
 								dobj.addGhost(ndg);
@@ -345,7 +359,7 @@ public class Heuristic
 					DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
 					if(dobj.getGhostsSize() < 1){
-						DecisionObject newDobj = new DecisionObject();
+						DecisionObject newDobj = new DecisionObject(pacman, ghostArrayList);
 						newDobj.setPacman(dobj.getPacman());
 						for(Ghost ndg : nonDecision){
 							dobj.addGhost(ndg);
@@ -363,15 +377,21 @@ public class Heuristic
 				}
 			}	
 		}else{
-			endResult.setPacObject(pacResult.getPacObject());
+			
+			endResult.setPacObject(new DecisionObject(pacman, ghostArrayList));
 			endResult.setPacDepht(depth);
-			endResult.setGhostObject(ghostResult.getGhostObject());
+			endResult.setGhostObject(new DecisionObject(pacman, ghostArrayList));
 			endResult.setGhostDepht(depth);
 		}
 		
 		if(!pac && depth < endResult.getGhostDepht()){
 			endResult.setGhostDepht(depth);
 			endResult.setGhostObject(ghostResult.getGhostObject());
+		}
+		
+		if(pac && depth > endResult.getPacDepht()){
+			endResult.setPacDepht(depth);
+			endResult.setPacObject(pacResult.getPacObject());
 		}
 		
 		return endResult;

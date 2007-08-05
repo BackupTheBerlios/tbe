@@ -39,5 +39,12 @@ public class DecisionObject
 	{
 		this.distance = distance;
 	}
+
+	public DecisionObject(PacMan pacman, ArrayList<Ghost> ghosts)
+	{
+		super();
+		this.pacman = pacman;
+		this.ghosts = ghosts;
+	}
 	
 }

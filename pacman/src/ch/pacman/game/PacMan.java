@@ -127,35 +127,34 @@ public class PacMan
 		if (human)
 		{
 			this.setHumanMove(screendata);
-		}
-//		else if (this.getActX() % Level.blocksize == 0
-//				&& this.getActY() % Level.blocksize == 0)
-//		{
-//
+		} else if (this.getActX() % Level.blocksize == 0
+				&& this.getActY() % Level.blocksize == 0)
+		{
 			currentCol = this.getActX() / Level.blocksize;
 			currentRow = this.getActY() / Level.blocksize;
 			currentVertex = screendata[currentRow][currentCol];
-//			PacVertex vertex = (PacVertex) currentVertex.element();
-//			this.setRandomDirection();
-//			// checks for small/bigBoint
-//			int ch = vertex.getType();
-//			if ((ch & 16) != 0)
-//			{
-//				((PacVertex) screendata[currentRow][currentCol].element())
-//						.setType((short) (ch & 15));
-//				game.setScore(game.getScore()+1);
-//
-//			}
-//			if ((ch & 32) != 0)
-//			{
-//				game.setScared(true);
-//
-//				((PacVertex) screendata[currentRow][currentCol].element())
-//						.setType((short) (ch & 15));
-//				game.setScore(game.getScore()+5);
-//
-//			}
-//		}
+		}
+		// PacVertex vertex = (PacVertex) currentVertex.element();
+		// this.setRandomDirection();
+		// // checks for small/bigBoint
+		// int ch = vertex.getType();
+		// if ((ch & 16) != 0)
+		// {
+		// ((PacVertex) screendata[currentRow][currentCol].element())
+		// .setType((short) (ch & 15));
+		// game.setScore(game.getScore()+1);
+		//
+		// }
+		// if ((ch & 32) != 0)
+		// {
+		// game.setScared(true);
+		//
+		// ((PacVertex) screendata[currentRow][currentCol].element())
+		// .setType((short) (ch & 15));
+		// game.setScore(game.getScore()+5);
+		//
+		// }
+		// }
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
@@ -222,7 +221,7 @@ public class PacMan
 			{
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
-				game.setScore(game.getScore()+1);
+				game.setScore(game.getScore() + 1);
 			}
 			if ((ch & 32) != 0)
 			{
@@ -230,7 +229,7 @@ public class PacMan
 
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
-				game.setScore(game.getScore()+5);
+				game.setScore(game.getScore() + 5);
 
 			}
 
@@ -476,22 +475,23 @@ public class PacMan
 				pacanimdir = -pacanimdir;
 		}
 	}
-	
-	public void dead(int i){
-		switch(i)
-	    {
-	      case 0:
-	        game.getGraphic().drawImage(pacman4up,actX+1,actY+1,game);
-	        break;
-	      case 1:
-	    	  game.getGraphic().drawImage(pacman4right,actX+1,actY+1,game);
-	        break;
-	      case 2:
-	    	  game.getGraphic().drawImage(pacman4down,actX+1,actY+1,game);
-	        break;
-	      default:
-	    	  game.getGraphic().drawImage(pacman4left,actX+1,actY+1,game);
-	    }
+
+	public void dead(int i)
+	{
+		switch (i)
+		{
+		case 0:
+			game.getGraphic().drawImage(pacman4up, actX + 1, actY + 1, game);
+			break;
+		case 1:
+			game.getGraphic().drawImage(pacman4right, actX + 1, actY + 1, game);
+			break;
+		case 2:
+			game.getGraphic().drawImage(pacman4down, actX + 1, actY + 1, game);
+			break;
+		default:
+			game.getGraphic().drawImage(pacman4left, actX + 1, actY + 1, game);
+		}
 	}
 
 	public PacMan clone()
@@ -507,6 +507,7 @@ public class PacMan
 	{
 		return pacman3left;
 	}
+
 	public void changeVertex(Vertex newVertex)
 	{
 		((PacVertex) currentVertex.element()).setPacMan(null);
