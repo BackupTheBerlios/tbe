@@ -140,8 +140,8 @@ public class Ghost
 
 
 //			count = 0;
-//			currentCol = this.getActX() / Level.blocksize;
-//			currentRow = this.getActY() / Level.blocksize;
+			currentCol = this.getActX() / Level.blocksize;
+			currentRow = this.getActY() / Level.blocksize;
 //			currentVertex = screendata[currentRow][currentCol];
 //			PacVertex vertex = (PacVertex) screendata[currentRow][currentCol]
 //					.element();
@@ -242,41 +242,42 @@ public class Ghost
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
-		// sets ghost-int
-		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
-		{
-
-			((PacVertex) currentVertex.element()).ghostDecrement(this);
-			if (this.getDestX() >= 0)
+		if(currentVertex != null){
+			// sets ghost-int
+			if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 			{
-				((PacVertex) screendata[currentRow][currentCol + 1].element())
-						.ghostIncrement(this);
-				currentVertex = screendata[currentRow][currentCol + 1];
-			} else
-			{
-				((PacVertex) screendata[currentRow][currentCol - 1].element())
-						.ghostIncrement(this);
-				currentVertex = screendata[currentRow][currentCol - 1];
-			}
 
-		} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
-		{
+				((PacVertex) currentVertex.element()).ghostDecrement(this);
+				if (this.getDestX() >= 0)
+				{
+					((PacVertex) screendata[currentRow][currentCol + 1].element())
+							.ghostIncrement(this);
+					currentVertex = screendata[currentRow][currentCol + 1];
+				} else
+				{
+					((PacVertex) screendata[currentRow][currentCol - 1].element())
+							.ghostIncrement(this);
+					currentVertex = screendata[currentRow][currentCol - 1];
+				}
 
-			((PacVertex) currentVertex.element()).ghostDecrement(this);
+			} else if (this.getActY() % Level.blocksize == Level.blocksize / 2)
+			{
 
-			if (this.getDestY() >= 0)
-			{
-				((PacVertex) screendata[currentRow + 1][currentCol].element())
-						.ghostIncrement(this);
-				currentVertex = screendata[currentRow + 1][currentCol];
-			} else
-			{
-				((PacVertex) screendata[currentRow - 1][currentCol].element())
-						.ghostIncrement(this);
-				currentVertex = screendata[currentRow - 1][currentCol];
+				((PacVertex) currentVertex.element()).ghostDecrement(this);
+
+				if (this.getDestY() >= 0)
+				{
+					((PacVertex) screendata[currentRow + 1][currentCol].element())
+							.ghostIncrement(this);
+					currentVertex = screendata[currentRow + 1][currentCol];
+				} else
+				{
+					((PacVertex) screendata[currentRow - 1][currentCol].element())
+							.ghostIncrement(this);
+					currentVertex = screendata[currentRow - 1][currentCol];
+				}
 			}
 		}
-
 	}
 
 	public void draw(int x, int y)

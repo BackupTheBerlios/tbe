@@ -132,9 +132,9 @@ public class PacMan
 //				&& this.getActY() % Level.blocksize == 0)
 //		{
 //
-//			currentCol = this.getActX() / Level.blocksize;
-//			currentRow = this.getActY() / Level.blocksize;
-//			currentVertex = screendata[currentRow][currentCol];
+			currentCol = this.getActX() / Level.blocksize;
+			currentRow = this.getActY() / Level.blocksize;
+			currentVertex = screendata[currentRow][currentCol];
 //			PacVertex vertex = (PacVertex) currentVertex.element();
 //			this.setRandomDirection();
 //			// checks for small/bigBoint
