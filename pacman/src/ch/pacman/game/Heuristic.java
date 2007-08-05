@@ -65,7 +65,7 @@ public class Heuristic
 				while(findVi.hasNext()){
 					Vertex findVertex = findVi.nextVertex();
 					PacVertex findPacVertex = (PacVertex)findVertex.element();
-					if(findPacVertex.getX() == oldPacVertex.getX() && findPacVertex.getY() == oldPacVertex.getX()){
+					if(findPacVertex.getX() == oldPacVertex.getX() && findPacVertex.getY() == oldPacVertex.getY()){
 						newVertex = findVertex;
 						break;
 					}
@@ -338,6 +338,25 @@ public class Heuristic
 						ghostResult = makeTree(child, depth - 1, true, graph, pacman, ghosts);
 						}
 					}
+				}else{
+					DefaultMutableTreeNode child = new DefaultMutableTreeNode();
+
+					if(dobj.getGhostsSize() < 1){
+						DecisionObject newDobj = new DecisionObject();
+						newDobj.setPacman(dobj.getPacman());
+						for(Ghost ndg : nonDecision){
+							dobj.addGhost(ndg);
+						}
+						for(Ghost dg : decision){
+							dobj.addGhost(dg);
+						}
+						child.setUserObject(newDobj);
+					}else{
+						child.setUserObject(dobj);
+					}
+					
+					node.add(child);
+					ghostResult = makeTree(child, depth - 1, true, graph, pacman, ghosts);
 				}
 			}	
 		}else{

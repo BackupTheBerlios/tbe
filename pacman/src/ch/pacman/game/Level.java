@@ -98,11 +98,14 @@ public abstract class Level
 			VertexIterator vi2 = cloneGraph.vertices();
 			while(vi2.hasNext()){
 				Vertex cloneVert = vi2.nextVertex();
-				if(dest.element().equals(cloneVert.element())){
+				PacVertex destPacVertex = (PacVertex) dest.element();
+				PacVertex origPacVertex = (PacVertex) orig.element();
+					PacVertex clonePacVertex = (PacVertex) cloneVert.element();
+				if(destPacVertex.getX() == clonePacVertex.getX() && destPacVertex.getY() == clonePacVertex.getY()){
 					cloneDest = cloneVert;
 					destfound = true;
 				}
-				if(orig.element().equals(cloneVert.element())){
+				if(origPacVertex.getX() == clonePacVertex.getX() && destPacVertex.getY() == clonePacVertex.getY()){
 					cloneOrig = cloneVert;
 					origfound = true;
 				}
