@@ -334,7 +334,27 @@ public class Heuristic
 							makeTree(child, depth - 1, true, graph, pacman, ghosts);
 							}
 						}
-					}
+					}else{
+						DefaultMutableTreeNode child = new DefaultMutableTreeNode();
+
+						if(dobj.getGhostsSize() < 1){
+							DecisionObject newDobj = new DecisionObject();
+							newDobj.setPacman(dobj.getPacman());
+							for(Ghost ndg : nonDecision){
+								dobj.addGhost(ndg);
+							}
+							for(Ghost dg : decision){
+								dobj.addGhost(dg);
+							}
+							child.setUserObject(newDobj);
+						}else{
+							child.setUserObject(dobj);
+						}
+						
+						node.add(child);
+						makeTree(child, depth - 1, true, graph, pacman, ghosts);
+						}
+					
 					}
 			
 		}
