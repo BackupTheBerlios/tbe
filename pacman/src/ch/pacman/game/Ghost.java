@@ -29,6 +29,7 @@ public class Ghost
 	private int speed = 0;
 
 	private Vertex currentVertex = null;
+	private Vertex oldVertex = null;
 
 	private int currentRow, currentCol;
 
@@ -67,11 +68,13 @@ public class Ghost
 
 	public void setCurrentVertex(Vertex current)
 	{
+		this.setOldVertex(currentVertex);
 		this.currentVertex = current;
 	}
 
 	public void changeVertex(Vertex newVertex)
 	{
+		this.setOldVertex(currentVertex);
 		((PacVertex) currentVertex.element()).ghostDecrement(this);
 		((PacVertex) newVertex.element()).ghostIncrement(this);
 		currentVertex = newVertex;
@@ -386,6 +389,16 @@ public class Ghost
 			this.setDestX(dx[count]);
 			this.setDestY(dy[count]);
 		}
+	}
+
+	public Vertex getOldVertex()
+	{
+		return oldVertex;
+	}
+
+	public void setOldVertex(Vertex oldVertex)
+	{
+		this.oldVertex = oldVertex;
 	}
 	
 

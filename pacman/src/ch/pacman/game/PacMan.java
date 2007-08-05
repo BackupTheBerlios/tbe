@@ -502,4 +502,10 @@ public class PacMan
 	{
 		return pacman3left;
 	}
+	public void changeVertex(Vertex newVertex)
+	{
+		((PacVertex) currentVertex.element()).setPacMan(null);
+		((PacVertex) newVertex.element()).setPacMan(this);
+		currentVertex = newVertex;
+	}
 }
