@@ -251,7 +251,7 @@ public class Heuristic
 									decision.get(2).setActY(((PacVertex)blub[2].get(e).element()).getY());
 									DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 									
-									if(dobj.getGhostsSize() > 1){
+									if(dobj.getGhostsSize() < 1){
 										DecisionObject newDobj = new DecisionObject();
 										newDobj.setPacman(dobj.getPacman());
 										for(Ghost ndg : nonDecision){
@@ -277,7 +277,7 @@ public class Heuristic
 								decision.get(1).setActY(((PacVertex)blub[1].get(w).element()).getY());
 								DefaultMutableTreeNode child = new DefaultMutableTreeNode();
 
-								if(dobj.getGhostsSize() > 1){
+								if(dobj.getGhostsSize() < 1){
 									DecisionObject newDobj = new DecisionObject();
 									newDobj.setPacman(dobj.getPacman());
 									for(Ghost ndg : nonDecision){
