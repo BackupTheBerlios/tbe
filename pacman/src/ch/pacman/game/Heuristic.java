@@ -75,6 +75,7 @@ public class Heuristic
 					PacVertex findPacVertex = (PacVertex)findVertex.element();
 					if(findPacVertex.getX() == oldPacVertex.getX() && findPacVertex.getY() == oldPacVertex.getY()){
 						newVertex = findVertex;
+						tempPac.setCurrentVertex(newVertex);
 						break;
 					}
 				}
@@ -143,6 +144,23 @@ public class Heuristic
 				}
 			} else
 			{
+				Vertex newVertex = null;
+				for(Ghost g : ghosts){
+					Vertex oldVertex = g.getCurrentVertex();
+					PacVertex oldPacVertex = (PacVertex)oldVertex.element();
+					VertexIterator findVi = graph.vertices();
+					while(findVi.hasNext()){
+						Vertex findVertex = findVi.nextVertex();
+						PacVertex findPacVertex = (PacVertex)findVertex.element();
+						if(findPacVertex.getX() == oldPacVertex.getX() && findPacVertex.getY() == oldPacVertex.getY()){
+							newVertex = findVertex;
+							g.setCurrentVertex(newVertex);
+							break;
+						}
+					}
+				}
+
+				
 				ArrayList<Ghost> decision = new ArrayList<Ghost>();
 				ArrayList<Ghost> nonDecision = new ArrayList<Ghost>();
 
@@ -152,14 +170,12 @@ public class Heuristic
 
 				for (int i = 0; i < tempGhosts.length; i++)
 				{
-					if (tempGhosts[i].getCurrentVertex() != null){
-						if (igraph.degree(tempGhosts[i].getCurrentVertex()) > 2)
-						{
-							decision.add(tempGhosts[i]);
-						} else
-						{
-							nonDecision.add(tempGhosts[i]);
-						}
+					if (igraph.degree(tempGhosts[i].getCurrentVertex()) > 2)
+					{
+						decision.add(tempGhosts[i]);
+					} else
+					{
+						nonDecision.add(tempGhosts[i]);
 					}
 				}
 				for (int i = 0; i < decision.size(); i++)
