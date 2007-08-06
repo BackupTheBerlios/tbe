@@ -72,7 +72,8 @@ public class Ghost
 
 	public void setCurrentVertex(Vertex current)
 	{
-		this.setOldVertex(currentVertex);
+		oldVertex = currentVertex;
+		if(oldVertex == null) oldVertex = current;
 		this.currentVertex = current;
 	}
 
@@ -348,7 +349,7 @@ public class Ghost
 	{
 		Ghost newGhost = new Ghost(actX, actY, speed, game, ghostId);
 		newGhost.setDestX(destX);
-		newGhost.setDestY(destX);
+		newGhost.setDestY(destY);
 		newGhost.setCurrentVertex(this.currentVertex);
 		newGhost.setOldVertex(oldVertex);
 		return newGhost;

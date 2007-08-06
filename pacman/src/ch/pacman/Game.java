@@ -162,6 +162,7 @@ public class Game extends JPanel implements Runnable
 		{
 			g.setActX(level.getGhostStart().x);
 			g.setActY(level.getGhostStart().y);
+			g.setCurrentVertex(screendata[level.getGhostStart().y / Level.blocksize][level.getGhostStart().x / Level.blocksize]);
 
 			g.setDestY(0);
 			g.setDestX(dx);
@@ -228,15 +229,12 @@ public class Game extends JPanel implements Runnable
 				pacman.setDestX(res.getPacObject().getPacman().getDestX());
 				pacman.setDestY(res.getPacObject().getPacman().getDestY());
 			}
-
-			pacman.move(screendata);
-			pacman.draw();
-
+			
 			for (Ghost g : ghosts)
 			{
 				Ghost found = null;
 				
-				if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0){
+				if(g.getActX() % Level.blocksize == 0 && g.getActY() % Level.blocksize == 0){
 					for(Ghost search : res.getGhostObject().getGhosts()){
 						if(search != null && search.getGhostId() == g.getGhostId()){
 							found = search;
@@ -253,6 +251,11 @@ public class Game extends JPanel implements Runnable
 				g.draw(g.getActX() + 1, (g.getActY() + 1));
 				checkDead(g);
 			}
+			
+
+			
+			pacman.move(screendata);
+			pacman.draw();
 
 			// this.debug(); //TODO: remove debug
 		}
