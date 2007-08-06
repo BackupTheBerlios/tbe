@@ -3,10 +3,18 @@ package ch.pacman.game;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Random;
+
 import javax.swing.ImageIcon;
 import ch.pacman.Game;
 import ch.pacman.graph.PacVertex;
+import ch.pacman.graph.Pathfinder;
+import jdsl.graph.algo.IntegerDijkstraPathfinder;
+import jdsl.graph.api.EdgeIterator;
 import jdsl.graph.api.Vertex;
+import jdsl.graph.api.VertexIterator;
+import jdsl.graph.ref.IncidenceListGraph;
 
 public class PacMan
 {
@@ -30,6 +38,7 @@ public class PacMan
 	private int[] dy = new int[4];
 
 	private Vertex currentVertex = null;
+	private Vertex oldVertex = null;
 
 	private Game game;
 
@@ -124,6 +133,7 @@ public class PacMan
 
 	public void move(Vertex[][] screendata)
 	{
+
 		if (human)
 		{
 			this.setHumanMove(screendata);
@@ -133,45 +143,161 @@ public class PacMan
 			currentCol = this.getActX() / Level.blocksize;
 			currentRow = this.getActY() / Level.blocksize;
 			currentVertex = screendata[currentRow][currentCol];
+
+			PacVertex vertex = (PacVertex) currentVertex.element();
+
+			// checks for small/bigBoint
+			int ch = vertex.getType();
+			if ((ch & 16) != 0)
+			{
+				((PacVertex) screendata[currentRow][currentCol].element())
+						.setType((short) (ch & 15));
+
+			}
+			if ((ch & 32) != 0)
+			{
+				game.setScared(true);
+
+				((PacVertex) screendata[currentRow][currentCol].element())
+						.setType((short) (ch & 15));
+				;
+
+			}
+
+			IncidenceListGraph graph = ((PacVertex) currentVertex.element())
+					.getGraph();
+			VertexIterator vi = graph.adjacentVertices(currentVertex);
+			ArrayList<Vertex> adjacents = new ArrayList<Vertex>();
+			while (vi.hasNext())
+			{
+				adjacents.add(vi.nextVertex());
+			}
+			if (game.isScared()){
+				adjacents.remove(oldVertex);
+			}else
+			{
+				ArrayList<Ghost> ghosts = Game.getGhosts();
+				EdgeIterator[] ei2 = new EdgeIterator[ghosts.size()];
+				EdgeIterator[] eiLength = new EdgeIterator[ghosts.size()];
+				int[] distance = new int[ghosts.size()];
+				int k = 0;
+				for (Ghost g : ghosts)
+				{
+					IntegerDijkstraPathfinder dfs = new Pathfinder();
+					dfs.execute(graph, currentVertex, g.getCurrentVertex());
+					if (dfs.pathExists())
+					{
+
+						ei2[k] = dfs.reportPath();
+						eiLength[k] = dfs.reportPath();
+						int j = 0;
+						while (eiLength[k].hasNext())
+						{
+							eiLength[k].nextEdge();
+							j++;
+						}
+						distance[k] = j;
+						k++;
+					}
+				}
+
+				int j = 0;
+				while (adjacents.size() > 1 && j < ghosts.size())
+				{
+
+					int minDist = 99999999;
+					int minGhost = -1;
+					for (int w = 0; w < distance.length; w++)
+					{
+						if (minDist > distance[w])
+						{
+							if (minGhost != -1)
+							{
+								distance[minGhost] = minDist;
+							}
+							minDist = distance[w];
+							minGhost = w;
+							distance[w] = 99999999;
+						}
+
+					}
+					if (minDist < 6)
+					{
+						adjacents.remove(graph.opposite(currentVertex,
+								ei2[minGhost].nextEdge()));
+					}
+					j++;
+				}
+			}
+			// System.out.println(dfs.pathExists());
+			PacVertex current = (PacVertex) screendata[currentRow][currentCol]
+					.element();
+			// System.out.println(count);
+
+			PacVertex next = null;
+			if (adjacents.size() == 1)
+			{
+				next = (PacVertex) adjacents.get(0).element();
+			} else
+			{
+				Random r = new Random();
+				int rand = r.nextInt(adjacents.size());
+				next = (PacVertex) adjacents.get(rand).element();
+			}
+
+			if (current.getX() == next.getX())
+			{
+
+				this.destX = 0;
+			} else if (current.getX() < next.getX())
+			{
+
+				this.destX = 1;
+
+			} else
+			{
+
+				this.destX = -1;
+
+			}
+
+			if (current.getY() == next.getY())
+			{
+				this.destY = 0;
+			} else if (current.getY() < next.getY())
+			{
+
+				this.destY = 1;
+
+			} else
+			{
+
+				this.destY = -1;
+
+			}
+
+			// System.out.println("----");
+
 		}
-		// PacVertex vertex = (PacVertex) currentVertex.element();
-		// this.setRandomDirection();
-		// // checks for small/bigBoint
-		// int ch = vertex.getType();
-		// if ((ch & 16) != 0)
-		// {
-		// ((PacVertex) screendata[currentRow][currentCol].element())
-		// .setType((short) (ch & 15));
-		// game.setScore(game.getScore()+1);
-		//
-		// }
-		// if ((ch & 32) != 0)
-		// {
-		// game.setScared(true);
-		//
-		// ((PacVertex) screendata[currentRow][currentCol].element())
-		// .setType((short) (ch & 15));
-		// game.setScore(game.getScore()+5);
-		//
-		// }
-		// }
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
 
 		// sets pacman
 		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
-
+			
 			((PacVertex) currentVertex.element()).setPacMan(null);
 			if (this.getDestX() >= 0)
 			{
 				((PacVertex) screendata[currentRow][currentCol + 1].element())
 						.setPacMan(this);
+				oldVertex = currentVertex;
 				currentVertex = screendata[currentRow][currentCol + 1];
 			} else
 			{
 				((PacVertex) screendata[currentRow][currentCol - 1].element())
 						.setPacMan(this);
+				oldVertex = currentVertex;
 				currentVertex = screendata[currentRow][currentCol - 1];
 			}
 
@@ -184,11 +310,13 @@ public class PacMan
 			{
 				((PacVertex) screendata[currentRow + 1][currentCol].element())
 						.setPacMan(this);
+				oldVertex = currentVertex;
 				currentVertex = screendata[currentRow + 1][currentCol];
 			} else
 			{
 				((PacVertex) screendata[currentRow - 1][currentCol].element())
 						.setPacMan(this);
+				oldVertex = currentVertex;
 				currentVertex = screendata[currentRow - 1][currentCol];
 			}
 		}
@@ -266,25 +394,25 @@ public class PacMan
 		// System.out.println("random");
 		int count = 0;
 		PacVertex vertex = (PacVertex) currentVertex.element();
-		if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
+		if ((vertex.getType() & 1) == 0)
 		{
 			dx[count] = -1;
 			dy[count] = 0;
 			count++;
 		}
-		if ((vertex.getType() & 2) == 0 && this.getDestY() != 1)
+		if ((vertex.getType() & 2) == 0)
 		{
 			dx[count] = 0;
 			dy[count] = -1;
 			count++;
 		}
-		if ((vertex.getType() & 4) == 0 && this.getDestX() != -1)
+		if ((vertex.getType() & 4) == 0)
 		{
 			dx[count] = 1;
 			dy[count] = 0;
 			count++;
 		}
-		if ((vertex.getType() & 8) == 0 && this.getDestY() != -1)
+		if ((vertex.getType() & 8) == 0)
 		{
 			dx[count] = 0;
 			dy[count] = 1;
@@ -510,6 +638,7 @@ public class PacMan
 
 	public void changeVertex(Vertex newVertex)
 	{
+		oldVertex = currentVertex;
 		((PacVertex) currentVertex.element()).setPacMan(null);
 		((PacVertex) newVertex.element()).setPacMan(this);
 		currentVertex = newVertex;
