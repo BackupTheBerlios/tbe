@@ -532,7 +532,7 @@ public class Game extends JPanel implements Runnable
 		{
 			graphics.setFont(smallfont);
 			graphics.setColor(new Color(96, 128, 255));
-			s = "'H' for Human-Player or 'C' for Computer";
+			s = "'H' Human-Player, 'C' Computer or 'Esc' Abort";
 			FontMetrics fmsmall = graphics.getFontMetrics();
 			graphics.drawString(s,
 					(Level.screensize - fmsmall.stringWidth(s)) / 2,
