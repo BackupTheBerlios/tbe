@@ -10,7 +10,7 @@ public class Level1 extends Level
 	{
 		this.createLevel();
 		this.pacManStart = new Point(7 * Level.blocksize, 13 * Level.blocksize);
-		this.ghostStart = new Point(7 * Level.blocksize, 0 * Level.blocksize);
+		this.ghostStart = new Point(7 * Level.blocksize, 7 * Level.blocksize);
 	}
 
 	private void createLevel()

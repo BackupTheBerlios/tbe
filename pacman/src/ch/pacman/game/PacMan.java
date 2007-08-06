@@ -221,7 +221,7 @@ public class PacMan
 						}
 
 					}
-					if (minDist < 6)
+					if (minDist < 6 && ei2[minGhost] != null )
 					{
 						adjacents.remove(graph.opposite(currentVertex,
 								ei2[minGhost].nextEdge()));

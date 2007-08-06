@@ -73,7 +73,8 @@ public class Ghost
 	public void setCurrentVertex(Vertex current)
 	{
 		oldVertex = currentVertex;
-		if(oldVertex == null) oldVertex = current;
+		if (oldVertex == null)
+			oldVertex = current;
 		this.currentVertex = current;
 	}
 
@@ -100,7 +101,7 @@ public class Ghost
 		return actX;
 	}
 
-	public synchronized void setActX(int actX)
+	public  void setActX(int actX)
 	{
 		this.actX = actX;
 	}
@@ -110,7 +111,7 @@ public class Ghost
 		return actY;
 	}
 
-	public synchronized void setActY(int actY)
+	public  void setActY(int actY)
 	{
 		this.actY = actY;
 	}
@@ -137,113 +138,98 @@ public class Ghost
 
 	int count;
 
-	public void move(Vertex[][] screendata)
+	public  void move(Vertex[][] screendata)
 	{
 
-		// count = 0;
+		count = 0;
 		if (this.getActX() % Level.blocksize == 0
 				&& this.getActY() % Level.blocksize == 0)
 		{
 			currentCol = this.getActX() / Level.blocksize;
 			currentRow = this.getActY() / Level.blocksize;
 			currentVertex = screendata[currentRow][currentCol];
+			PacVertex vertex = (PacVertex) screendata[currentRow][currentCol]
+					.element();
+			if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
+			{
+				count++;
+			}
+			if ((vertex.getType() & 2) == 0 && this.getDestY() != 1)
+			{
+				count++;
+			}
+			if ((vertex.getType() & 4) == 0 && this.getDestX() != -1)
+			{
+				count++;
+			}
+			if ((vertex.getType() & 8) == 0 && this.getDestY() != -1)
+			{
+				count++;
+			}
+
+			IntegerDijkstraPathfinder dfs = new Pathfinder();
+			IncidenceListGraph graph = ((PacVertex) currentVertex.element())
+					.getGraph();
+			dfs.execute(graph, currentVertex, game.getPacman()
+					.getCurrentVertex());
+			PacVertex current = (PacVertex) screendata[currentRow][currentCol]
+					.element();
+
+			if (count < 2)
+			{
+				this.setRandomDirection();
+			} else if (dfs.pathExists())
+			{
+
+				EdgeIterator ei = dfs.reportPath();
+
+				PacVertex next = (PacVertex) graph.opposite(currentVertex,
+						ei.nextEdge()).element();
+				// in 80% he takes the right way
+				Random r = new Random();
+				int rand = r.nextInt(8);
+				
+				if (current.getX() == next.getX() && rand != 0)
+				{
+
+					this.destX = 0;
+				} else if (current.getX() < next.getX() && this.destX != -1 && rand != 0)
+				{
+					
+						this.destX = 1;
+					
+				} else if (current.getX() > next.getX() && this.destX != 1 && rand != 0)
+				{
+					
+						this.destX = -1;
+					
+				} else
+				{
+					
+					rand = 0;
+				}
+				
+				if (current.getY() == next.getY() && rand != 0)
+				{
+					this.destY = 0;
+				} else if (current.getY() < next.getY() && this.destY != -1 && rand != 0)
+				{
+					
+						this.destY = 1;
+					
+				} else if (current.getY() > next.getY() && this.destY != 1 && rand != 0)
+				{
+					
+						this.destY = -1;
+					
+				}else 
+				{
+					this.setRandomDirection();
+				}
+
+			}
+
 		}
-		// currentVertex = screendata[currentRow][currentCol];
-		// PacVertex vertex = (PacVertex) screendata[currentRow][currentCol]
-		// .element();
-		// if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
-		// {
-		// count++;
-		// }
-		// if ((vertex.getType() & 2) == 0 && this.getDestY() != 1)
-		// {
-		// count++;
-		// }
-		// if ((vertex.getType() & 4) == 0 && this.getDestX() != -1)
-		// {
-		// count++;
-		// }
-		// if ((vertex.getType() & 8) == 0 && this.getDestY() != -1)
-		// {
-		// count++;
-		// }
-		//
-		// IntegerDijkstraPathfinder dfs = new Pathfinder();
-		// IncidenceListGraph graph = ((PacVertex) currentVertex.element())
-		// .getGraph();
-		// dfs.execute(graph, currentVertex, game.getPacman()
-		// .getCurrentVertex());
-		// PacVertex current = (PacVertex) screendata[currentRow][currentCol]
-		// .element();
-		//
-		// if (count < 2)
-		// {
-		// this.setRandomDirection();
-		// } else if (dfs.pathExists())
-		// {
-		//
-		// EdgeIterator ei = dfs.reportPath();
-		//
-		// PacVertex next = (PacVertex) graph.opposite(currentVertex,
-		// ei.nextEdge()).element();
-		// // in 90% he takes the right way
-		// Random r = new Random();
-		// int rand = r.nextInt(9);
-		// if (current.getX() == next.getX())
-		// {
-		//
-		// this.destX = 0;
-		// } else if (current.getX() < next.getX() && this.destX != -1)
-		// {
-		// if (rand == 0)
-		// {
-		// this.setRandomDirection();
-		// } else
-		// {
-		// this.destX = 1;
-		// }
-		// } else if (current.getX() > next.getX() && this.destX != 1)
-		// {
-		// if (rand == 0)
-		// {
-		// this.setRandomDirection();
-		// } else
-		// {
-		// this.destX = -1;
-		// }
-		// } else
-		// {
-		// this.setRandomDirection();
-		// }
-		// if (current.getY() == next.getY())
-		// {
-		// this.destY = 0;
-		// } else if (current.getY() < next.getY() && this.destY != -1)
-		// {
-		// if (rand == 0)
-		// {
-		// this.setRandomDirection();
-		// } else
-		// {
-		// this.destY = 1;
-		// }
-		// } else if (current.getY() > next.getY() && this.destY != 1)
-		// {
-		// if (rand == 0)
-		// {
-		// this.setRandomDirection();
-		// } else
-		// {
-		// this.destY = -1;
-		// }
-		// } else
-		// {
-		// this.setRandomDirection();
-		// }
-		//
-		// }
-		//
-		// }
 
 		this.setActX(this.getActX() + (this.getDestX() * this.getSpeed()));
 		this.setActY(this.getActY() + (this.getDestY() * this.getSpeed()));
@@ -255,12 +241,12 @@ public class Ghost
 			{
 
 				((PacVertex) currentVertex.element()).ghostDecrement(this);
-				if (this.getDestX() >= 0)
+				if (this.getDestX() > 0)
 				{
 					((PacVertex) screendata[currentRow][currentCol + 1]
 							.element()).ghostIncrement(this);
 					currentVertex = screendata[currentRow][currentCol + 1];
-				} else
+				} else if (this.getDestX() < 0)
 				{
 					((PacVertex) screendata[currentRow][currentCol - 1]
 							.element()).ghostIncrement(this);
@@ -272,12 +258,12 @@ public class Ghost
 
 				((PacVertex) currentVertex.element()).ghostDecrement(this);
 
-				if (this.getDestY() >= 0)
+				if (this.getDestY() > 0)
 				{
 					((PacVertex) screendata[currentRow + 1][currentCol]
 							.element()).ghostIncrement(this);
 					currentVertex = screendata[currentRow + 1][currentCol];
-				} else
+				} else if (this.getDestX() < 0)
 				{
 					((PacVertex) screendata[currentRow - 1][currentCol]
 							.element()).ghostIncrement(this);
@@ -357,7 +343,6 @@ public class Ghost
 
 	private void setRandomDirection()
 	{
-		// System.out.println("random");
 		int count = 0;
 		PacVertex vertex = (PacVertex) currentVertex.element();
 		if ((vertex.getType() & 1) == 0 && this.getDestX() != 1)
@@ -392,6 +377,7 @@ public class Ghost
 				this.setDestY(0);
 			} else
 			{
+				
 				this.setDestX(-this.getDestX());
 				this.setDestY(-this.getDestY());
 			}

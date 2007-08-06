@@ -124,9 +124,10 @@ public class Game extends JPanel implements Runnable
 	public void GameInit()
 	{
 		nrofGhosts = 4;
+		ghosts.clear();
 		for (int i = 0; i < nrofGhosts; i++)
 		{
-			ghosts.add(new Ghost(0, 0, 4, this, i));
+			ghosts.add(new Ghost(0, 0, 3, this, i));
 		}
 		pacman = new PacMan(human, 0, 0, 4, this);
 		pacsleft = 3;
@@ -162,7 +163,7 @@ public class Game extends JPanel implements Runnable
 		{
 			g.setActX(level.getGhostStart().x);
 			g.setActY(level.getGhostStart().y);
-			g.setCurrentVertex(screendata[level.getGhostStart().y / Level.blocksize][level.getGhostStart().x / Level.blocksize]);
+			//g.setCurrentVertex(screendata[level.getGhostStart().y / Level.blocksize][level.getGhostStart().x / Level.blocksize]);
 
 			g.setDestY(0);
 			g.setDestX(dx);
@@ -181,6 +182,7 @@ public class Game extends JPanel implements Runnable
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
+		
 		if (graphics == null && d.width > 0 && d.height > 0)
 		{
 			ii = createImage(d.width, d.height);
@@ -215,8 +217,8 @@ public class Game extends JPanel implements Runnable
 	public void PlayGame()
 	{
 		
-		if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0)
-			res = Heuristic.getBestMove(screendata);
+//		if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0)
+//			res = Heuristic.getBestMove(screendata);
 		
 		if (dead)
 		{
@@ -225,27 +227,27 @@ public class Game extends JPanel implements Runnable
 		{
 			CheckScared();
 			
-			if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0){
-				pacman.setDestX(res.getPacObject().getPacman().getDestX());
-				pacman.setDestY(res.getPacObject().getPacman().getDestY());
-			}
-			
+//			if(pacman.getActX() % Level.blocksize == 0 && pacman.getActY() % Level.blocksize == 0){
+//				pacman.setDestX(res.getPacObject().getPacman().getDestX());
+//				pacman.setDestY(res.getPacObject().getPacman().getDestY());
+//			}
+			int i = 0;
 			for (Ghost g : ghosts)
 			{
-				Ghost found = null;
-				
-				if(g.getActX() % Level.blocksize == 0 && g.getActY() % Level.blocksize == 0){
-					for(Ghost search : res.getGhostObject().getGhosts()){
-						if(search != null && search.getGhostId() == g.getGhostId()){
-							found = search;
-							g.setDestX(found.getDestX());
-							g.setDestY(found.getDestY());
-
-							break;
-						}
-					}
-
-				}
+//				Ghost found = null;
+//				
+//				if(g.getActX() % Level.blocksize == 0 && g.getActY() % Level.blocksize == 0){
+//					for(Ghost search : res.getGhostObject().getGhosts()){
+//						if(search != null && search.getGhostId() == g.getGhostId()){
+//							found = search;
+//							g.setDestX(found.getDestX());
+//							g.setDestY(found.getDestY());
+//
+//							break;
+//						}
+//					}
+//
+//				}
 
 				g.move(screendata);
 				g.draw(g.getActX() + 1, (g.getActY() + 1));
@@ -257,7 +259,7 @@ public class Game extends JPanel implements Runnable
 			pacman.move(screendata);
 			pacman.draw();
 
-			// this.debug(); //TODO: remove debug
+			//this.debug(); //TODO: remove debug
 		}
 	}
 
