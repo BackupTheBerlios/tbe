@@ -3,6 +3,7 @@ package ch.pacman.game;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -13,6 +14,7 @@ import ch.pacman.graph.Pathfinder;
 import jdsl.graph.algo.IntegerDijkstraPathfinder;
 import jdsl.graph.api.EdgeIterator;
 import jdsl.graph.api.Vertex;
+import jdsl.graph.api.VertexIterator;
 import jdsl.graph.ref.IncidenceListGraph;
 
 public class Ghost
@@ -101,7 +103,7 @@ public class Ghost
 		return actX;
 	}
 
-	public  void setActX(int actX)
+	public void setActX(int actX)
 	{
 		this.actX = actX;
 	}
@@ -111,7 +113,7 @@ public class Ghost
 		return actY;
 	}
 
-	public  void setActY(int actY)
+	public void setActY(int actY)
 	{
 		this.actY = actY;
 	}
@@ -138,7 +140,7 @@ public class Ghost
 
 	int count;
 
-	public  void move(Vertex[][] screendata)
+	public void move(Vertex[][] screendata)
 	{
 
 		count = 0;
@@ -180,53 +182,114 @@ public class Ghost
 				this.setRandomDirection();
 			} else if (dfs.pathExists())
 			{
-
-				EdgeIterator ei = dfs.reportPath();
-
-				PacVertex next = (PacVertex) graph.opposite(currentVertex,
-						ei.nextEdge()).element();
-				// in 80% he takes the right way
-				Random r = new Random();
-				int rand = r.nextInt(8);
-				
-				if (current.getX() == next.getX() && rand != 0)
+				if (game.isScared())
 				{
 
-					this.destX = 0;
-				} else if (current.getX() < next.getX() && this.destX != -1 && rand != 0)
-				{
+					VertexIterator vi = graph.adjacentVertices(currentVertex);
+					ArrayList<Vertex> adjacents = new ArrayList<Vertex>();
+					while (vi.hasNext())
+					{
+						adjacents.add(vi.nextVertex());
+					}
+					EdgeIterator ei = dfs.reportPath();
+
+					PacVertex next = (PacVertex) graph.opposite(currentVertex,
+							ei.nextEdge()).element();
 					
+					adjacents.remove(oldVertex);
+					if(adjacents.size() > 1){
+					adjacents.remove(next);}
+					Random r = new Random();
+					int rand = r.nextInt(adjacents.size());
+					next = (PacVertex) adjacents.get(rand).element();
+					if (current.getX() == next.getX())
+					{
+
+						this.destX = 0;
+					} else if (current.getX() < next.getX())
+					{
+
 						this.destX = 1;
-					
-				} else if (current.getX() > next.getX() && this.destX != 1 && rand != 0)
-				{
-					
+
+					} else if (current.getX() > next.getX())
+					{
+
 						this.destX = -1;
-					
+
+					} else
+					{
+
+						rand = 0;
+					}
+
+					if (current.getY() == next.getY())
+					{
+						this.destY = 0;
+					} else if (current.getY() < next.getY())
+					{
+
+						this.destY = 1;
+
+					} else if (current.getY() > next.getY())
+					{
+
+						this.destY = -1;
+
+					}
+
 				} else
 				{
-					
-					rand = 0;
-				}
-				
-				if (current.getY() == next.getY() && rand != 0)
-				{
-					this.destY = 0;
-				} else if (current.getY() < next.getY() && this.destY != -1 && rand != 0)
-				{
-					
-						this.destY = 1;
-					
-				} else if (current.getY() > next.getY() && this.destY != 1 && rand != 0)
-				{
-					
-						this.destY = -1;
-					
-				}else 
-				{
-					this.setRandomDirection();
-				}
+					EdgeIterator ei = dfs.reportPath();
 
+					PacVertex next = (PacVertex) graph.opposite(currentVertex,
+							ei.nextEdge()).element();
+					// in 80% he takes the right way
+					Random r = new Random();
+					int rand = r.nextInt(8);
+
+					if (current.getX() == next.getX() && rand != 0)
+					{
+
+						this.destX = 0;
+					} else if (current.getX() < next.getX() && this.destX != -1
+							&& rand != 0)
+					{
+
+						this.destX = 1;
+
+					} else if (current.getX() > next.getX() && this.destX != 1
+							&& rand != 0)
+					{
+
+						this.destX = -1;
+
+					} else
+					{
+
+						rand = 0;
+					}
+
+					if (current.getY() == next.getY() && rand != 0)
+					{
+						this.destY = 0;
+					} else if (current.getY() < next.getY() && this.destY != -1
+							&& rand != 0)
+					{
+
+						this.destY = 1;
+
+					} else if (current.getY() > next.getY() && this.destY != 1
+							&& rand != 0)
+					{
+
+						this.destY = -1;
+
+					} else
+					{
+						this.setRandomDirection();
+					}
+
+				}
 			}
 
 		}
@@ -377,7 +440,7 @@ public class Ghost
 				this.setDestY(0);
 			} else
 			{
-				
+
 				this.setDestX(-this.getDestX());
 				this.setDestY(-this.getDestY());
 			}

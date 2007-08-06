@@ -424,6 +424,12 @@ public class Game extends JPanel implements Runnable
 		{
 			scaredcount = Level.scaredtime;
 		}
+		for(Ghost g : ghosts){
+			g.setDestX(-g.getDestX());
+			g.setDestY(-g.getDestY());
+		}
+		pacman.setDestX(-pacman.getDestX());
+		pacman.setDestY(-pacman.getDestY());
 	}
 
 	public void Death()

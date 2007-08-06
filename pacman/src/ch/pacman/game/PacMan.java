@@ -38,6 +38,7 @@ public class PacMan
 	private int[] dy = new int[4];
 
 	private Vertex currentVertex = null;
+
 	private Vertex oldVertex = null;
 
 	private Game game;
@@ -172,9 +173,10 @@ public class PacMan
 			{
 				adjacents.add(vi.nextVertex());
 			}
-			if (game.isScared()){
-				adjacents.remove(oldVertex);
-			}else
+			if (game.isScared())
+			{
+				
+			} else
 			{
 				ArrayList<Ghost> ghosts = Game.getGhosts();
 				EdgeIterator[] ei2 = new EdgeIterator[ghosts.size()];
@@ -221,7 +223,7 @@ public class PacMan
 						}
 
 					}
-					if (minDist < 6 && ei2[minGhost] != null )
+					if (minDist < 6 && ei2[minGhost] != null)
 					{
 						adjacents.remove(graph.opposite(currentVertex,
 								ei2[minGhost].nextEdge()));
@@ -240,9 +242,16 @@ public class PacMan
 				next = (PacVertex) adjacents.get(0).element();
 			} else
 			{
-				Random r = new Random();
-				int rand = r.nextInt(adjacents.size());
-				next = (PacVertex) adjacents.get(rand).element();
+				adjacents.remove(oldVertex);
+				if (adjacents.size() == 1)
+				{
+					next = (PacVertex) adjacents.get(0).element();
+				} else
+				{
+					Random r = new Random();
+					int rand = r.nextInt(adjacents.size());
+					next = (PacVertex) adjacents.get(rand).element();
+				}
 			}
 
 			if (current.getX() == next.getX())
@@ -285,7 +294,7 @@ public class PacMan
 		// sets pacman
 		if (this.getActX() % Level.blocksize == Level.blocksize / 2)
 		{
-			
+
 			((PacVertex) currentVertex.element()).setPacMan(null);
 			if (this.getDestX() >= 0)
 			{
