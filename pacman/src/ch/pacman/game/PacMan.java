@@ -153,6 +153,7 @@ public class PacMan
 			{
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
+				game.setScore(game.getScore() + 1);
 
 			}
 			if ((ch & 32) != 0)
@@ -161,7 +162,7 @@ public class PacMan
 
 				((PacVertex) screendata[currentRow][currentCol].element())
 						.setType((short) (ch & 15));
-				;
+				game.setScore(game.getScore() + 5);
 
 			}
 
@@ -223,7 +224,7 @@ public class PacMan
 						}
 
 					}
-					if (minDist < 6 && ei2[minGhost] != null)
+					if (minDist < 3 && ei2[minGhost] != null && ei2[minGhost].hasNext())
 					{
 						adjacents.remove(graph.opposite(currentVertex,
 								ei2[minGhost].nextEdge()));
